@@ -10,7 +10,7 @@ module.exports = [
       return res.json(eventsList);
     }),
 
-    eventsRouter.get(RoutesConstants.findEvent, (req, res) => {
+    eventsRouter.get(RoutesConstants.findEventById, (req, res) => {
       let eventsList = require(`../../${RoutesConstants.eventsListLocation}`);
       const { eventId } = req.params;
       const searchArtist = helpers.searchResult(eventsList, eventId, "id");

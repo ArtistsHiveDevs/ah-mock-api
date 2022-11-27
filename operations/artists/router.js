@@ -6,12 +6,12 @@ var artistRouter = express.Router({ mergeParams: true });
 
 module.exports = [
 
-    artistRouter.get(RoutesConstants.aritstsList, (req, res) => {
+    artistRouter.get(RoutesConstants.artistsList, (req, res) => {
       let artistsList = require(`../../${RoutesConstants.artistListLocation}`);
       return res.json(artistsList);
     }),
 
-    artistRouter.get(RoutesConstants.findArtist, (req, res) => {
+    artistRouter.get(RoutesConstants.findArtistById, (req, res) => {
       let artistsList = require(`../../${RoutesConstants.artistListLocation}`);
       const { artistId } = req.params;
       const searchArtist = helpers.searchResult(artistsList, artistId, "id");
