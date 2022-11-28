@@ -8,8 +8,8 @@ module.exports = [
     const eventsList = require(`../../${RoutesConstants.placesListLocation}`);
     let result = eventsList;
     if (req.query) {
+      // Consulta por palabra clave
       if (req.query.q) {
-        console.log("Total", eventsList.length);
         result = helpers.findMany(eventsList, req.query.q, [
           "Nombre",
           "Departamento",
@@ -19,6 +19,16 @@ module.exports = [
           "web",
           "tiktok",
         ]);
+      }
+
+      // Consulta por cercanía
+      if (req.query.d) {
+        const coords = req.query.d.split(",");
+        const latlong = {
+          latitude: parseFloat(coords[0]),
+          longitude: parseFloat(coords[1]),
+        };
+        result = helpers.findByDistance(result, latlong, "Lat, Long");
       }
     }
 
