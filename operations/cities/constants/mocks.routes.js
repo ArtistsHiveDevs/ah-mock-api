@@ -1,3 +1,3 @@
 module.exports = {
-    citiesListLocation: "assets/mocks/countries/countriesList.json"
-}
+  citiesListLocation: "assets/mocks/cities/citiesList.json",
+};

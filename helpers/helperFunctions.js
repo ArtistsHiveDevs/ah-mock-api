@@ -47,14 +47,7 @@ module.exports = {
           latitude: parseFloat(coords[0]),
           longitude: parseFloat(coords[1]),
         };
-        console.log(
-          latlong &&
-            latlong.latitude >= searchLatLong.latitude - options.maxdistance &&
-            latlong.latitude <= searchLatLong.latitude + options.maxdistance &&
-            latlong.longitude >=
-              searchLatLong.longitude - options.maxdistance &&
-            latlong.longitude <= searchLatLong.longitude + options.maxdistance
-        );
+
         return (
           latlong &&
           latlong.latitude >= searchLatLong.latitude - options.maxdistance &&

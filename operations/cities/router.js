@@ -5,18 +5,19 @@ var RoutesConstants = require("./constants/index");
 var router = express.Router({ mergeParams: true });
 
 module.exports = [
+  router.get(RoutesConstants.citiesList, (req, res) => {
+    let artistsList = require(`../../${RoutesConstants.citiesListLocation}`);
+    return res.json(artistsList);
+  }),
 
-    router.get(RoutesConstants.artistsList, (req, res) => {
-      let artistsList = require(`../../${RoutesConstants.citiesListLocation}`);
-      return res.json(artistsList);
-    }),
-
-    router.get(RoutesConstants.findArtistById, (req, res) => {
-      let artistsList = require(`../../${RoutesConstants.citiesListLocation}`);
-      const { artistId } = req.params;
-      const searchArtist = helpers.searchResult(artistsList, artistId, "id");
-      return res.json(searchArtist || { message: helpers.noResultDefaultLabel });
-    })
-
-
+  router.get(RoutesConstants.findCityById, (req, res) => {
+    let citiesList = require(`../../${RoutesConstants.citiesListLocation}`);
+    const { cityId } = req.params;
+    const searchCity = helpers.searchResult(
+      citiesList,
+      cityId,
+      "Codigo_municipio"
+    );
+    return res.json(searchCity || { message: helpers.noResultDefaultLabel });
+  }),
 ];
