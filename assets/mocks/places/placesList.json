@@ -1,6 +1,6 @@
 [
   {
-    "N°": 1,
+    "id": 1,
     "Nombre": "Matik Matik",
     "Tipo": "Bar Restaurante",
     "Género": "",
@@ -21,7 +21,7 @@
     "tiktok": ""
   },
   {
-    "N°": 2,
+    "id": 2,
     "Nombre": "Teatro Jorge Eliécer Gaitán",
     "Tipo": "Teatro",
     "Género": "",
@@ -42,7 +42,7 @@
     "tiktok": ""
   },
   {
-    "N°": 3,
+    "id": 3,
     "Nombre": "Galería Café Libro 93",
     "Tipo": "",
     "Género": "Salsa",
@@ -63,7 +63,7 @@
     "tiktok": ""
   },
   {
-    "N°": 4,
+    "id": 4,
     "Nombre": "Galería Café Libro Palermo",
     "Tipo": "",
     "Género": "Salsa",
@@ -84,7 +84,7 @@
     "tiktok": ""
   },
   {
-    "N°": 5,
+    "id": 5,
     "Nombre": "La Pascasia",
     "Tipo": "Bar , galeria de arte",
     "Género": "",
@@ -105,7 +105,7 @@
     "tiktok": ""
   },
   {
-    "N°": 6,
+    "id": 6,
     "Nombre": "Sonora Casa Cultural",
     "Tipo": "",
     "Género": "",
@@ -126,7 +126,7 @@
     "tiktok": ""
   },
   {
-    "N°": 7,
+    "id": 7,
     "Nombre": "Casa Kilele",
     "Tipo": "fundación sin ánimo de lucro",
     "Género": "",
@@ -147,7 +147,7 @@
     "tiktok": ""
   },
   {
-    "N°": 8,
+    "id": 8,
     "Nombre": "Disco Jaguar",
     "Tipo": "Club nocturno bar",
     "Género": "",
@@ -168,7 +168,7 @@
     "tiktok": ""
   },
   {
-    "N°": 9,
+    "id": 9,
     "Nombre": "Cuban Jazz",
     "Tipo": "CERRADO DEFINITIVAMENTE",
     "Género": "Salsa",
@@ -189,7 +189,7 @@
     "tiktok": ""
   },
   {
-    "N°": 10,
+    "id": 10,
     "Nombre": "PuraPizza",
     "Tipo": "",
     "Género": "Jazz",
@@ -210,7 +210,7 @@
     "tiktok": ""
   },
   {
-    "N°": 11,
+    "id": 11,
     "Nombre": "Latino Power",
     "Tipo": "",
     "Género": "",
@@ -231,7 +231,7 @@
     "tiktok": ""
   },
   {
-    "N°": 12,
+    "id": 12,
     "Nombre": "Boogaloop CLUB",
     "Tipo": "iscoteca crossunder de Chapinero. Música en vivo y cultura Dj",
     "Género": "",
@@ -252,7 +252,7 @@
     "tiktok": ""
   },
   {
-    "N°": 13,
+    "id": 13,
     "Nombre": "Café cinema",
     "Tipo": "",
     "Género": "Salsa, Cumbia",
@@ -273,7 +273,7 @@
     "tiktok": ""
   },
   {
-    "N°": 14,
+    "id": 14,
     "Nombre": "El Goce Pagano",
     "Tipo": "",
     "Género": "Salsa",
@@ -294,7 +294,7 @@
     "tiktok": ""
   },
   {
-    "N°": 15,
+    "id": 15,
     "Nombre": "Salsa Camará",
     "Tipo": "",
     "Género": "Salsa",
@@ -315,7 +315,7 @@
     "tiktok": "https://www.tiktok.com/discover/salsa-camara"
   },
   {
-    "N°": 16,
+    "id": 16,
     "Nombre": "Longo's",
     "Tipo": "",
     "Género": "",
@@ -336,7 +336,7 @@
     "tiktok": ""
   },
   {
-    "N°": 17,
+    "id": 17,
     "Nombre": "Café Vallejo",
     "Tipo": "",
     "Género": "",
@@ -357,7 +357,7 @@
     "tiktok": ""
   },
   {
-    "N°": 18,
+    "id": 18,
     "Nombre": "Revellion Bar",
     "Tipo": "",
     "Género": "",
@@ -378,7 +378,7 @@
     "tiktok": ""
   },
   {
-    "N°": 19,
+    "id": 19,
     "Nombre": "Jackass Rock Bar",
     "Tipo": "",
     "Género": "Rock",
@@ -399,7 +399,7 @@
     "tiktok": ""
   },
   {
-    "N°": 20,
+    "id": 20,
     "Nombre": "El anónimo",
     "Tipo": "centro cultural",
     "Género": "",
@@ -420,7 +420,7 @@
     "tiktok": ""
   },
   {
-    "N°": 21,
+    "id": 21,
     "Nombre": "Son Havana",
     "Tipo": "",
     "Género": "",
@@ -441,7 +441,7 @@
     "tiktok": ""
   },
   {
-    "N°": 22,
+    "id": 22,
     "Nombre": "Teatro Charlot",
     "Tipo": "",
     "Género": "",
@@ -462,7 +462,7 @@
     "tiktok": ""
   },
   {
-    "N°": 23,
+    "id": 23,
     "Nombre": "A seis manos",
     "Tipo": "Espacio cultural",
     "Género": "",

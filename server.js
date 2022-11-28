@@ -5,6 +5,7 @@ var bodyParser = require("body-parser");
 var textConstants = require("./helpers/index");
 var artistRouter = require("./operations/artists/router");
 var citiesRouter = require("./operations/cities/router");
+var countriesRouter = require("./operations/countries/router");
 var eventsRouter = require("./operations/events/router");
 var placesRouter = require("./operations/places/router");
 
@@ -17,6 +18,7 @@ app.use(cors());
 var routes = [
     { path: "/artists", route: artistRouter },
     { path: "/cities", route: citiesRouter },
+    { path: "/countries", route: countriesRouter },
     { path: "/events", route: eventsRouter },
     { path: "/places", route: placesRouter },
 ];
