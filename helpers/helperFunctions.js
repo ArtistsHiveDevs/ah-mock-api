@@ -105,4 +105,49 @@ module.exports = {
 
     return fullData;
   },
+
+  attachRelationship(
+    mainObject,
+    objectRelationshipName,
+    relationshipName,
+    relationshipData,
+    objectID = "id"
+  ) {
+    const mainObjectIsArray = Array.isArray(mainObject);
+    let mainArray = mainObject;
+
+    if (!mainObjectIsArray) {
+      mainArray = [mainObject];
+    }
+
+    let relationshipDataArray = relationshipData;
+    if (!Array.isArray(relationshipData)) {
+      relationshipDataArray = [relationshipData];
+    }
+    console.log(relationshipName);
+
+    mainArray.forEach((object) => {
+      object[objectRelationshipName] = relationshipDataArray.filter(
+        (relatedObject) =>
+          `${relatedObject[relationshipName]}` === `${object[objectID]}`
+      );
+    });
+    return mainObjectIsArray ? mainArray : mainArray[0];
+  },
+
+  attachRelationships(originalData, relationships, objectID = "id") {
+    let fullData = originalData;
+
+    relationships.forEach((relationship) => {
+      fullData = this.attachRelationship(
+        fullData,
+        relationship.objectRelationshipName,
+        relationship.relationshipName,
+        relationship.relationshipData,
+        objectID
+      );
+    });
+
+    return fullData;
+  },
 };

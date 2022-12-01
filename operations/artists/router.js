@@ -4,19 +4,33 @@ var RoutesConstants = require("./constants/index");
 
 var artistRouter = express.Router({ mergeParams: true });
 
+const artistsList = require(`../../${RoutesConstants.artistListLocation}`);
+const eventsList = require(`../../${RoutesConstants.eventListLocation}`);
+
+function fillRelationships(element) {
+  const filledElement = element;
+  helpers.attachRelationships(filledElement, [
+    {
+      objectRelationshipName: "events",
+      relationshipName: "main_artist_id",
+      relationshipData: eventsList,
+    },
+  ]);
+  return filledElement;
+}
+
 module.exports = [
+  artistRouter.get(RoutesConstants.artistsList, (req, res) => {
+    return res.json(artistsList);
+  }),
 
-    artistRouter.get(RoutesConstants.artistsList, (req, res) => {
-      let artistsList = require(`../../${RoutesConstants.artistListLocation}`);
-      return res.json(artistsList);
-    }),
-
-    artistRouter.get(RoutesConstants.findArtistById, (req, res) => {
-      let artistsList = require(`../../${RoutesConstants.artistListLocation}`);
-      const { artistId } = req.params;
-      const searchArtist = helpers.searchResult(artistsList, artistId, "id");
-      return res.json(searchArtist || { message: helpers.noResultDefaultLabel });
-    })
-
-
+  artistRouter.get(RoutesConstants.findArtistById, (req, res) => {
+    const { artistId } = req.params;
+    const searchArtist = helpers.searchResult(artistsList, artistId, "id");
+    return res.json(
+      fillRelationships(searchArtist) || {
+        message: helpers.noResultDefaultLabel,
+      }
+    );
+  }),
 ];
