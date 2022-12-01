@@ -8,6 +8,7 @@ module.exports = {
       }
     });
   },
+
   findMany: function (
     baseObject,
     search,
@@ -33,6 +34,7 @@ module.exports = {
       );
     });
   },
+
   findByDistance: function (
     baseObject,
     searchLatLong,
@@ -59,5 +61,48 @@ module.exports = {
         return objElement == search;
       }
     });
+  },
+
+  fillRelationship: function (
+    mainObject,
+    relationshipName,
+    relationshipData,
+    relationshipID = "id"
+  ) {
+    const mainObjectIsArray = Array.isArray(mainObject);
+    let mainArray = mainObject;
+
+    if (!mainObjectIsArray) {
+      mainArray = [mainObject];
+    }
+
+    let relationshipDataArray = relationshipData;
+    if (!Array.isArray(relationshipData)) {
+      relationshipDataArray = [relationshipData];
+    }
+
+    mainArray.forEach((object) => {
+      object[relationshipName.replace("_id", "")] = relationshipDataArray.find(
+        (relatedObject) =>
+          `${relatedObject[relationshipID]}` === `${object[relationshipName]}`
+      );
+    });
+
+    return mainObjectIsArray ? mainArray : mainArray[0];
+  },
+
+  fillRelationships(originalData, relationships) {
+    let fullData = originalData;
+
+    relationships.forEach((relationship) => {
+      fullData = this.fillRelationship(
+        fullData,
+        relationship.relationshipName,
+        relationship.relationshipData,
+        relationship.relationshipID || "id"
+      );
+    });
+
+    return fullData;
   },
 };

@@ -1,0 +1,33 @@
+[
+  {
+    "id": 1,
+    "name": "Jazz al parque",
+    "subtitle": "",
+    "artist_id": "",
+    "place_id": "",
+    "social_networks": {
+      "FB": "",
+      "IG": "",
+      "tiktok": "",
+      "web": "",
+      "WA": ""
+    },
+    "tickets_info": {
+      "web": "",
+      "WA": "",
+      "mobile_phones": ["3001234567", "3001234568", "3001234569"],
+      "phones": ["6011234567", "6011234568"]
+    },
+    "minimum_age": 18,
+    "maximum_age": -1,
+    "timetable": {
+      "initial_date": "23/12/2022",
+      "end_date": "23/12/2022",
+      "openning_doors": 2030,
+      "guest_time": 2130,
+      "main_artist_time": 2230
+    },
+    "promoter": "",
+    "national_code": ""
+  }
+]
