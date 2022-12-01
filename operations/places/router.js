@@ -56,8 +56,8 @@ function filterResultsByQuery(req, result) {
     }
 
     // Consulta por cercanía
-    if (req.query.d) {
-      const coords = req.query.d.split(",");
+    if (req.query.l) {
+      const coords = req.query.l.split(",");
       const latlong = {
         latitude: parseFloat(coords[0]),
         longitude: parseFloat(coords[1]),

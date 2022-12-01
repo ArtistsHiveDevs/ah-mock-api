@@ -1,3 +1,4 @@
+const { query } = require("express");
 var express = require("express");
 var helpers = require("../../helpers/index");
 var RoutesConstants = require("./constants/index");
@@ -7,6 +8,31 @@ var eventsRouter = express.Router({ mergeParams: true });
 const placesList = require(`../../${RoutesConstants.placesListLocation}`);
 const eventsList = require(`../../${RoutesConstants.eventsListLocation}`);
 const artistsList = require(`../../${RoutesConstants.artistsListLocation}`);
+
+function filterResultsByQuery(req, elements) {
+  const d1 = new Date();
+  const d2 = new Date("2022-12-23");
+
+  if (req.query) {
+    if (req.query.bd) {
+      elements = helpers.findByDate(
+        elements,
+        "timetable__initial_date",
+        req.query.bd,
+        ">="
+      );
+    }
+    if (req.query.ad) {
+      elements = helpers.findByDate(
+        elements,
+        "timetable__end_date",
+        req.query.ad,
+        "<="
+      );
+    }
+  }
+  return elements;
+}
 
 function fillRelationships(element) {
   let eventos = helpers.fillRelationships(element, [
@@ -45,7 +71,7 @@ function fillRelationships(element) {
 
 module.exports = [
   eventsRouter.get(RoutesConstants.eventList, (req, res) => {
-    return res.json(fillRelationships(eventsList));
+    return res.json(fillRelationships(filterResultsByQuery(req, eventsList)));
   }),
 
   eventsRouter.get(RoutesConstants.findEventById, (req, res) => {
@@ -53,7 +79,7 @@ module.exports = [
     const searchEvent = helpers.searchResult(eventsList, eventId, "id");
 
     return res.json(
-      fillRelationships(searchEvent) || {
+      fillRelationships(filterResultsByQuery(req, searchEvent)) || {
         message: helpers.noResultDefaultLabel,
       }
     );

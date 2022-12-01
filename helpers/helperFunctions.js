@@ -63,6 +63,44 @@ module.exports = {
     });
   },
 
+  findByDate: function (baseObject, dateProperty, date, comparison) {
+    let baseArray = baseObject;
+    const isArray = Array.isArray(baseObject);
+    if (!isArray) {
+      baseArray = [baseObject];
+    }
+
+    baseArray = baseArray.filter((object) => {
+      let objectDate = object[dateProperty];
+      if (objectDate) {
+        objectDate = new Date(objectDate);
+        const requestedDate = new Date(date);
+
+        const difference = requestedDate.getTime() - objectDate.getTime();
+
+        switch (comparison) {
+          case "<=":
+            return difference <= 0;
+          case "<":
+            return difference < 0;
+
+          case ">=":
+            return difference >= 0;
+          case ">":
+            return difference > 0;
+
+          case "==":
+            return difference == 0;
+
+          default:
+            break;
+        }
+      }
+      return false;
+    });
+    return isArray ? baseArray : !!baseArray.length ? baseArray[0] : undefined;
+  },
+
   fillRelationship: function (
     mainObject,
     relationshipName,
