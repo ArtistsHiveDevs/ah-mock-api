@@ -9,11 +9,38 @@ const eventsList = require(`../../${RoutesConstants.eventsListLocation}`);
 const artistsList = require(`../../${RoutesConstants.artistsListLocation}`);
 
 function fillRelationships(element) {
-  return helpers.fillRelationships(element, [
+  let eventos = helpers.fillRelationships(element, [
     { relationshipName: "place_id", relationshipData: placesList },
     { relationshipName: "main_artist_id", relationshipData: artistsList },
     { relationshipName: "guest_artist_id", relationshipData: artistsList },
   ]);
+
+  // // Llenar nombres de eventos incompletos
+  // eventos.forEach((evento) => {
+  //   evento.name =
+  //     evento.name ||
+  //     `${evento.main_artist?.name || evento.guest_artist?.name} en vivo en ${
+  //       evento.place.Nombre
+  //     }`;
+  // });
+  // eventos = eventos.map((evento) => {
+  //   return {
+  //     id: evento.id,
+  //     name: evento.name,
+  //     subtitle: evento.subtitle,
+  //     main_artist_id: evento.main_artist_id,
+  //     guest_artist_id: evento.guest_artist_id,
+  //     place_id: evento.place_id,
+  //     timetable__initial_date: evento.timetable__initial_date,
+  //     timetable__end_date: evento.timetable__end_date,
+  //     timetable__openning_doors: evento.timetable__openning_doors,
+  //     timetable__guest_time: evento.timetable__guest_time,
+  //     timetable__main_artist_time: evento.timetable__main_artist_time,
+  //     promoter: evento.promoter,
+  //     national_code: evento.national_code,
+  //   };
+  // });
+  return eventos;
 }
 
 module.exports = [
