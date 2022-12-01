@@ -126,10 +126,24 @@ module.exports = {
     }
 
     mainArray.forEach((object) => {
-      object[objectRelationshipName] = relationshipDataArray.filter(
-        (relatedObject) =>
-          `${relatedObject[relationshipName]}` === `${object[objectID]}`
-      );
+      if (!objectRelationshipName.includes(".")) {
+        object[objectRelationshipName] = relationshipDataArray.filter(
+          (relatedObject) =>
+            `${relatedObject[relationshipName]}` === `${object[objectID]}`
+        );
+      } else {
+        const subpathnames = objectRelationshipName.split(".");
+
+        object[subpathnames[0]].forEach((firstRelationship) => {
+          if (relationshipName.includes("_id")) {
+            this.fillRelationship(
+              firstRelationship,
+              relationshipName,
+              relationshipDataArray
+            );
+          }
+        });
+      }
     });
     return mainObjectIsArray ? mainArray : mainArray[0];
   },
@@ -140,7 +154,7 @@ module.exports = {
     relationships.forEach((relationship) => {
       fullData = this.attachRelationship(
         fullData,
-        relationship.objectRelationshipName,
+        relationship.objectRelationshipName || relationship.field,
         relationship.relationshipName,
         relationship.relationshipData,
         objectID

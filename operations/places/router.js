@@ -15,18 +15,27 @@ function fillRelationships(element, relationships = []) {
 function fillResultWithFields(fields, result) {
   const relationships = [
     {
+      field: "events",
       objectRelationshipName: "events",
       relationshipName: "place_id",
       relationshipData: eventsList,
+    },
+    {
+      field: "events.main_artist",
+      relationshipName: "main_artist_id",
+      relationshipData: artistsList,
+    },
+    {
+      field: "events.guest_artist",
+      relationshipName: "guest_artist_id",
+      relationshipData: artistsList,
     },
   ];
 
   return fillRelationships(
     result,
     relationships.filter((relationship) =>
-      fields.find(
-        (fieldName) => fieldName === relationship.objectRelationshipName
-      )
+      fields.find((fieldName) => fieldName === relationship.field)
     )
   );
 }
