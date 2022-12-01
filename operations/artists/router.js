@@ -8,15 +8,13 @@ const artistsList = require(`../../${RoutesConstants.artistListLocation}`);
 const eventsList = require(`../../${RoutesConstants.eventListLocation}`);
 
 function fillRelationships(element) {
-  const filledElement = element;
-  helpers.attachRelationships(filledElement, [
+  return helpers.attachRelationships(element, [
     {
       objectRelationshipName: "events",
       relationshipName: "main_artist_id",
       relationshipData: eventsList,
     },
   ]);
-  return filledElement;
 }
 
 module.exports = [

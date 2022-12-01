@@ -124,7 +124,6 @@ module.exports = {
     if (!Array.isArray(relationshipData)) {
       relationshipDataArray = [relationshipData];
     }
-    console.log(relationshipName);
 
     mainArray.forEach((object) => {
       object[objectRelationshipName] = relationshipDataArray.filter(
