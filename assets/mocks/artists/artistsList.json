@@ -1,342 +1,342 @@
 [
-    {
-        "artistType": "musician",
-        "id": "1",
-        "name": "Petrona Martínez",
-        "subtitle": "Música folclórica del caribe",
-        "verified_status": 1,
-        "profile_pic": "https://i0.wp.com/www.expresionnaranja.com/wp-content/uploads/2019/01/pertona.png?w=788",
-        "photo": "https://cr00.epimg.net/radio/imagenes/2021/11/19/cartagena/1637324086_096489_1637324189_noticia_normal.jpg",
-        "description": "Petrona Martínez es una cantante afrocolombiana de música tradicional de la Costa Caribe. Su larga y prolífica carrera profesional le han valido el título de “la reina del bullerengue”",
-        "template": {
-            "artistType": "musician",
-            "id": "1",
-            "name": "Petrona Martínez",
-            "subtitle": "Música folclórica del caribe",
-            "verified_status": 1,
-            "profile_pic": "https://i0.wp.com/www.expresionnaranja.com/wp-content/uploads/2019/01/pertona.png?w=788",
-            "photo": "https://cr00.epimg.net/radio/imagenes/2021/11/19/cartagena/1637324086_096489_1637324189_noticia_normal.jpg",
-            "description": "Petrona Martínez es una cantante afrocolombiana de música tradicional de la Costa Caribe. Su larga y prolífica carrera profesional le han valido el título de “la reina del bullerengue”"
-        }
-    },
-    {
-        "artistType": "musician",
-        "id": "2",
-        "name": "Gualajo",
-        "subtitle": "El piano de la selva",
-        "verified_status": 2,
-        "profile_pic": "https://radionacional-v3.s3.amazonaws.com/s3fs-public/styles/portadas_relaciona_4_3/public/senalradio/articulo-noticia/galeriaimagen/gualajo.jpg?h=e414c3af&itok=YNZ1VW9-",
-        "photo": "https://www.eltiempo.com/files/image_640_428/files/crop/uploads/2018/05/25/5b08ab38c91eb.r_1527466171569.0-0-3000-1503.jpeg",
-        "description": "Por su destreza y maestría en la interpretación de la Marimba de Chonta, a José Antonio Torres Solís se le conocía como el “Maestro Gualajo” o el “Pianista de la Selva”. La estrecha relación con este instrumento inició desde los 15 años, cuando construyo y diseñó su primera marimba.",
-        "template": {
-            "artistType": "musician",
-            "id": "2",
-            "name": "Gualajo",
-            "subtitle": "El piano de la selva",
-            "verified_status": 2,
-            "profile_pic": "https://radionacional-v3.s3.amazonaws.com/s3fs-public/styles/portadas_relaciona_4_3/public/senalradio/articulo-noticia/galeriaimagen/gualajo.jpg?h=e414c3af&itok=YNZ1VW9-",
-            "photo": "https://www.eltiempo.com/files/image_640_428/files/crop/uploads/2018/05/25/5b08ab38c91eb.r_1527466171569.0-0-3000-1503.jpeg",
-            "description": "Por su destreza y maestría en la interpretación de la Marimba de Chonta, a José Antonio Torres Solís se le conocía como el “Maestro Gualajo” o el “Pianista de la Selva”. La estrecha relación con este instrumento inició desde los 15 años, cuando construyo y diseñó su primera marimba."
-        }
-    },
-    {
-        "artistType": "musician",
-        "id": "3",
-        "name": "Bluefinch & The Wanderlust",
-        "subtitle": "Just Rockers!",
-        "verified_status": 0,
-        "profile_pic": "http://npcarlos.co/artistsHive_mocks/profile_bf.jpg",
-        "photo": "http://npcarlos.co/artistsHive_mocks/cover_bf.jpg",
-        "description": "Bluefinch & The Wanderlust es una banda de Rock Alternativo bogotana formada por Osvaldo Oliver (Bajo y Coros), Julian Londoño, (Guitarra Líder), Juan Pinzón (Batería y Coros) y Sergio de Helena (Voz y Guitarra). Aunque el rock alternativo se distingue como la influencia más destacada, no se dejan encasillar en un sólo género, seducidos por el blues, el rock británico, las nuevas propuestas locales y el deseo constante de explorar sus límites la banda se compromete con lo heterogéneo, su sonido siempre contundente más nunca unívoco refleja la riqueza del contexto bogotano en el que viven sus músicos.",
-        "template": {
-            "artistType": "musician",
-            "id": "3",
-            "name": "Bluefinch & The Wanderlust",
-            "subtitle": "Just Rockers!",
-            "verified_status": 0,
-            "profile_pic": "http://npcarlos.co/artistsHive_mocks/profile_bf.jpg",
-            "photo": "http://npcarlos.co/artistsHive_mocks/cover_bf.jpg",
-            "description": "Bluefinch & The Wanderlust es una banda de Rock Alternativo bogotana formada por Osvaldo Oliver (Bajo y Coros), Julian Londoño, (Guitarra Líder), Juan Pinzón (Batería y Coros) y Sergio de Helena (Voz y Guitarra). Aunque el rock alternativo se distingue como la influencia más destacada, no se dejan encasillar en un sólo género, seducidos por el blues, el rock británico, las nuevas propuestas locales y el deseo constante de explorar sus límites la banda se compromete con lo heterogéneo, su sonido siempre contundente más nunca unívoco refleja la riqueza del contexto bogotano en el que viven sus músicos."
-        }
-    },
-    {
-        "artistType": "musician",
-        "id": "4",
-        "name": "Espiral 7",
-        "subtitle": "Música folclórica del caribe",
-        "verified_status": 1,
-        "profile_pic": "http://npcarlos.co/artistsHive_mocks/profile_e7.jpg",
-        "photo": "http://npcarlos.co/artistsHive_mocks/cover_e7.jpg",
-        "description": "Espiral7 representa la desembocadura, el lugar donde el afluente se encuentra con el mar, combinando ritmos, sonidos y juegos de palabras.",
-        "template": {
-            "artistType": "musician",
-            "id": "4",
-            "name": "Espiral 7",
-            "subtitle": "Música folclórica del caribe",
-            "verified_status": 1,
-            "profile_pic": "http://npcarlos.co/artistsHive_mocks/profile_e7.jpg",
-            "photo": "http://npcarlos.co/artistsHive_mocks/cover_e7.jpg",
-            "description": "Espiral7 representa la desembocadura, el lugar donde el afluente se encuentra con el mar, combinando ritmos, sonidos y juegos de palabras."
-        }
-    },
-    {
-        "artistType": "musician",
-        "id": "6",
-        "name": "Monsieur Periné",
-        "subtitle": "Jazz a la colombiana",
-        "verified_status": 0,
-        "profile_pic": "http://npcarlos.co/artistsHive_mocks/profile_mp.jpg",
-        "photo": "http://npcarlos.co/artistsHive_mocks/cover_mp.jpg",
-        "description": "Volverte A Ver: https://SML.lnk.to/VolverteaVerPreSave",
-        "template": {
-            "artistType": "musician",
-            "id": "6",
-            "name": "Monsieur Periné",
-            "subtitle": "Jazz a la colombiana",
-            "verified_status": 0,
-            "profile_pic": "http://npcarlos.co/artistsHive_mocks/profile_mp.jpg",
-            "photo": "http://npcarlos.co/artistsHive_mocks/cover_mp.jpg",
-            "description": "Volverte A Ver: https://SML.lnk.to/VolverteaVerPreSave"
-        }
-    },
-    {
-        "artistType": "musician",
-        "id": "7",
-        "name": "La Pacifican Power",
-        "subtitle": "Música folclórica del caribe",
-        "verified_status": 1,
-        "profile_pic": "http://npcarlos.co/artistsHive_mocks/profile_pp.jpg",
-        "photo": "http://npcarlos.co/artistsHive_mocks/cover_pp.jpg",
-        "description": "La Pacifican Power es un colectivo multidisciplinario donde la música, la gráfica, la fotografía,",
-        "template": {
-            "artistType": "musician",
-            "id": "7",
-            "name": "La Pacifican Power",
-            "subtitle": "Música folclórica del caribe",
-            "verified_status": 1,
-            "profile_pic": "http://npcarlos.co/artistsHive_mocks/profile_pp.jpg",
-            "photo": "http://npcarlos.co/artistsHive_mocks/cover_pp.jpg",
-            "description": "La Pacifican Power es un colectivo multidisciplinario donde la música, la gráfica, la fotografía,"
-        }
-    },
-    {
-        "artistType": "musician",
-        "id": "8",
-        "name": "Los Rolling Ruanas",
-        "subtitle": "El piano de la selva",
-        "verified_status": 2,
-        "profile_pic": "http://npcarlos.co/artistsHive_mocks/profile_rr.jpg",
-        "photo": "http://npcarlos.co/artistsHive_mocks/cover_rr.jpg",
-        "description": "\"Nueva Tierra\" disponible en todas las plataformas. 🎼🎤⚡ https://links.altafonte.com/gwpee2x",
-        "template": {
-            "artistType": "musician",
-            "id": "8",
-            "name": "Los Rolling Ruanas",
-            "subtitle": "El piano de la selva",
-            "verified_status": 2,
-            "profile_pic": "http://npcarlos.co/artistsHive_mocks/profile_rr.jpg",
-            "photo": "http://npcarlos.co/artistsHive_mocks/cover_rr.jpg",
-            "description": "\"Nueva Tierra\" disponible en todas las plataformas. 🎼🎤⚡ https://links.altafonte.com/gwpee2x"
-        }
-    },
-    {
-        "artistType": "musician",
-        "id": "8",
-        "name": "Puerto Candelaria",
-        "subtitle": "Just Rockers!",
-        "verified_status": 0,
-        "profile_pic": "http://npcarlos.co/artistsHive_mocks/profile_pc.jpg",
-        "photo": "http://npcarlos.co/artistsHive_mocks/cover_pc.jpg",
-        "description": "Atrevida, controversial e innovadora agrupación colombiana. Escucha su más reciente lanzamiento: h",
-        "template": {
-            "artistType": "musician",
-            "id": "8",
-            "name": "Puerto Candelaria",
-            "subtitle": "Just Rockers!",
-            "verified_status": 0,
-            "profile_pic": "http://npcarlos.co/artistsHive_mocks/profile_pc.jpg",
-            "photo": "http://npcarlos.co/artistsHive_mocks/cover_pc.jpg",
-            "description": "Atrevida, controversial e innovadora agrupación colombiana. Escucha su más reciente lanzamiento: h"
-        }
-    },
-    {
-        "artistType": "musician",
-        "id": "9",
-        "name": "Lunalé",
-        "subtitle": "Música folclórica del caribe",
-        "verified_status": 1,
-        "profile_pic": "http://npcarlos.co/artistsHive_mocks/profile_l.jpg",
-        "photo": "http://npcarlos.co/artistsHive_mocks/cover_ll.jpg",
-        "description": "Cantante, compositora y artista audiovisual colombiana 🇨🇴 🔥Hoy nada me daña soy de fuego🔥",
-        "template": {
-            "artistType": "musician",
-            "id": "9",
-            "name": "Lunalé",
-            "subtitle": "Música folclórica del caribe",
-            "verified_status": 1,
-            "profile_pic": "http://npcarlos.co/artistsHive_mocks/profile_l.jpg",
-            "photo": "http://npcarlos.co/artistsHive_mocks/cover_ll.jpg",
-            "description": "Cantante, compositora y artista audiovisual colombiana 🇨🇴 🔥Hoy nada me daña soy de fuego🔥"
-        }
-    },
-    {
-        "artistType": "musician",
-        "id": "10",
-        "name": "Ministerio del beat",
-        "subtitle": "El piano de la selva",
-        "verified_status": 2,
-        "profile_pic": "http://npcarlos.co/artistsHive_mocks/profile_mb.jpg",
-        "photo": "http://npcarlos.co/artistsHive_mocks/cover_mb.jpg",
-        "description": "Mirá nuestra live session 🤯🤯🤯",
-        "template": {
-            "artistType": "musician",
-            "id": "10",
-            "name": "Ministerio del beat",
-            "subtitle": "El piano de la selva",
-            "verified_status": 2,
-            "profile_pic": "http://npcarlos.co/artistsHive_mocks/profile_mb.jpg",
-            "photo": "http://npcarlos.co/artistsHive_mocks/cover_mb.jpg",
-            "description": "Mirá nuestra live session 🤯🤯🤯"
-        }
-    },
-    {
-        "artistType": "musician",
-        "id": "11",
-        "name": "La mojarra eléctrica",
-        "subtitle": "Just Rockers!",
-        "verified_status": 0,
-        "profile_pic": "http://npcarlos.co/artistsHive_mocks/profile_me.jpg",
-        "photo": "http://npcarlos.co/artistsHive_mocks/cover_me.jpg",
-        "description": "La Mojarra Eléctrica es la banda mas representativa del nuevo sonido moderno Afro- Colombiano, pioneros en este nuevo genero que se empezó a gestar en el año 2002, han liderado la escena de esta música underground.",
-        "template": {
-            "artistType": "musician",
-            "id": "11",
-            "name": "La mojarra eléctrica",
-            "subtitle": "Just Rockers!",
-            "verified_status": 0,
-            "profile_pic": "http://npcarlos.co/artistsHive_mocks/profile_me.jpg",
-            "photo": "http://npcarlos.co/artistsHive_mocks/cover_me.jpg",
-            "description": "La Mojarra Eléctrica es la banda mas representativa del nuevo sonido moderno Afro- Colombiano, pioneros en este nuevo genero que se empezó a gestar en el año 2002, han liderado la escena de esta música underground."
-        }
-    },
-    {
-        "artistType": "musician",
-        "id": "12",
-        "name": "Pacífico Libre",
-        "subtitle": "Música del pacífico",
-        "verified_status": 1,
-        "profile_pic": "http://npcarlos.co/artistsHive_mocks/profile_pl.jpg",
-        "photo": "http://npcarlos.co/artistsHive_mocks/cover_pl.jpg",
-        "description": "La agrupación Pacifico libre tiene un profundo compromiso con la difusión cultural y se ha enfocad",
-        "template": {
-            "artistType": "musician",
-            "id": "12",
-            "name": "Pacífico Libre",
-            "subtitle": "Música del pacífico",
-            "verified_status": 1,
-            "profile_pic": "http://npcarlos.co/artistsHive_mocks/profile_pl.jpg",
-            "photo": "http://npcarlos.co/artistsHive_mocks/cover_pl.jpg",
-            "description": "La agrupación Pacifico libre tiene un profundo compromiso con la difusión cultural y se ha enfocad"
-        }
-    },
-    {
-        "artistType": "musician",
-        "id": "13",
-        "name": "Gregorio Uribe",
-        "subtitle": "Cantautor y acordenista",
-        "verified_status": 2,
-        "profile_pic": "http://npcarlos.co/artistsHive_mocks/profile_gu.jpg",
-        "photo": "http://npcarlos.co/artistsHive_mocks/cover_gu.jpg",
-        "description": "Cantautor y acordeonista que ha llevado sus canciones a Carnegie Hall y a los Montes de María.",
-        "template": {
-            "artistType": "musician",
-            "id": "13",
-            "name": "Gregorio Uribe",
-            "subtitle": "Cantautor y acordenista",
-            "verified_status": 2,
-            "profile_pic": "http://npcarlos.co/artistsHive_mocks/profile_gu.jpg",
-            "photo": "http://npcarlos.co/artistsHive_mocks/cover_gu.jpg",
-            "description": "Cantautor y acordeonista que ha llevado sus canciones a Carnegie Hall y a los Montes de María."
-        }
-    },
-    {
-        "artistType": "musician",
-        "id": "14",
-        "name": "Sonoras Mil",
-        "subtitle": "Just Rockers!",
-        "verified_status": 0,
-        "profile_pic": "http://npcarlos.co/artistsHive_mocks/profile_sm.jpg",
-        "photo": "http://npcarlos.co/artistsHive_mocks/cover_sm.jpg",
-        "description": "Sonoras mil is the project of Colombian musician Felipe Gómez Ossa. The music is a fresh mix of Dub",
-        "template": {
-            "artistType": "musician",
-            "id": "14",
-            "name": "Sonoras Mil",
-            "subtitle": "Just Rockers!",
-            "verified_status": 0,
-            "profile_pic": "http://npcarlos.co/artistsHive_mocks/profile_sm.jpg",
-            "photo": "http://npcarlos.co/artistsHive_mocks/cover_sm.jpg",
-            "description": "Sonoras mil is the project of Colombian musician Felipe Gómez Ossa. The music is a fresh mix of Dub"
-        }
-    },
-    {
-        "artistType": "musician",
-        "id": "15",
-        "name": "La 33",
-        "subtitle": "Salsa bogotana",
-        "verified_status": 1,
-        "profile_pic": "http://npcarlos.co/artistsHive_mocks/profile_33.jpg",
-        "photo": "http://npcarlos.co/artistsHive_mocks/cover_33.jpg",
-        "description": "Salsa, boogaloo, Funk, jazz and folk. https://linkr.bio/la-33",
-        "template": {
-            "artistType": "musician",
-            "id": "15",
-            "name": "La 33",
-            "subtitle": "Salsa bogotana",
-            "verified_status": 1,
-            "profile_pic": "http://npcarlos.co/artistsHive_mocks/profile_33.jpg",
-            "photo": "http://npcarlos.co/artistsHive_mocks/cover_33.jpg",
-            "description": "Salsa, boogaloo, Funk, jazz and folk. https://linkr.bio/la-33"
-        }
-    },
-    {
-        "artistType": "musician",
-        "id": "16",
-        "name": "Los Cañaverales del Bohío",
-        "subtitle": "El piano de la selva",
-        "verified_status": 2,
-        "profile_pic": "http://npcarlos.co/artistsHive_mocks/profile_cb.jpg",
-        "photo": "http://npcarlos.co/artistsHive_mocks/cover_cb.jpg",
-        "description": "Por su destreza y maestría en la interpretación de la Marimba de Chonta, a José Antonio Torres Solís se le conocía como el “Maestro Gualajo” o el “Pianista de la Selva”. La estrecha relación con este instrumento inició desde los 15 años, cuando construyo y diseñó su primera marimba.",
-        "template": {
-            "artistType": "musician",
-            "id": "16",
-            "name": "Los Cañaverales del Bohío",
-            "subtitle": "El piano de la selva",
-            "verified_status": 2,
-            "profile_pic": "http://npcarlos.co/artistsHive_mocks/profile_cb.jpg",
-            "photo": "http://npcarlos.co/artistsHive_mocks/cover_cb.jpg",
-            "description": "Por su destreza y maestría en la interpretación de la Marimba de Chonta, a José Antonio Torres Solís se le conocía como el “Maestro Gualajo” o el “Pianista de la Selva”. La estrecha relación con este instrumento inició desde los 15 años, cuando construyo y diseñó su primera marimba."
-        }
-    },
-    {
-        "artistType": "musician",
-        "id": "17",
-        "name": "LauraMare",
-        "subtitle": "Cantautora",
-        "verified_status": 0,
-        "profile_pic": "http://npcarlos.co/artistsHive_mocks/profile_lm.jpg",
-        "photo": "http://npcarlos.co/artistsHive_mocks/cover_lm.jpg",
-        "description": "Mi falda tiene espinas, es el primer sencillo de LauraMare cantautora, comunicadora y productora cultural de Marediagua Producciones en Medellín, con una trayectoria de más de 20 años como intérprete - Todo es política",
-        "template": {
-            "artistType": "musician",
-            "id": "17",
-            "name": "LauraMare",
-            "subtitle": "Cantautora",
-            "verified_status": 0,
-            "profile_pic": "http://npcarlos.co/artistsHive_mocks/profile_lm.jpg",
-            "photo": "http://npcarlos.co/artistsHive_mocks/cover_lm.jpg",
-            "description": "Mi falda tiene espinas, es el primer sencillo de LauraMare cantautora, comunicadora y productora cultural de Marediagua Producciones en Medellín, con una trayectoria de más de 20 años como intérprete - Todo es política"
-        }
+  {
+    "artistType": "musician",
+    "id": "1",
+    "name": "Petrona Martínez",
+    "subtitle": "Música folclórica del caribe",
+    "verified_status": 1,
+    "profile_pic": "https://i0.wp.com/www.expresionnaranja.com/wp-content/uploads/2019/01/pertona.png?w=788",
+    "photo": "https://cr00.epimg.net/radio/imagenes/2021/11/19/cartagena/1637324086_096489_1637324189_noticia_normal.jpg",
+    "description": "Petrona Martínez es una cantante afrocolombiana de música tradicional de la Costa Caribe. Su larga y prolífica carrera profesional le han valido el título de “la reina del bullerengue”",
+    "template": {
+      "artistType": "musician",
+      "id": "1",
+      "name": "Petrona Martínez",
+      "subtitle": "Música folclórica del caribe",
+      "verified_status": 1,
+      "profile_pic": "https://i0.wp.com/www.expresionnaranja.com/wp-content/uploads/2019/01/pertona.png?w=788",
+      "photo": "https://cr00.epimg.net/radio/imagenes/2021/11/19/cartagena/1637324086_096489_1637324189_noticia_normal.jpg",
+      "description": "Petrona Martínez es una cantante afrocolombiana de música tradicional de la Costa Caribe. Su larga y prolífica carrera profesional le han valido el título de “la reina del bullerengue”"
     }
+  },
+  {
+    "artistType": "musician",
+    "id": "2",
+    "name": "Gualajo",
+    "subtitle": "El piano de la selva",
+    "verified_status": 2,
+    "profile_pic": "https://radionacional-v3.s3.amazonaws.com/s3fs-public/styles/portadas_relaciona_4_3/public/senalradio/articulo-noticia/galeriaimagen/gualajo.jpg?h=e414c3af&itok=YNZ1VW9-",
+    "photo": "https://www.eltiempo.com/files/image_640_428/files/crop/uploads/2018/05/25/5b08ab38c91eb.r_1527466171569.0-0-3000-1503.jpeg",
+    "description": "Por su destreza y maestría en la interpretación de la Marimba de Chonta, a José Antonio Torres Solís se le conocía como el “Maestro Gualajo” o el “Pianista de la Selva”. La estrecha relación con este instrumento inició desde los 15 años, cuando construyo y diseñó su primera marimba.",
+    "template": {
+      "artistType": "musician",
+      "id": "2",
+      "name": "Gualajo",
+      "subtitle": "El piano de la selva",
+      "verified_status": 2,
+      "profile_pic": "https://radionacional-v3.s3.amazonaws.com/s3fs-public/styles/portadas_relaciona_4_3/public/senalradio/articulo-noticia/galeriaimagen/gualajo.jpg?h=e414c3af&itok=YNZ1VW9-",
+      "photo": "https://www.eltiempo.com/files/image_640_428/files/crop/uploads/2018/05/25/5b08ab38c91eb.r_1527466171569.0-0-3000-1503.jpeg",
+      "description": "Por su destreza y maestría en la interpretación de la Marimba de Chonta, a José Antonio Torres Solís se le conocía como el “Maestro Gualajo” o el “Pianista de la Selva”. La estrecha relación con este instrumento inició desde los 15 años, cuando construyo y diseñó su primera marimba."
+    }
+  },
+  {
+    "artistType": "musician",
+    "id": "3",
+    "name": "Bluefinch & The Wanderlust",
+    "subtitle": "Just Rockers!",
+    "verified_status": 0,
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_bf.jpg",
+    "photo": "https://npcarlos.co/artistsHive_mocks/cover_bf.jpg",
+    "description": "Bluefinch & The Wanderlust es una banda de Rock Alternativo bogotana formada por Osvaldo Oliver (Bajo y Coros), Julian Londoño, (Guitarra Líder), Juan Pinzón (Batería y Coros) y Sergio de Helena (Voz y Guitarra). Aunque el rock alternativo se distingue como la influencia más destacada, no se dejan encasillar en un sólo género, seducidos por el blues, el rock británico, las nuevas propuestas locales y el deseo constante de explorar sus límites la banda se compromete con lo heterogéneo, su sonido siempre contundente más nunca unívoco refleja la riqueza del contexto bogotano en el que viven sus músicos.",
+    "template": {
+      "artistType": "musician",
+      "id": "3",
+      "name": "Bluefinch & The Wanderlust",
+      "subtitle": "Just Rockers!",
+      "verified_status": 0,
+      "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_bf.jpg",
+      "photo": "https://npcarlos.co/artistsHive_mocks/cover_bf.jpg",
+      "description": "Bluefinch & The Wanderlust es una banda de Rock Alternativo bogotana formada por Osvaldo Oliver (Bajo y Coros), Julian Londoño, (Guitarra Líder), Juan Pinzón (Batería y Coros) y Sergio de Helena (Voz y Guitarra). Aunque el rock alternativo se distingue como la influencia más destacada, no se dejan encasillar en un sólo género, seducidos por el blues, el rock británico, las nuevas propuestas locales y el deseo constante de explorar sus límites la banda se compromete con lo heterogéneo, su sonido siempre contundente más nunca unívoco refleja la riqueza del contexto bogotano en el que viven sus músicos."
+    }
+  },
+  {
+    "artistType": "musician",
+    "id": "4",
+    "name": "Espiral 7",
+    "subtitle": "Música folclórica del caribe",
+    "verified_status": 1,
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_e7.jpg",
+    "photo": "https://npcarlos.co/artistsHive_mocks/cover_e7.jpg",
+    "description": "Espiral7 representa la desembocadura, el lugar donde el afluente se encuentra con el mar, combinando ritmos, sonidos y juegos de palabras.",
+    "template": {
+      "artistType": "musician",
+      "id": "4",
+      "name": "Espiral 7",
+      "subtitle": "Música folclórica del caribe",
+      "verified_status": 1,
+      "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_e7.jpg",
+      "photo": "https://npcarlos.co/artistsHive_mocks/cover_e7.jpg",
+      "description": "Espiral7 representa la desembocadura, el lugar donde el afluente se encuentra con el mar, combinando ritmos, sonidos y juegos de palabras."
+    }
+  },
+  {
+    "artistType": "musician",
+    "id": "6",
+    "name": "Monsieur Periné",
+    "subtitle": "Jazz a la colombiana",
+    "verified_status": 0,
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_mp.jpg",
+    "photo": "https://npcarlos.co/artistsHive_mocks/cover_mp.jpg",
+    "description": "Volverte A Ver: https://SML.lnk.to/VolverteaVerPreSave",
+    "template": {
+      "artistType": "musician",
+      "id": "6",
+      "name": "Monsieur Periné",
+      "subtitle": "Jazz a la colombiana",
+      "verified_status": 0,
+      "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_mp.jpg",
+      "photo": "https://npcarlos.co/artistsHive_mocks/cover_mp.jpg",
+      "description": "Volverte A Ver: https://SML.lnk.to/VolverteaVerPreSave"
+    }
+  },
+  {
+    "artistType": "musician",
+    "id": "7",
+    "name": "La Pacifican Power",
+    "subtitle": "Música folclórica del caribe",
+    "verified_status": 1,
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_pp.jpg",
+    "photo": "https://npcarlos.co/artistsHive_mocks/cover_pp.jpg",
+    "description": "La Pacifican Power es un colectivo multidisciplinario donde la música, la gráfica, la fotografía,",
+    "template": {
+      "artistType": "musician",
+      "id": "7",
+      "name": "La Pacifican Power",
+      "subtitle": "Música folclórica del caribe",
+      "verified_status": 1,
+      "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_pp.jpg",
+      "photo": "https://npcarlos.co/artistsHive_mocks/cover_pp.jpg",
+      "description": "La Pacifican Power es un colectivo multidisciplinario donde la música, la gráfica, la fotografía,"
+    }
+  },
+  {
+    "artistType": "musician",
+    "id": "8",
+    "name": "Los Rolling Ruanas",
+    "subtitle": "El piano de la selva",
+    "verified_status": 2,
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_rr.jpg",
+    "photo": "https://npcarlos.co/artistsHive_mocks/cover_rr.jpg",
+    "description": "\"Nueva Tierra\" disponible en todas las plataformas. 🎼🎤⚡ https://links.altafonte.com/gwpee2x",
+    "template": {
+      "artistType": "musician",
+      "id": "8",
+      "name": "Los Rolling Ruanas",
+      "subtitle": "El piano de la selva",
+      "verified_status": 2,
+      "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_rr.jpg",
+      "photo": "https://npcarlos.co/artistsHive_mocks/cover_rr.jpg",
+      "description": "\"Nueva Tierra\" disponible en todas las plataformas. 🎼🎤⚡ https://links.altafonte.com/gwpee2x"
+    }
+  },
+  {
+    "artistType": "musician",
+    "id": "8",
+    "name": "Puerto Candelaria",
+    "subtitle": "Just Rockers!",
+    "verified_status": 0,
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_pc.jpg",
+    "photo": "https://npcarlos.co/artistsHive_mocks/cover_pc.jpg",
+    "description": "Atrevida, controversial e innovadora agrupación colombiana. Escucha su más reciente lanzamiento: h",
+    "template": {
+      "artistType": "musician",
+      "id": "8",
+      "name": "Puerto Candelaria",
+      "subtitle": "Just Rockers!",
+      "verified_status": 0,
+      "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_pc.jpg",
+      "photo": "https://npcarlos.co/artistsHive_mocks/cover_pc.jpg",
+      "description": "Atrevida, controversial e innovadora agrupación colombiana. Escucha su más reciente lanzamiento: h"
+    }
+  },
+  {
+    "artistType": "musician",
+    "id": "9",
+    "name": "Lunalé",
+    "subtitle": "Música folclórica del caribe",
+    "verified_status": 1,
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_l.jpg",
+    "photo": "https://npcarlos.co/artistsHive_mocks/cover_ll.jpg",
+    "description": "Cantante, compositora y artista audiovisual colombiana 🇨🇴 🔥Hoy nada me daña soy de fuego🔥",
+    "template": {
+      "artistType": "musician",
+      "id": "9",
+      "name": "Lunalé",
+      "subtitle": "Música folclórica del caribe",
+      "verified_status": 1,
+      "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_l.jpg",
+      "photo": "https://npcarlos.co/artistsHive_mocks/cover_ll.jpg",
+      "description": "Cantante, compositora y artista audiovisual colombiana 🇨🇴 🔥Hoy nada me daña soy de fuego🔥"
+    }
+  },
+  {
+    "artistType": "musician",
+    "id": "10",
+    "name": "Ministerio del beat",
+    "subtitle": "El piano de la selva",
+    "verified_status": 2,
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_mb.jpg",
+    "photo": "https://npcarlos.co/artistsHive_mocks/cover_mb.jpg",
+    "description": "Mirá nuestra live session 🤯🤯🤯",
+    "template": {
+      "artistType": "musician",
+      "id": "10",
+      "name": "Ministerio del beat",
+      "subtitle": "El piano de la selva",
+      "verified_status": 2,
+      "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_mb.jpg",
+      "photo": "https://npcarlos.co/artistsHive_mocks/cover_mb.jpg",
+      "description": "Mirá nuestra live session 🤯🤯🤯"
+    }
+  },
+  {
+    "artistType": "musician",
+    "id": "11",
+    "name": "La mojarra eléctrica",
+    "subtitle": "Just Rockers!",
+    "verified_status": 0,
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_me.jpg",
+    "photo": "https://npcarlos.co/artistsHive_mocks/cover_me.jpg",
+    "description": "La Mojarra Eléctrica es la banda mas representativa del nuevo sonido moderno Afro- Colombiano, pioneros en este nuevo genero que se empezó a gestar en el año 2002, han liderado la escena de esta música underground.",
+    "template": {
+      "artistType": "musician",
+      "id": "11",
+      "name": "La mojarra eléctrica",
+      "subtitle": "Just Rockers!",
+      "verified_status": 0,
+      "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_me.jpg",
+      "photo": "https://npcarlos.co/artistsHive_mocks/cover_me.jpg",
+      "description": "La Mojarra Eléctrica es la banda mas representativa del nuevo sonido moderno Afro- Colombiano, pioneros en este nuevo genero que se empezó a gestar en el año 2002, han liderado la escena de esta música underground."
+    }
+  },
+  {
+    "artistType": "musician",
+    "id": "12",
+    "name": "Pacífico Libre",
+    "subtitle": "Música del pacífico",
+    "verified_status": 1,
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_pl.jpg",
+    "photo": "https://npcarlos.co/artistsHive_mocks/cover_pl.jpg",
+    "description": "La agrupación Pacifico libre tiene un profundo compromiso con la difusión cultural y se ha enfocad",
+    "template": {
+      "artistType": "musician",
+      "id": "12",
+      "name": "Pacífico Libre",
+      "subtitle": "Música del pacífico",
+      "verified_status": 1,
+      "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_pl.jpg",
+      "photo": "https://npcarlos.co/artistsHive_mocks/cover_pl.jpg",
+      "description": "La agrupación Pacifico libre tiene un profundo compromiso con la difusión cultural y se ha enfocad"
+    }
+  },
+  {
+    "artistType": "musician",
+    "id": "13",
+    "name": "Gregorio Uribe",
+    "subtitle": "Cantautor y acordenista",
+    "verified_status": 2,
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_gu.jpg",
+    "photo": "https://npcarlos.co/artistsHive_mocks/cover_gu.jpg",
+    "description": "Cantautor y acordeonista que ha llevado sus canciones a Carnegie Hall y a los Montes de María.",
+    "template": {
+      "artistType": "musician",
+      "id": "13",
+      "name": "Gregorio Uribe",
+      "subtitle": "Cantautor y acordenista",
+      "verified_status": 2,
+      "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_gu.jpg",
+      "photo": "https://npcarlos.co/artistsHive_mocks/cover_gu.jpg",
+      "description": "Cantautor y acordeonista que ha llevado sus canciones a Carnegie Hall y a los Montes de María."
+    }
+  },
+  {
+    "artistType": "musician",
+    "id": "14",
+    "name": "Sonoras Mil",
+    "subtitle": "Just Rockers!",
+    "verified_status": 0,
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_sm.jpg",
+    "photo": "https://npcarlos.co/artistsHive_mocks/cover_sm.jpg",
+    "description": "Sonoras mil is the project of Colombian musician Felipe Gómez Ossa. The music is a fresh mix of Dub",
+    "template": {
+      "artistType": "musician",
+      "id": "14",
+      "name": "Sonoras Mil",
+      "subtitle": "Just Rockers!",
+      "verified_status": 0,
+      "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_sm.jpg",
+      "photo": "https://npcarlos.co/artistsHive_mocks/cover_sm.jpg",
+      "description": "Sonoras mil is the project of Colombian musician Felipe Gómez Ossa. The music is a fresh mix of Dub"
+    }
+  },
+  {
+    "artistType": "musician",
+    "id": "15",
+    "name": "La 33",
+    "subtitle": "Salsa bogotana",
+    "verified_status": 1,
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_33.jpg",
+    "photo": "https://npcarlos.co/artistsHive_mocks/cover_33.jpg",
+    "description": "Salsa, boogaloo, Funk, jazz and folk. https://linkr.bio/la-33",
+    "template": {
+      "artistType": "musician",
+      "id": "15",
+      "name": "La 33",
+      "subtitle": "Salsa bogotana",
+      "verified_status": 1,
+      "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_33.jpg",
+      "photo": "https://npcarlos.co/artistsHive_mocks/cover_33.jpg",
+      "description": "Salsa, boogaloo, Funk, jazz and folk. https://linkr.bio/la-33"
+    }
+  },
+  {
+    "artistType": "musician",
+    "id": "16",
+    "name": "Los Cañaverales del Bohío",
+    "subtitle": "El piano de la selva",
+    "verified_status": 2,
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_cb.jpg",
+    "photo": "https://npcarlos.co/artistsHive_mocks/cover_cb.jpg",
+    "description": "Por su destreza y maestría en la interpretación de la Marimba de Chonta, a José Antonio Torres Solís se le conocía como el “Maestro Gualajo” o el “Pianista de la Selva”. La estrecha relación con este instrumento inició desde los 15 años, cuando construyo y diseñó su primera marimba.",
+    "template": {
+      "artistType": "musician",
+      "id": "16",
+      "name": "Los Cañaverales del Bohío",
+      "subtitle": "El piano de la selva",
+      "verified_status": 2,
+      "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_cb.jpg",
+      "photo": "https://npcarlos.co/artistsHive_mocks/cover_cb.jpg",
+      "description": "Por su destreza y maestría en la interpretación de la Marimba de Chonta, a José Antonio Torres Solís se le conocía como el “Maestro Gualajo” o el “Pianista de la Selva”. La estrecha relación con este instrumento inició desde los 15 años, cuando construyo y diseñó su primera marimba."
+    }
+  },
+  {
+    "artistType": "musician",
+    "id": "17",
+    "name": "LauraMare",
+    "subtitle": "Cantautora",
+    "verified_status": 0,
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_lm.jpg",
+    "photo": "https://npcarlos.co/artistsHive_mocks/cover_lm.jpg",
+    "description": "Mi falda tiene espinas, es el primer sencillo de LauraMare cantautora, comunicadora y productora cultural de Marediagua Producciones en Medellín, con una trayectoria de más de 20 años como intérprete - Todo es política",
+    "template": {
+      "artistType": "musician",
+      "id": "17",
+      "name": "LauraMare",
+      "subtitle": "Cantautora",
+      "verified_status": 0,
+      "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_lm.jpg",
+      "photo": "https://npcarlos.co/artistsHive_mocks/cover_lm.jpg",
+      "description": "Mi falda tiene espinas, es el primer sencillo de LauraMare cantautora, comunicadora y productora cultural de Marediagua Producciones en Medellín, con una trayectoria de más de 20 años como intérprete - Todo es política"
+    }
+  }
 ]
