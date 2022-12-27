@@ -64,8 +64,15 @@ function fillRelationships(element) {
   //     timetable__main_artist_time: evento.timetable__main_artist_time,
   //     promoter: evento.promoter,
   //     national_code: evento.national_code,
+  //     photo:
+  //       evento.main_artist?.photo ||
+  //       evento.guest_artist?.photo ||
+  //       evento.main_artist?.profile_pic ||
+  //       evento.guest_artist?.profile_pic,
+  //     verified_status: Math.floor(Math.random() * 3),
   //   };
   // });
+
   return eventos;
 }
 
