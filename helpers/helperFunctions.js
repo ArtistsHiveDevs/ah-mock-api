@@ -201,4 +201,32 @@ module.exports = {
 
     return fullData;
   },
+
+  sortByDate(eventsArray, nameDate, nameHour) {
+    return eventsArray.sort((event1, event2) => {
+      const initialDate1 = event1[nameDate].split("-");
+      var hour1 = event1[nameHour];
+      var initialDatetime1 = new Date(
+        initialDate1[0],
+        initialDate1[1],
+        initialDate1[2],
+        `${hour1}`.substring(0, 2),
+        `${hour1}`.substring(2, 4)
+      );
+
+      const initialDate2 = event2[nameDate].split("-");
+      var hour2 = event2[nameHour];
+      var initialDatetime2 = new Date(
+        initialDate2[0],
+        initialDate2[1],
+        initialDate2[2],
+        `${hour2}`.substring(0, 2),
+        `${hour2}`.substring(2, 4)
+      );
+
+      const difference =
+        initialDatetime1.getTime() - initialDatetime2.getTime();
+      return difference;
+    });
+  },
 };

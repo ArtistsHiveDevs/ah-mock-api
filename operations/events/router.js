@@ -78,7 +78,13 @@ function fillRelationships(element) {
 
 module.exports = [
   eventsRouter.get(RoutesConstants.eventList, (req, res) => {
-    return res.json(fillRelationships(filterResultsByQuery(req, eventsList)));
+    return res.json(
+      helpers.sortByDate(
+        fillRelationships(filterResultsByQuery(req, eventsList)),
+        "timetable__initial_date",
+        "timetable__openning_doors"
+      )
+    );
   }),
 
   eventsRouter.get(RoutesConstants.findEventById, (req, res) => {
@@ -86,7 +92,11 @@ module.exports = [
     const searchEvent = helpers.searchResult(eventsList, eventId, "id");
 
     return res.json(
-      fillRelationships(filterResultsByQuery(req, searchEvent)) || {
+      helpers.sortByDate(
+        fillRelationships(filterResultsByQuery(req, searchEvent)),
+        "timetable__initial_date",
+        "timetable__openning_doors"
+      ) || {
         message: helpers.noResultDefaultLabel,
       }
     );

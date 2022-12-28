@@ -32,12 +32,23 @@ function fillResultWithFields(fields, result) {
     },
   ];
 
-  return fillRelationships(
+  const filled = fillRelationships(
     result,
     relationships.filter((relationship) =>
       fields.find((fieldName) => fieldName === relationship.field)
     )
   );
+
+  filled.forEach((place) => {
+    const sortedEvents = helpers.sortByDate(
+      place["events"] || [],
+      "timetable__initial_date",
+      "timetable__openning_doors"
+    );
+    place["events"] = sortedEvents;
+  });
+
+  return filled;
 }
 
 function filterResultsByQuery(req, result) {
