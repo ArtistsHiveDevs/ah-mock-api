@@ -81,6 +81,26 @@
   },
   {
     "artistType": "musician",
+    "id": "5",
+    "name": "Juan Pablo Vega",
+    "subtitle": "Música folclórica del caribe",
+    "verified_status": 1,
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_jpv.jpg",
+    "photo": "https://npcarlos.co/artistsHive_mocks/cover_jpv.jpg",
+    "description": "Artista, cantautor y productor, Vega es uno de los nombres más importantes de América Latina y parte de una nueva generación de artistas que están cambiando el paradigma del pop latino.",
+    "template": {
+      "artistType": "musician",
+      "id": "5",
+      "name": "Juan Pablo Vega",
+      "subtitle": "Música folclórica del caribe",
+      "verified_status": 1,
+      "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_jpv.jpg",
+      "photo": "https://npcarlos.co/artistsHive_mocks/cover_jpv.jpg",
+      "description": "Artista, cantautor y productor, Vega es uno de los nombres más importantes de América Latina y parte de una nueva generación de artistas que están cambiando el paradigma del pop latino."
+    }
+  },
+  {
+    "artistType": "musician",
     "id": "6",
     "name": "Monsieur Periné",
     "subtitle": "Jazz a la colombiana",
