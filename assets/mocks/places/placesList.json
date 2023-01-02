@@ -1,6 +1,6 @@
 [
   {
-    "id": 1,
+    "id": "1",
     "Nombre": "Matik Matik",
     "Tipo": "Bar Restaurante",
     "Género": "",
@@ -22,7 +22,7 @@
     "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_mm.png"
   },
   {
-    "id": 2,
+    "id": "2",
     "Nombre": "Teatro Jorge Eliécer Gaitán",
     "Tipo": "Teatro",
     "Género": "",
@@ -36,15 +36,15 @@
     "Teléfono": 6013795750,
     "Carácter": "Público distrital",
     "FB": "https://www.facebook.com/TeatroJEGOficial/",
-    "IG": "https://www.instagram.com/teatrojeg/?hl=es",
-    "Twitter": "https://twitter.com/TeatroJEG?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor",
+    "IG": "https://www.instagram.com/teatrojeg",
+    "Twitter": "https://twitter.com/TeatroJEG",
     "web": "teatrojorgeeliecer.gov.co",
     "Responsable": "",
     "tiktok": "",
     "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_tjeg.jpg"
   },
   {
-    "id": 3,
+    "id": "3",
     "Nombre": "Galería Café Libro 93",
     "Tipo": "",
     "Género": "Salsa",
@@ -66,7 +66,7 @@
     "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_gcl.jpg"
   },
   {
-    "id": 4,
+    "id": "4",
     "Nombre": "Galería Café Libro Palermo",
     "Tipo": "",
     "Género": "Salsa",
@@ -88,7 +88,7 @@
     "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_gcl.jpg"
   },
   {
-    "id": 5,
+    "id": "5",
     "Nombre": "La Pascasia",
     "Tipo": "Bar , galeria de arte",
     "Género": "",
@@ -110,7 +110,7 @@
     "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_lp.png"
   },
   {
-    "id": 6,
+    "id": "6",
     "Nombre": "Sonora Casa Cultural",
     "Tipo": "",
     "Género": "",
@@ -132,7 +132,7 @@
     "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_sccc.jpg"
   },
   {
-    "id": 7,
+    "id": "7",
     "Nombre": "Casa Kilele",
     "Tipo": "fundación sin ánimo de lucro",
     "Género": "",
@@ -154,7 +154,7 @@
     "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_ck.jpg"
   },
   {
-    "id": 8,
+    "id": "8",
     "Nombre": "Disco Jaguar",
     "Tipo": "Club nocturno bar",
     "Género": "",
@@ -176,7 +176,7 @@
     "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_dj.jpg"
   },
   {
-    "id": 9,
+    "id": "9",
     "Nombre": "Cuban Jazz",
     "Tipo": "CERRADO DEFINITIVAMENTE",
     "Género": "Salsa",
@@ -198,7 +198,7 @@
     "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_cj.jpg"
   },
   {
-    "id": 10,
+    "id": "10",
     "Nombre": "PuraPizza",
     "Tipo": "",
     "Género": "Jazz",
@@ -220,7 +220,7 @@
     "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_ppjazz.jpg"
   },
   {
-    "id": 11,
+    "id": "11",
     "Nombre": "Latino Power",
     "Tipo": "",
     "Género": "",
@@ -242,7 +242,7 @@
     "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_latp.jpg"
   },
   {
-    "id": 12,
+    "id": "12",
     "Nombre": "Boogaloop CLUB",
     "Tipo": "iscoteca crossunder de Chapinero. Música en vivo y cultura Dj",
     "Género": "",
@@ -264,7 +264,7 @@
     "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_b.jpg"
   },
   {
-    "id": 13,
+    "id": "13",
     "Nombre": "Café cinema",
     "Tipo": "",
     "Género": "Salsa, Cumbia",
@@ -286,7 +286,7 @@
     "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_cc.jpg"
   },
   {
-    "id": 14,
+    "id": "14",
     "Nombre": "El Goce Pagano",
     "Tipo": "",
     "Género": "Salsa",
@@ -308,7 +308,7 @@
     "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_egp.jpg"
   },
   {
-    "id": 15,
+    "id": "15",
     "Nombre": "Salsa Camará",
     "Tipo": "",
     "Género": "Salsa",
@@ -330,7 +330,7 @@
     "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_sc.jpg"
   },
   {
-    "id": 16,
+    "id": "16",
     "Nombre": "Longo's",
     "Tipo": "",
     "Género": "",
@@ -352,7 +352,7 @@
     "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_sl.jpg"
   },
   {
-    "id": 17,
+    "id": "17",
     "Nombre": "Café Vallejo",
     "Tipo": "",
     "Género": "",
@@ -374,7 +374,7 @@
     "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_cv.png"
   },
   {
-    "id": 18,
+    "id": "18",
     "Nombre": "Revellion Bar",
     "Tipo": "",
     "Género": "",
@@ -396,7 +396,7 @@
     "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_r.jpg"
   },
   {
-    "id": 19,
+    "id": "19",
     "Nombre": "Jackass Rock Bar",
     "Tipo": "",
     "Género": "Rock",
@@ -418,7 +418,7 @@
     "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_j.jpg"
   },
   {
-    "id": 20,
+    "id": "20",
     "Nombre": "El anónimo",
     "Tipo": "centro cultural",
     "Género": "",
@@ -440,7 +440,7 @@
     "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_ea.jpg"
   },
   {
-    "id": 21,
+    "id": "21",
     "Nombre": "Son Havana",
     "Tipo": "",
     "Género": "",
@@ -462,7 +462,7 @@
     "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_sh.jpg"
   },
   {
-    "id": 22,
+    "id": "22",
     "Nombre": "Teatro Charlot",
     "Tipo": "",
     "Género": "",
@@ -484,7 +484,7 @@
     "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_tc.jpg"
   },
   {
-    "id": 23,
+    "id": "23",
     "Nombre": "A seis manos",
     "Tipo": "Espacio cultural",
     "Género": "",
