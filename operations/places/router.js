@@ -52,37 +52,43 @@ function fillResultWithFields(fields, result) {
 }
 
 function filterResultsByQuery(req, result) {
-  if (req.query) {
-    // Consulta por palabra clave
-    if (req.query.q) {
-      result = helpers.findMany(placesList, req.query.q, [
-        "Nombre",
-        "Departamento",
-        "Ciudad",
-        "FB",
-        "IG",
-        "web",
-        "tiktok",
-      ]);
-    }
+  try {
+    if (req.query) {
+      // Consulta por palabra clave
+      if (req.query.q) {
+        result = helpers.findMany(placesList, req.query.q, [
+          "Nombre",
+          "Departamento",
+          "Ciudad",
+          "FB",
+          "IG",
+          "web",
+          "tiktok",
+        ]);
+      }
 
-    // Consulta por cercanía
-    if (req.query.l) {
-      const coords = req.query.l.split(",");
-      const latlong = {
-        latitude: parseFloat(coords[0]),
-        longitude: parseFloat(coords[1]),
-      };
-      result = helpers.findByDistance(result, latlong, "Lat, Long");
-    }
+      // Consulta por cercanía
+      if (req.query.l) {
+        const coords = req.query.l.split(",");
+        const latlong = {
+          latitude: parseFloat(coords[0]),
+          longitude: parseFloat(coords[1]),
+        };
+        result = helpers.findByDistance(result, latlong, "Lat, Long");
+      }
 
-    // Pide algunas relaciones a otros elementos
-    if (req.query.f) {
-      const fields = req.query.f.split(",");
+      // Pide algunas relaciones a otros elementos
+      if (req.query.f) {
+        const fields = req.query.f.split(",");
 
-      fillResultWithFields(fields, result);
+        fillResultWithFields(fields, result);
+      }
     }
+  } catch (error) {
+    console.log(error);
+    result = undefined;
   }
+
   return result;
 }
 
