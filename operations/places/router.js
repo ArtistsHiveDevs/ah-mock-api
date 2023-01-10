@@ -95,18 +95,28 @@ function filterResultsByQuery(req, result) {
 module.exports = [
   router.get(RoutesConstants.eventList, (req, res) => {
     let result = placesList;
+    try {
+      return res.json(filterResultsByQuery(req, result));
+    } catch (error) {
+      console.error(error);
 
-    return res.json(filterResultsByQuery(req, result));
+      return res.status(500).json([]);
+    }
   }),
 
   router.get(RoutesConstants.findEventById, (req, res) => {
     const { eventId: placeId } = req.params;
     const searchPlace = helpers.searchResult(placesList, placeId, "id");
+    try {
+      return res.json(
+        filterResultsByQuery(req, searchPlace) || {
+          message: helpers.noResultDefaultLabel,
+        }
+      );
+    } catch (error) {
+      console.error(error);
 
-    return res.json(
-      filterResultsByQuery(req, searchPlace) || {
-        message: helpers.noResultDefaultLabel,
-      }
-    );
+      return res.status(500).json({});
+    }
   }),
 ];

@@ -133,12 +133,16 @@ module.exports = {
     let fullData = originalData;
 
     relationships.forEach((relationship) => {
-      fullData = this.fillRelationship(
-        fullData,
-        relationship.relationshipName,
-        relationship.relationshipData,
-        relationship.relationshipID || "id"
-      );
+      try {
+        fullData = this.fillRelationship(
+          fullData,
+          relationship.relationshipName,
+          relationship.relationshipData,
+          relationship.relationshipID || "id"
+        );
+      } catch (error) {
+        console.log(error);
+      }
     });
 
     return fullData;

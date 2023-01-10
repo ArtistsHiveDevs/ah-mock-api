@@ -78,27 +78,37 @@ function fillRelationships(element) {
 
 module.exports = [
   eventsRouter.get(RoutesConstants.eventList, (req, res) => {
-    return res.json(
-      helpers.sortByDate(
-        fillRelationships(filterResultsByQuery(req, eventsList)),
-        "timetable__initial_date",
-        "timetable__openning_doors"
-      )
-    );
+    try {
+      return res.json(
+        helpers.sortByDate(
+          fillRelationships(filterResultsByQuery(req, eventsList)),
+          "timetable__initial_date",
+          "timetable__openning_doors"
+        )
+      );
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json([]);
+    }
   }),
 
   eventsRouter.get(RoutesConstants.findEventById, (req, res) => {
     const { eventId } = req.params;
     const searchEvent = helpers.searchResult(eventsList, eventId, "id");
+    try {
+      return res.json(
+        helpers.sortByDate(
+          fillRelationships(filterResultsByQuery(req, searchEvent)),
+          "timetable__initial_date",
+          "timetable__openning_doors"
+        ) || {
+          message: helpers.noResultDefaultLabel,
+        }
+      );
+    } catch (error) {
+      console.error(error);
 
-    return res.json(
-      helpers.sortByDate(
-        fillRelationships(filterResultsByQuery(req, searchEvent)),
-        "timetable__initial_date",
-        "timetable__openning_doors"
-      ) || {
-        message: helpers.noResultDefaultLabel,
-      }
-    );
+      return res.status(500).json({});
+    }
   }),
 ];

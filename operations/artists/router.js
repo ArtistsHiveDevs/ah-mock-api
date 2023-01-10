@@ -69,17 +69,28 @@ function filterResultsByQuery(req, result) {
 
 module.exports = [
   artistRouter.get(RoutesConstants.artistsList, (req, res) => {
-    return res.json(filterResultsByQuery(req, artistsList));
+    try {
+      return res.json(filterResultsByQuery(req, artistsList));
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json([]);
+    }
   }),
 
   artistRouter.get(RoutesConstants.findArtistById, (req, res) => {
     const { artistId } = req.params;
     const searchArtist = helpers.searchResult(artistsList, artistId, "id");
 
-    return res.json(
-      filterResultsByQuery(req, searchArtist) || {
-        message: helpers.noResultDefaultLabel,
-      }
-    );
+    try {
+      return res.json(
+        filterResultsByQuery(req, searchArtist) || {
+          message: helpers.noResultDefaultLabel,
+        }
+      );
+    } catch (error) {
+      console.log(error);
+
+      return res.status(500).json({});
+    }
   }),
 ];
