@@ -233,4 +233,27 @@ module.exports = {
       return difference;
     });
   },
+
+  getEntityData(entityName) {
+    let response = [];
+    const fs = require("fs");
+
+    const artists = JSON.parse(
+      fs.readFileSync(`./assets/mocks/artists/artistsList.json`)
+    );
+    const events = JSON.parse(
+      fs.readFileSync(`./assets/mocks/events/eventsList.json`)
+    );
+    const places = JSON.parse(
+      fs.readFileSync(`./assets/mocks/places/placesList.json`)
+    );
+    if (entityName === "Artist") {
+      response = [...artists];
+    } else if (entityName === "Event") {
+      response = [...events];
+    } else if (entityName === "Place") {
+      response = [...places];
+    }
+    return response;
+  },
 };

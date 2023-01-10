@@ -4,9 +4,6 @@ var RoutesConstants = require("./constants/index");
 var router = express.Router({ mergeParams: true });
 
 // Data import
-const artistsList = require(`../../${RoutesConstants.artistsListLocation}`);
-const eventsList = require(`../../${RoutesConstants.eventsListLocation}`);
-const placesList = require(`../../${RoutesConstants.placesListLocation}`);
 
 function fillRelationships(element, relationships = []) {
   return helpers.attachRelationships(element, relationships);
@@ -18,17 +15,17 @@ function fillResultWithFields(fields, result) {
       field: "events",
       objectRelationshipName: "events",
       relationshipName: "place_id",
-      relationshipData: eventsList,
+      relationshipData: helpers.getEntityData("Event"),
     },
     {
       field: "events.main_artist",
       relationshipName: "main_artist_id",
-      relationshipData: artistsList,
+      relationshipData: helpers.getEntityData("Artist"),
     },
     {
       field: "events.guest_artist",
       relationshipName: "guest_artist_id",
-      relationshipData: artistsList,
+      relationshipData: helpers.getEntityData("Artist"),
     },
   ];
 
@@ -56,7 +53,7 @@ function filterResultsByQuery(req, result) {
     if (req.query) {
       // Consulta por palabra clave
       if (req.query.q) {
-        result = helpers.findMany(placesList, req.query.q, [
+        result = helpers.findMany(helpers.getEntityData("Place"), req.query.q, [
           "Nombre",
           "Departamento",
           "Ciudad",
@@ -94,7 +91,7 @@ function filterResultsByQuery(req, result) {
 
 module.exports = [
   router.get(RoutesConstants.eventList, (req, res) => {
-    let result = placesList;
+    let result = helpers.getEntityData("Place");
     try {
       return res.json(filterResultsByQuery(req, result));
     } catch (error) {
@@ -106,7 +103,11 @@ module.exports = [
 
   router.get(RoutesConstants.findEventById, (req, res) => {
     const { eventId: placeId } = req.params;
-    const searchPlace = helpers.searchResult(placesList, placeId, "id");
+    const searchPlace = helpers.searchResult(
+      helpers.getEntityData("Place"),
+      placeId,
+      "id"
+    );
     try {
       return res.json(
         filterResultsByQuery(req, searchPlace) || {

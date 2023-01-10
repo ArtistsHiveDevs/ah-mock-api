@@ -5,9 +5,6 @@ var RoutesConstants = require("./constants/index");
 var eventsRouter = express.Router({ mergeParams: true });
 
 // Data import
-const placesList = require(`../../${RoutesConstants.placesListLocation}`);
-const eventsList = require(`../../${RoutesConstants.eventsListLocation}`);
-const artistsList = require(`../../${RoutesConstants.artistsListLocation}`);
 
 function filterResultsByQuery(req, elements) {
   const d1 = new Date();
@@ -36,9 +33,18 @@ function filterResultsByQuery(req, elements) {
 
 function fillRelationships(element) {
   let eventos = helpers.fillRelationships(element, [
-    { relationshipName: "place_id", relationshipData: placesList },
-    { relationshipName: "main_artist_id", relationshipData: artistsList },
-    { relationshipName: "guest_artist_id", relationshipData: artistsList },
+    {
+      relationshipName: "place_id",
+      relationshipData: helpers.getEntityData("Place"),
+    },
+    {
+      relationshipName: "main_artist_id",
+      relationshipData: helpers.getEntityData("Artist"),
+    },
+    {
+      relationshipName: "guest_artist_id",
+      relationshipData: helpers.getEntityData("Artist"),
+    },
   ]);
 
   // // Llenar nombres de eventos incompletos
@@ -79,13 +85,17 @@ function fillRelationships(element) {
 module.exports = [
   eventsRouter.get(RoutesConstants.eventList, (req, res) => {
     try {
-      return res.json(
-        helpers.sortByDate(
-          fillRelationships(filterResultsByQuery(req, eventsList)),
-          "timetable__initial_date",
-          "timetable__openning_doors"
-        )
+      const filtered = filterResultsByQuery(
+        req,
+        helpers.getEntityData("Event")
       );
+      const filled = fillRelationships(filtered);
+      const sorted = helpers.sortByDate(
+        filled,
+        "timetable__initial_date",
+        "timetable__openning_doors"
+      );
+      return res.json(sorted);
     } catch (error) {
       console.error(error);
       return res.status(500).json([]);
@@ -94,7 +104,11 @@ module.exports = [
 
   eventsRouter.get(RoutesConstants.findEventById, (req, res) => {
     const { eventId } = req.params;
-    const searchEvent = helpers.searchResult(eventsList, eventId, "id");
+    const searchEvent = helpers.searchResult(
+      helpers.getEntityData("Event"),
+      eventId,
+      "id"
+    );
     try {
       return res.json(
         helpers.sortByDate(
