@@ -19,6 +19,21 @@ function fillResultWithFields(fields, result) {
       relationshipName: "main_artist_id",
       relationshipData: eventsList,
     },
+    {
+      field: "events.main_artist",
+      relationshipName: "main_artist_id",
+      relationshipData: helpers.getEntityData("Artist"),
+    },
+    {
+      field: "events.guest_artist",
+      relationshipName: "guest_artist_id",
+      relationshipData: helpers.getEntityData("Artist"),
+    },
+    {
+      field: "events.place",
+      relationshipName: "place_id",
+      relationshipData: helpers.getEntityData("Place"),
+    },
   ];
 
   const filled = fillRelationships(
