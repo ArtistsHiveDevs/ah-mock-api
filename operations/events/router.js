@@ -69,13 +69,33 @@ function fillRelationships(element) {
   //     timetable__guest_time: evento.timetable__guest_time,
   //     timetable__main_artist_time: evento.timetable__main_artist_time,
   //     promoter: evento.promoter,
-  //     national_code: evento.national_code,
+  //     national_code:
+  //       evento.national_code || `${Math.floor(Math.random() * 999999)}`,
   //     photo:
   //       evento.main_artist?.photo ||
   //       evento.guest_artist?.photo ||
   //       evento.main_artist?.profile_pic ||
   //       evento.guest_artist?.profile_pic,
   //     verified_status: Math.floor(Math.random() * 3),
+  //     tickets_website: "https://www.tickets.com",
+  //     description:
+  //       "Te invitamos a que nos acompañes a la versión número 15 del Gran Concierto de fin de año 2022, un concierto en vivo y en directo en donde recibiremos el año nuevo con una recopilación de varias de las obras que hemos presentado durante las ediciones anteriores.\nDesde 2008, ininterrumpidamente se ha realizado esta gala musical todos los 31 de diciembre, en donde el público capitalino disfruta de lo más selecto de la música clásica. La interpretación estará a cargo del Coro y Orquesta de la Fundación Orquesta Sinfónica de Bogotá - FOSBO, bajo la dirección del maestro Carlos Agreda, y como solistas invitados el pianista Mauricio Arias y la soprano Beatriz Mora.\nTe garantizamos una velada con un alto nivel artístico y en donde el corazón de cada persona que no acompañe latirá y vibrará con cada nota que emita la orquesta y el coro permitiendo así, meditar sobre las cosas buenas y malas de este año 2022 e iniciar con un nuevo espíritu el 2023.\nLa cita al Gran Concierto de fin de año es el próximo 31 de diciembre a las 8:00 p.m. en nuestro Teatro Cafam.",
+  //     website: "http://.com",
+  //     email: "info@.com",
+  //     mobile_phone: "+57 (300)765 43 21",
+  //     whatsapp: "+57 (300)765 43 21",
+
+  //     facebook: "",
+  //     twitter: "",
+  //     instagram: "",
+  //     spotify: "",
+  //     youtube: "",
+  //     additional_info:
+  //       "Recuerde tener listo su tiquete de entrada impreso o el código QR en el celular al momento del ingreso para agilizar la entrada. \nEl evento inicia puntualmente.\nNo se permite el ingreso de personas en estado de embriaguez ni efectos alucinógenos.",
+  //     dress_code: "Traje formal",
+  //     promoter: "Pepito Pérez SAS",
+  //     discounts:
+  //       "15% Estudiantes\n20% Miembros de fuerzas militares o policiales\n10%Cajas de compensación",
   //   };
   // });
 
