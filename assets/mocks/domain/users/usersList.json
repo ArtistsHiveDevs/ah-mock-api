@@ -1,0 +1,167 @@
+[
+  {
+    "id": "1",
+    "given_names": "Pepito",
+    "surnames": "Pérez",
+    "username": "pepito",
+    "email": "pepitoperez@mail.com",
+    "password": 1234556768,
+    "phone_number": 7123456,
+    "access_token": 123456789,
+    "gender": 1,
+    "blood_group": "",
+    "birthdate": "",
+    "nationality": "CO",
+    "home_city": "Bogotá",
+    "home_address": "",
+    "latlng": "4.2342,-72.23423",
+    "profile_pic": "https://randomuser.me/api/portraits/men/75.jpg",
+    "verification_status": 3,
+    "user_language": "es",
+    "created_at": "",
+    "updated_at": "",
+    "roles": []
+  },
+  {
+    "id": "2",
+    "given_names": "Fulanito",
+    "surnames": "Gómez",
+    "username": "fgomez",
+    "email": "fgomez@mail.com",
+    "password": 1234556768,
+    "phone_number": 7123456,
+    "access_token": 123456789,
+    "gender": 1,
+    "blood_group": "",
+    "birthdate": "",
+    "nationality": "CO",
+    "home_city": "Medellín",
+    "home_address": "",
+    "latlng": "4.6311,-73.43322",
+    "profile_pic": "https://randomuser.me/api/portraits/men/87.jpg",
+    "verification_status": 3,
+    "user_language": "fr",
+    "created_at": "",
+    "updated_at": "",
+    "roles": [
+      {
+        "entityName": "ARTIST",
+        "entityRoleMap": [
+          {
+            "entityId": "4",
+            "roles": ["ROADIE", "ARTIST_OWNER", "ARTIST_MEMBER", "MANAGER"]
+          },
+          { "entityId": "5", "roles": ["PRODUCER"] }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "3",
+    "given_names": "María",
+    "surnames": "Pachón",
+    "username": "mpachon",
+    "email": "mpachon@mail.com",
+    "password": 1234556768,
+    "phone_number": 7123456,
+    "access_token": 123456789,
+    "gender": 2,
+    "blood_group": "",
+    "birthdate": "",
+    "nationality": "CO",
+    "home_city": "Cali",
+    "home_address": "",
+    "latlng": "3.2342,-73.23423",
+    "profile_pic": "https://randomuser.me/api/portraits/men/67.jpg",
+    "verification_status": 1,
+    "user_language": "en",
+    "created_at": "",
+    "updated_at": "",
+    "roles": [
+      {
+        "entityName": "ARTIST",
+        "entityRoleMap": [
+          {
+            "entityId": "10",
+            "roles": [
+              "SOUND_ENGINEER",
+              "ARTIST_OWNER",
+              "MANAGER",
+              "TOUR_MANAGER"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "4",
+    "given_names": "Juanito",
+    "surnames": "Rodríguez",
+    "username": "jrod",
+    "email": "jrod@mail.com",
+    "password": 1234556768,
+    "phone_number": 7123456,
+    "access_token": 123456789,
+    "gender": 1,
+    "blood_group": "",
+    "birthdate": "",
+    "nationality": "CO",
+    "home_city": "Medellín",
+    "home_address": "",
+    "latlng": "4.6311,-73.43322",
+    "profile_pic": "https://randomuser.me/api/portraits/men/20.jpg",
+    "verification_status": 1,
+    "user_language": "de",
+    "created_at": "",
+    "updated_at": "",
+    "roles": [
+      {
+        "entityName": "ARTIST",
+        "entityRoleMap": [
+          {
+            "entityId": "13",
+            "roles": ["ROADIE", "ARTIST_OWNER", "ARTIST_MEMBER", "MANAGER"]
+          }
+        ]
+      },
+      {
+        "entityName": "PLACE",
+        "entityRoleMap": [
+          { "entityId": "3", "roles": ["PLACE_OWNER", "MEDIA_MANAGER"] },
+          { "entityId": "7", "roles": ["PLACE_OWNER"] }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "5",
+    "given_names": "Laura",
+    "surnames": "Jiménez",
+    "username": "ljimenez",
+    "email": "ljimenez@mail.com",
+    "password": 1234556768,
+    "phone_number": 7123456,
+    "access_token": 123456789,
+    "gender": 2,
+    "blood_group": "",
+    "birthdate": "",
+    "nationality": "CO",
+    "home_city": "Bogotá",
+    "home_address": "",
+    "latlng": "4.2342,-72.23423",
+    "profile_pic": "https://randomuser.me/api/portraits/men/50.jpg",
+    "verification_status": 3,
+    "user_language": "it",
+    "created_at": "",
+    "updated_at": "",
+    "roles": [
+      {
+        "entityName": "PLACE",
+        "entityRoleMap": [
+          { "entityId": "4", "roles": ["PLACE_OWNER", "MANAGER"] }
+        ]
+      }
+    ]
+  }
+]

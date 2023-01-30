@@ -3,11 +3,13 @@ var cors = require("cors");
 var bodyParser = require("body-parser");
 
 var textConstants = require("./helpers/index");
-var artistRouter = require("./operations/artists/router");
-var citiesRouter = require("./operations/cities/router");
-var countriesRouter = require("./operations/countries/router");
-var eventsRouter = require("./operations/events/router");
-var placesRouter = require("./operations/places/router");
+var artistRouter = require("./operations/domain/artists/router");
+var citiesRouter = require("./operations/parametrics/general/cities/router");
+var countriesRouter = require("./operations/parametrics/general/countries/router");
+var eventsRouter = require("./operations/domain/events/router");
+var instrumentsRouter = require("./operations/parametrics/domain/instruments/router");
+var placesRouter = require("./operations/domain/places/router");
+var usersRouter = require("./operations/domain/users/router");
 
 var app = express();
 var port = process.env.PORT || 3000;
@@ -16,18 +18,18 @@ app.use(bodyParser.json());
 app.use(cors());
 
 var routes = [
-    { path: "/artists", route: artistRouter },
-    { path: "/cities", route: citiesRouter },
-    { path: "/countries", route: countriesRouter },
-    { path: "/events", route: eventsRouter },
-    { path: "/places", route: placesRouter },
+  { path: "/artists", route: artistRouter },
+  { path: "/cities", route: citiesRouter },
+  { path: "/countries", route: countriesRouter },
+  { path: "/events", route: eventsRouter },
+  { path: "/instruments", route: instrumentsRouter },
+  { path: "/places", route: placesRouter },
+  { path: "/users", route: usersRouter },
 ];
 
 routes.forEach((route) => app.use(route.path, route.route));
 
 //  Server Zone
 app.listen(port, function () {
-    console.log(textConstants.runningServer, port);
+  console.log(textConstants.runningServer, port);
 });
-
-

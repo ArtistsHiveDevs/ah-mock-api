@@ -1,5 +1,5 @@
 var express = require("express");
-var helpers = require("../../helpers/index");
+var helpers = require("../../../helpers/index");
 var RoutesConstants = require("./constants/index");
 var router = express.Router({ mergeParams: true });
 
@@ -54,12 +54,12 @@ function filterResultsByQuery(req, result) {
       // Consulta por palabra clave
       if (req.query.q) {
         result = helpers.findMany(helpers.getEntityData("Place"), req.query.q, [
-          "Nombre",
-          "Departamento",
-          "Ciudad",
-          "FB",
-          "IG",
-          "web",
+          "name",
+          "state",
+          "city",
+          "facebook",
+          "instagram",
+          "website",
           "tiktok",
         ]);
       }
@@ -71,7 +71,7 @@ function filterResultsByQuery(req, result) {
           latitude: parseFloat(coords[0]),
           longitude: parseFloat(coords[1]),
         };
-        result = helpers.findByDistance(result, latlong, "Lat, Long");
+        result = helpers.findByDistance(result, latlong, "location");
       }
 
       // Pide algunas relaciones a otros elementos

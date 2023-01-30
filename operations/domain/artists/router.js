@@ -1,11 +1,8 @@
 var express = require("express");
-var helpers = require("../../helpers/index");
+var helpers = require("../../../helpers/index");
 var RoutesConstants = require("./constants/index");
 
 var artistRouter = express.Router({ mergeParams: true });
-
-const artistsList = require(`../../${RoutesConstants.artistListLocation}`);
-const eventsList = require(`../../${RoutesConstants.eventListLocation}`);
 
 function fillRelationships(element, relationships = []) {
   return helpers.attachRelationships(element, relationships);
@@ -17,7 +14,7 @@ function fillResultWithFields(fields, result) {
       field: "events",
       objectRelationshipName: "events",
       relationshipName: "main_artist_id",
-      relationshipData: eventsList,
+      relationshipData: helpers.getEntityData("Event"),
     },
     {
       field: "events.main_artist",
@@ -59,7 +56,9 @@ function filterResultsByQuery(req, result) {
   if (req.query) {
     // Consulta por palabra clave
     if (req.query.q) {
-      result = helpers.findMany(artistsList, req.query.q, ["name"]);
+      result = helpers.findMany(helpers.getEntityData("Artist"), req.query.q, [
+        "name",
+      ]);
     }
 
     // Consulta por cercanía
@@ -69,7 +68,7 @@ function filterResultsByQuery(req, result) {
         latitude: parseFloat(coords[0]),
         longitude: parseFloat(coords[1]),
       };
-      result = helpers.findByDistance(result, latlong, "Lat, Long");
+      result = helpers.findByDistance(result, latlong, "location");
     }
 
     // Pide algunas relaciones a otros elementos
@@ -85,7 +84,9 @@ function filterResultsByQuery(req, result) {
 module.exports = [
   artistRouter.get(RoutesConstants.artistsList, (req, res) => {
     try {
-      return res.json(filterResultsByQuery(req, artistsList));
+      return res.json(
+        filterResultsByQuery(req, helpers.getEntityData("Artist"))
+      );
     } catch (error) {
       console.log(error);
       return res.status(500).json([]);
@@ -94,7 +95,11 @@ module.exports = [
 
   artistRouter.get(RoutesConstants.findArtistById, (req, res) => {
     const { artistId } = req.params;
-    const searchArtist = helpers.searchResult(artistsList, artistId, "id");
+    const searchArtist = helpers.searchResult(
+      helpers.getEntityData("Artist"),
+      artistId,
+      "id"
+    );
 
     try {
       return res.json(

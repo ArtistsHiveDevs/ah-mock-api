@@ -1,20 +1,18 @@
 var express = require("express");
-var helpers = require("../../helpers/index");
+var helpers = require("../../../../helpers/index");
 var RoutesConstants = require("./constants/index");
 
 var router = express.Router({ mergeParams: true });
 
 module.exports = [
   router.get(RoutesConstants.citiesList, (req, res) => {
-    let artistsList = require(`../../${RoutesConstants.citiesListLocation}`);
-    return res.json(artistsList);
+    return res.json(helpers.getEntityData("City"));
   }),
 
   router.get(RoutesConstants.findCityById, (req, res) => {
-    let citiesList = require(`../../${RoutesConstants.citiesListLocation}`);
     const { cityId } = req.params;
     const searchCity = helpers.searchResult(
-      citiesList,
+      helpers.getEntityData("City"),
       cityId,
       "Codigo_municipio"
     );

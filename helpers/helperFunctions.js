@@ -20,8 +20,14 @@ module.exports = {
         !!properties &&
         !!properties.length &&
         properties.find((property) => {
+          const propertyPath = property.split(".") || [];
           let searchValue = search;
-          let objectPropertyValue = objElement[property];
+          let objectPropertyValue =
+            propertyPath.reduce(
+              (previous, current) => previous[current],
+              objElement
+            ) || "";
+
           if (!!options) {
             if (!options.caseSentive) {
               searchValue = searchValue.toLowerCase();
@@ -29,7 +35,12 @@ module.exports = {
             }
           }
 
-          return !!property && objectPropertyValue.includes(searchValue);
+          return (
+            !!property &&
+            searchValue &&
+            objectPropertyValue &&
+            objectPropertyValue.includes(searchValue)
+          );
         })
       );
     });
@@ -39,23 +50,33 @@ module.exports = {
     baseObject,
     searchLatLong,
     property,
-    options = { maxdistance: 0.5 }
+    options = { maxdistance: 5 } // Measured in Km
   ) {
     return baseObject?.filter((objElement) => {
       if (!!property) {
-        const objLatLong = objElement[property];
+        const propertyPath = property.split(".") || [];
+        const objLatLong = propertyPath.reduce(
+          (previous, current) => previous[current],
+          objElement
+        );
+
         const coords = objLatLong.split(",");
         const latlong = {
           latitude: parseFloat(coords[0]),
           longitude: parseFloat(coords[1]),
         };
 
+        // 1° @Equator = 110.567 / 1° @Poles = 110.699 / 1° Avg  = 111.133
+        const degreeKmRate = (110.567 + 110.699) / 2;
+
+        const maxDistanceInDegrees = options.maxdistance / degreeKmRate;
+
         return (
           latlong &&
-          latlong.latitude >= searchLatLong.latitude - options.maxdistance &&
-          latlong.latitude <= searchLatLong.latitude + options.maxdistance &&
-          latlong.longitude >= searchLatLong.longitude - options.maxdistance &&
-          latlong.longitude <= searchLatLong.longitude + options.maxdistance
+          latlong.latitude >= searchLatLong.latitude - maxDistanceInDegrees &&
+          latlong.latitude <= searchLatLong.latitude + maxDistanceInDegrees &&
+          latlong.longitude >= searchLatLong.longitude - maxDistanceInDegrees &&
+          latlong.longitude <= searchLatLong.longitude + maxDistanceInDegrees
         );
       } else {
         return objElement == search;
@@ -239,20 +260,32 @@ module.exports = {
     const fs = require("fs");
 
     const artists = JSON.parse(
-      fs.readFileSync(`./assets/mocks/artists/artistsList.json`)
+      fs.readFileSync(`./assets/mocks/domain/artists/artistsList.json`)
     );
     const events = JSON.parse(
-      fs.readFileSync(`./assets/mocks/events/eventsList.json`)
+      fs.readFileSync(`./assets/mocks/domain/events/eventsList.json`)
+    );
+    const instruments = JSON.parse(
+      fs.readFileSync(
+        `./assets/mocks/parametrics/domain/instruments/instrumentsList.json`
+      )
     );
     const places = JSON.parse(
-      fs.readFileSync(`./assets/mocks/places/placesList.json`)
+      fs.readFileSync(`./assets/mocks/domain/places/placesList.json`)
+    );
+    const users = JSON.parse(
+      fs.readFileSync(`./assets/mocks/domain/users/usersList.json`)
     );
     if (entityName === "Artist") {
       response = [...artists];
     } else if (entityName === "Event") {
       response = [...events];
+    } else if (entityName === "Instrument") {
+      response = [...instruments];
     } else if (entityName === "Place") {
       response = [...places];
+    } else if (entityName === "User") {
+      response = [...users];
     }
     return response;
   },

@@ -1,6 +1,6 @@
 const { query } = require("express");
 var express = require("express");
-var helpers = require("../../helpers/index");
+var helpers = require("../../../helpers/index");
 var RoutesConstants = require("./constants/index");
 var eventsRouter = express.Router({ mergeParams: true });
 
@@ -11,6 +11,7 @@ function filterResultsByQuery(req, elements) {
   const d2 = new Date("2022-12-23");
 
   if (req.query) {
+    // Before date
     if (req.query.bd) {
       elements = helpers.findByDate(
         elements,
@@ -19,6 +20,7 @@ function filterResultsByQuery(req, elements) {
         ">="
       );
     }
+    // After Date
     if (req.query.ad) {
       elements = helpers.findByDate(
         elements,
@@ -26,6 +28,33 @@ function filterResultsByQuery(req, elements) {
         req.query.ad,
         "<="
       );
+    }
+
+    // Consulta por palabra clave
+    if (req.query.q) {
+      elements = helpers.findMany(elements, req.query.q, [
+        "name",
+        "subtitle",
+        "promoter",
+        "facebook",
+        "instagram",
+        "website",
+        "tiktok",
+        "place.name",
+        "place.city",
+        "main_artist.name",
+        "guest_artist.name",
+      ]);
+    }
+
+    // Consulta por cercanía
+    if (req.query.l) {
+      const coords = req.query.l.split(",");
+      const latlong = {
+        latitude: parseFloat(coords[0]),
+        longitude: parseFloat(coords[1]),
+      };
+      elements = helpers.findByDistance(elements, latlong, "place.location");
     }
   }
   return elements;
@@ -105,13 +134,10 @@ function fillRelationships(element) {
 module.exports = [
   eventsRouter.get(RoutesConstants.eventList, (req, res) => {
     try {
-      const filtered = filterResultsByQuery(
-        req,
-        helpers.getEntityData("Event")
-      );
-      const filled = fillRelationships(filtered);
+      const filled = fillRelationships(helpers.getEntityData("Event"));
+      const filtered = filterResultsByQuery(req, filled);
       const sorted = helpers.sortByDate(
-        filled,
+        filtered,
         "timetable__initial_date",
         "timetable__openning_doors"
       );
@@ -130,12 +156,9 @@ module.exports = [
       "id"
     );
     try {
+      const filled = fillRelationships(searchEvent);
       return res.json(
-        helpers.sortByDate(
-          fillRelationships(filterResultsByQuery(req, searchEvent)),
-          "timetable__initial_date",
-          "timetable__openning_doors"
-        ) || {
+        filled || {
           message: helpers.noResultDefaultLabel,
         }
       );
