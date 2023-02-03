@@ -11,9 +11,9 @@
     "access_token": 123456789,
     "emergency_contact": [
       {
-        "given_names": "Laura",
-        "surnames": "Jiménez",
-        "email": "ljimenez@mail.com",
+        "given_names": "ECLaura",
+        "surnames": "ECJiménez",
+        "email": "ECljimenez@mail.com",
         "phone_number": 7123456
       }
     ],
@@ -54,9 +54,9 @@
     "access_token": 123456789,
     "emergency_contact": [
       {
-        "given_names": "Fulanito",
-        "surnames": "Gómez",
-        "email": "fgomez@mail.com",
+        "given_names": "ECFulanito",
+        "surnames": "ECGómez",
+        "email": "ECfgomez@mail.com",
         "phone_number": 7123456
       }
     ],
@@ -79,9 +79,20 @@
         "entityRoleMap": [
           {
             "entityId": "4",
+            "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_e7.jpg",
+            "name": "Espiral 7",
+            "subtitle": "Música folclórica del caribe",
+            "verified_status": 1,
             "roles": ["ROADIE", "ARTIST_OWNER", "ARTIST_MEMBER", "MANAGER"]
           },
-          { "entityId": "5", "roles": ["PRODUCER"] }
+          {
+            "entityId": "5",
+            "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_jpv.jpg",
+            "name": "Juan Pablo Vega",
+            "subtitle": "Música folclórica del caribe",
+            "verified_status": 1,
+            "roles": ["PRODUCER"]
+          }
         ]
       }
     ],
@@ -108,9 +119,9 @@
     "access_token": 123456789,
     "emergency_contact": [
       {
-        "given_names": "María",
-        "surnames": "Pachón",
-        "email": "mpachon@mail.com",
+        "given_names": "ECMaría",
+        "surnames": "ECPachón",
+        "email": "ECmpachon@mail.com",
         "phone_number": 7123456
       }
     ],
@@ -133,6 +144,10 @@
         "entityRoleMap": [
           {
             "entityId": "10",
+            "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_mb.jpg",
+            "name": "Ministerio del beat",
+            "subtitle": "El piano de la selva",
+            "verified_status": 2,
             "roles": [
               "SOUND_ENGINEER",
               "ARTIST_OWNER",
@@ -166,9 +181,15 @@
     "access_token": 123456789,
     "emergency_contact": [
       {
-        "given_names": "Juanito",
-        "surnames": "Rodríguez",
-        "email": "jrod@mail.com",
+        "given_names": "EC1Juanito",
+        "surnames": "EC1Rodríguez",
+        "email": "EC1jrod@mail.com",
+        "phone_number": 7123456
+      },
+      {
+        "given_names": "EC2Juanito",
+        "surnames": "EC2Rodríguez",
+        "email": "EC2jrod@mail.com",
         "phone_number": 7123456
       }
     ],
@@ -191,6 +212,10 @@
         "entityRoleMap": [
           {
             "entityId": "13",
+            "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_gu.jpg",
+            "name": "Gregorio Uribe",
+            "subtitle": "Cantautor y acordenista",
+            "verified_status": 2,
             "roles": ["ROADIE", "ARTIST_OWNER", "ARTIST_MEMBER", "MANAGER"]
           }
         ]
@@ -198,8 +223,22 @@
       {
         "entityName": "PLACE",
         "entityRoleMap": [
-          { "entityId": "3", "roles": ["PLACE_OWNER", "MEDIA_MANAGER"] },
-          { "entityId": "7", "roles": ["PLACE_OWNER"] }
+          {
+            "entityId": "3",
+            "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_gcl.jpg",
+            "name": "Galería Café Libro 93",
+            "subtitle": "",
+            "verified_status": 1,
+            "roles": ["PLACE_OWNER", "MEDIA_MANAGER"]
+          },
+          {
+            "entityId": "7",
+            "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_ck.jpg",
+            "name": "Casa Kilele",
+            "subtitle": "",
+            "verified_status": 2,
+            "roles": ["PLACE_OWNER"]
+          }
         ]
       }
     ],
@@ -226,9 +265,9 @@
     "access_token": 123456789,
     "emergency_contact": [
       {
-        "given_names": "Laura",
-        "surnames": "Jiménez",
-        "email": "ljimenez@mail.com",
+        "given_names": "ECLaura",
+        "surnames": "ECJiménez",
+        "email": "ECljimenez@mail.com",
         "phone_number": 7123456
       }
     ],
@@ -249,7 +288,14 @@
       {
         "entityName": "PLACE",
         "entityRoleMap": [
-          { "entityId": "4", "roles": ["PLACE_OWNER", "MANAGER"] }
+          {
+            "entityId": "8",
+            "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_dj.jpg",
+            "name": "Disco Jaguar",
+            "subtitle": "",
+            "verified_status": 1,
+            "roles": ["PLACE_OWNER", "MANAGER"]
+          }
         ]
       }
     ],
