@@ -23,10 +23,9 @@ module.exports = {
           const propertyPath = property.split(".") || [];
           let searchValue = search;
           let objectPropertyValue =
-            propertyPath.reduce(
-              (previous, current) => previous[current],
-              objElement
-            ) || "";
+            propertyPath.reduce((previous, current) => {
+              return previous ? previous[current] : "";
+            }, objElement) || "";
 
           if (!!options) {
             if (!options.caseSentive) {

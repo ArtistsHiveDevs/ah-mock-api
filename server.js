@@ -3,6 +3,7 @@ var cors = require("cors");
 var bodyParser = require("body-parser");
 
 var textConstants = require("./helpers/index");
+var allRouter = require("./operations/domain/all/router");
 var artistRouter = require("./operations/domain/artists/router");
 var citiesRouter = require("./operations/parametrics/general/cities/router");
 var countriesRouter = require("./operations/parametrics/general/countries/router");
@@ -18,6 +19,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 var routes = [
+  { path: "/search", route: allRouter },
   { path: "/artists", route: artistRouter },
   { path: "/cities", route: citiesRouter },
   { path: "/countries", route: countriesRouter },
