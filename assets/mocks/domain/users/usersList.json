@@ -4,14 +4,24 @@
     "given_names": "Pepito",
     "surnames": "Pérez",
     "username": "pepito",
+    "artistic_name": "",
     "email": "pepitoperez@mail.com",
     "password": 1234556768,
     "phone_number": 7123456,
     "access_token": 123456789,
+    "emergency_contact": [
+      {
+        "given_names": "Laura",
+        "surnames": "Jiménez",
+        "email": "ljimenez@mail.com",
+        "phone_number": 7123456
+      }
+    ],
     "gender": 1,
-    "blood_group": "",
-    "birthdate": "",
+    "blood_group": "O+",
+    "birthdate": "23-12-1956",
     "nationality": "CO",
+    "birthplace": "Cúcuta",
     "home_city": "Bogotá",
     "home_address": "",
     "latlng": "4.2342,-72.23423",
@@ -20,21 +30,41 @@
     "user_language": "es",
     "created_at": "",
     "updated_at": "",
-    "roles": []
+    "roles": [],
+    "arts": {
+      "music": [],
+      "dance": [],
+      "photography": [],
+      "video": [],
+      "painting": [],
+      "poetry": [],
+      "standup-comedy": [],
+      "awards": []
+    }
   },
   {
     "id": "2",
     "given_names": "Fulanito",
     "surnames": "Gómez",
     "username": "fgomez",
+    "artistic_name": "",
     "email": "fgomez@mail.com",
     "password": 1234556768,
     "phone_number": 7123456,
     "access_token": 123456789,
+    "emergency_contact": [
+      {
+        "given_names": "Fulanito",
+        "surnames": "Gómez",
+        "email": "fgomez@mail.com",
+        "phone_number": 7123456
+      }
+    ],
     "gender": 1,
-    "blood_group": "",
-    "birthdate": "",
+    "blood_group": "A-",
+    "birthdate": "02-05-2003",
     "nationality": "CO",
+    "birthplace": "Pitalito",
     "home_city": "Medellín",
     "home_address": "",
     "latlng": "4.6311,-73.43322",
@@ -54,21 +84,41 @@
           { "entityId": "5", "roles": ["PRODUCER"] }
         ]
       }
-    ]
+    ],
+    "arts": {
+      "music": [],
+      "dance": [],
+      "photography": [],
+      "video": [],
+      "painting": [],
+      "poetry": [],
+      "standup-comedy": [],
+      "awards": []
+    }
   },
   {
     "id": "3",
     "given_names": "María",
     "surnames": "Pachón",
     "username": "mpachon",
+    "artistic_name": "Florecita Rockera",
     "email": "mpachon@mail.com",
     "password": 1234556768,
     "phone_number": 7123456,
     "access_token": 123456789,
+    "emergency_contact": [
+      {
+        "given_names": "María",
+        "surnames": "Pachón",
+        "email": "mpachon@mail.com",
+        "phone_number": 7123456
+      }
+    ],
     "gender": 2,
-    "blood_group": "",
-    "birthdate": "",
+    "blood_group": "B+",
+    "birthdate": "15-10-1983",
     "nationality": "CO",
+    "birthplace": "Aracata",
     "home_city": "Cali",
     "home_address": "",
     "latlng": "3.2342,-73.23423",
@@ -92,21 +142,41 @@
           }
         ]
       }
-    ]
+    ],
+    "arts": {
+      "music": [],
+      "dance": [],
+      "photography": [],
+      "video": [],
+      "painting": [],
+      "poetry": [],
+      "standup-comedy": [],
+      "awards": []
+    }
   },
   {
     "id": "4",
     "given_names": "Juanito",
     "surnames": "Rodríguez",
     "username": "jrod",
+    "artistic_name": "JuanchoRod",
     "email": "jrod@mail.com",
     "password": 1234556768,
     "phone_number": 7123456,
     "access_token": 123456789,
+    "emergency_contact": [
+      {
+        "given_names": "Juanito",
+        "surnames": "Rodríguez",
+        "email": "jrod@mail.com",
+        "phone_number": 7123456
+      }
+    ],
     "gender": 1,
-    "blood_group": "",
-    "birthdate": "",
+    "blood_group": "B-",
+    "birthdate": "09-03-1973",
     "nationality": "CO",
+    "birthplace": "San Onofre",
     "home_city": "Medellín",
     "home_address": "",
     "latlng": "4.6311,-73.43322",
@@ -132,21 +202,41 @@
           { "entityId": "7", "roles": ["PLACE_OWNER"] }
         ]
       }
-    ]
+    ],
+    "arts": {
+      "music": [],
+      "dance": [],
+      "photography": [],
+      "video": [],
+      "painting": [],
+      "poetry": [],
+      "standup-comedy": [],
+      "awards": []
+    }
   },
   {
     "id": "5",
     "given_names": "Laura",
     "surnames": "Jiménez",
     "username": "ljimenez",
+    "artistic_name": "",
     "email": "ljimenez@mail.com",
     "password": 1234556768,
     "phone_number": 7123456,
     "access_token": 123456789,
+    "emergency_contact": [
+      {
+        "given_names": "Laura",
+        "surnames": "Jiménez",
+        "email": "ljimenez@mail.com",
+        "phone_number": 7123456
+      }
+    ],
     "gender": 2,
-    "blood_group": "",
-    "birthdate": "",
+    "blood_group": "O+",
+    "birthdate": "09-04-1988",
     "nationality": "CO",
+    "birthplace": "Zipaquirá",
     "home_city": "Bogotá",
     "home_address": "",
     "latlng": "4.2342,-72.23423",
@@ -162,6 +252,16 @@
           { "entityId": "4", "roles": ["PLACE_OWNER", "MANAGER"] }
         ]
       }
-    ]
+    ],
+    "arts": {
+      "music": [],
+      "dance": [],
+      "photography": [],
+      "video": [],
+      "painting": [],
+      "poetry": [],
+      "standup-comedy": [],
+      "awards": []
+    }
   }
 ]
