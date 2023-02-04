@@ -75,10 +75,10 @@
     "updated_at": "",
     "roles": [
       {
-        "entityName": "ARTIST",
+        "entityName": "Artist",
         "entityRoleMap": [
           {
-            "entityId": "4",
+            "id": "4",
             "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_e7.jpg",
             "name": "Espiral 7",
             "subtitle": "Música folclórica del caribe",
@@ -86,7 +86,7 @@
             "roles": ["ROADIE", "ARTIST_OWNER", "ARTIST_MEMBER", "MANAGER"]
           },
           {
-            "entityId": "5",
+            "id": "5",
             "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_jpv.jpg",
             "name": "Juan Pablo Vega",
             "subtitle": "Música folclórica del caribe",
@@ -140,10 +140,10 @@
     "updated_at": "",
     "roles": [
       {
-        "entityName": "ARTIST",
+        "entityName": "Artist",
         "entityRoleMap": [
           {
-            "entityId": "10",
+            "id": "10",
             "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_mb.jpg",
             "name": "Ministerio del beat",
             "subtitle": "El piano de la selva",
@@ -208,10 +208,10 @@
     "updated_at": "",
     "roles": [
       {
-        "entityName": "ARTIST",
+        "entityName": "Artist",
         "entityRoleMap": [
           {
-            "entityId": "13",
+            "id": "13",
             "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_gu.jpg",
             "name": "Gregorio Uribe",
             "subtitle": "Cantautor y acordenista",
@@ -221,10 +221,10 @@
         ]
       },
       {
-        "entityName": "PLACE",
+        "entityName": "Place",
         "entityRoleMap": [
           {
-            "entityId": "3",
+            "id": "3",
             "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_gcl.jpg",
             "name": "Galería Café Libro 93",
             "subtitle": "",
@@ -232,7 +232,7 @@
             "roles": ["PLACE_OWNER", "MEDIA_MANAGER"]
           },
           {
-            "entityId": "7",
+            "id": "7",
             "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_ck.jpg",
             "name": "Casa Kilele",
             "subtitle": "",
@@ -286,14 +286,84 @@
     "updated_at": "",
     "roles": [
       {
-        "entityName": "PLACE",
+        "entityName": "Place",
         "entityRoleMap": [
           {
-            "entityId": "8",
+            "id": "8",
             "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_dj.jpg",
             "name": "Disco Jaguar",
             "subtitle": "",
             "verified_status": 1,
+            "roles": ["PLACE_OWNER", "MANAGER"]
+          }
+        ]
+      }
+    ],
+    "arts": {
+      "music": [],
+      "dance": [],
+      "photography": [],
+      "video": [],
+      "painting": [],
+      "poetry": [],
+      "standup-comedy": [],
+      "awards": []
+    }
+  },
+  {
+    "id": "6",
+    "given_names": "Daniela",
+    "surnames": "Mejía",
+    "username": "dmejia",
+    "artistic_name": "",
+    "email": "dmejia@mail.com",
+    "password": 1234556768,
+    "phone_number": 7123456,
+    "access_token": 123456789,
+    "emergency_contact": [
+      {
+        "given_names": "ECDaniela",
+        "surnames": "ECMejia",
+        "email": "ECdmejia@mail.com",
+        "phone_number": 7123456
+      }
+    ],
+    "gender": 2,
+    "blood_group": "O+",
+    "birthdate": "09-04-1988",
+    "nationality": "CO",
+    "birthplace": "Zipaquirá",
+    "home_city": "Bogotá",
+    "home_address": "",
+    "latlng": "4.2342,-72.23423",
+    "profile_pic": "https://randomuser.me/api/portraits/women/7.jpg",
+    "verified_status": 3,
+    "user_language": "es",
+    "created_at": "",
+    "updated_at": "",
+    "roles": [
+      {
+        "entityName": "Artist",
+        "entityRoleMap": [
+          {
+            "id": "16",
+            "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_cb.jpg",
+            "name": "Los Cañaverales del Bohío",
+            "subtitle": "El piano de la selva",
+            "verified_status": 0,
+            "roles": ["PHOTOGRAPHER"]
+          }
+        ]
+      },
+      {
+        "entityName": "Place",
+        "entityRoleMap": [
+          {
+            "id": "5",
+            "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_lp.png",
+            "name": "La Pascasia",
+            "subtitle": "",
+            "verified_status": 2,
             "roles": ["PLACE_OWNER", "MANAGER"]
           }
         ]
