@@ -11,6 +11,7 @@ var eventsRouter = require("./operations/domain/events/router");
 var instrumentsRouter = require("./operations/parametrics/domain/instruments/router");
 var placesRouter = require("./operations/domain/places/router");
 var usersRouter = require("./operations/domain/users/router");
+var errorsRouter = require("./operations/parametrics/general/error/router");
 
 var app = express();
 var port = process.env.PORT || 3000;
@@ -27,6 +28,7 @@ var routes = [
   { path: "/instruments", route: instrumentsRouter },
   { path: "/places", route: placesRouter },
   { path: "/users", route: usersRouter },
+  { path: "/error", route: errorsRouter },
 ];
 
 routes.forEach((route) => app.use(route.path, route.route));
