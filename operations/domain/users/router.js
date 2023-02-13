@@ -63,6 +63,27 @@ function filterResultsByQuery(req, result) {
       fillResultWithFields(fields, result);
     }
   }
+
+  // Fill mandatory relationships
+  const events = helpers.getEntityData("Event");
+  const isArray = Array.isArray(result);
+  if (!isArray) {
+    result = [result];
+  }
+
+  result.forEach((user) => {
+    Object.keys(user.subscribed_events).forEach((eventsType) => {
+      user.subscribed_events[eventsType] = user.subscribed_events[
+        eventsType
+      ].map((eventId) =>
+        events.find((event) => `${event.id}` === `${eventId}`)
+      );
+    });
+  });
+
+  if (!isArray) {
+    result = result[0];
+  }
   return result;
 }
 
