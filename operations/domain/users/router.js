@@ -66,6 +66,7 @@ function filterResultsByQuery(req, result) {
 
   // Fill mandatory relationships
   const events = helpers.getEntityData("Event");
+  const places = helpers.getEntityData("Place");
   const isArray = Array.isArray(result);
   if (!isArray) {
     result = [result];
@@ -75,9 +76,11 @@ function filterResultsByQuery(req, result) {
     Object.keys(user.subscribed_events).forEach((eventsType) => {
       user.subscribed_events[eventsType] = user.subscribed_events[
         eventsType
-      ].map((eventId) =>
-        events.find((event) => `${event.id}` === `${eventId}`)
-      );
+      ].map((eventId) => {
+        let event = events.find((event) => `${event.id}` === `${eventId}`);
+        event = helpers.fillRelationship(event, "place_id", places);
+        return event;
+      });
     });
   });
 
