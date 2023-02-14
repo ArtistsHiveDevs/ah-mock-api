@@ -73,13 +73,16 @@ function filterResultsByQuery(req, result) {
   }
 
   result.forEach((user) => {
-    Object.keys(user.subscribed_events).forEach((eventsType) => {
-      user.subscribed_events[eventsType] = user.subscribed_events[
-        eventsType
-      ].map((eventId) => {
-        let event = events.find((event) => `${event.id}` === `${eventId}`);
-        event = helpers.fillRelationship(event, "place_id", places);
-        return event;
+    const eventSubscriptions = ["events_as_artist", "subscribed_events"];
+    eventSubscriptions.forEach((subscription) => {
+      Object.keys(user[subscription]).forEach((eventsType) => {
+        user[subscription][eventsType] = user[subscription][eventsType].map(
+          (eventId) => {
+            let event = events.find((event) => `${event.id}` === `${eventId}`);
+            event = helpers.fillRelationship(event, "place_id", places);
+            return event;
+          }
+        );
       });
     });
   });

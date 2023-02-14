@@ -41,6 +41,10 @@
       "standup-comedy": [],
       "awards": []
     },
+    "events_as_artist": {
+      "next_events": ["63", "81", "263"],
+      "past_events": ["26", "34", "95", "62", "281", "203", "209"]
+    },
     "subscribed_events": {
       "next_events": ["63", "81", "263"],
       "past_events": ["26", "34", "95", "62", "281", "203", "209"]
@@ -110,6 +114,10 @@
       "standup-comedy": [],
       "awards": []
     },
+    "events_as_artist": {
+      "next_events": ["176", "208", "35", "107", "30"],
+      "past_events": ["299", "183", "298", "111"]
+    },
     "subscribed_events": {
       "next_events": ["176", "208", "35", "107", "30"],
       "past_events": ["299", "183", "298", "111"]
@@ -175,6 +183,10 @@
       "poetry": [],
       "standup-comedy": [],
       "awards": []
+    },
+    "events_as_artist": {
+      "next_events": ["252", "167", "100", "295", "88"],
+      "past_events": ["144", "44", "278"]
     },
     "subscribed_events": {
       "next_events": ["252", "167", "100", "295", "88"],
@@ -264,6 +276,10 @@
       "standup-comedy": [],
       "awards": []
     },
+    "events_as_artist": {
+      "next_events": ["190", "110", "18", "137", "323", "171"],
+      "past_events": ["310", "309", "232"]
+    },
     "subscribed_events": {
       "next_events": ["190", "110", "18", "137", "323", "171"],
       "past_events": ["310", "309", "232"]
@@ -324,6 +340,10 @@
       "poetry": [],
       "standup-comedy": [],
       "awards": []
+    },
+    "events_as_artist": {
+      "next_events": ["130", "295", "180", "74", "332", "71", "70", "183"],
+      "past_events": ["28", "316", "101", "75"]
     },
     "subscribed_events": {
       "next_events": ["130", "295", "180", "74", "332", "71", "70", "183"],
@@ -398,6 +418,10 @@
       "poetry": [],
       "standup-comedy": [],
       "awards": []
+    },
+    "events_as_artist": {
+      "next_events": ["295", "113", "164", "248", "190", "323", "287", "71"],
+      "past_events": ["173", "38", "173", "218"]
     },
     "subscribed_events": {
       "next_events": ["295", "113", "164", "248", "190", "323", "287", "71"],
