@@ -14,19 +14,67 @@ function fillResultWithFields(fields, result) {
   const filled = fillRelationships(
     result,
     relationships.filter((relationship) =>
-      fields.find((fieldName) => fieldName === relationship.field)
+      fields.find(
+        (fieldName) =>
+          fieldName !== "location_boundaries" &&
+          fieldName === relationship.field
+      )
     )
   );
 
-  filled.forEach((artist) => {
-    const sortedEvents = helpers.sortByDate(
-      artist["events"] || [],
-      "timetable__initial_date",
-      "timetable__openning_doors"
-    );
-    artist["events"] = sortedEvents;
-  });
+  // filled.events
+  //   const sortedEvents = helpers.sortByDate(
+  //     artist["events"] || [],
+  //     "timetable__initial_date",
+  //     "timetable__openning_doors"
+  //   );
+  //   artist["events"] = sortedEvents;
+  // };
 
+  if (fields.includes("location_boundaries")) {
+    const placesLatLng = filled.places
+      .map((place) => {
+        const strCoords = place.location?.split(",");
+        if (strCoords.length === 2) {
+          return {
+            lat: parseFloat(strCoords[0] || "0"),
+            lng: parseFloat(strCoords[1] || "0"),
+          };
+        }
+        return undefined;
+      })
+      .filter((location) => !!location);
+
+    const eventsLatLng = filled.events
+      .filter((event) => !!event.place)
+      .map((event) => {
+        const strCoords = event.place.location?.split(",");
+        if (strCoords.length === 2) {
+          return {
+            lat: parseFloat(strCoords[0] || "0"),
+            lng: parseFloat(strCoords[1] || "0"),
+          };
+        }
+        return undefined;
+      })
+      .filter((location) => !!location);
+
+    const allLatLng = [...placesLatLng, ...eventsLatLng];
+    const allLats = allLatLng.map((latlng) => latlng.lat);
+    const allLngs = allLatLng.map((latlng) => latlng.lng);
+
+    const location_boundaries =
+      allLatLng.length === 0
+        ? undefined
+        : {
+            min_lat: Math.min(...allLats),
+            max_lat: Math.max(...allLats),
+            min_lng: Math.min(...allLngs),
+            max_lng: Math.max(...allLngs),
+          };
+
+    filled["location_boundaries"] = location_boundaries;
+  }
   return filled;
 }
 
@@ -76,10 +124,17 @@ function filterResultsByQuery(req) {
           "tiktok",
         ]);
 
+        const pagination = {
+          total_artists: artists.length,
+          total_events: events.length,
+          total_places: places.length,
+        };
+
         result = {
           artists,
           events,
           places,
+          pagination,
         };
       }
     } else {
@@ -126,7 +181,7 @@ function fillEventRelationships(element) {
 }
 
 module.exports = [
-  router.get(RoutesConstants.artistsList, (req, res) => {
+  router.get(RoutesConstants.root, (req, res) => {
     try {
       return res.json(filterResultsByQuery(req));
     } catch (error) {

@@ -1,4 +1,4 @@
 module.exports = {
-    artistsList: "/",
-    findArtistById: "/:artistId"
+  root: "/",
+  findArtistById: "/:artistId",
 };
