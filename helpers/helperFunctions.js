@@ -1,4 +1,11 @@
 module.exports = {
+  removeStringAccents: function (string) {
+    return string.replace(/[^A-Za-z0-9\[\] ]/g, function (a) {
+      const { StringAccentsMap } = require("./stringAccentsMap");
+      return StringAccentsMap[a] || a;
+    });
+  },
+
   searchResult: function (baseObject, search, property) {
     return baseObject?.find((objElement) => {
       if (!!property) {
@@ -29,8 +36,12 @@ module.exports = {
 
           if (!!options) {
             if (!options.caseSentive) {
-              searchValue = searchValue.toLowerCase();
-              objectPropertyValue = objectPropertyValue.toLowerCase();
+              searchValue = this.removeStringAccents(
+                searchValue.toLowerCase().trim()
+              );
+              objectPropertyValue = this.removeStringAccents(
+                objectPropertyValue.toLowerCase().trim()
+              );
             }
           }
 
