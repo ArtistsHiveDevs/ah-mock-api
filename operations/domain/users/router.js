@@ -123,4 +123,16 @@ module.exports = [
       return res.status(500).json({});
     }
   }),
+
+  userRouter.post(RoutesConstants.createUser, (req, res) => {
+    return res.status(200).json({ message: "Crear usuario" });
+  }),
+
+  userRouter.put(RoutesConstants.createUser, (req, res) => {
+    return res.status(200).json({ message: "update usuario" });
+  }),
+
+  userRouter.delete(RoutesConstants.createUser, (req, res) => {
+    return res.status(200).json({ message: "delete usuario" });
+  }),
 ];
