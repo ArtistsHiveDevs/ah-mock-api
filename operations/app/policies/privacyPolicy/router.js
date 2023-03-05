@@ -1,10 +1,9 @@
 var express = require("express");
-var helpers = require("../../../helpers/index");
 
-var userRouter = express.Router({ mergeParams: true });
+var router = express.Router({ mergeParams: true });
 
 module.exports = [
-  userRouter.get("/", (req, res) => {
+  router.get("/", (req, res) => {
     try {
       const versions = [
         {
@@ -32,15 +31,15 @@ module.exports = [
         );
         if (versionObj) {
           const fs = require("fs");
-          const terms = fs.readFileSync(
-            `./assets/mocks/app/termsAndConditions/termsAndConditions.v${version}.md`,
+          const policy = fs.readFileSync(
+            `./assets/mocks/app/policies/privacy/privacy.v${version}.md`,
             { encoding: "utf8", flag: "r" }
           );
 
-          return res.status(200).json({ ...versionObj, terms });
+          return res.status(200).json({ ...versionObj, policy });
         } else {
           return res.status(404).json({
-            message: `Terms & Conditions version ${version} was not found`,
+            message: `Privacy Policy version ${version} was not found`,
           });
         }
       }

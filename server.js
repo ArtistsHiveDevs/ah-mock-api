@@ -12,7 +12,8 @@ var instrumentsRouter = require("./operations/parametrics/domain/instruments/rou
 var placesRouter = require("./operations/domain/places/router");
 var usersRouter = require("./operations/domain/users/router");
 var errorsRouter = require("./operations/parametrics/general/error/router");
-var termsAndConditionsRouter = require("./operations/app/termsAndConditions/router");
+var termsAndConditionsRouter = require("./operations/app/policies/termsAndConditions/router");
+var privacyRouter = require("./operations/app/policies/privacyPolicy/router");
 
 var app = express();
 var port = process.env.PORT || 3000;
@@ -31,6 +32,7 @@ var routes = [
   { path: "/users", route: usersRouter },
   { path: "/error", route: errorsRouter },
   { path: "/terms", route: termsAndConditionsRouter },
+  { path: "/privacy", route: privacyRouter },
 ];
 
 routes.forEach((route) => app.use(route.path, route.route));
