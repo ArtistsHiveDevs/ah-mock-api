@@ -26,7 +26,23 @@
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/mm_3.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/mm_4.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/mm_5.jpg" }
-    ]
+    ],
+    "genres": {
+      "music": [
+        "Electroacústica",
+        "experimental",
+        "Contemporáneo",
+        "freejazz",
+        "rock experimental",
+        "musicas improvisadas",
+        "jazz",
+        "rock",
+        "musica antigua",
+        "baroco",
+        "folclor",
+        "fusiones"
+      ]
+    }
   },
   {
     "id": "2",
@@ -54,7 +70,10 @@
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/tejg_2.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/tejg_3.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/tejg_4.jpg" }
-    ]
+    ],
+    "genres": {
+      "music": ["all"]
+    }
   },
   {
     "id": "3",
@@ -83,7 +102,18 @@
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gcl_3.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gcl_4.jpeg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gcl_5.jpg" }
-    ]
+    ],
+    "genres": {
+      "music": [
+        "salsa",
+        "timba",
+        "musicas improvisadas",
+        "jazz",
+        "fusiones",
+        "cumbia",
+        "son cubano"
+      ]
+    }
   },
   {
     "id": "4",
@@ -112,7 +142,18 @@
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gcl_3.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gcl_4.jpeg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gcl_5.jpg" }
-    ]
+    ],
+    "genres": {
+      "music": [
+        "salsa",
+        "timba",
+        "musicas improvisadas",
+        "jazz",
+        "fusiones",
+        "cumbia",
+        "son cubano"
+      ]
+    }
   },
   {
     "id": "5",
@@ -141,7 +182,21 @@
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/lp_3.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/lp_4.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/lp_5.jpg" }
-    ]
+    ],
+
+    "genres": {
+      "music": [
+        "salsa",
+        "timba",
+        "musicas improvisadas",
+        "jazz",
+        "fusiones",
+        "cumbia",
+        "porro",
+        "ska",
+        "crossover"
+      ]
+    }
   },
   {
     "id": "6",
@@ -171,7 +226,23 @@
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sc_4.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sc_5.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sc_6.jpg" }
-    ]
+    ],
+    "genres": {
+      "music": [
+        "salsa",
+        "timba",
+        "musicas improvisadas",
+        "jazz",
+        "fusiones",
+        "cumbia",
+        "porro",
+        "ska",
+        "chirimía",
+        "pacífico",
+        "hip-hop",
+        "llanera"
+      ]
+    }
   },
   {
     "id": "7",
@@ -201,7 +272,21 @@
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/ck_4.jpeg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/ck_5.jpeg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/ck_6.jpg" }
-    ]
+    ],
+    "genres": {
+      "music": [
+        "salsa",
+        "timba",
+        "musicas improvisadas",
+        "jazz",
+        "fusiones",
+        "cumbia",
+        "porro",
+        "ska",
+        "crossover",
+        "afrobeat"
+      ]
+    }
   },
   {
     "id": "8",
@@ -230,7 +315,21 @@
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/dj_3.jpeg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/dj_4.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/dj_5.jpg" }
-    ]
+    ],
+
+    "genres": {
+      "music": [
+        "salsa",
+        "timba",
+        "musicas improvisadas",
+        "jazz",
+        "fusiones",
+        "cumbia",
+        "porro",
+        "ska",
+        "reggaetón"
+      ]
+    }
   },
   {
     "id": "9",
@@ -258,7 +357,11 @@
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cj_2.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cj_3.webp" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cj_4.jpg" }
-    ]
+    ],
+
+    "genres": {
+      "music": ["salsa", "timba", "jazz", "fusiones", "cumbia"]
+    }
   },
   {
     "id": "10",
@@ -285,7 +388,11 @@
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/pp_1.jfif" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/pp_2.jfif" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/pp_3.jfif" }
-    ]
+    ],
+
+    "genres": {
+      "music": ["musicas improvisadas", "jazz", "fusiones"]
+    }
   },
   {
     "id": "11",
@@ -313,7 +420,19 @@
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/lpbta_2.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/lpbta_3.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/lpbta_4.jpg" }
-    ]
+    ],
+    "genres": {
+      "music": [
+        "salsa",
+        "timba",
+        "musicas improvisadas",
+        "jazz",
+        "fusiones",
+        "cumbia",
+        "porro",
+        "ska"
+      ]
+    }
   },
   {
     "id": "12",
@@ -341,7 +460,19 @@
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/bc_2.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/bc_3.webp" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/bc_4.jpg" }
-    ]
+    ],
+    "genres": {
+      "music": [
+        "salsa",
+        "timba",
+        "musicas improvisadas",
+        "jazz",
+        "fusiones",
+        "cumbia",
+        "porro",
+        "ska"
+      ]
+    }
   },
   {
     "id": "13",
@@ -369,7 +500,17 @@
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cc53_2.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cc53_3.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cc53_4.jpg" }
-    ]
+    ],
+    "genres": {
+      "music": [
+        "salsa",
+        "timba",
+        "musicas improvisadas",
+        "fusiones",
+        "cumbia",
+        "porro"
+      ]
+    }
   },
   {
     "id": "14",
@@ -398,7 +539,10 @@
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gp_3.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gp_4.webp" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gp_5.jpg" }
-    ]
+    ],
+    "genres": {
+      "music": ["salsa", "timba", "fusiones", "cumbia", "porro"]
+    }
   },
   {
     "id": "15",
@@ -426,7 +570,10 @@
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sc_bta_2.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sc_bta_3.webp" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sc_bta_4.webp" }
-    ]
+    ],
+    "genres": {
+      "music": ["salsa", "timba", "fusiones", "cumbia", "porro"]
+    }
   },
   {
     "id": "16",
@@ -456,7 +603,10 @@
       { "src": "https://npcarlos.co/artistsHive_mocks/cover_pl.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/cover_pl.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/cover_pl.jpg" }
-    ]
+    ],
+    "genres": {
+      "music": ["salsa", "timba", "fusiones", "cumbia", "porro"]
+    }
   },
   {
     "id": "17",
@@ -486,7 +636,10 @@
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cv_4.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cv_5.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cv_6.jpg" }
-    ]
+    ],
+    "genres": {
+      "music": ["salsa", "timba", "fusiones", "cumbia", "porro"]
+    }
   },
   {
     "id": "18",
@@ -516,7 +669,10 @@
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/rcb_4.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/rcb_5.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/rcb_6.jpg" }
-    ]
+    ],
+    "genres": {
+      "music": ["rock", "ska"]
+    }
   },
   {
     "id": "19",
@@ -545,7 +701,10 @@
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/j_3.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/j_4.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/j_5.jpg" }
-    ]
+    ],
+    "genres": {
+      "music": ["rock", "ska"]
+    }
   },
   {
     "id": "20",
@@ -571,7 +730,10 @@
     "image_gallery": [
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/ea_1.webp" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/ea_2.webp" }
-    ]
+    ],
+    "genres": {
+      "music": ["rock", "ska", "cantautor", "cumbia", "fusiones", "afrobeat"]
+    }
   },
   {
     "id": "21",
@@ -599,7 +761,18 @@
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sh_2.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sh_3.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sh_4.jpg" }
-    ]
+    ],
+    "genres": {
+      "music": [
+        "salsa",
+        "timba",
+        "musicas improvisadas",
+        "fusiones",
+        "cumbia",
+        "porro",
+        "jazz"
+      ]
+    }
   },
   {
     "id": "22",
@@ -626,7 +799,10 @@
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/tc_1.webp" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/tc_2.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/tc_3.jpg" }
-    ]
+    ],
+    "genres": {
+      "music": ["all"]
+    }
   },
   {
     "id": "23",
@@ -659,6 +835,16 @@
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
-    ]
+    ],
+    "genres": {
+      "music": [
+        "salsa",
+        "timba",
+        "musicas improvisadas",
+        "fusiones",
+        "cumbia",
+        "porro"
+      ]
+    }
   }
 ]
