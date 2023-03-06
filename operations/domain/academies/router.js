@@ -36,7 +36,7 @@ function fillResultWithFields(fields, result) {
     )
   );
 
-  filled.forEach((place) => {
+  filled?.forEach((place) => {
     const sortedEvents = helpers.sortByDate(
       place["events"] || [],
       "timetable__initial_date",
