@@ -1,0 +1,850 @@
+[
+  {
+    "id": "1",
+    "name": "Matik Matik",
+    "place_type": "Bar Restaurante",
+    "music_genre": "",
+    "country": "Colombia",
+    "state": "Bogotá DC",
+    "city": "Bogotá DC",
+    "address": "Cra. 11 # 67 - 20",
+    "location": "4.6529702,-74.0611748",
+    "Sede principal": "",
+    "email": "",
+    "phone": 12499832,
+    "public_private": "Privado",
+    "facebook": "matikmatik",
+    "instagram": "matikbogota",
+    "twitter": "",
+    "website": "http://www.matik-matik.com",
+    "promoter": "",
+    "tiktok": "",
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_mm.png",
+    "image_gallery": [
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/mm_1.jpeg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/mm_2.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/mm_3.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/mm_4.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/mm_5.jpg" }
+    ],
+    "genres": {
+      "music": [
+        "Electroacústica",
+        "experimental",
+        "Contemporáneo",
+        "freejazz",
+        "rock experimental",
+        "musicas improvisadas",
+        "jazz",
+        "rock",
+        "musica antigua",
+        "baroco",
+        "folclor",
+        "fusiones"
+      ]
+    }
+  },
+  {
+    "id": "2",
+    "name": "Teatro Jorge Eliécer Gaitán",
+    "place_type": "Teatro",
+    "music_genre": "",
+    "country": "Colombia",
+    "state": "Bogotá DC",
+    "city": "Bogotá DC",
+    "address": "Cra. 7 # 22 - 47",
+    "location": "4.60869,-74.0707264",
+    "Sede principal": "",
+    "email": "contactenos@idartes.gov.co",
+    "phone": 6013795750,
+    "public_private": "Público distrital",
+    "facebook": "TeatroJEGOficial",
+    "instagram": "teatrojeg",
+    "twitter": "TeatroJEG",
+    "website": "https://www.teatrojorgeeliecer.gov.co",
+    "promoter": "",
+    "tiktok": "",
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_tjeg.jpg",
+    "image_gallery": [
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/tejg_1.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/tejg_2.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/tejg_3.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/tejg_4.jpg" }
+    ],
+    "genres": {
+      "music": ["all"]
+    }
+  },
+  {
+    "id": "3",
+    "name": "Galería Café Libro 93",
+    "place_type": "",
+    "music_genre": "Salsa",
+    "country": "Colombia",
+    "state": "Bogotá DC",
+    "city": "Bogotá DC",
+    "address": "Cra. 11a # 93 - 42",
+    "location": "4.6751858,-74.0479853",
+    "Sede principal": "",
+    "email": "info@galeriacafelibro.com.co",
+    "phone": 6012183435,
+    "public_private": "Privado",
+    "facebook": "galeriacafelibro",
+    "instagram": "galeriacafelibro-la",
+    "twitter": "cafelibro",
+    "website": "",
+    "promoter": "",
+    "tiktok": "",
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_gcl.jpg",
+    "image_gallery": [
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gcl_1.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gcl_2.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gcl_3.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gcl_4.jpeg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gcl_5.jpg" }
+    ],
+    "genres": {
+      "music": [
+        "salsa",
+        "timba",
+        "musicas improvisadas",
+        "jazz",
+        "fusiones",
+        "cumbia",
+        "son cubano"
+      ]
+    }
+  },
+  {
+    "id": "4",
+    "name": "Galería Café Libro Palermo",
+    "place_type": "",
+    "music_genre": "Salsa",
+    "country": "Colombia",
+    "state": "Bogotá DC",
+    "city": "Bogotá DC",
+    "address": "Trv. 15B # 46 - 38",
+    "location": "4.634076!4d-74.0690678",
+    "Sede principal": 3,
+    "email": "",
+    "phone": "",
+    "public_private": "Privado",
+    "facebook": "",
+    "instagram": "",
+    "twitter": "",
+    "website": "",
+    "promoter": "",
+    "tiktok": "",
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_gcl.jpg",
+    "image_gallery": [
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gcl_1.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gcl_2.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gcl_3.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gcl_4.jpeg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gcl_5.jpg" }
+    ],
+    "genres": {
+      "music": [
+        "salsa",
+        "timba",
+        "musicas improvisadas",
+        "jazz",
+        "fusiones",
+        "cumbia",
+        "son cubano"
+      ]
+    }
+  },
+  {
+    "id": "5",
+    "name": "La Pascasia",
+    "place_type": "Bar , galeria de arte",
+    "music_genre": "",
+    "country": "Colombia",
+    "state": "Antioquia",
+    "city": "Medellín",
+    "address": "Cra. 42 # 46 - 46",
+    "location": "6.2433137,-75.5635655",
+    "Sede principal": "",
+    "email": "pascasia@comunycorriente.org",
+    "phone": "6045808660",
+    "public_private": "",
+    "facebook": "casapascasia",
+    "instagram": "lapascasia",
+    "twitter": "la_pascasia",
+    "website": "https://www.comunycorriente.org/lapascasia",
+    "promoter": "",
+    "tiktok": "",
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_lp.png",
+    "image_gallery": [
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/lp_1.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/lp_2.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/lp_3.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/lp_4.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/lp_5.jpg" }
+    ],
+
+    "genres": {
+      "music": [
+        "salsa",
+        "timba",
+        "musicas improvisadas",
+        "jazz",
+        "fusiones",
+        "cumbia",
+        "porro",
+        "ska",
+        "crossover"
+      ]
+    }
+  },
+  {
+    "id": "6",
+    "name": "Sonora Casa Cultural",
+    "place_type": "",
+    "music_genre": "",
+    "country": "Colombia",
+    "state": "Valle del Cauca",
+    "city": "Cali",
+    "address": "Cra. 9 # 3 - 54",
+    "location": "3.4468935,-76.5382427",
+    "Sede principal": "",
+    "email": "sonoracasacultural@gmail.com",
+    "phone": "3161809922",
+    "public_private": "",
+    "facebook": "sonoracalicolombia",
+    "instagram": "sonoracali",
+    "twitter": "",
+    "website": "",
+    "promoter": "",
+    "tiktok": "",
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_sccc.jpg",
+    "image_gallery": [
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sc_1.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sc_2.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sc_3.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sc_4.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sc_5.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sc_6.jpg" }
+    ],
+    "genres": {
+      "music": [
+        "salsa",
+        "timba",
+        "musicas improvisadas",
+        "jazz",
+        "fusiones",
+        "cumbia",
+        "porro",
+        "ska",
+        "chirimía",
+        "pacífico",
+        "hip-hop",
+        "llanera"
+      ]
+    }
+  },
+  {
+    "id": "7",
+    "name": "Casa Kilele",
+    "place_type": "fundación sin ánimo de lucro",
+    "music_genre": "",
+    "country": "Colombia",
+    "state": "Bogotá DC",
+    "city": "Bogotá DC",
+    "address": "Calle 28a # 16a - 31",
+    "location": "4.6178333,-74.0741353",
+    "Sede principal": "",
+    "email": "info@casakilele.com",
+    "phone": 3208584703,
+    "public_private": "",
+    "facebook": "casakilele",
+    "instagram": "casakilele",
+    "twitter": "casakilele",
+    "website": "https://www.casakilele.com",
+    "promoter": "",
+    "tiktok": "",
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_ck.jpg",
+    "image_gallery": [
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/ck_1.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/ck_2.png" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/ck_3.jpeg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/ck_4.jpeg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/ck_5.jpeg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/ck_6.jpg" }
+    ],
+    "genres": {
+      "music": [
+        "salsa",
+        "timba",
+        "musicas improvisadas",
+        "jazz",
+        "fusiones",
+        "cumbia",
+        "porro",
+        "ska",
+        "crossover",
+        "afrobeat"
+      ]
+    }
+  },
+  {
+    "id": "8",
+    "name": "Disco Jaguar",
+    "place_type": "Club nocturno bar",
+    "music_genre": "",
+    "country": "Colombia",
+    "state": "Bogotá DC",
+    "city": "Bogotá DC",
+    "address": "Av Cra 7 # 59 - 30",
+    "location": "4.644519,-74.0614486",
+    "Sede principal": "",
+    "email": "discojaguar@gmail.com",
+    "phone": "3124417308",
+    "public_private": "",
+    "facebook": "DiscoJaguarBta",
+    "instagram": "discojaguar.bta",
+    "twitter": "",
+    "website": "http://www.discojaguar.inf.travel/company/section",
+    "promoter": "",
+    "tiktok": "",
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_dj.jpg",
+    "image_gallery": [
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/dj_1.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/dj_2.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/dj_3.jpeg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/dj_4.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/dj_5.jpg" }
+    ],
+
+    "genres": {
+      "music": [
+        "salsa",
+        "timba",
+        "musicas improvisadas",
+        "jazz",
+        "fusiones",
+        "cumbia",
+        "porro",
+        "ska",
+        "reggaetón"
+      ]
+    }
+  },
+  {
+    "id": "9",
+    "name": "Cuban Jazz",
+    "place_type": "CERRADO DEFINITIVAMENTE",
+    "music_genre": "Salsa",
+    "country": "Colombia",
+    "state": "Bogotá DC",
+    "city": "Bogotá DC",
+    "address": "Cra. 7 # 12C - 36",
+    "location": "4.6009388,-74.0735901",
+    "Sede principal": "",
+    "email": "",
+    "phone": 6013413714,
+    "public_private": "313 2043278",
+    "facebook": "CubanJazzCafe",
+    "instagram": "cubanjazzcafebogota",
+    "twitter": "",
+    "website": "",
+    "promoter": "",
+    "tiktok": "",
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_cj.jpg",
+    "image_gallery": [
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cj_1.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cj_2.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cj_3.webp" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cj_4.jpg" }
+    ],
+
+    "genres": {
+      "music": ["salsa", "timba", "jazz", "fusiones", "cumbia"]
+    }
+  },
+  {
+    "id": "10",
+    "name": "PuraPizza",
+    "place_type": "",
+    "music_genre": "Jazz",
+    "country": "Colombia",
+    "state": "Bogotá DC",
+    "city": "Bogotá DC",
+    "address": "Calle 93 # 11A - 11",
+    "location": "4.6746573,-74.0484797",
+    "Sede principal": "",
+    "email": "purapizzaorganicbogota@gmail.com",
+    "phone": "312 3265737",
+    "public_private": "",
+    "facebook": "PuraPizzaOrganicBta",
+    "instagram": "purapizzaorganicbogota",
+    "twitter": "",
+    "website": "https://www.purapizzaorganic.com/copia-de-inicio",
+    "promoter": "Diego Santanelli , santanelliart@gmail.com",
+    "tiktok": "",
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_ppjazz.jpg",
+    "image_gallery": [
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/pp_1.jfif" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/pp_2.jfif" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/pp_3.jfif" }
+    ],
+
+    "genres": {
+      "music": ["musicas improvisadas", "jazz", "fusiones"]
+    }
+  },
+  {
+    "id": "11",
+    "name": "Latino Power",
+    "place_type": "",
+    "music_genre": "",
+    "country": "Colombia",
+    "state": "Bogotá DC",
+    "city": "Bogotá DC",
+    "address": "Cl. 58 # 13 - 88",
+    "location": "4.6448237,-74.0651584",
+    "Sede principal": "",
+    "email": "latinopower.bogota@gmail.com",
+    "phone": "319 6654299",
+    "public_private": "",
+    "facebook": "LatinoPowerChapinero",
+    "instagram": "latinopowerchapinero",
+    "twitter": "",
+    "website": "http://latinopower.co",
+    "promoter": "",
+    "tiktok": "",
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_latp.jpg",
+    "image_gallery": [
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/lpbta_1.webp" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/lpbta_2.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/lpbta_3.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/lpbta_4.jpg" }
+    ],
+    "genres": {
+      "music": [
+        "salsa",
+        "timba",
+        "musicas improvisadas",
+        "jazz",
+        "fusiones",
+        "cumbia",
+        "porro",
+        "ska"
+      ]
+    }
+  },
+  {
+    "id": "12",
+    "name": "Boogaloop CLUB",
+    "place_type": "iscoteca crossunder de Chapinero. Música en vivo y cultura Dj",
+    "music_genre": "",
+    "country": "Colombia",
+    "state": "Bogotá DC",
+    "city": "Bogotá DC",
+    "address": "Cra 13 # 65 - 42",
+    "location": "4.6520534,-74.0629683",
+    "Sede principal": "",
+    "email": "elboogaloopdelgato@gmail.com",
+    "phone": 7173263,
+    "public_private": "300 4987255",
+    "facebook": "BoogaloopColombia",
+    "instagram": "boogaloopcolombia",
+    "twitter": "",
+    "website": "https://ra.co/clubs/149900",
+    "promoter": "http://boogaloopteve.com",
+    "tiktok": "",
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_b.jpg",
+    "image_gallery": [
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/bc_1.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/bc_2.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/bc_3.webp" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/bc_4.jpg" }
+    ],
+    "genres": {
+      "music": [
+        "salsa",
+        "timba",
+        "musicas improvisadas",
+        "jazz",
+        "fusiones",
+        "cumbia",
+        "porro",
+        "ska"
+      ]
+    }
+  },
+  {
+    "id": "13",
+    "name": "Café cinema La resistencia",
+    "place_type": "",
+    "music_genre": "Salsa, Cumbia",
+    "country": "Colombia",
+    "state": "Bogotá DC",
+    "city": "Bogotá DC",
+    "address": "Cra 7 # 55 - 03",
+    "location": "4.6415229,-74.0625434",
+    "Sede principal": "",
+    "email": "cafecinema90@gmail.com",
+    "phone": "319 2888028",
+    "public_private": "",
+    "facebook": "cafecinema90",
+    "instagram": "cafecinema90",
+    "twitter": "",
+    "website": "https://cinemaparaiso.com.co",
+    "promoter": "",
+    "tiktok": "",
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_cc.jpg",
+    "image_gallery": [
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cc53_1.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cc53_2.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cc53_3.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cc53_4.jpg" }
+    ],
+    "genres": {
+      "music": [
+        "salsa",
+        "timba",
+        "musicas improvisadas",
+        "fusiones",
+        "cumbia",
+        "porro"
+      ]
+    }
+  },
+  {
+    "id": "14",
+    "name": "El Goce Pagano",
+    "place_type": "",
+    "music_genre": "Salsa",
+    "country": "Colombia",
+    "state": "Bogotá DC",
+    "city": "Bogotá DC",
+    "address": "Dg. 20A # 0 - 82",
+    "location": "4.6035242,-74.0660281",
+    "Sede principal": "",
+    "email": "elgocepagano@gmail.com",
+    "phone": "316 8710646",
+    "public_private": "",
+    "facebook": "el.goce.pagano.bar",
+    "instagram": "elgocepagano",
+    "twitter": "elgocepagano",
+    "website": "https://elgocepagano.co/salsa",
+    "promoter": "",
+    "tiktok": "",
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_egp.jpg",
+    "image_gallery": [
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gp_1.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gp_2.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gp_3.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gp_4.webp" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gp_5.jpg" }
+    ],
+    "genres": {
+      "music": ["salsa", "timba", "fusiones", "cumbia", "porro"]
+    }
+  },
+  {
+    "id": "15",
+    "name": "Salsa Camará",
+    "place_type": "",
+    "music_genre": "Salsa",
+    "country": "Colombia",
+    "state": "Bogotá DC",
+    "city": "Bogotá DC",
+    "address": "Cra. 11 # 70a - 22",
+    "location": "4.6557988,-74.0595785",
+    "Sede principal": "",
+    "email": "salsacamara@yahoo.com",
+    "phone": "313 8308844",
+    "public_private": "",
+    "facebook": "salsacamarabar",
+    "instagram": "",
+    "twitter": "",
+    "website": "",
+    "promoter": "",
+    "tiktok": "salsa-camara",
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_sc.jpg",
+    "image_gallery": [
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sc_bta_1.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sc_bta_2.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sc_bta_3.webp" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sc_bta_4.webp" }
+    ],
+    "genres": {
+      "music": ["salsa", "timba", "fusiones", "cumbia", "porro"]
+    }
+  },
+  {
+    "id": "16",
+    "name": "Longo's",
+    "place_type": "",
+    "music_genre": "",
+    "country": "Colombia",
+    "state": "Bogotá DC",
+    "city": "Bogotá DC",
+    "address": "",
+    "location": "4.6617844,-74.0645625",
+    "Sede principal": "",
+    "email": "",
+    "phone": "",
+    "public_private": "",
+    "facebook": "soylongos",
+    "instagram": "soylongos",
+    "twitter": "",
+    "website": "",
+    "promoter": "",
+    "tiktok": "",
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_sl.jpg",
+    "image_gallery": [
+      { "src": "https://npcarlos.co/artistsHive_mocks/cover_pl.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/cover_pl.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/cover_pl.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/cover_pl.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/cover_pl.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/cover_pl.jpg" }
+    ],
+    "genres": {
+      "music": ["salsa", "timba", "fusiones", "cumbia", "porro"]
+    }
+  },
+  {
+    "id": "17",
+    "name": "Café Vallejo",
+    "place_type": "",
+    "music_genre": "",
+    "country": "Colombia",
+    "state": "Antioquia",
+    "city": "Medellín",
+    "address": "Circular 74 b # 39b - 126",
+    "location": "6.2464459,-75.5947898",
+    "Sede principal": "",
+    "email": "cafevallejo@gmail.com",
+    "phone": 6045018172,
+    "public_private": "",
+    "facebook": "cafevallejo",
+    "instagram": "",
+    "twitter": "",
+    "website": "",
+    "promoter": "",
+    "tiktok": "",
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_cv.png",
+    "image_gallery": [
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cv_1.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cv_2.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cv_3.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cv_4.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cv_5.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cv_6.jpg" }
+    ],
+    "genres": {
+      "music": ["salsa", "timba", "fusiones", "cumbia", "porro"]
+    }
+  },
+  {
+    "id": "18",
+    "name": "Revellion Bar",
+    "place_type": "",
+    "music_genre": "",
+    "country": "Colombia",
+    "state": "Bogotá DC",
+    "city": "Bogotá DC",
+    "address": "Cl. 16 # 4 - 23",
+    "location": "4.6010415,-74.0704066",
+    "Sede principal": "",
+    "email": "comercial@revellion.com",
+    "phone": "321 9967464",
+    "public_private": "",
+    "facebook": "RevellionCultuBar",
+    "instagram": "",
+    "twitter": "",
+    "website": "",
+    "promoter": "",
+    "tiktok": "",
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_r.jpg",
+    "image_gallery": [
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/rcb_1.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/rcb_2.jpeg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/rcb_3.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/rcb_4.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/rcb_5.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/rcb_6.jpg" }
+    ],
+    "genres": {
+      "music": ["rock", "ska"]
+    }
+  },
+  {
+    "id": "19",
+    "name": "Jackass Rock Bar",
+    "place_type": "",
+    "music_genre": "Rock",
+    "country": "Colombia",
+    "state": "Bogotá DC",
+    "city": "Bogotá DC",
+    "address": "Ac 53 # 70d - 41",
+    "location": "4.6693518,-74.1050706",
+    "Sede principal": "",
+    "email": "",
+    "phone": "310 2223748",
+    "public_private": "",
+    "facebook": "",
+    "instagram": "",
+    "twitter": "",
+    "website": "https://www.jackassrockbar.com",
+    "promoter": "",
+    "tiktok": "",
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_j.jpg",
+    "image_gallery": [
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/j_1.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/j_2.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/j_3.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/j_4.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/j_5.jpg" }
+    ],
+    "genres": {
+      "music": ["rock", "ska"]
+    }
+  },
+  {
+    "id": "20",
+    "name": "El anónimo",
+    "place_type": "centro cultural",
+    "music_genre": "",
+    "country": "Colombia",
+    "state": "Bogotá DC",
+    "city": "Bogotá DC",
+    "address": "TV 59 106 21 IN 17 19",
+    "location": "4.6937581,-74.066944",
+    "Sede principal": "",
+    "email": "elanonimobar@gmail.com",
+    "phone": "(601) 4783769",
+    "public_private": "",
+    "facebook": "BarElAnonimo",
+    "instagram": "el_anonimo_bar",
+    "twitter": "elanonimobar",
+    "website": "",
+    "promoter": "",
+    "tiktok": "",
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_ea.jpg",
+    "image_gallery": [
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/ea_1.webp" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/ea_2.webp" }
+    ],
+    "genres": {
+      "music": ["rock", "ska", "cantautor", "cumbia", "fusiones", "afrobeat"]
+    }
+  },
+  {
+    "id": "21",
+    "name": "Son Havana",
+    "place_type": "",
+    "music_genre": "",
+    "country": "Colombia",
+    "state": "Antioquia",
+    "city": "Medellín",
+    "address": "Carrera 73, Av. San Juan # 44 - 56",
+    "location": "6.2502648,-75.5921719",
+    "Sede principal": "",
+    "email": "sonhavanabar@gmail.com",
+    "phone": "320 4512267",
+    "public_private": "",
+    "facebook": "sonhavana",
+    "instagram": "sonhavana",
+    "twitter": "",
+    "website": "http://www.sonhavana.co",
+    "promoter": "",
+    "tiktok": "",
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_sh.jpg",
+    "image_gallery": [
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sh_1.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sh_2.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sh_3.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sh_4.jpg" }
+    ],
+    "genres": {
+      "music": [
+        "salsa",
+        "timba",
+        "musicas improvisadas",
+        "fusiones",
+        "cumbia",
+        "porro",
+        "jazz"
+      ]
+    }
+  },
+  {
+    "id": "22",
+    "name": "Teatro Charlot",
+    "place_type": "",
+    "music_genre": "",
+    "country": "Colombia",
+    "state": "Bogotá DC",
+    "city": "Bogotá DC",
+    "address": "Calle 70a # 9 - 51",
+    "location": "4.6549171,-74.0585907",
+    "Sede principal": "",
+    "email": "teatrocharlot@gmail.com",
+    "phone": "310 8748106",
+    "public_private": "",
+    "facebook": "charloteatro",
+    "instagram": "charloteatro",
+    "twitter": "",
+    "website": "http://www.academiacharlot.co",
+    "promoter": "",
+    "tiktok": "",
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_tc.jpg",
+    "image_gallery": [
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/tc_1.webp" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/tc_2.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/tc_3.jpg" }
+    ],
+    "genres": {
+      "music": ["all"]
+    }
+  },
+  {
+    "id": "23",
+    "name": "A seis manos",
+    "place_type": "Espacio cultural",
+    "music_genre": "",
+    "country": "Colombia",
+    "state": "Bogotá DC",
+    "city": "Bogotá DC",
+    "address": "Cl. 22 # 8 - 60",
+    "location": "4.6084868,-74.0713828",
+    "Sede principal": "",
+    "email": "manos.seis@gmail.com, aseismanoseventos@gmail.com",
+    "phone": "(601) 2828441, 322 708 57 57",
+    "public_private": "",
+    "facebook": "6manos",
+    "instagram": "aseismanos",
+    "twitter": "6manos",
+    "website": "http://aseismanos.com.co",
+    "promoter": "",
+    "tiktok": "",
+    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_a6m.jpg",
+    "image_gallery": [
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
+      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+    ],
+    "genres": {
+      "music": [
+        "salsa",
+        "timba",
+        "musicas improvisadas",
+        "fusiones",
+        "cumbia",
+        "porro"
+      ]
+    }
+  }
+]
