@@ -76,6 +76,35 @@ function fillRelationships(element) {
     },
   ]);
 
+  const esArray = Array.isArray(eventos);
+  let eventsArray = eventos;
+  if (!esArray) {
+    eventsArray = [eventos];
+  }
+
+  eventsArray.forEach((evento) => {
+    const main_artist_genres = evento.main_artist?.genres || {};
+    const guest_artist_genres = evento.guest_artist?.genres || {};
+
+    const all_genres = {};
+
+    const artists = [main_artist_genres, guest_artist_genres];
+
+    artists.forEach((artistGenres) => {
+      Object.keys(artistGenres).forEach((artType) => {
+        if (!all_genres[artType]) {
+          all_genres[artType] = [];
+        }
+        const newGenres = artistGenres[artType].filter(
+          (artistGenre) => !all_genres[artType].includes(artistGenre)
+        );
+        all_genres[artType] = [...all_genres[artType], ...newGenres];
+      });
+    });
+
+    evento.genres = all_genres;
+  });
+
   // // Llenar nombres de eventos incompletos
   // eventos.forEach((evento) => {
   //   evento.name =

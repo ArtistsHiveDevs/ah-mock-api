@@ -11,7 +11,9 @@
 
     "since": 2002,
     "home_city": "Bogotá DC, Colombia",
-    "genres": ["Salsa"],
+    "genres": {
+      "music": ["cumbia", "bullerengue", "folclor", "fusiones"]
+    },
     "spoken_languages": ["ES", "EN", "FR"],
     "stage_languages": ["ES"],
     "arts_languages": ["ES"],
@@ -41,7 +43,9 @@
 
     "since": 2002,
     "home_city": "Bogotá DC, Colombia",
-    "genres": ["Salsa"],
+    "genres": {
+      "music": ["Aguabajo", "folclor", "Pacífico"]
+    },
     "spoken_languages": ["ES", "EN", "FR"],
     "stage_languages": ["ES"],
     "arts_languages": ["ES"],
@@ -71,7 +75,9 @@
 
     "since": 2002,
     "home_city": "Bogotá DC, Colombia",
-    "genres": ["Salsa"],
+    "genres": {
+      "music": ["rock experimental", "rock"]
+    },
     "spoken_languages": ["ES", "EN", "FR"],
     "stage_languages": ["ES"],
     "arts_languages": ["ES"],
@@ -101,7 +107,16 @@
 
     "since": 2002,
     "home_city": "Bogotá DC, Colombia",
-    "genres": ["Salsa"],
+    "genres": {
+      "music": [
+        "Contemporáneo",
+        "freejazz",
+        "Músicas improvisadas",
+        "jazz",
+        "folclor",
+        "fusiones"
+      ]
+    },
     "spoken_languages": ["ES", "EN", "FR"],
     "stage_languages": ["ES"],
     "arts_languages": ["ES"],
@@ -131,7 +146,18 @@
 
     "since": 2002,
     "home_city": "Bogotá DC, Colombia",
-    "genres": ["Salsa"],
+    "genres": {
+      "music": [
+        "freejazz",
+        "rock experimental",
+        "Músicas improvisadas",
+        "jazz",
+        "rock",
+        "folclor",
+        "fusiones",
+        "Reggae"
+      ]
+    },
     "spoken_languages": ["ES", "EN", "FR"],
     "stage_languages": ["ES"],
     "arts_languages": ["ES"],
@@ -161,7 +187,9 @@
 
     "since": 2002,
     "home_city": "Bogotá DC, Colombia",
-    "genres": ["Salsa", "Pop", "Gypsy", "Jazz"],
+    "genres": {
+      "music": ["Salsa", "Pop", "Gypsy", "Jazz"]
+    },
     "spoken_languages": ["ES", "EN", "FR"],
     "stage_languages": ["ES"],
     "arts_languages": ["ES"],
@@ -195,7 +223,9 @@
 
     "since": 2002,
     "home_city": "Bogotá DC, Colombia",
-    "genres": ["Salsa"],
+    "genres": {
+      "music": ["Pacífico", "folclor", "fusiones"]
+    },
     "spoken_languages": ["ES", "EN", "FR"],
     "stage_languages": ["ES"],
     "arts_languages": ["ES"],
@@ -225,7 +255,9 @@
 
     "since": 2002,
     "home_city": "Bogotá DC, Colombia",
-    "genres": ["Salsa"],
+    "genres": {
+      "music": ["Carranga", "folclor", "fusiones", "Rock"]
+    },
     "spoken_languages": ["ES", "EN", "FR"],
     "stage_languages": ["ES"],
     "arts_languages": ["ES"],
@@ -255,7 +287,17 @@
 
     "since": 2002,
     "home_city": "Bogotá DC, Colombia",
-    "genres": ["Salsa"],
+    "genres": {
+      "music": [
+        "Cumbia",
+        "freejazz",
+        "rock experimental",
+        "Músicas improvisadas",
+        "jazz",
+        "folclor",
+        "fusiones"
+      ]
+    },
     "spoken_languages": ["ES", "EN", "FR"],
     "stage_languages": ["ES"],
     "arts_languages": ["ES"],
@@ -286,7 +328,9 @@
 
     "since": 2002,
     "home_city": "Bogotá DC, Colombia",
-    "genres": ["Salsa"],
+    "genres": {
+      "music": ["cantautor", "folclor", "fusiones"]
+    },
     "spoken_languages": ["ES", "EN", "FR"],
     "stage_languages": ["ES"],
     "arts_languages": ["ES"],
@@ -316,7 +360,9 @@
 
     "since": 2002,
     "home_city": "Bogotá DC, Colombia",
-    "genres": ["Salsa"],
+    "genres": {
+      "music": ["jazz", "rock", "fusiones"]
+    },
     "spoken_languages": ["ES", "EN", "FR"],
     "stage_languages": ["ES"],
     "arts_languages": ["ES"],
@@ -347,7 +393,9 @@
 
     "since": 2002,
     "home_city": "Bogotá DC, Colombia",
-    "genres": ["Salsa"],
+    "genres": {
+      "music": ["Pacífico", "Contemporáneo", "freejazz", "folclor", "fusiones"]
+    },
     "spoken_languages": ["ES", "EN", "FR"],
     "stage_languages": ["ES"],
     "arts_languages": ["ES"],
@@ -377,7 +425,9 @@
 
     "since": 2002,
     "home_city": "Bogotá DC, Colombia",
-    "genres": ["Salsa"],
+    "genres": {
+      "music": ["pacífico", "folclor", "fusiones"]
+    },
     "spoken_languages": ["ES", "EN", "FR"],
     "stage_languages": ["ES"],
     "arts_languages": ["ES"],
@@ -407,7 +457,9 @@
 
     "since": 2002,
     "home_city": "Bogotá DC, Colombia",
-    "genres": ["Salsa"],
+    "genres": {
+      "music": ["vallenato", "folclor", "fusiones"]
+    },
     "spoken_languages": ["ES", "EN", "FR"],
     "stage_languages": ["ES"],
     "arts_languages": ["ES"],
@@ -437,7 +489,16 @@
 
     "since": 2002,
     "home_city": "Bogotá DC, Colombia",
-    "genres": ["Salsa"],
+    "genres": {
+      "music": [
+        "rock experimental",
+        "Músicas improvisadas",
+        "jazz",
+        "rock",
+        "folclor",
+        "fusiones"
+      ]
+    },
     "spoken_languages": ["ES", "EN", "FR"],
     "stage_languages": ["ES"],
     "arts_languages": ["ES"],
@@ -467,7 +528,9 @@
 
     "since": 2002,
     "home_city": "Bogotá DC, Colombia",
-    "genres": ["Salsa"],
+    "genres": {
+      "music": ["salsa", "rock", "reggae", "fusiones"]
+    },
     "spoken_languages": ["ES", "EN", "FR"],
     "stage_languages": ["ES"],
     "arts_languages": ["ES"],
@@ -497,7 +560,9 @@
 
     "since": 2002,
     "home_city": "Bogotá DC, Colombia",
-    "genres": ["Salsa"],
+    "genres": {
+      "music": ["folclor", "fusiones"]
+    },
     "spoken_languages": ["ES", "EN", "FR"],
     "stage_languages": ["ES"],
     "arts_languages": ["ES"],
@@ -530,7 +595,9 @@
 
     "since": 2002,
     "home_city": "Bogotá DC, Colombia",
-    "genres": ["Salsa"],
+    "genres": {
+      "music": ["folclor", "fusiones"]
+    },
     "spoken_languages": ["ES", "EN", "FR"],
     "stage_languages": ["ES"],
     "arts_languages": ["ES"],
