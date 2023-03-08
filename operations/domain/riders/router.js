@@ -91,9 +91,9 @@ function filterResultsByQuery(req, result) {
 
 module.exports = [
   router.get(RoutesConstants.eventList, (req, res) => {
-    let result = helpers.getEntityData("Academy");
+    let result = helpers.getEntityData("Rider");
     try {
-      return res.json(filterResultsByQuery(req, result));
+      return res.json(result);
     } catch (error) {
       console.error(error);
 
@@ -101,16 +101,16 @@ module.exports = [
     }
   }),
 
-  router.get(RoutesConstants.findEventById, (req, res) => {
-    const { eventId: placeId } = req.params;
-    const searchPlace = helpers.searchResult(
-      helpers.getEntityData("Academy"),
-      placeId,
+  router.get(RoutesConstants.findRiderById, (req, res) => {
+    const { riderId } = req.params;
+    const searchRider = helpers.searchResult(
+      helpers.getEntityData("Rider"),
+      riderId,
       "id"
     );
     try {
       return res.json(
-        filterResultsByQuery(req, searchPlace) || {
+        searchRider || {
           message: helpers.noResultDefaultLabel,
         }
       );

@@ -286,6 +286,12 @@ module.exports = {
     const users = JSON.parse(
       fs.readFileSync(`./assets/mocks/domain/users/usersList.json`)
     );
+    const riders = JSON.parse(
+      fs.readFileSync(`./assets/mocks/domain/riders/ridersList.json`)
+    );
+    const academies = JSON.parse(
+      fs.readFileSync(`./assets/mocks/domain/academies/academiesList.json`)
+    );
     if (entityName === "Artist") {
       response = [...artists];
     } else if (entityName === "Event") {
@@ -296,6 +302,10 @@ module.exports = {
       response = [...places];
     } else if (entityName === "User") {
       response = [...users];
+    } else if (entityName === "Rider") {
+      response = [...riders];
+    } else if (entityName === "Academy") {
+      response = [...academies];
     }
     return response;
   },
