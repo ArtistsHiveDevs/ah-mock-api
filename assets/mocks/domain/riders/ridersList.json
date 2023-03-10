@@ -4,132 +4,148 @@
     "name": "Rider Principal",
     "id": "1",
     "instruments": [],
-    "inputList": [
-      {
-        "channelNumber": 1,
-        "instrumentName": "Kick Drum",
-        "microphone": "Shure Beta 52 / Akg D112",
-        "inserts": "COMP/GATE"
-      },
-      {
-        "channelNumber": 2,
-        "instrumentName": "Snare Drum TOP",
-        "microphone": "Shure Sm 57",
-        "inserts": "COMP"
-      },
-      {
-        "channelNumber": 3,
-        "instrumentName": "Snare Drum BOTTOM",
-        "microphone": "ShureSm 57",
-        "inserts": "COMP"
-      },
-      {
-        "channelNumber": 4,
-        "instrumentName": "Hi Hat",
-        "microphone": "Shure Beta 81",
-        "inserts": ""
-      },
-      {
-        "channelNumber": 5,
-        "instrumentName": "Small Tom",
-        "microphone": "ShureBETA-98",
-        "inserts": "GATE"
-      },
-      {
-        "channelNumber": 6,
-        "instrumentName": "Medium Tom",
-        "microphone": "ShureBETA-98",
-        "inserts": "GATE"
-      },
-      {
-        "channelNumber": 7,
-        "instrumentName": "Floor Tom",
-        "microphone": "ShureBETA-98",
-        "inserts": "GATE"
-      },
-      {
-        "channelNumber": 8,
-        "instrumentName": "Over Head L",
-        "microphone": "Shure Sm 81",
-        "inserts": ""
-      },
-      {
-        "channelNumber": 9,
-        "instrumentName": "Over Head R",
-        "microphone": "Shure Sm 81 / rode NT-5",
-        "inserts": ""
-      },
-      {
-        "channelNumber": 10,
-        "instrumentName": "Bajo",
-        "microphone": "Akg D112/ D.I. Active",
-        "inserts": "COMP"
-      },
-      {
-        "channelNumber": 11,
-        "instrumentName": "Guitarra Líder",
-        "microphone": "Shure SM 57 / Beta 57A",
-        "inserts": ""
-      },
-      {
-        "channelNumber": 12,
-        "instrumentName": "Guitarra Rítmica",
-        "microphone": "Shure SM 57 / Beta 57A",
-        "inserts": ""
-      },
-      {
-        "channelNumber": 13,
-        "instrumentName": "Voz Líder",
-        "microphone": "Shure Sm 58",
-        "inserts": "COMP/GATE/RV"
-      },
-      {
-        "channelNumber": 14,
-        "instrumentName": "Coro Andrés",
-        "microphone": "Shure Sm 58",
-        "inserts": "COMP/GATE/RV"
-      },
-      {
-        "channelNumber": 15,
-        "instrumentName": "Coro Gustavo",
-        "microphone": "Shure Sm 58",
-        "inserts": "COMP/GATE/RV"
+    "requirements": {
+      "audio": {
+        "inputList": [
+          {
+            "channelNumber": 1,
+            "instrumentName": "Kick Drum",
+            "microphone": "Shure Beta 52 / Akg D112",
+            "inserts": "COMP/GATE"
+          },
+          {
+            "channelNumber": 2,
+            "instrumentName": "Snare Drum TOP",
+            "microphone": "Shure Sm 57",
+            "inserts": "COMP"
+          },
+          {
+            "channelNumber": 3,
+            "instrumentName": "Snare Drum BOTTOM",
+            "microphone": "ShureSm 57",
+            "inserts": "COMP"
+          },
+          {
+            "channelNumber": 4,
+            "instrumentName": "Hi Hat",
+            "microphone": "Shure Beta 81",
+            "inserts": ""
+          },
+          {
+            "channelNumber": 5,
+            "instrumentName": "Small Tom",
+            "microphone": "ShureBETA-98",
+            "inserts": "GATE"
+          },
+          {
+            "channelNumber": 6,
+            "instrumentName": "Medium Tom",
+            "microphone": "ShureBETA-98",
+            "inserts": "GATE"
+          },
+          {
+            "channelNumber": 7,
+            "instrumentName": "Floor Tom",
+            "microphone": "ShureBETA-98",
+            "inserts": "GATE"
+          },
+          {
+            "channelNumber": 8,
+            "instrumentName": "Over Head L",
+            "microphone": "Shure Sm 81",
+            "inserts": ""
+          },
+          {
+            "channelNumber": 9,
+            "instrumentName": "Over Head R",
+            "microphone": "Shure Sm 81 / rode NT-5",
+            "inserts": ""
+          },
+          {
+            "channelNumber": 10,
+            "instrumentName": "Bajo",
+            "microphone": "Akg D112/ D.I. Active",
+            "inserts": "COMP"
+          },
+          {
+            "channelNumber": 11,
+            "instrumentName": "Guitarra Líder",
+            "microphone": "Shure SM 57 / Beta 57A",
+            "inserts": ""
+          },
+          {
+            "channelNumber": 12,
+            "instrumentName": "Guitarra Rítmica",
+            "microphone": "Shure SM 57 / Beta 57A",
+            "inserts": ""
+          },
+          {
+            "channelNumber": 13,
+            "instrumentName": "Voz Líder",
+            "microphone": "Shure Sm 58",
+            "inserts": "COMP/GATE/RV"
+          },
+          {
+            "channelNumber": 14,
+            "instrumentName": "Coro Andrés",
+            "microphone": "Shure Sm 58",
+            "inserts": "COMP/GATE/RV"
+          },
+          {
+            "channelNumber": 15,
+            "instrumentName": "Coro Gustavo",
+            "microphone": "Shure Sm 58",
+            "inserts": "COMP/GATE/RV"
+          }
+        ],
+        "mixesList": [
+          {
+            "mixNumber": 1,
+            "description": "Frente voces líderes",
+            "monitor": "4 monitores"
+          },
+          { "mixNumber": 2, "description": "Guitarra", "monitor": "1 monitor" },
+          { "mixNumber": 3, "description": "Bajo", "monitor": "1 monitor" },
+          {
+            "mixNumber": 4,
+            "description": "Percusión",
+            "monitor": "2 monitores"
+          },
+          { "mixNumber": 5, "description": "Percusión", "monitor": "XLR" },
+          { "mixNumber": 6, "description": "Drum fill", "monitor": "2 ways" },
+          { "mixNumber": 7, "description": "Drum fill", "monitor": "XLR" },
+          {
+            "mixNumber": 8,
+            "description": "Secuencias",
+            "monitor": "2 monitores"
+          },
+          { "mixNumber": 9, "description": "Side fill L", "monitor": "3 ways" },
+          {
+            "mixNumber": 10,
+            "description": "Side fill R",
+            "monitor": "3 ways"
+          },
+          {
+            "mixNumber": 11,
+            "description": "Slow vocal",
+            "monitor": "In Ear",
+            "notes": "Shure PSM 700"
+          },
+          {
+            "mixNumber": 12,
+            "description": "Goyo vocal",
+            "monitor": "In ear",
+            "notes": "Shure PSM 700"
+          },
+          {
+            "mixNumber": 13,
+            "description": "Tostao vocal",
+            "monitor": "In ear",
+            "notes": "Shure PSM 700"
+          }
+        ]
       }
-    ],
-    "mixesList": [
-      {
-        "mixNumber": 1,
-        "description": "Frente voces líderes",
-        "monitor": "4 monitores"
-      },
-      { "mixNumber": 2, "description": "Guitarra", "monitor": "1 monitor" },
-      { "mixNumber": 3, "description": "Bajo", "monitor": "1 monitor" },
-      { "mixNumber": 4, "description": "Percusión", "monitor": "2 monitores" },
-      { "mixNumber": 5, "description": "Percusión", "monitor": "XLR" },
-      { "mixNumber": 6, "description": "Drum fill", "monitor": "2 ways" },
-      { "mixNumber": 7, "description": "Drum fill", "monitor": "XLR" },
-      { "mixNumber": 8, "description": "Secuencias", "monitor": "2 monitores" },
-      { "mixNumber": 9, "description": "Side fill L", "monitor": "3 ways" },
-      { "mixNumber": 10, "description": "Side fill R", "monitor": "3 ways" },
-      {
-        "mixNumber": 11,
-        "description": "Slow vocal",
-        "monitor": "In Ear",
-        "notes": "Shure PSM 700"
-      },
-      {
-        "mixNumber": 12,
-        "description": "Goyo vocal",
-        "monitor": "In ear",
-        "notes": "Shure PSM 700"
-      },
-      {
-        "mixNumber": 13,
-        "description": "Tostao vocal",
-        "monitor": "In ear",
-        "notes": "Shure PSM 700"
-      }
-    ],
+    },
     "backline": {
       "external": [
         {
@@ -207,79 +223,103 @@
       "width": 4,
       "unitMeasure": "mts"
     },
-    "crewList": {
-      "artists": [
-        {
-          "name": "Carlos Valencia",
-          "role": "Director & voz líder",
-          "document_type": "CC",
-          "document_number": "1234566789"
-        },
-        {
-          "name": "Gloria Martínez",
-          "role": "Voz líder",
-          "document_type": "CC",
-          "document_number": "1234566789"
-        },
-        {
-          "name": "Miguel Martínez",
-          "role": "Voz líder & secuencias",
-          "document_type": "CC",
-          "document_number": "1234566789"
-        },
-        {
-          "name": "Larry Viveros Ararat",
-          "role": "Percusionista",
-          "document_type": "CC",
-          "document_number": "1234566789"
-        },
-        {
-          "name": "Alexander Sánchez",
-          "role": "Bajista",
-          "document_type": "CC",
-          "document_number": "1234566789"
-        },
-        {
-          "name": "Milton Jurado Restrepo",
-          "role": "Guitarrista",
-          "document_type": "CC",
-          "document_number": "1234566789"
-        },
-        {
-          "name": "Andrés Zea",
-          "role": "Baterista",
-          "document_type": "CC",
-          "document_number": "1234566789"
-        }
-      ],
-      "engineers": [
-        {
-          "name": "Carlos Alberto Rodríguez",
-          "role": "Ing. Sonido FOH",
-          "document_type": "CC",
-          "document_number": "1234566789"
-        },
-        {
-          "name": "Edison Fagua",
-          "role": "Ing. Sonido MON",
-          "document_type": "CC",
-          "document_number": "1234566789"
-        }
-      ],
-      "managers": [
-        {
-          "name": "Alexander Farigua",
-          "role": "Stage manager",
-          "document_type": "CC",
-          "document_number": "1234566789"
-        },
-        {
-          "name": "Ricardo Leyva P.",
-          "role": "Booking agent",
-          "document_type": "CC",
-          "document_number": "1234566789"
-        }
-      ]
+    "staff": {
+      "crewList": {
+        "artists": [
+          {
+            "name": "Carlos Valencia",
+            "artistic_name": "Tostao",
+            "role": "Director & voz líder",
+            "document_type": "CC",
+            "document_number": "1234566789"
+          },
+          {
+            "name": "Gloria Martínez",
+            "artistic_name": "Goyo",
+            "role": "Voz líder",
+            "document_type": "CC",
+            "document_number": "1234566789",
+            "allergies": ["Mani", "polen"],
+            "dietary_restrictions": "vegan"
+          },
+          {
+            "name": "Miguel Martínez",
+            "artistic_name": "Mike",
+            "role": "Voz líder & secuencias",
+            "document_type": "CC",
+            "document_number": "1234566789",
+            "dietary_restrictions": "vegetarian"
+          },
+          {
+            "name": "Larry Viveros Ararat",
+            "role": "Percusionista",
+            "document_type": "CC",
+            "document_number": "1234566789"
+          },
+          {
+            "name": "Alexander Sánchez",
+            "role": "Bajista",
+            "document_type": "CC",
+            "document_number": "1234566789"
+          },
+          {
+            "name": "Milton Jurado Restrepo",
+            "role": "Guitarrista",
+            "document_type": "CC",
+            "document_number": "1234566789"
+          },
+          {
+            "name": "Andrés Zea",
+            "role": "Baterista",
+            "document_type": "CC",
+            "document_number": "1234566789",
+            "dietary_restrictions": "vegan"
+          }
+        ],
+        "engineers": [
+          {
+            "name": "Carlos Alberto Rodríguez",
+            "role": "Ing. Sonido FOH",
+            "document_type": "CC",
+            "document_number": "1234566789"
+          },
+          {
+            "name": "Edison Fagua",
+            "role": "Ing. Sonido MON",
+            "document_type": "CC",
+            "document_number": "1234566789"
+          }
+        ],
+        "managers": [
+          {
+            "name": "Alexander Farigua",
+            "role": "Stage manager",
+            "document_type": "CC",
+            "document_number": "1234566789"
+          },
+          {
+            "name": "Ricardo Leyva P.",
+            "role": "Booking agent",
+            "document_type": "CC",
+            "document_number": "1234566789"
+          }
+        ],
+        "security": [
+          {
+            "name": "Juan Pérez",
+            "role": "Security agent",
+            "document_type": "CC",
+            "document_number": "1234566789"
+          },
+          {
+            "name": "Fulanito Rodríguez",
+            "role": "Security agent",
+            "document_type": "CC",
+            "document_number": "1234566789"
+          }
+        ]
+      },
+      "rooming_list": {}
     }
   },
   {
@@ -287,271 +327,278 @@
     "name": "Rider Tarima pequeña",
     "id": "2",
     "instruments": [],
-    "inputList": [
-      {
-        "channelNumber": 1,
-        "instrumentName": "Kick Drum",
-        "microphone": "Shure Beta 52 / Akg D112",
-        "inserts": "COMP/GATE"
-      },
-      {
-        "channelNumber": 2,
-        "instrumentName": "Snare Drum TOP",
-        "microphone": "Shure Sm 57",
-        "inserts": "COMP"
-      },
-      {
-        "channelNumber": 3,
-        "instrumentName": "Snare Drum BOTTOM",
-        "microphone": "ShureSm 57",
-        "inserts": "COMP"
-      },
-      {
-        "channelNumber": 4,
-        "instrumentName": "Hi Hat",
-        "microphone": "Shure Beta 81",
-        "inserts": ""
-      },
-      {
-        "channelNumber": 5,
-        "instrumentName": "Small Tom",
-        "microphone": "ShureBETA-98",
-        "inserts": "GATE"
-      },
-      {
-        "channelNumber": 6,
-        "instrumentName": "Medium Tom",
-        "microphone": "ShureBETA-98",
-        "inserts": "GATE"
-      },
-      {
-        "channelNumber": 7,
-        "instrumentName": "Floor Tom",
-        "microphone": "ShureBETA-98",
-        "inserts": "GATE"
-      },
-      {
-        "channelNumber": 8,
-        "instrumentName": "Over Head L",
-        "microphone": "Shure Sm 81",
-        "inserts": ""
-      },
-      {
-        "channelNumber": 9,
-        "instrumentName": "Over Head R",
-        "microphone": "Shure Sm 81 / rode NT-5",
-        "inserts": ""
-      },
-      {
-        "channelNumber": 10,
-        "instrumentName": "Bajo",
-        "microphone": "Akg D112/ D.I. Active",
-        "inserts": "COMP"
-      },
-      {
-        "channelNumber": 11,
-        "instrumentName": "Guitarra Líder",
-        "microphone": "Shure SM 57 / Beta 57A",
-        "inserts": ""
-      },
-      {
-        "channelNumber": 12,
-        "instrumentName": "Guitarra Rítmica",
-        "microphone": "Shure SM 57 / Beta 57A",
-        "inserts": ""
-      },
-      {
-        "channelNumber": 13,
-        "instrumentName": "Voz Líder",
-        "microphone": "Shure Sm 58",
-        "inserts": "COMP/GATE/RV"
-      },
-      {
-        "channelNumber": 14,
-        "instrumentName": "Coro Andrés",
-        "microphone": "Shure Sm 58",
-        "inserts": "COMP/GATE/RV"
-      },
-      {
-        "channelNumber": 15,
-        "instrumentName": "Coro Gustavo",
-        "microphone": "Shure Sm 58",
-        "inserts": "COMP/GATE/RV"
+    "requirements": {
+      "audio": {
+        "inputList": [
+          {
+            "channelNumber": 1,
+            "instrumentName": "Kick Drum",
+            "microphone": "Shure Beta 52 / Akg D112",
+            "inserts": "COMP/GATE"
+          },
+          {
+            "channelNumber": 2,
+            "instrumentName": "Snare Drum TOP",
+            "microphone": "Shure Sm 57",
+            "inserts": "COMP"
+          },
+          {
+            "channelNumber": 3,
+            "instrumentName": "Snare Drum BOTTOM",
+            "microphone": "ShureSm 57",
+            "inserts": "COMP"
+          },
+          {
+            "channelNumber": 4,
+            "instrumentName": "Hi Hat",
+            "microphone": "Shure Beta 81",
+            "inserts": ""
+          },
+          {
+            "channelNumber": 5,
+            "instrumentName": "Small Tom",
+            "microphone": "ShureBETA-98",
+            "inserts": "GATE"
+          },
+          {
+            "channelNumber": 6,
+            "instrumentName": "Medium Tom",
+            "microphone": "ShureBETA-98",
+            "inserts": "GATE"
+          },
+          {
+            "channelNumber": 7,
+            "instrumentName": "Floor Tom",
+            "microphone": "ShureBETA-98",
+            "inserts": "GATE"
+          },
+          {
+            "channelNumber": 8,
+            "instrumentName": "Over Head L",
+            "microphone": "Shure Sm 81",
+            "inserts": ""
+          },
+          {
+            "channelNumber": 9,
+            "instrumentName": "Over Head R",
+            "microphone": "Shure Sm 81 / rode NT-5",
+            "inserts": ""
+          },
+          {
+            "channelNumber": 10,
+            "instrumentName": "Bajo",
+            "microphone": "Akg D112/ D.I. Active",
+            "inserts": "COMP"
+          },
+          {
+            "channelNumber": 11,
+            "instrumentName": "Guitarra Líder",
+            "microphone": "Shure SM 57 / Beta 57A",
+            "inserts": ""
+          },
+          {
+            "channelNumber": 12,
+            "instrumentName": "Guitarra Rítmica",
+            "microphone": "Shure SM 57 / Beta 57A",
+            "inserts": ""
+          },
+          {
+            "channelNumber": 13,
+            "instrumentName": "Voz Líder",
+            "microphone": "Shure Sm 58",
+            "inserts": "COMP/GATE/RV"
+          },
+          {
+            "channelNumber": 14,
+            "instrumentName": "Coro Andrés",
+            "microphone": "Shure Sm 58",
+            "inserts": "COMP/GATE/RV"
+          },
+          {
+            "channelNumber": 15,
+            "instrumentName": "Coro Gustavo",
+            "microphone": "Shure Sm 58",
+            "inserts": "COMP/GATE/RV"
+          }
+        ],
+        "mixesList": [
+          {
+            "mixNumber": 1,
+            "description": "Drums",
+            "monitor": "In ears (1 bodypack)"
+          },
+          {
+            "mixNumber": 2,
+            "description": "Drums",
+            "monitor": "In ears (1 bodypack)"
+          },
+          {
+            "mixNumber": 3,
+            "description": "Bass",
+            "monitor": "In ears (1 bodypack)"
+          },
+          {
+            "mixNumber": 4,
+            "description": "Bass",
+            "monitor": "In ears (1 bodypack)"
+          },
+          {
+            "mixNumber": 5,
+            "description": "Guitar",
+            "monitor": "In ears (1 bodypack)"
+          },
+          {
+            "mixNumber": 6,
+            "description": "Guitar",
+            "monitor": "In ears (1 bodypack)"
+          },
+          {
+            "mixNumber": 7,
+            "description": "Keys",
+            "monitor": "In ears (1 bodypack)"
+          },
+          {
+            "mixNumber": 8,
+            "description": "Keys",
+            "monitor": "In ears (1 bodypack)"
+          },
+          {
+            "mixNumber": 9,
+            "description": "DJ",
+            "monitor": "In ears (1 bodypack)"
+          },
+          {
+            "mixNumber": 10,
+            "description": "DJ",
+            "monitor": "In ears (1 bodypack)"
+          },
+          {
+            "mixNumber": 11,
+            "description": "Yatra",
+            "monitor": "In ears (2 bodypack)"
+          },
+          {
+            "mixNumber": 12,
+            "description": "Yatra",
+            "monitor": "In ears (2 bodypack)"
+          },
+          {
+            "mixNumber": 13,
+            "description": "Stage manager",
+            "monitor": "In ears (1 bodypack)"
+          },
+          {
+            "mixNumber": 14,
+            "description": "Stage manager",
+            "monitor": "In ears (1 bodypack)"
+          },
+          {
+            "mixNumber": 15,
+            "description": "CUE Monitor Engineer",
+            "monitor": "In ears (1 bodypack)"
+          },
+          {
+            "mixNumber": 16,
+            "description": "CUE Monitor Engineer",
+            "monitor": "In ears (1 bodypack)"
+          },
+          {
+            "mixNumber": 17,
+            "description": "Side fills",
+            "monitor": "Line array (4 way system)"
+          },
+          {
+            "mixNumber": 18,
+            "description": "Side fills",
+            "monitor": "Line array (4 way system)"
+          }
+        ]
       }
-    ],
-    "mixesList": [
-      {
-        "mixNumber": 1,
-        "description": "Drums",
-        "monitor": "In ears (1 bodypack)"
+    },
+    "staff": {
+      "crewList": {
+        "artists": [
+          {
+            "name": "Carlos Valencia",
+            "role": "Cantante",
+            "document_type": "CC",
+            "document_number": "1234566789"
+          },
+          {
+            "name": "Gloria Martínez",
+            "role": "Trompeta",
+            "document_type": "CC",
+            "document_number": "1234566789"
+          },
+          {
+            "name": "Miguel Martínez",
+            "role": "Flauta",
+            "document_type": "CC",
+            "document_number": "1234566789"
+          },
+          {
+            "name": "Larry Viveros Ararat",
+            "role": "Percusionista",
+            "document_type": "CC",
+            "document_number": "1234566789"
+          },
+          {
+            "name": "Alexander Sánchez",
+            "role": "Bajista",
+            "document_type": "CC",
+            "document_number": "1234566789"
+          },
+          {
+            "name": "Milton Jurado Restrepo",
+            "role": "Guitarrista",
+            "document_type": "CC",
+            "document_number": "1234566789"
+          },
+          {
+            "name": "Andrés Zea",
+            "role": "Baterista",
+            "document_type": "CC",
+            "document_number": "1234566789"
+          }
+        ],
+        "engineers": [
+          {
+            "name": "Carlos Alberto Rodríguez",
+            "role": "Ing. Sonido FOH",
+            "document_type": "CC",
+            "document_number": "1234566789"
+          },
+          {
+            "name": "Edison Fagua",
+            "role": "Ing. Sonido MON",
+            "document_type": "CC",
+            "document_number": "1234566789"
+          }
+        ],
+        "managers": [
+          {
+            "name": "Alexander Farigua",
+            "role": "Stage manager",
+            "document_type": "CC",
+            "document_number": "1234566789"
+          },
+          {
+            "name": "Ricardo Leyva P.",
+            "role": "Booking agent",
+            "document_type": "CC",
+            "document_number": "1234566789"
+          }
+        ],
+        "security": [
+          {
+            "name": "Juan Pérez",
+            "role": "Security agent",
+            "document_type": "CC",
+            "document_number": "1234566789"
+          }
+        ]
       },
-      {
-        "mixNumber": 2,
-        "description": "Drums",
-        "monitor": "In ears (1 bodypack)"
-      },
-      {
-        "mixNumber": 3,
-        "description": "Bass",
-        "monitor": "In ears (1 bodypack)"
-      },
-      {
-        "mixNumber": 4,
-        "description": "Bass",
-        "monitor": "In ears (1 bodypack)"
-      },
-      {
-        "mixNumber": 5,
-        "description": "Guitar",
-        "monitor": "In ears (1 bodypack)"
-      },
-      {
-        "mixNumber": 6,
-        "description": "Guitar",
-        "monitor": "In ears (1 bodypack)"
-      },
-      {
-        "mixNumber": 7,
-        "description": "Keys",
-        "monitor": "In ears (1 bodypack)"
-      },
-      {
-        "mixNumber": 8,
-        "description": "Keys",
-        "monitor": "In ears (1 bodypack)"
-      },
-      {
-        "mixNumber": 9,
-        "description": "DJ",
-        "monitor": "In ears (1 bodypack)"
-      },
-      {
-        "mixNumber": 10,
-        "description": "DJ",
-        "monitor": "In ears (1 bodypack)"
-      },
-      {
-        "mixNumber": 11,
-        "description": "Yatra",
-        "monitor": "In ears (2 bodypack)"
-      },
-      {
-        "mixNumber": 12,
-        "description": "Yatra",
-        "monitor": "In ears (2 bodypack)"
-      },
-      {
-        "mixNumber": 13,
-        "description": "Stage manager",
-        "monitor": "In ears (1 bodypack)"
-      },
-      {
-        "mixNumber": 14,
-        "description": "Stage manager",
-        "monitor": "In ears (1 bodypack)"
-      },
-      {
-        "mixNumber": 15,
-        "description": "CUE Monitor Engineer",
-        "monitor": "In ears (1 bodypack)"
-      },
-      {
-        "mixNumber": 16,
-        "description": "CUE Monitor Engineer",
-        "monitor": "In ears (1 bodypack)"
-      },
-      {
-        "mixNumber": 17,
-        "description": "Side fills",
-        "monitor": "Line array (4 way system)"
-      },
-      {
-        "mixNumber": 18,
-        "description": "Side fills",
-        "monitor": "Line array (4 way system)"
-      }
-    ],
-    "crewList": {
-      "artists": [
-        {
-          "name": "Carlos Valencia",
-          "role": "Cantante",
-          "document_type": "CC",
-          "document_number": "1234566789"
-        },
-        {
-          "name": "Gloria Martínez",
-          "role": "Trompeta",
-          "document_type": "CC",
-          "document_number": "1234566789"
-        },
-        {
-          "name": "Miguel Martínez",
-          "role": "Flauta",
-          "document_type": "CC",
-          "document_number": "1234566789"
-        },
-        {
-          "name": "Larry Viveros Ararat",
-          "role": "Percusionista",
-          "document_type": "CC",
-          "document_number": "1234566789"
-        },
-        {
-          "name": "Alexander Sánchez",
-          "role": "Bajista",
-          "document_type": "CC",
-          "document_number": "1234566789"
-        },
-        {
-          "name": "Milton Jurado Restrepo",
-          "role": "Guitarrista",
-          "document_type": "CC",
-          "document_number": "1234566789"
-        },
-        {
-          "name": "Andrés Zea",
-          "role": "Baterista",
-          "document_type": "CC",
-          "document_number": "1234566789"
-        }
-      ],
-      "engineers": [
-        {
-          "name": "Carlos Alberto Rodríguez",
-          "role": "Ing. Sonido FOH",
-          "document_type": "CC",
-          "document_number": "1234566789"
-        },
-        {
-          "name": "Edison Fagua",
-          "role": "Ing. Sonido MON",
-          "document_type": "CC",
-          "document_number": "1234566789"
-        }
-      ],
-      "managers": [
-        {
-          "name": "Alexander Farigua",
-          "role": "Stage manager",
-          "document_type": "CC",
-          "document_number": "1234566789"
-        },
-        {
-          "name": "Ricardo Leyva P.",
-          "role": "Booking agent",
-          "document_type": "CC",
-          "document_number": "1234566789"
-        }
-      ],
-      "security": [
-        {
-          "name": "Juan Pérez",
-          "role": "Security agent",
-          "document_type": "CC",
-          "document_number": "1234566789"
-        }
-      ]
+      "rooming_list": {}
     },
     "stageSpecs": {
       "height": 2,
