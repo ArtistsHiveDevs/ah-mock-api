@@ -144,6 +144,73 @@
             "notes": "Shure PSM 700"
           }
         ]
+      },
+      "video": {
+        "requests": [
+          "Se requiere la disponibilidad de proyección de archivos en formato mp4 o MOV en resolución 4K."
+        ],
+        "screens": [
+          {
+            "name": "main",
+            "shape": "rectangle",
+            "dimensions": {
+              "height": 2,
+              "length": 2,
+              "width": 4,
+              "unitMeasure": "mts"
+            }
+          },
+          {
+            "name": "left",
+            "shape": "rectangle",
+            "dimensions": {
+              "height": 2,
+              "length": 2,
+              "width": 4,
+              "unitMeasure": "mts"
+            }
+          },
+          {
+            "name": "right",
+            "shape": "rectangle",
+            "dimensions": {
+              "height": 2,
+              "length": 2,
+              "width": 4,
+              "unitMeasure": "mts"
+            }
+          }
+        ]
+      },
+      "lights": {},
+      "stage_design": {},
+      "special_effects": {
+        "requests": [
+          {
+            "name": "Cryo Jet Packs de Colores RGB DMX control por corte de corriente",
+            "amount": 8
+          },
+          {
+            "name": "Cilindros Grandes",
+            "amount": 8
+          },
+          {
+            "name": "Cañones de Ventury",
+            "amount": 2
+          },
+          {
+            "name": "Minas",
+            "amount": 12
+          },
+          {
+            "name": "Programador a disposición",
+            "amount": 1
+          },
+          {
+            "name": "Control ubicado en FOH",
+            "amount": 1
+          }
+        ]
       }
     },
     "backline": {
@@ -218,10 +285,50 @@
       "frontview": "http://npcarlos.co/artistsHive_mocks/stageplot_frontview.png"
     },
     "stageSpecs": {
-      "height": 2,
-      "length": 2,
-      "width": 4,
-      "unitMeasure": "mts"
+      "dimensions": {
+        "height": 2,
+        "length": 2,
+        "width": 4,
+        "unitMeasure": "mts"
+      },
+      "floorboards": [
+        {
+          "name": "Batería",
+          "instruments": ["Batería"],
+          "dimensions": {
+            "height": 2,
+            "length": 2,
+            "width": 4,
+            "unitMeasure": "mts"
+          },
+          "colors": ["black"],
+          "color_pattern": "solid"
+        },
+        {
+          "name": "Congas",
+          "instruments": ["Conga"],
+          "dimensions": {
+            "height": 2,
+            "length": 2,
+            "width": 4,
+            "unitMeasure": "mts"
+          },
+          "colors": ["black"],
+          "color_pattern": "solid"
+        },
+        {
+          "name": "Precusión menor",
+          "instruments": ["Bongós", "Cajón Peruano", "Platillos", "Jamblock"],
+          "dimensions": {
+            "height": 2,
+            "length": 2,
+            "width": 4,
+            "unitMeasure": "mts"
+          },
+          "colors": ["black"],
+          "color_pattern": "solid"
+        }
+      ]
     },
     "staff": {
       "crewList": {
@@ -320,6 +427,16 @@
         ]
       },
       "rooming_list": {}
+    },
+    "sound_check": {
+      "requirements": [
+        "La prueba de sonido se realizará mínimo 8 horas antes del show.",
+        "El Equipo Técnico de YATRA llegará 2 horas antes que comience la prueba de sonido para ultimar detalles y verificar que todo esté correcto.",
+        "Todo el sistema debe estar montado y funcionando a la llegada del Equipo Técnico.",
+        "Debe haber personal competente por parte de la compañía productora del evento a disposición del Equipo Técnico de YATRA.",
+        "La prueba de sonido tendrá una duración de 2 horas.",
+        "No se permitirán cambios sobre consolas, periféricos, escenario y riggin después de realizada la prueba sin autorización previa del Equipo Técnico"
+      ]
     }
   },
   {
@@ -513,6 +630,41 @@
             "monitor": "Line array (4 way system)"
           }
         ]
+      },
+      "video": {
+        "requests": [
+          "Se requiere la disponibilidad de proyección de archivos en formato mp4 o MOV en resolución 4K."
+        ]
+      },
+      "lights": {},
+      "stage_design": {},
+      "special_effects": {
+        "requests": [
+          {
+            "name": "Cryo Jet Packs de Colores RGB DMX control por corte de corriente",
+            "amount": 8
+          },
+          {
+            "name": "Cilindros Grandes",
+            "amount": 8
+          },
+          {
+            "name": "Cañones de Ventury",
+            "amount": 2
+          },
+          {
+            "name": "Minas",
+            "amount": 12
+          },
+          {
+            "name": "Programador a disposición",
+            "amount": 1
+          },
+          {
+            "name": "Control ubicado en FOH",
+            "amount": 1
+          }
+        ]
       }
     },
     "staff": {
@@ -601,10 +753,50 @@
       "rooming_list": {}
     },
     "stageSpecs": {
-      "height": 2,
-      "length": 2,
-      "width": 4,
-      "unitMeasure": "mts"
+      "dimensions": {
+        "height": 2,
+        "length": 2,
+        "width": 4,
+        "unitMeasure": "mts"
+      },
+      "floorboards": [
+        {
+          "name": "Batería",
+          "instruments": ["Batería"],
+          "dimensions": {
+            "height": 2,
+            "length": 2,
+            "width": 4,
+            "unitMeasure": "mts"
+          },
+          "colors": ["black"],
+          "color_pattern": "solid"
+        },
+        {
+          "name": "Congas",
+          "instruments": ["Conga"],
+          "dimensions": {
+            "height": 2,
+            "length": 2,
+            "width": 4,
+            "unitMeasure": "mts"
+          },
+          "colors": ["black"],
+          "color_pattern": "solid"
+        },
+        {
+          "name": "Precusión menor",
+          "instruments": ["Bongós", "Cajón Peruano", "Platillos", "Jamblock"],
+          "dimensions": {
+            "height": 2,
+            "length": 2,
+            "width": 4,
+            "unitMeasure": "mts"
+          },
+          "colors": ["black"],
+          "color_pattern": "solid"
+        }
+      ]
     },
     "backline": {
       "external": [
@@ -676,6 +868,16 @@
     "stage_plot": {
       "topview": "http://npcarlos.co/artistsHive_mocks/stageplot_topview.png",
       "frontview": "http://npcarlos.co/artistsHive_mocks/stageplot_frontview.png"
+    },
+    "sound_check": {
+      "requirements": [
+        "La prueba de sonido se realizará mínimo 8 horas antes del show.",
+        "El Equipo Técnico de YATRA llegará 2 horas antes que comience la prueba de sonido para ultimar detalles y verificar que todo esté correcto.",
+        "Todo el sistema debe estar montado y funcionando a la llegada del Equipo Técnico.",
+        "Debe haber personal competente por parte de la compañía productora del evento a disposición del Equipo Técnico de YATRA.",
+        "La prueba de sonido tendrá una duración de 2 horas.",
+        "No se permitirán cambios sobre consolas, periféricos, escenario y riggin después de realizada la prueba sin autorización previa del Equipo Técnico"
+      ]
     }
   }
 ]
