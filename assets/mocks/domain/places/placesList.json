@@ -42,6 +42,307 @@
         "folclor",
         "fusiones"
       ]
+    },
+    "stages": [
+      {
+        "name": "main",
+        "dimensions": {
+          "height": 2,
+          "length": 2,
+          "width": 4,
+          "roof": 8,
+          "unitMeasure": "mts"
+        },
+        "lights": {},
+        "video": {},
+        "screens": {}
+      }
+    ],
+    "backline": [
+      {
+        "instrumentName": "Batería",
+        "components": [
+          {
+            "name": "Bombo de 22 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Bases de Snare 13 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 10 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 12 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 14 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 16 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "6 Bases para Platillos",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Máquina de Hi-Hat",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Pedales de Bombo",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Silla de Batería",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Alfombra de 2x2",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ],
+        "brands": ["Tama Starclassic", "DW Collector Series", "Yamaha Oak"]
+      },
+      {
+        "instrumentName": "Micrófonos",
+        "components": [
+          {
+            "name": "Micrófono de voz SM58",
+            "amount": 3,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Micrófono percusión SM57",
+            "amount": 5,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Amplificador Bajo",
+            "amount": 1,
+            "brand": "Ampeg",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Cabina de sonido tarima",
+            "amount": 5,
+            "brand": "BEHRINGER",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ]
+      }
+    ],
+    "dressing_room": {
+      "number_of_full_length_mirrors": 3,
+      "number_of_non_full_length_mirrors": 3,
+      "dimensions": {
+        "height": 2,
+        "length": 2,
+        "width": 4,
+        "roof": 8,
+        "unitMeasure": "mts"
+      },
+      "lights": [],
+      "chairs": [],
+      "beds": []
+    },
+    "stats": {
+      "rating": {
+        "overall": 2.830179260646145,
+        "stage": 0.9819967773681103,
+        "sound": 2.214957968746749,
+        "backline": 2.9698466397406498,
+        "lights": 2.0025787127268866,
+        "dressing_room": 1.9643179189429372,
+        "hospitality_food": 2.8682151826866007,
+        "hospitality_drinks": 4.5519358647985495,
+        "timeliness": 1.7418593982778152,
+        "communication": 2.613852745760925,
+        "transportation": 1.4916602164680381,
+        "logistic": 4.782882475786958,
+        "location": 1.8132036282176123,
+        "seating_capacity": 1.2541376985822839,
+        "total_rates": 7915
+      }
     }
   },
   {
@@ -75,6 +376,307 @@
       "music": ["all"],
       "theatre": ["all"],
       "dance": ["ballet"]
+    },
+    "stages": [
+      {
+        "name": "main",
+        "dimensions": {
+          "height": 2,
+          "length": 2,
+          "width": 4,
+          "roof": 8,
+          "unitMeasure": "mts"
+        },
+        "lights": {},
+        "video": {},
+        "screens": {}
+      }
+    ],
+    "backline": [
+      {
+        "instrumentName": "Batería",
+        "components": [
+          {
+            "name": "Bombo de 22 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Bases de Snare 13 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 10 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 12 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 14 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 16 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "6 Bases para Platillos",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Máquina de Hi-Hat",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Pedales de Bombo",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Silla de Batería",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Alfombra de 2x2",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ],
+        "brands": ["Tama Starclassic", "DW Collector Series", "Yamaha Oak"]
+      },
+      {
+        "instrumentName": "Micrófonos",
+        "components": [
+          {
+            "name": "Micrófono de voz SM58",
+            "amount": 3,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Micrófono percusión SM57",
+            "amount": 5,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Amplificador Bajo",
+            "amount": 1,
+            "brand": "Ampeg",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Cabina de sonido tarima",
+            "amount": 5,
+            "brand": "BEHRINGER",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ]
+      }
+    ],
+    "dressing_room": {
+      "number_of_full_length_mirrors": 3,
+      "number_of_non_full_length_mirrors": 3,
+      "dimensions": {
+        "height": 2,
+        "length": 2,
+        "width": 4,
+        "roof": 8,
+        "unitMeasure": "mts"
+      },
+      "lights": [],
+      "chairs": [],
+      "beds": []
+    },
+    "stats": {
+      "rating": {
+        "overall": 2.2867347943868053,
+        "stage": 0.558578875150485,
+        "sound": 4.305487102801729,
+        "backline": 2.9505785367673876,
+        "lights": 0.8758589060116362,
+        "dressing_room": 0.8379790586882996,
+        "hospitality_food": 3.035324582225263,
+        "hospitality_drinks": 4.858719877188179,
+        "timeliness": 4.817765106053763,
+        "communication": 0.44644063503080034,
+        "transportation": 1.0561036094623166,
+        "logistic": 3.461431008623877,
+        "location": 1.7944710627043936,
+        "seating_capacity": 4.506639271028801,
+        "total_rates": 5898
+      }
     }
   },
   {
@@ -115,6 +717,308 @@
         "cumbia",
         "son cubano"
       ]
+    },
+    "stages": [
+      {
+        "name": "main",
+        "dimensions": {
+          "height": 2,
+          "length": 2,
+          "width": 4,
+          "roof": 8,
+          "unitMeasure": "mts"
+        },
+        "lights": {},
+        "video": {},
+        "screens": {}
+      }
+    ],
+    "backline": [
+      {
+        "instrumentName": "Batería",
+        "components": [
+          {
+            "name": "Bombo de 22 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Bases de Snare 13 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 10 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 12 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 14 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 16 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "6 Bases para Platillos",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Máquina de Hi-Hat",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Pedales de Bombo",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Silla de Batería",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Alfombra de 2x2",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ],
+        "brands": ["Tama Starclassic", "DW Collector Series", "Yamaha Oak"]
+      },
+      {
+        "instrumentName": "Micrófonos",
+        "components": [
+          {
+            "name": "Micrófono de voz SM58",
+            "amount": 3,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Micrófono percusión SM57",
+            "amount": 5,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Amplificador Bajo",
+            "amount": 1,
+            "brand": "Ampeg",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Cabina de sonido tarima",
+            "amount": 5,
+            "brand": "BEHRINGER",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ]
+      }
+    ],
+    "dressing_room": {
+      "number_of_full_length_mirrors": 3,
+      "number_of_non_full_length_mirrors": 3,
+      "dimensions": {
+        "height": 2,
+        "length": 2,
+        "width": 4,
+        "roof": 8,
+        "unitMeasure": "mts"
+      },
+      "lights": [],
+      "chairs": [],
+      "beds": []
+    },
+
+    "stats": {
+      "rating": {
+        "overall": 3.644865863469898,
+        "stage": 1.187216818359128,
+        "sound": 2.864049721893236,
+        "backline": 4.043922651093701,
+        "lights": 4.710061951852656,
+        "dressing_room": 3.2974181114041414,
+        "hospitality_food": 1.2687576399333467,
+        "hospitality_drinks": 3.676362233496337,
+        "timeliness": 1.8678609361552234,
+        "communication": 2.8259852229534776,
+        "transportation": 4.301853820975628,
+        "logistic": 3.506959675576675,
+        "location": 0.35995989485907764,
+        "seating_capacity": 3.6801398488432744,
+        "total_rates": 2607
+      }
     }
   },
   {
@@ -155,6 +1059,307 @@
         "cumbia",
         "son cubano"
       ]
+    },
+    "stages": [
+      {
+        "name": "main",
+        "dimensions": {
+          "height": 2,
+          "length": 2,
+          "width": 4,
+          "roof": 8,
+          "unitMeasure": "mts"
+        },
+        "lights": {},
+        "video": {},
+        "screens": {}
+      }
+    ],
+    "backline": [
+      {
+        "instrumentName": "Batería",
+        "components": [
+          {
+            "name": "Bombo de 22 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Bases de Snare 13 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 10 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 12 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 14 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 16 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "6 Bases para Platillos",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Máquina de Hi-Hat",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Pedales de Bombo",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Silla de Batería",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Alfombra de 2x2",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ],
+        "brands": ["Tama Starclassic", "DW Collector Series", "Yamaha Oak"]
+      },
+      {
+        "instrumentName": "Micrófonos",
+        "components": [
+          {
+            "name": "Micrófono de voz SM58",
+            "amount": 3,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Micrófono percusión SM57",
+            "amount": 5,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Amplificador Bajo",
+            "amount": 1,
+            "brand": "Ampeg",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Cabina de sonido tarima",
+            "amount": 5,
+            "brand": "BEHRINGER",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ]
+      }
+    ],
+    "dressing_room": {
+      "number_of_full_length_mirrors": 3,
+      "number_of_non_full_length_mirrors": 3,
+      "dimensions": {
+        "height": 2,
+        "length": 2,
+        "width": 4,
+        "roof": 8,
+        "unitMeasure": "mts"
+      },
+      "lights": [],
+      "chairs": [],
+      "beds": []
+    },
+    "stats": {
+      "rating": {
+        "overall": 2.391987751884541,
+        "stage": 1.53965619878222,
+        "sound": 1.7179741788377136,
+        "backline": 2.0490160253535903,
+        "lights": 2.7895669308645243,
+        "dressing_room": 3.3407529005505454,
+        "hospitality_food": 2.617793464736468,
+        "hospitality_drinks": 4.39637231658867,
+        "timeliness": 2.5773387516739854,
+        "communication": 0.751354854051326,
+        "transportation": 2.770230267999446,
+        "logistic": 4.787906032374904,
+        "location": 3.15233936904033,
+        "seating_capacity": 0.04075368477393426,
+        "total_rates": 8782
+      }
     }
   },
   {
@@ -198,6 +1403,307 @@
         "ska",
         "crossover"
       ]
+    },
+    "stages": [
+      {
+        "name": "main",
+        "dimensions": {
+          "height": 2,
+          "length": 2,
+          "width": 4,
+          "roof": 8,
+          "unitMeasure": "mts"
+        },
+        "lights": {},
+        "video": {},
+        "screens": {}
+      }
+    ],
+    "backline": [
+      {
+        "instrumentName": "Batería",
+        "components": [
+          {
+            "name": "Bombo de 22 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Bases de Snare 13 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 10 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 12 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 14 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 16 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "6 Bases para Platillos",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Máquina de Hi-Hat",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Pedales de Bombo",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Silla de Batería",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Alfombra de 2x2",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ],
+        "brands": ["Tama Starclassic", "DW Collector Series", "Yamaha Oak"]
+      },
+      {
+        "instrumentName": "Micrófonos",
+        "components": [
+          {
+            "name": "Micrófono de voz SM58",
+            "amount": 3,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Micrófono percusión SM57",
+            "amount": 5,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Amplificador Bajo",
+            "amount": 1,
+            "brand": "Ampeg",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Cabina de sonido tarima",
+            "amount": 5,
+            "brand": "BEHRINGER",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ]
+      }
+    ],
+    "dressing_room": {
+      "number_of_full_length_mirrors": 3,
+      "number_of_non_full_length_mirrors": 3,
+      "dimensions": {
+        "height": 2,
+        "length": 2,
+        "width": 4,
+        "roof": 8,
+        "unitMeasure": "mts"
+      },
+      "lights": [],
+      "chairs": [],
+      "beds": []
+    },
+    "stats": {
+      "rating": {
+        "overall": 0.7341335884211364,
+        "stage": 4.992712277223668,
+        "sound": 2.2198114813543954,
+        "backline": 0.6555007014728664,
+        "lights": 2.228682229309499,
+        "dressing_room": 2.49464302154375,
+        "hospitality_food": 3.2476047703406072,
+        "hospitality_drinks": 0.07304123198966117,
+        "timeliness": 0.6993761803171261,
+        "communication": 1.9933898897972568,
+        "transportation": 2.103412855512059,
+        "logistic": 2.7721849091316764,
+        "location": 2.5536700451747616,
+        "seating_capacity": 3.491467082819754,
+        "total_rates": 5613
+      }
     }
   },
   {
@@ -244,6 +1750,307 @@
         "hip-hop",
         "llanera"
       ]
+    },
+    "stages": [
+      {
+        "name": "main",
+        "dimensions": {
+          "height": 2,
+          "length": 2,
+          "width": 4,
+          "roof": 8,
+          "unitMeasure": "mts"
+        },
+        "lights": {},
+        "video": {},
+        "screens": {}
+      }
+    ],
+    "backline": [
+      {
+        "instrumentName": "Batería",
+        "components": [
+          {
+            "name": "Bombo de 22 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Bases de Snare 13 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 10 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 12 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 14 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 16 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "6 Bases para Platillos",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Máquina de Hi-Hat",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Pedales de Bombo",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Silla de Batería",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Alfombra de 2x2",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ],
+        "brands": ["Tama Starclassic", "DW Collector Series", "Yamaha Oak"]
+      },
+      {
+        "instrumentName": "Micrófonos",
+        "components": [
+          {
+            "name": "Micrófono de voz SM58",
+            "amount": 3,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Micrófono percusión SM57",
+            "amount": 5,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Amplificador Bajo",
+            "amount": 1,
+            "brand": "Ampeg",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Cabina de sonido tarima",
+            "amount": 5,
+            "brand": "BEHRINGER",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ]
+      }
+    ],
+    "dressing_room": {
+      "number_of_full_length_mirrors": 3,
+      "number_of_non_full_length_mirrors": 3,
+      "dimensions": {
+        "height": 2,
+        "length": 2,
+        "width": 4,
+        "roof": 8,
+        "unitMeasure": "mts"
+      },
+      "lights": [],
+      "chairs": [],
+      "beds": []
+    },
+    "stats": {
+      "rating": {
+        "overall": 4.328499960161214,
+        "stage": 0.5350251712777876,
+        "sound": 0.08303270378852035,
+        "backline": 3.213788111890563,
+        "lights": 1.1479744921733304,
+        "dressing_room": 3.9431717053119457,
+        "hospitality_food": 3.5876651214953155,
+        "hospitality_drinks": 4.703232381996409,
+        "timeliness": 3.6937248575877346,
+        "communication": 1.7794204288955484,
+        "transportation": 1.6157339251057443,
+        "logistic": 3.984435660843532,
+        "location": 2.5738996952863746,
+        "seating_capacity": 4.48814908511292,
+        "total_rates": 8531
+      }
     }
   },
   {
@@ -288,6 +2095,307 @@
         "crossover",
         "afrobeat"
       ]
+    },
+    "stages": [
+      {
+        "name": "main",
+        "dimensions": {
+          "height": 2,
+          "length": 2,
+          "width": 4,
+          "roof": 8,
+          "unitMeasure": "mts"
+        },
+        "lights": {},
+        "video": {},
+        "screens": {}
+      }
+    ],
+    "backline": [
+      {
+        "instrumentName": "Batería",
+        "components": [
+          {
+            "name": "Bombo de 22 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Bases de Snare 13 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 10 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 12 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 14 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 16 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "6 Bases para Platillos",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Máquina de Hi-Hat",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Pedales de Bombo",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Silla de Batería",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Alfombra de 2x2",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ],
+        "brands": ["Tama Starclassic", "DW Collector Series", "Yamaha Oak"]
+      },
+      {
+        "instrumentName": "Micrófonos",
+        "components": [
+          {
+            "name": "Micrófono de voz SM58",
+            "amount": 3,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Micrófono percusión SM57",
+            "amount": 5,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Amplificador Bajo",
+            "amount": 1,
+            "brand": "Ampeg",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Cabina de sonido tarima",
+            "amount": 5,
+            "brand": "BEHRINGER",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ]
+      }
+    ],
+    "dressing_room": {
+      "number_of_full_length_mirrors": 3,
+      "number_of_non_full_length_mirrors": 3,
+      "dimensions": {
+        "height": 2,
+        "length": 2,
+        "width": 4,
+        "roof": 8,
+        "unitMeasure": "mts"
+      },
+      "lights": [],
+      "chairs": [],
+      "beds": []
+    },
+    "stats": {
+      "rating": {
+        "overall": 0.21385801351782585,
+        "stage": 3.302585169979781,
+        "sound": 2.387487799511765,
+        "backline": 0.3040420187941151,
+        "lights": 0.009156143827204755,
+        "dressing_room": 0.53241555734859,
+        "hospitality_food": 2.0790615335213305,
+        "hospitality_drinks": 0.7104434572012108,
+        "timeliness": 2.464758269774847,
+        "communication": 2.332486615064643,
+        "transportation": 4.834184643958162,
+        "logistic": 1.4961396447751851,
+        "location": 3.7111026167518424,
+        "seating_capacity": 3.8657714227616893,
+        "total_rates": 3486
+      }
     }
   },
   {
@@ -331,6 +2439,307 @@
         "ska",
         "reggaetón"
       ]
+    },
+    "stages": [
+      {
+        "name": "main",
+        "dimensions": {
+          "height": 2,
+          "length": 2,
+          "width": 4,
+          "roof": 8,
+          "unitMeasure": "mts"
+        },
+        "lights": {},
+        "video": {},
+        "screens": {}
+      }
+    ],
+    "backline": [
+      {
+        "instrumentName": "Batería",
+        "components": [
+          {
+            "name": "Bombo de 22 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Bases de Snare 13 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 10 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 12 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 14 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 16 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "6 Bases para Platillos",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Máquina de Hi-Hat",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Pedales de Bombo",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Silla de Batería",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Alfombra de 2x2",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ],
+        "brands": ["Tama Starclassic", "DW Collector Series", "Yamaha Oak"]
+      },
+      {
+        "instrumentName": "Micrófonos",
+        "components": [
+          {
+            "name": "Micrófono de voz SM58",
+            "amount": 3,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Micrófono percusión SM57",
+            "amount": 5,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Amplificador Bajo",
+            "amount": 1,
+            "brand": "Ampeg",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Cabina de sonido tarima",
+            "amount": 5,
+            "brand": "BEHRINGER",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ]
+      }
+    ],
+    "dressing_room": {
+      "number_of_full_length_mirrors": 3,
+      "number_of_non_full_length_mirrors": 3,
+      "dimensions": {
+        "height": 2,
+        "length": 2,
+        "width": 4,
+        "roof": 8,
+        "unitMeasure": "mts"
+      },
+      "lights": [],
+      "chairs": [],
+      "beds": []
+    },
+    "stats": {
+      "rating": {
+        "overall": 3.2654501402656466,
+        "stage": 0.3817820119290172,
+        "sound": 2.774242299402996,
+        "backline": 2.8080809541348164,
+        "lights": 4.82735393311996,
+        "dressing_room": 3.39076628315795,
+        "hospitality_food": 4.973328495544836,
+        "hospitality_drinks": 2.2290427263368784,
+        "timeliness": 1.3616924202263458,
+        "communication": 0.4738784949981434,
+        "transportation": 1.1755969416495282,
+        "logistic": 2.286867688867887,
+        "location": 3.7746712760951326,
+        "seating_capacity": 2.3109804141046255,
+        "total_rates": 3585
+      }
     }
   },
   {
@@ -360,9 +2769,309 @@
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cj_3.webp" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cj_4.jpg" }
     ],
-
     "genres": {
       "music": ["salsa", "timba", "jazz", "fusiones", "cumbia"]
+    },
+    "stages": [
+      {
+        "name": "main",
+        "dimensions": {
+          "height": 2,
+          "length": 2,
+          "width": 4,
+          "roof": 8,
+          "unitMeasure": "mts"
+        },
+        "lights": {},
+        "video": {},
+        "screens": {}
+      }
+    ],
+    "backline": [
+      {
+        "instrumentName": "Batería",
+        "components": [
+          {
+            "name": "Bombo de 22 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Bases de Snare 13 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 10 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 12 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 14 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 16 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "6 Bases para Platillos",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Máquina de Hi-Hat",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Pedales de Bombo",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Silla de Batería",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Alfombra de 2x2",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ],
+        "brands": ["Tama Starclassic", "DW Collector Series", "Yamaha Oak"]
+      },
+      {
+        "instrumentName": "Micrófonos",
+        "components": [
+          {
+            "name": "Micrófono de voz SM58",
+            "amount": 3,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Micrófono percusión SM57",
+            "amount": 5,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Amplificador Bajo",
+            "amount": 1,
+            "brand": "Ampeg",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Cabina de sonido tarima",
+            "amount": 5,
+            "brand": "BEHRINGER",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ]
+      }
+    ],
+    "dressing_room": {
+      "number_of_full_length_mirrors": 3,
+      "number_of_non_full_length_mirrors": 3,
+      "dimensions": {
+        "height": 2,
+        "length": 2,
+        "width": 4,
+        "roof": 8,
+        "unitMeasure": "mts"
+      },
+      "lights": [],
+      "chairs": [],
+      "beds": []
+    },
+    "stats": {
+      "rating": {
+        "overall": 4.110226709865839,
+        "stage": 2.048282904681248,
+        "sound": 4.941232368175486,
+        "backline": 2.9001265772805707,
+        "lights": 0.5585196337201381,
+        "dressing_room": 1.6086207952405531,
+        "hospitality_food": 2.776018830243802,
+        "hospitality_drinks": 4.454075229453322,
+        "timeliness": 2.0302534426390917,
+        "communication": 3.49428665146284,
+        "transportation": 0.6999039435963961,
+        "logistic": 1.1541537432130966,
+        "location": 3.051880310557985,
+        "seating_capacity": 0.49680515710664447,
+        "total_rates": 3516
+      }
     }
   },
   {
@@ -391,9 +3100,309 @@
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/pp_2.jfif" },
       { "src": "https://npcarlos.co/artistsHive_mocks/galeria/pp_3.jfif" }
     ],
-
     "genres": {
       "music": ["músicas improvisadas", "jazz", "fusiones"]
+    },
+    "stages": [
+      {
+        "name": "main",
+        "dimensions": {
+          "height": 2,
+          "length": 2,
+          "width": 4,
+          "roof": 8,
+          "unitMeasure": "mts"
+        },
+        "lights": {},
+        "video": {},
+        "screens": {}
+      }
+    ],
+    "backline": [
+      {
+        "instrumentName": "Batería",
+        "components": [
+          {
+            "name": "Bombo de 22 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Bases de Snare 13 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 10 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 12 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 14 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 16 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "6 Bases para Platillos",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Máquina de Hi-Hat",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Pedales de Bombo",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Silla de Batería",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Alfombra de 2x2",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ],
+        "brands": ["Tama Starclassic", "DW Collector Series", "Yamaha Oak"]
+      },
+      {
+        "instrumentName": "Micrófonos",
+        "components": [
+          {
+            "name": "Micrófono de voz SM58",
+            "amount": 3,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Micrófono percusión SM57",
+            "amount": 5,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Amplificador Bajo",
+            "amount": 1,
+            "brand": "Ampeg",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Cabina de sonido tarima",
+            "amount": 5,
+            "brand": "BEHRINGER",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ]
+      }
+    ],
+    "dressing_room": {
+      "number_of_full_length_mirrors": 3,
+      "number_of_non_full_length_mirrors": 3,
+      "dimensions": {
+        "height": 2,
+        "length": 2,
+        "width": 4,
+        "roof": 8,
+        "unitMeasure": "mts"
+      },
+      "lights": [],
+      "chairs": [],
+      "beds": []
+    },
+    "stats": {
+      "rating": {
+        "overall": 2.618377668273372,
+        "stage": 4.067701725965309,
+        "sound": 4.823027031343292,
+        "backline": 0.14815934265841935,
+        "lights": 3.570950794244511,
+        "dressing_room": 2.557381511875083,
+        "hospitality_food": 1.6874518297927952,
+        "hospitality_drinks": 2.1508620552272903,
+        "timeliness": 3.369931925410609,
+        "communication": 2.821524336210984,
+        "transportation": 0.18341196140730598,
+        "logistic": 1.7636625547191098,
+        "location": 2.0343918982114704,
+        "seating_capacity": 1.7817720244016766,
+        "total_rates": 4671
+      }
     }
   },
   {
@@ -434,6 +3443,307 @@
         "porro",
         "ska"
       ]
+    },
+    "stages": [
+      {
+        "name": "main",
+        "dimensions": {
+          "height": 2,
+          "length": 2,
+          "width": 4,
+          "roof": 8,
+          "unitMeasure": "mts"
+        },
+        "lights": {},
+        "video": {},
+        "screens": {}
+      }
+    ],
+    "backline": [
+      {
+        "instrumentName": "Batería",
+        "components": [
+          {
+            "name": "Bombo de 22 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Bases de Snare 13 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 10 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 12 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 14 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 16 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "6 Bases para Platillos",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Máquina de Hi-Hat",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Pedales de Bombo",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Silla de Batería",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Alfombra de 2x2",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ],
+        "brands": ["Tama Starclassic", "DW Collector Series", "Yamaha Oak"]
+      },
+      {
+        "instrumentName": "Micrófonos",
+        "components": [
+          {
+            "name": "Micrófono de voz SM58",
+            "amount": 3,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Micrófono percusión SM57",
+            "amount": 5,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Amplificador Bajo",
+            "amount": 1,
+            "brand": "Ampeg",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Cabina de sonido tarima",
+            "amount": 5,
+            "brand": "BEHRINGER",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ]
+      }
+    ],
+    "dressing_room": {
+      "number_of_full_length_mirrors": 3,
+      "number_of_non_full_length_mirrors": 3,
+      "dimensions": {
+        "height": 2,
+        "length": 2,
+        "width": 4,
+        "roof": 8,
+        "unitMeasure": "mts"
+      },
+      "lights": [],
+      "chairs": [],
+      "beds": []
+    },
+    "stats": {
+      "rating": {
+        "overall": 3.3551094110319135,
+        "stage": 4.5868785460910955,
+        "sound": 3.9196458685774176,
+        "backline": 1.2386602841249428,
+        "lights": 3.3068331297170936,
+        "dressing_room": 2.8848528991522815,
+        "hospitality_food": 1.2711414600021376,
+        "hospitality_drinks": 2.190376898548684,
+        "timeliness": 4.336976965979918,
+        "communication": 3.098017686772175,
+        "transportation": 2.463938143816821,
+        "logistic": 1.6510466956416958,
+        "location": 0.6813454821286857,
+        "seating_capacity": 3.8930563284632713,
+        "total_rates": 9667
+      }
     }
   },
   {
@@ -474,6 +3784,307 @@
         "porro",
         "ska"
       ]
+    },
+    "stages": [
+      {
+        "name": "main",
+        "dimensions": {
+          "height": 2,
+          "length": 2,
+          "width": 4,
+          "roof": 8,
+          "unitMeasure": "mts"
+        },
+        "lights": {},
+        "video": {},
+        "screens": {}
+      }
+    ],
+    "backline": [
+      {
+        "instrumentName": "Batería",
+        "components": [
+          {
+            "name": "Bombo de 22 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Bases de Snare 13 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 10 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 12 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 14 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 16 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "6 Bases para Platillos",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Máquina de Hi-Hat",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Pedales de Bombo",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Silla de Batería",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Alfombra de 2x2",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ],
+        "brands": ["Tama Starclassic", "DW Collector Series", "Yamaha Oak"]
+      },
+      {
+        "instrumentName": "Micrófonos",
+        "components": [
+          {
+            "name": "Micrófono de voz SM58",
+            "amount": 3,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Micrófono percusión SM57",
+            "amount": 5,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Amplificador Bajo",
+            "amount": 1,
+            "brand": "Ampeg",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Cabina de sonido tarima",
+            "amount": 5,
+            "brand": "BEHRINGER",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ]
+      }
+    ],
+    "dressing_room": {
+      "number_of_full_length_mirrors": 3,
+      "number_of_non_full_length_mirrors": 3,
+      "dimensions": {
+        "height": 2,
+        "length": 2,
+        "width": 4,
+        "roof": 8,
+        "unitMeasure": "mts"
+      },
+      "lights": [],
+      "chairs": [],
+      "beds": []
+    },
+    "stats": {
+      "rating": {
+        "overall": 3.2485160754412674,
+        "stage": 0.8747091841327148,
+        "sound": 3.4210718555814466,
+        "backline": 1.651028300187063,
+        "lights": 1.3398472946681517,
+        "dressing_room": 3.773619423485691,
+        "hospitality_food": 2.8460699787359567,
+        "hospitality_drinks": 0.6436988349802075,
+        "timeliness": 3.3026832908729746,
+        "communication": 1.790154469875548,
+        "transportation": 1.644459754581844,
+        "logistic": 2.3223689045919738,
+        "location": 1.0702701533176884,
+        "seating_capacity": 4.148155787070225,
+        "total_rates": 3733
+      }
     }
   },
   {
@@ -512,6 +4123,307 @@
         "cumbia",
         "porro"
       ]
+    },
+    "stages": [
+      {
+        "name": "main",
+        "dimensions": {
+          "height": 2,
+          "length": 2,
+          "width": 4,
+          "roof": 8,
+          "unitMeasure": "mts"
+        },
+        "lights": {},
+        "video": {},
+        "screens": {}
+      }
+    ],
+    "backline": [
+      {
+        "instrumentName": "Batería",
+        "components": [
+          {
+            "name": "Bombo de 22 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Bases de Snare 13 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 10 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 12 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 14 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 16 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "6 Bases para Platillos",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Máquina de Hi-Hat",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Pedales de Bombo",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Silla de Batería",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Alfombra de 2x2",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ],
+        "brands": ["Tama Starclassic", "DW Collector Series", "Yamaha Oak"]
+      },
+      {
+        "instrumentName": "Micrófonos",
+        "components": [
+          {
+            "name": "Micrófono de voz SM58",
+            "amount": 3,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Micrófono percusión SM57",
+            "amount": 5,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Amplificador Bajo",
+            "amount": 1,
+            "brand": "Ampeg",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Cabina de sonido tarima",
+            "amount": 5,
+            "brand": "BEHRINGER",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ]
+      }
+    ],
+    "dressing_room": {
+      "number_of_full_length_mirrors": 3,
+      "number_of_non_full_length_mirrors": 3,
+      "dimensions": {
+        "height": 2,
+        "length": 2,
+        "width": 4,
+        "roof": 8,
+        "unitMeasure": "mts"
+      },
+      "lights": [],
+      "chairs": [],
+      "beds": []
+    },
+    "stats": {
+      "rating": {
+        "overall": 4.0245844560795225,
+        "stage": 2.5873190676123827,
+        "sound": 4.507516428705176,
+        "backline": 1.750747698999873,
+        "lights": 1.3685726967556444,
+        "dressing_room": 2.288576016704716,
+        "hospitality_food": 0.025860784627225186,
+        "hospitality_drinks": 3.4083097311620927,
+        "timeliness": 2.1211092250636043,
+        "communication": 1.762565132580749,
+        "transportation": 4.055949433366024,
+        "logistic": 3.9097466266863456,
+        "location": 1.3261152905975915,
+        "seating_capacity": 1.620414166820241,
+        "total_rates": 4404
+      }
     }
   },
   {
@@ -544,6 +4456,307 @@
     ],
     "genres": {
       "music": ["salsa", "timba", "fusiones", "cumbia", "porro"]
+    },
+    "stages": [
+      {
+        "name": "main",
+        "dimensions": {
+          "height": 2,
+          "length": 2,
+          "width": 4,
+          "roof": 8,
+          "unitMeasure": "mts"
+        },
+        "lights": {},
+        "video": {},
+        "screens": {}
+      }
+    ],
+    "backline": [
+      {
+        "instrumentName": "Batería",
+        "components": [
+          {
+            "name": "Bombo de 22 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Bases de Snare 13 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 10 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 12 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 14 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 16 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "6 Bases para Platillos",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Máquina de Hi-Hat",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Pedales de Bombo",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Silla de Batería",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Alfombra de 2x2",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ],
+        "brands": ["Tama Starclassic", "DW Collector Series", "Yamaha Oak"]
+      },
+      {
+        "instrumentName": "Micrófonos",
+        "components": [
+          {
+            "name": "Micrófono de voz SM58",
+            "amount": 3,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Micrófono percusión SM57",
+            "amount": 5,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Amplificador Bajo",
+            "amount": 1,
+            "brand": "Ampeg",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Cabina de sonido tarima",
+            "amount": 5,
+            "brand": "BEHRINGER",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ]
+      }
+    ],
+    "dressing_room": {
+      "number_of_full_length_mirrors": 3,
+      "number_of_non_full_length_mirrors": 3,
+      "dimensions": {
+        "height": 2,
+        "length": 2,
+        "width": 4,
+        "roof": 8,
+        "unitMeasure": "mts"
+      },
+      "lights": [],
+      "chairs": [],
+      "beds": []
+    },
+    "stats": {
+      "rating": {
+        "overall": 2.1021260552011554,
+        "stage": 2.2687425818515936,
+        "sound": 2.1265431945463376,
+        "backline": 2.738966096567147,
+        "lights": 3.4005298064422753,
+        "dressing_room": 0.5505998388208488,
+        "hospitality_food": 4.695679103613893,
+        "hospitality_drinks": 1.1904423326705171,
+        "timeliness": 2.0199499557558975,
+        "communication": 0.7667180822416897,
+        "transportation": 1.714353617100158,
+        "logistic": 0.6081398940737992,
+        "location": 2.3733515697560703,
+        "seating_capacity": 1.66390669431989,
+        "total_rates": 613
+      }
     }
   },
   {
@@ -575,6 +4788,307 @@
     ],
     "genres": {
       "music": ["salsa", "timba", "fusiones", "cumbia", "porro"]
+    },
+    "stages": [
+      {
+        "name": "main",
+        "dimensions": {
+          "height": 2,
+          "length": 2,
+          "width": 4,
+          "roof": 8,
+          "unitMeasure": "mts"
+        },
+        "lights": {},
+        "video": {},
+        "screens": {}
+      }
+    ],
+    "backline": [
+      {
+        "instrumentName": "Batería",
+        "components": [
+          {
+            "name": "Bombo de 22 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Bases de Snare 13 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 10 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 12 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 14 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 16 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "6 Bases para Platillos",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Máquina de Hi-Hat",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Pedales de Bombo",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Silla de Batería",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Alfombra de 2x2",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ],
+        "brands": ["Tama Starclassic", "DW Collector Series", "Yamaha Oak"]
+      },
+      {
+        "instrumentName": "Micrófonos",
+        "components": [
+          {
+            "name": "Micrófono de voz SM58",
+            "amount": 3,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Micrófono percusión SM57",
+            "amount": 5,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Amplificador Bajo",
+            "amount": 1,
+            "brand": "Ampeg",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Cabina de sonido tarima",
+            "amount": 5,
+            "brand": "BEHRINGER",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ]
+      }
+    ],
+    "dressing_room": {
+      "number_of_full_length_mirrors": 3,
+      "number_of_non_full_length_mirrors": 3,
+      "dimensions": {
+        "height": 2,
+        "length": 2,
+        "width": 4,
+        "roof": 8,
+        "unitMeasure": "mts"
+      },
+      "lights": [],
+      "chairs": [],
+      "beds": []
+    },
+    "stats": {
+      "rating": {
+        "overall": 4.568500340474841,
+        "stage": 4.319025416572808,
+        "sound": 3.636668061307956,
+        "backline": 0.6271566614729185,
+        "lights": 0.298383583799251,
+        "dressing_room": 0.07313857993773043,
+        "hospitality_food": 4.046381571869253,
+        "hospitality_drinks": 1.7502525939068125,
+        "timeliness": 2.7617681674663364,
+        "communication": 2.476194897285071,
+        "transportation": 2.2931084194779894,
+        "logistic": 3.8187144886922653,
+        "location": 3.0417783123444586,
+        "seating_capacity": 1.803222904950913,
+        "total_rates": 1589
+      }
     }
   },
   {
@@ -608,6 +5122,307 @@
     ],
     "genres": {
       "music": ["salsa", "timba", "fusiones", "cumbia", "porro"]
+    },
+    "stages": [
+      {
+        "name": "main",
+        "dimensions": {
+          "height": 2,
+          "length": 2,
+          "width": 4,
+          "roof": 8,
+          "unitMeasure": "mts"
+        },
+        "lights": {},
+        "video": {},
+        "screens": {}
+      }
+    ],
+    "backline": [
+      {
+        "instrumentName": "Batería",
+        "components": [
+          {
+            "name": "Bombo de 22 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Bases de Snare 13 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 10 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 12 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 14 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 16 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "6 Bases para Platillos",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Máquina de Hi-Hat",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Pedales de Bombo",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Silla de Batería",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Alfombra de 2x2",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ],
+        "brands": ["Tama Starclassic", "DW Collector Series", "Yamaha Oak"]
+      },
+      {
+        "instrumentName": "Micrófonos",
+        "components": [
+          {
+            "name": "Micrófono de voz SM58",
+            "amount": 3,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Micrófono percusión SM57",
+            "amount": 5,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Amplificador Bajo",
+            "amount": 1,
+            "brand": "Ampeg",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Cabina de sonido tarima",
+            "amount": 5,
+            "brand": "BEHRINGER",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ]
+      }
+    ],
+    "dressing_room": {
+      "number_of_full_length_mirrors": 3,
+      "number_of_non_full_length_mirrors": 3,
+      "dimensions": {
+        "height": 2,
+        "length": 2,
+        "width": 4,
+        "roof": 8,
+        "unitMeasure": "mts"
+      },
+      "lights": [],
+      "chairs": [],
+      "beds": []
+    },
+    "stats": {
+      "rating": {
+        "overall": 2.3487580119398546,
+        "stage": 4.321578474910576,
+        "sound": 3.828641402114721,
+        "backline": 1.4777090096107737,
+        "lights": 1.825849308715064,
+        "dressing_room": 1.6536559222152991,
+        "hospitality_food": 4.053547248146654,
+        "hospitality_drinks": 2.921814952796591,
+        "timeliness": 3.905807505147205,
+        "communication": 0.8955463760577531,
+        "transportation": 2.3940900357006702,
+        "logistic": 2.126149673879285,
+        "location": 0.5768841778746914,
+        "seating_capacity": 2.8552263308911927,
+        "total_rates": 3286
+      }
     }
   },
   {
@@ -641,6 +5456,307 @@
     ],
     "genres": {
       "music": ["salsa", "timba", "fusiones", "cumbia", "porro"]
+    },
+    "stages": [
+      {
+        "name": "main",
+        "dimensions": {
+          "height": 2,
+          "length": 2,
+          "width": 4,
+          "roof": 8,
+          "unitMeasure": "mts"
+        },
+        "lights": {},
+        "video": {},
+        "screens": {}
+      }
+    ],
+    "backline": [
+      {
+        "instrumentName": "Batería",
+        "components": [
+          {
+            "name": "Bombo de 22 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Bases de Snare 13 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 10 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 12 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 14 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 16 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "6 Bases para Platillos",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Máquina de Hi-Hat",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Pedales de Bombo",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Silla de Batería",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Alfombra de 2x2",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ],
+        "brands": ["Tama Starclassic", "DW Collector Series", "Yamaha Oak"]
+      },
+      {
+        "instrumentName": "Micrófonos",
+        "components": [
+          {
+            "name": "Micrófono de voz SM58",
+            "amount": 3,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Micrófono percusión SM57",
+            "amount": 5,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Amplificador Bajo",
+            "amount": 1,
+            "brand": "Ampeg",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Cabina de sonido tarima",
+            "amount": 5,
+            "brand": "BEHRINGER",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ]
+      }
+    ],
+    "dressing_room": {
+      "number_of_full_length_mirrors": 3,
+      "number_of_non_full_length_mirrors": 3,
+      "dimensions": {
+        "height": 2,
+        "length": 2,
+        "width": 4,
+        "roof": 8,
+        "unitMeasure": "mts"
+      },
+      "lights": [],
+      "chairs": [],
+      "beds": []
+    },
+    "stats": {
+      "rating": {
+        "overall": 3.514579808930435,
+        "stage": 2.9789223127507647,
+        "sound": 1.3204967003876955,
+        "backline": 2.922656719409893,
+        "lights": 0.4015134337626424,
+        "dressing_room": 2.9301447215477205,
+        "hospitality_food": 2.3201429570472643,
+        "hospitality_drinks": 4.351685787564454,
+        "timeliness": 2.5445855648721483,
+        "communication": 1.3650131816905453,
+        "transportation": 2.789933256460173,
+        "logistic": 1.400605171346001,
+        "location": 1.6194901511031676,
+        "seating_capacity": 2.3590620923300873,
+        "total_rates": 2319
+      }
     }
   },
   {
@@ -674,6 +5790,307 @@
     ],
     "genres": {
       "music": ["rock", "ska"]
+    },
+    "stages": [
+      {
+        "name": "main",
+        "dimensions": {
+          "height": 2,
+          "length": 2,
+          "width": 4,
+          "roof": 8,
+          "unitMeasure": "mts"
+        },
+        "lights": {},
+        "video": {},
+        "screens": {}
+      }
+    ],
+    "backline": [
+      {
+        "instrumentName": "Batería",
+        "components": [
+          {
+            "name": "Bombo de 22 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Bases de Snare 13 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 10 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 12 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 14 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 16 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "6 Bases para Platillos",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Máquina de Hi-Hat",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Pedales de Bombo",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Silla de Batería",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Alfombra de 2x2",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ],
+        "brands": ["Tama Starclassic", "DW Collector Series", "Yamaha Oak"]
+      },
+      {
+        "instrumentName": "Micrófonos",
+        "components": [
+          {
+            "name": "Micrófono de voz SM58",
+            "amount": 3,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Micrófono percusión SM57",
+            "amount": 5,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Amplificador Bajo",
+            "amount": 1,
+            "brand": "Ampeg",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Cabina de sonido tarima",
+            "amount": 5,
+            "brand": "BEHRINGER",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ]
+      }
+    ],
+    "dressing_room": {
+      "number_of_full_length_mirrors": 3,
+      "number_of_non_full_length_mirrors": 3,
+      "dimensions": {
+        "height": 2,
+        "length": 2,
+        "width": 4,
+        "roof": 8,
+        "unitMeasure": "mts"
+      },
+      "lights": [],
+      "chairs": [],
+      "beds": []
+    },
+    "stats": {
+      "rating": {
+        "overall": 3.9244041114486152,
+        "stage": 2.482254236542394,
+        "sound": 1.9777934689191412,
+        "backline": 3.406799259188591,
+        "lights": 2.715719491587405,
+        "dressing_room": 2.709271125059023,
+        "hospitality_food": 1.843590363512305,
+        "hospitality_drinks": 4.70905133938387,
+        "timeliness": 2.46971953905333,
+        "communication": 3.840066967437708,
+        "transportation": 2.750173933171286,
+        "logistic": 1.1608972846048737,
+        "location": 3.7147116883549556,
+        "seating_capacity": 4.344164941384775,
+        "total_rates": 3958
+      }
     }
   },
   {
@@ -706,6 +6123,307 @@
     ],
     "genres": {
       "music": ["rock", "ska"]
+    },
+    "stages": [
+      {
+        "name": "main",
+        "dimensions": {
+          "height": 2,
+          "length": 2,
+          "width": 4,
+          "roof": 8,
+          "unitMeasure": "mts"
+        },
+        "lights": {},
+        "video": {},
+        "screens": {}
+      }
+    ],
+    "backline": [
+      {
+        "instrumentName": "Batería",
+        "components": [
+          {
+            "name": "Bombo de 22 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Bases de Snare 13 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 10 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 12 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 14 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 16 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "6 Bases para Platillos",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Máquina de Hi-Hat",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Pedales de Bombo",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Silla de Batería",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Alfombra de 2x2",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ],
+        "brands": ["Tama Starclassic", "DW Collector Series", "Yamaha Oak"]
+      },
+      {
+        "instrumentName": "Micrófonos",
+        "components": [
+          {
+            "name": "Micrófono de voz SM58",
+            "amount": 3,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Micrófono percusión SM57",
+            "amount": 5,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Amplificador Bajo",
+            "amount": 1,
+            "brand": "Ampeg",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Cabina de sonido tarima",
+            "amount": 5,
+            "brand": "BEHRINGER",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ]
+      }
+    ],
+    "dressing_room": {
+      "number_of_full_length_mirrors": 3,
+      "number_of_non_full_length_mirrors": 3,
+      "dimensions": {
+        "height": 2,
+        "length": 2,
+        "width": 4,
+        "roof": 8,
+        "unitMeasure": "mts"
+      },
+      "lights": [],
+      "chairs": [],
+      "beds": []
+    },
+    "stats": {
+      "rating": {
+        "overall": 4.079841030232454,
+        "stage": 2.465265271227738,
+        "sound": 1.6729426278852966,
+        "backline": 4.289278350800826,
+        "lights": 3.625725041134989,
+        "dressing_room": 3.766325495478141,
+        "hospitality_food": 2.478680628394644,
+        "hospitality_drinks": 3.9211287884808366,
+        "timeliness": 1.1889371530962767,
+        "communication": 0.8438336084562881,
+        "transportation": 4.317933793644455,
+        "logistic": 4.7674959949717906,
+        "location": 1.8887783813266779,
+        "seating_capacity": 0.18124021105769383,
+        "total_rates": 3226
+      }
     }
   },
   {
@@ -735,6 +6453,307 @@
     ],
     "genres": {
       "music": ["rock", "ska", "cantautor", "cumbia", "fusiones", "afrobeat"]
+    },
+    "stages": [
+      {
+        "name": "main",
+        "dimensions": {
+          "height": 2,
+          "length": 2,
+          "width": 4,
+          "roof": 8,
+          "unitMeasure": "mts"
+        },
+        "lights": {},
+        "video": {},
+        "screens": {}
+      }
+    ],
+    "backline": [
+      {
+        "instrumentName": "Batería",
+        "components": [
+          {
+            "name": "Bombo de 22 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Bases de Snare 13 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 10 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 12 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 14 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 16 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "6 Bases para Platillos",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Máquina de Hi-Hat",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Pedales de Bombo",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Silla de Batería",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Alfombra de 2x2",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ],
+        "brands": ["Tama Starclassic", "DW Collector Series", "Yamaha Oak"]
+      },
+      {
+        "instrumentName": "Micrófonos",
+        "components": [
+          {
+            "name": "Micrófono de voz SM58",
+            "amount": 3,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Micrófono percusión SM57",
+            "amount": 5,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Amplificador Bajo",
+            "amount": 1,
+            "brand": "Ampeg",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Cabina de sonido tarima",
+            "amount": 5,
+            "brand": "BEHRINGER",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ]
+      }
+    ],
+    "dressing_room": {
+      "number_of_full_length_mirrors": 3,
+      "number_of_non_full_length_mirrors": 3,
+      "dimensions": {
+        "height": 2,
+        "length": 2,
+        "width": 4,
+        "roof": 8,
+        "unitMeasure": "mts"
+      },
+      "lights": [],
+      "chairs": [],
+      "beds": []
+    },
+    "stats": {
+      "rating": {
+        "overall": 0.0708504590836867,
+        "stage": 1.8580222457366435,
+        "sound": 4.981866263730187,
+        "backline": 1.7639857399950831,
+        "lights": 0.6754514757601637,
+        "dressing_room": 3.149062306610557,
+        "hospitality_food": 2.0401781328416946,
+        "hospitality_drinks": 0.18186733128258026,
+        "timeliness": 3.286790124715727,
+        "communication": 1.448011349751518,
+        "transportation": 3.9637930146412677,
+        "logistic": 1.5265308669193534,
+        "location": 0.5345848936495134,
+        "seating_capacity": 1.5398902344343723,
+        "total_rates": 3848
+      }
     }
   },
   {
@@ -774,6 +6793,307 @@
         "porro",
         "jazz"
       ]
+    },
+    "stages": [
+      {
+        "name": "main",
+        "dimensions": {
+          "height": 2,
+          "length": 2,
+          "width": 4,
+          "roof": 8,
+          "unitMeasure": "mts"
+        },
+        "lights": {},
+        "video": {},
+        "screens": {}
+      }
+    ],
+    "backline": [
+      {
+        "instrumentName": "Batería",
+        "components": [
+          {
+            "name": "Bombo de 22 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Bases de Snare 13 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 10 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 12 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 14 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 16 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "6 Bases para Platillos",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Máquina de Hi-Hat",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Pedales de Bombo",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Silla de Batería",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Alfombra de 2x2",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ],
+        "brands": ["Tama Starclassic", "DW Collector Series", "Yamaha Oak"]
+      },
+      {
+        "instrumentName": "Micrófonos",
+        "components": [
+          {
+            "name": "Micrófono de voz SM58",
+            "amount": 3,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Micrófono percusión SM57",
+            "amount": 5,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Amplificador Bajo",
+            "amount": 1,
+            "brand": "Ampeg",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Cabina de sonido tarima",
+            "amount": 5,
+            "brand": "BEHRINGER",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ]
+      }
+    ],
+    "dressing_room": {
+      "number_of_full_length_mirrors": 3,
+      "number_of_non_full_length_mirrors": 3,
+      "dimensions": {
+        "height": 2,
+        "length": 2,
+        "width": 4,
+        "roof": 8,
+        "unitMeasure": "mts"
+      },
+      "lights": [],
+      "chairs": [],
+      "beds": []
+    },
+    "stats": {
+      "rating": {
+        "overall": 1.7212810845381543,
+        "stage": 2.0527317078649463,
+        "sound": 3.0584220161835263,
+        "backline": 0.5989700070166315,
+        "lights": 2.2416430361806916,
+        "dressing_room": 3.226890847453519,
+        "hospitality_food": 4.112563446191134,
+        "hospitality_drinks": 1.1009015514920328,
+        "timeliness": 1.7620543785813534,
+        "communication": 3.2162879565164575,
+        "transportation": 1.1605171997530306,
+        "logistic": 3.499690398828565,
+        "location": 1.8795489717728497,
+        "seating_capacity": 2.927071020907539,
+        "total_rates": 3263
+      }
     }
   },
   {
@@ -806,6 +7126,307 @@
       "music": ["all"],
       "theatre": ["all"],
       "dance": ["ballet"]
+    },
+    "stages": [
+      {
+        "name": "main",
+        "dimensions": {
+          "height": 2,
+          "length": 2,
+          "width": 4,
+          "roof": 8,
+          "unitMeasure": "mts"
+        },
+        "lights": {},
+        "video": {},
+        "screens": {}
+      }
+    ],
+    "backline": [
+      {
+        "instrumentName": "Batería",
+        "components": [
+          {
+            "name": "Bombo de 22 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Bases de Snare 13 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 10 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 12 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 14 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 16 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "6 Bases para Platillos",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Máquina de Hi-Hat",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Pedales de Bombo",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Silla de Batería",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Alfombra de 2x2",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ],
+        "brands": ["Tama Starclassic", "DW Collector Series", "Yamaha Oak"]
+      },
+      {
+        "instrumentName": "Micrófonos",
+        "components": [
+          {
+            "name": "Micrófono de voz SM58",
+            "amount": 3,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Micrófono percusión SM57",
+            "amount": 5,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Amplificador Bajo",
+            "amount": 1,
+            "brand": "Ampeg",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Cabina de sonido tarima",
+            "amount": 5,
+            "brand": "BEHRINGER",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ]
+      }
+    ],
+    "dressing_room": {
+      "number_of_full_length_mirrors": 3,
+      "number_of_non_full_length_mirrors": 3,
+      "dimensions": {
+        "height": 2,
+        "length": 2,
+        "width": 4,
+        "roof": 8,
+        "unitMeasure": "mts"
+      },
+      "lights": [],
+      "chairs": [],
+      "beds": []
+    },
+    "stats": {
+      "rating": {
+        "overall": 0.2119879716086137,
+        "stage": 4.015739906497918,
+        "sound": 3.112765159733455,
+        "backline": 4.757824915844381,
+        "lights": 0.661953867257068,
+        "dressing_room": 4.838036982772871,
+        "hospitality_food": 2.7394940566063553,
+        "hospitality_drinks": 2.476065170926175,
+        "timeliness": 3.7700731761488093,
+        "communication": 0.7773784362898273,
+        "transportation": 0.3844791403876191,
+        "logistic": 0.44051476506640536,
+        "location": 4.965339887668661,
+        "seating_capacity": 3.776418068286258,
+        "total_rates": 2707
+      }
     }
   },
   {
@@ -849,6 +7470,307 @@
         "cumbia",
         "porro"
       ]
+    },
+    "stages": [
+      {
+        "name": "main",
+        "dimensions": {
+          "height": 2,
+          "length": 2,
+          "width": 4,
+          "roof": 8,
+          "unitMeasure": "mts"
+        },
+        "lights": {},
+        "video": {},
+        "screens": {}
+      }
+    ],
+    "backline": [
+      {
+        "instrumentName": "Batería",
+        "components": [
+          {
+            "name": "Bombo de 22 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Bases de Snare 13 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 10 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de aire de 12 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 14 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Tom de Piso de 16 pulgadas",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "6 Bases para Platillos",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Máquina de Hi-Hat",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "2 Pedales de Bombo",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Silla de Batería",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "1 Alfombra de 2x2",
+            "amount": 3,
+            "brand": "Yamaha",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ],
+        "brands": ["Tama Starclassic", "DW Collector Series", "Yamaha Oak"]
+      },
+      {
+        "instrumentName": "Micrófonos",
+        "components": [
+          {
+            "name": "Micrófono de voz SM58",
+            "amount": 3,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Micrófono percusión SM57",
+            "amount": 5,
+            "brand": "Shure",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Amplificador Bajo",
+            "amount": 1,
+            "brand": "Ampeg",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          },
+          {
+            "name": "Cabina de sonido tarima",
+            "amount": 5,
+            "brand": "BEHRINGER",
+            "voltage": 110,
+            "power": 20,
+            "power_measure": "Watts",
+            "dimensions": {
+              "height": 4,
+              "length": 2,
+              "width": 3,
+              "unitMeasure": "mts",
+              "weight": 40,
+              "weightUnit": "kg"
+            }
+          }
+        ]
+      }
+    ],
+    "dressing_room": {
+      "number_of_full_length_mirrors": 3,
+      "number_of_non_full_length_mirrors": 3,
+      "dimensions": {
+        "height": 2,
+        "length": 2,
+        "width": 4,
+        "roof": 8,
+        "unitMeasure": "mts"
+      },
+      "lights": [],
+      "chairs": [],
+      "beds": []
+    },
+    "stats": {
+      "rating": {
+        "overall": 0.1485958777948937,
+        "stage": 0.7299777296276599,
+        "sound": 2.6355210789554886,
+        "backline": 3.578598547233097,
+        "lights": 3.6793133934430484,
+        "dressing_room": 4.890237416195878,
+        "hospitality_food": 3.6769366130679577,
+        "hospitality_drinks": 0.3860654446825684,
+        "timeliness": 4.483766132249302,
+        "communication": 3.8192255559125683,
+        "transportation": 2.6450482790094476,
+        "logistic": 3.650634284274563,
+        "location": 0.8577710912356362,
+        "seating_capacity": 2.9640340962312917,
+        "total_rates": 2362
+      }
     }
   }
 ]
