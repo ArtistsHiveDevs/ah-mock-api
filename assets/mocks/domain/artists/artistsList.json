@@ -26,10 +26,25 @@
     "facebook": "",
     "instagram": "",
     "spotify": "2RdqdnFd1SZmabqOfCBFCa",
+    "soundcloud": "petronamartinez",
 
     "general_rate": 4.6,
     "followers": "40K",
-    "event_followers": "30K"
+    "event_followers": "30K",
+    "stats": {
+      "rating": {
+        "overall": 1.9526856251219205,
+        "talent": 0.25238794935722564,
+        "performance": 0.48012940099588236,
+        "proffesionalism": 3.7132583055733512,
+        "stage_presence": 4.569076484520532,
+        "charisma": 4.315508331689809,
+        "timeliness": 4.776021096801581,
+        "communication": 1.4758946837965081,
+        "respectfulness": 1.8984376596560317,
+        "total_rates": 8290
+      }
+    }
   },
   {
     "artistType": "musician",
@@ -58,10 +73,26 @@
     "facebook": "",
     "instagram": "",
     "spotify": "3iUaVpAVimcgE96g2ei73y",
+    "soundcloud": "grupogualajo",
 
     "general_rate": 4.6,
     "followers": "40K",
-    "event_followers": "30K"
+    "event_followers": "30K",
+
+    "stats": {
+      "rating": {
+        "overall": 0.2526472367117627,
+        "talent": 1.9249521063897945,
+        "performance": 3.181901454301037,
+        "proffesionalism": 4.440655790345811,
+        "stage_presence": 2.3470319658953995,
+        "charisma": 4.97639739359767,
+        "timeliness": 3.6704309216017186,
+        "communication": 2.614879460945102,
+        "respectfulness": 1.2251210229201648,
+        "total_rates": 9194
+      }
+    }
   },
   {
     "artistType": "musician",
@@ -93,7 +124,21 @@
 
     "general_rate": 4.6,
     "followers": "40K",
-    "event_followers": "30K"
+    "event_followers": "30K",
+    "stats": {
+      "rating": {
+        "overall": 4.2145334012158926,
+        "talent": 4.158858660602993,
+        "performance": 1.8061457358286472,
+        "proffesionalism": 2.055707503674602,
+        "stage_presence": 3.4923032111632724,
+        "charisma": 1.3960549909547415,
+        "timeliness": 1.7279563420458863,
+        "communication": 0.9051890330240141,
+        "respectfulness": 3.75400168374303,
+        "total_rates": 6480
+      }
+    }
   },
   {
     "artistType": "musician",
@@ -129,10 +174,26 @@
     "facebook": "",
     "instagram": "",
     "spotify": "05Y9z2ZOtMMuD5lnZZc6VM",
+    "soundcloud": "espiral7",
+    "youtube": "espiral7",
 
     "general_rate": 4.6,
     "followers": "40K",
-    "event_followers": "30K"
+    "event_followers": "30K",
+    "stats": {
+      "rating": {
+        "overall": 1.1359747493576433,
+        "talent": 1.4351092804241872,
+        "performance": 3.785450278116392,
+        "proffesionalism": 4.082899302318314,
+        "stage_presence": 0.7451828403275818,
+        "charisma": 3.4400770315890212,
+        "timeliness": 3.247184865825222,
+        "communication": 4.949899863123609,
+        "respectfulness": 0.4521377664853965,
+        "total_rates": 5178
+      }
+    }
   },
   {
     "artistType": "musician",
@@ -173,7 +234,21 @@
 
     "general_rate": 4.6,
     "followers": "40K",
-    "event_followers": "30K"
+    "event_followers": "30K",
+    "stats": {
+      "rating": {
+        "overall": 0.9068648465123907,
+        "talent": 1.1525986014852652,
+        "performance": 2.777687076837616,
+        "proffesionalism": 1.568707165769374,
+        "stage_presence": 3.4781375072101284,
+        "charisma": 0.5976760314327789,
+        "timeliness": 4.334181811189719,
+        "communication": 4.4139278739701675,
+        "respectfulness": 2.560888377564009,
+        "total_rates": 5222
+      }
+    }
   },
   {
     "artistType": "musician",
@@ -209,7 +284,22 @@
 
     "general_rate": 4.6,
     "followers": "40K",
-    "event_followers": "30K"
+    "event_followers": "30K",
+
+    "stats": {
+      "rating": {
+        "overall": 2.881898631412656,
+        "talent": 4.410549383511232,
+        "performance": 3.509728764028151,
+        "proffesionalism": 2.687364732744255,
+        "stage_presence": 1.6767021640921995,
+        "charisma": 1.4189312348874394,
+        "timeliness": 2.346955773727031,
+        "communication": 1.1813694539919206,
+        "respectfulness": 4.538220567747318,
+        "total_rates": 7292
+      }
+    }
   },
   {
     "artistType": "musician",
@@ -241,7 +331,22 @@
 
     "general_rate": 4.6,
     "followers": "40K",
-    "event_followers": "30K"
+    "event_followers": "30K",
+
+    "stats": {
+      "rating": {
+        "overall": 1.013820397452323,
+        "talent": 4.9981662413420604,
+        "performance": 1.9285742535611405,
+        "proffesionalism": 1.4113979532972343,
+        "stage_presence": 4.742439296508115,
+        "charisma": 1.1804059310536408,
+        "timeliness": 3.1587609253363236,
+        "communication": 3.479426018753503,
+        "respectfulness": 1.3610323290078619,
+        "total_rates": 9764
+      }
+    }
   },
   {
     "artistType": "musician",
@@ -273,7 +378,21 @@
 
     "general_rate": 4.6,
     "followers": "40K",
-    "event_followers": "30K"
+    "event_followers": "30K",
+    "stats": {
+      "rating": {
+        "overall": 4.185871132783861,
+        "talent": 1.9034071612035919,
+        "performance": 3.451229947595201,
+        "proffesionalism": 0.16421249528853488,
+        "stage_presence": 4.55895740932524,
+        "charisma": 3.384304224216776,
+        "timeliness": 3.21693770726383,
+        "communication": 0.7281709758856825,
+        "respectfulness": 1.4588611091002324,
+        "total_rates": 5162
+      }
+    }
   },
   {
     "artistType": "musician",
@@ -314,7 +433,21 @@
 
     "general_rate": 4.6,
     "followers": "40K",
-    "event_followers": "30K"
+    "event_followers": "30K",
+    "stats": {
+      "rating": {
+        "overall": 2.9550256436885856,
+        "talent": 0.6863160065720764,
+        "performance": 0.654254902770921,
+        "proffesionalism": 1.2493540292355498,
+        "stage_presence": 0.6786574335248607,
+        "charisma": 1.4449991767758519,
+        "timeliness": 2.5860547626821075,
+        "communication": 3.153947249293454,
+        "respectfulness": 2.903873738116003,
+        "total_rates": 6470
+      }
+    }
   },
   {
     "artistType": "musician",
@@ -346,7 +479,21 @@
 
     "general_rate": 4.6,
     "followers": "40K",
-    "event_followers": "30K"
+    "event_followers": "30K",
+    "stats": {
+      "rating": {
+        "overall": 4.848071804836542,
+        "talent": 1.4234960574372635,
+        "performance": 4.384373614158696,
+        "proffesionalism": 1.9940768519907472,
+        "stage_presence": 0.8373198954788308,
+        "charisma": 0.021269502620036018,
+        "timeliness": 4.297320823660647,
+        "communication": 4.558896544560285,
+        "respectfulness": 3.8248402551421163,
+        "total_rates": 6252
+      }
+    }
   },
   {
     "artistType": "musician",
@@ -379,7 +526,21 @@
 
     "general_rate": 4.6,
     "followers": "40K",
-    "event_followers": "30K"
+    "event_followers": "30K",
+    "stats": {
+      "rating": {
+        "overall": 1.241889214833971,
+        "talent": 1.2492028633547314,
+        "performance": 2.4323072957532057,
+        "proffesionalism": 4.655415222863626,
+        "stage_presence": 3.6076516900149125,
+        "charisma": 0.7934501731006327,
+        "timeliness": 3.029990221940815,
+        "communication": 2.069947035690398,
+        "respectfulness": 1.3230888205362734,
+        "total_rates": 2433
+      }
+    }
   },
   {
     "artistType": "musician",
@@ -411,7 +572,22 @@
 
     "general_rate": 4.6,
     "followers": "40K",
-    "event_followers": "30K"
+    "event_followers": "30K",
+
+    "stats": {
+      "rating": {
+        "overall": 1.9425309415809089,
+        "talent": 4.738626293089815,
+        "performance": 4.957993282460913,
+        "proffesionalism": 3.381479760635505,
+        "stage_presence": 1.9726510067183376,
+        "charisma": 4.393206930695525,
+        "timeliness": 2.729577458959158,
+        "communication": 3.252244474537007,
+        "respectfulness": 0.2952695692960561,
+        "total_rates": 4344
+      }
+    }
   },
   {
     "artistType": "musician",
@@ -443,7 +619,21 @@
 
     "general_rate": 4.6,
     "followers": "40K",
-    "event_followers": "30K"
+    "event_followers": "30K",
+    "stats": {
+      "rating": {
+        "overall": 3.5490958895814515,
+        "talent": 0.34403788652997647,
+        "performance": 2.5896794366125566,
+        "proffesionalism": 1.140316537132412,
+        "stage_presence": 2.1818976506247543,
+        "charisma": 0.041325892755517124,
+        "timeliness": 3.0549156334239393,
+        "communication": 4.646614463095939,
+        "respectfulness": 2.7015542886561414,
+        "total_rates": 4337
+      }
+    }
   },
   {
     "artistType": "musician",
@@ -475,7 +665,21 @@
 
     "general_rate": 4.6,
     "followers": "40K",
-    "event_followers": "30K"
+    "event_followers": "30K",
+    "stats": {
+      "rating": {
+        "overall": 4.60764351934377,
+        "talent": 4.20307834599885,
+        "performance": 3.3653846769176625,
+        "proffesionalism": 3.838376253790564,
+        "stage_presence": 2.970759237241293,
+        "charisma": 4.727448035480309,
+        "timeliness": 0.7372422881492846,
+        "communication": 1.383959989607646,
+        "respectfulness": 3.8729790718855854,
+        "total_rates": 421
+      }
+    }
   },
   {
     "artistType": "musician",
@@ -514,7 +718,21 @@
 
     "general_rate": 4.6,
     "followers": "40K",
-    "event_followers": "30K"
+    "event_followers": "30K",
+    "stats": {
+      "rating": {
+        "overall": 1.2916192754040523,
+        "talent": 0.35868189001436845,
+        "performance": 0.7549139644307512,
+        "proffesionalism": 2.6835046653172623,
+        "stage_presence": 2.6303369771628127,
+        "charisma": 4.606957966836629,
+        "timeliness": 3.401391961183595,
+        "communication": 2.536949972004728,
+        "respectfulness": 0.09741614396473586,
+        "total_rates": 6858
+      }
+    }
   },
   {
     "artistType": "musician",
@@ -546,7 +764,21 @@
 
     "general_rate": 4.6,
     "followers": "40K",
-    "event_followers": "30K"
+    "event_followers": "30K",
+    "stats": {
+      "rating": {
+        "overall": 2.914238121240156,
+        "talent": 0.7435048294882796,
+        "performance": 3.1056274011510787,
+        "proffesionalism": 0.1541362678770386,
+        "stage_presence": 2.277641846990922,
+        "charisma": 4.588038682865238,
+        "timeliness": 0.9551523220104731,
+        "communication": 2.1116988129602996,
+        "respectfulness": 3.4116393009394725,
+        "total_rates": 1626
+      }
+    }
   },
   {
     "artistType": "musician",
@@ -581,7 +813,21 @@
 
     "general_rate": 4.6,
     "followers": "40K",
-    "event_followers": "30K"
+    "event_followers": "30K",
+    "stats": {
+      "rating": {
+        "overall": 1.921210823174008,
+        "talent": 0.5594738372443431,
+        "performance": 2.003855048988905,
+        "proffesionalism": 1.8994212464485727,
+        "stage_presence": 1.166408798605273,
+        "charisma": 3.0331765154925194,
+        "timeliness": 3.8936754495020196,
+        "communication": 1.1960985538730884,
+        "respectfulness": 0.730689687330558,
+        "total_rates": 4999
+      }
+    }
   },
   {
     "artistType": "musician",
@@ -613,6 +859,20 @@
 
     "general_rate": 4.6,
     "followers": "40K",
-    "event_followers": "30K"
+    "event_followers": "30K",
+    "stats": {
+      "rating": {
+        "overall": 3.803931233388449,
+        "talent": 4.048568276896691,
+        "performance": 3.9161472139878364,
+        "proffesionalism": 1.795765376242926,
+        "stage_presence": 1.7571734137082384,
+        "charisma": 2.136013171073503,
+        "timeliness": 3.0462888985034318,
+        "communication": 1.461507520737425,
+        "respectfulness": 1.983311000875424,
+        "total_rates": 3105
+      }
+    }
   }
 ]
