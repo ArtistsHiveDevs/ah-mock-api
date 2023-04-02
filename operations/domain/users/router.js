@@ -124,15 +124,24 @@ module.exports = [
     }
   }),
 
-  userRouter.post(RoutesConstants.createUser, (req, res) => {
-    return res.status(200).json({ message: "Crear usuario" });
+  userRouter.post(RoutesConstants.create, (req, res) => {
+    const items = helpers.getEntityData("User");
+    return res
+      .status(200)
+      .json(items[Math.round(Math.random() * items.length)]);
   }),
 
-  userRouter.put(RoutesConstants.createUser, (req, res) => {
-    return res.status(200).json({ message: "update usuario" });
+  userRouter.put(RoutesConstants.updateById, (req, res) => {
+    const items = helpers.getEntityData("User");
+    return res
+      .status(200)
+      .json(items[Math.round(Math.random() * items.length)]);
   }),
 
-  userRouter.delete(RoutesConstants.createUser, (req, res) => {
-    return res.status(200).json({ message: "delete usuario" });
+  userRouter.delete(RoutesConstants.deleteById, (req, res) => {
+    const items = helpers.getEntityData("User");
+    return res
+      .status(200)
+      .json(items[Math.round(Math.random() * items.length)]);
   }),
 ];

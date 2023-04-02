@@ -113,4 +113,25 @@ module.exports = [
       return res.status(500).json({});
     }
   }),
+
+  artistRouter.post(RoutesConstants.create, (req, res) => {
+    const items = helpers.getEntityData("Artist");
+    return res
+      .status(200)
+      .json(items[Math.round(Math.random() * items.length)]);
+  }),
+
+  artistRouter.put(RoutesConstants.updateById, (req, res) => {
+    const items = helpers.getEntityData("Artist");
+    return res
+      .status(200)
+      .json(items[Math.round(Math.random() * items.length)]);
+  }),
+
+  artistRouter.delete(RoutesConstants.deleteById, (req, res) => {
+    const items = helpers.getEntityData("Artist");
+    return res
+      .status(200)
+      .json(items[Math.round(Math.random() * items.length)]);
+  }),
 ];

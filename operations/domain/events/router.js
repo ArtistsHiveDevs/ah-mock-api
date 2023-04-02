@@ -197,4 +197,25 @@ module.exports = [
       return res.status(500).json({});
     }
   }),
+
+  eventsRouter.post(RoutesConstants.create, (req, res) => {
+    const items = helpers.getEntityData("Event");
+    return res
+      .status(200)
+      .json(items[Math.round(Math.random() * items.length)]);
+  }),
+
+  eventsRouter.put(RoutesConstants.updateById, (req, res) => {
+    const items = helpers.getEntityData("Event");
+    return res
+      .status(200)
+      .json(items[Math.round(Math.random() * items.length)]);
+  }),
+
+  eventsRouter.delete(RoutesConstants.deleteById, (req, res) => {
+    const items = helpers.getEntityData("Event");
+    return res
+      .status(200)
+      .json(items[Math.round(Math.random() * items.length)]);
+  }),
 ];

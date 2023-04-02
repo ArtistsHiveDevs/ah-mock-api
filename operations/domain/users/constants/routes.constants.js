@@ -1,7 +1,7 @@
 module.exports = {
   usersList: "/",
   findUserById: "/:userId",
-  updateById: "/:userId",
-  deleteById: "/:userId",
-  createUser: "/",
+  updateById: "/:id",
+  deleteById: "/:id",
+  create: "/",
 };
