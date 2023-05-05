@@ -14,6 +14,7 @@ var placesRouter = require("./operations/domain/places/router");
 var ridersRouter = require("./operations/domain/riders/router");
 var usersRouter = require("./operations/domain/users/router");
 var errorsRouter = require("./operations/parametrics/general/error/router");
+var industryOfferRouter = require("./operations/app/industryOffer/industryOffer/router");
 var termsAndConditionsRouter = require("./operations/app/policies/termsAndConditions/router");
 var privacyRouter = require("./operations/app/policies/privacyPolicy/router");
 
@@ -32,6 +33,7 @@ var routes = [
   { path: "/events", route: eventsRouter },
   { path: "/instruments", route: instrumentsRouter },
   { path: "/places", route: placesRouter },
+  { path: "/industryOffer", route: industryOfferRouter },
   { path: "/riders", route: ridersRouter },
   { path: "/users", route: usersRouter },
   { path: "/error", route: errorsRouter },
