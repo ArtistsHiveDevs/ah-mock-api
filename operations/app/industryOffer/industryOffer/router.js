@@ -12,7 +12,6 @@ module.exports = [
           `./assets/mocks/app/industryOffer/${entityRole}.offer.md`,
           { encoding: "utf8", flag: "r" }
         );
-        console.log(offer);
         return res.status(200).json({ offer });
       } else {
         return res.status(404).json({
