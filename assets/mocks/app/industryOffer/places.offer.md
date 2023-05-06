@@ -1,4 +1,4 @@
-# Beneficios para venues al usar la aplicación
+# Para sitios
 
 La aplicación para la gestión de eventos musicales es una herramienta valiosa para los venues, ya que les permite gestionar de manera más eficiente sus eventos y tener acceso a una amplia base de datos de artistas para seleccionar a aquellos que mejor se adapten a sus necesidades. A continuación, se describen algunos de los beneficios más destacados para los venues al usar esta aplicación:
 

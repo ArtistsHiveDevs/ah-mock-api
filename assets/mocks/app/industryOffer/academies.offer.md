@@ -1,4 +1,4 @@
-# Beneficios para academias y universidades al usar la aplicación
+# Para academias
 
 La plataforma digital creada para conectar a músicos y promotores de eventos también puede ser de gran utilidad para academias y universidades que buscan fortalecer sus programas de música. A continuación, se presentan algunos beneficios que estas instituciones pueden obtener al utilizar la aplicación.
 

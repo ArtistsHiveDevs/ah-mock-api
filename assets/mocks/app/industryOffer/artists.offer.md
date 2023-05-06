@@ -1,4 +1,4 @@
-# Beneficios para los artistas que usen la aplicación
+# Para artistas
 
 Si eres un artista en busca de oportunidades para presentarte y darte a conocer en Bogotá, la aplicación de Artists Hive es la herramienta que estabas esperando. Con esta plataforma, podrás acceder a una amplia variedad de eventos y actividades culturales en la ciudad, así como conectarte con otros artistas y promotores en el ecosistema musical de Bogotá. A continuación, te presentamos algunos de los beneficios más destacados que obtendrás al usar la aplicación de Artists Hive.
 

@@ -1,4 +1,4 @@
-# Los beneficios de usar la aplicación para promotores
+# Para promotores
 
 La aplicación para promotores de artistas es una herramienta innovadora que puede brindar una serie de beneficios a los profesionales del sector. Aquí te presentamos algunos de los principales:
 
