@@ -41,12 +41,40 @@ function fillResultWithFields(fields, result) {
   );
 
   filled.forEach((artist) => {
+    const artistsEvents = artist["events"] || [];
+
     const sortedEvents = helpers.sortByDate(
-      artist["events"] || [],
+      artistsEvents,
       "timetable__initial_date",
       "timetable__openning_doors"
     );
     artist["events"] = sortedEvents;
+    const placesEvents =
+      [...new Set(artist["events"].map((event) => event.place_id))] || [];
+
+    const places = helpers.getEntityData("Place");
+
+    const placesCities = placesEvents.map((placeID) => {
+      const place = places.find((place) => `${place.id}` === `${placeID}`);
+      return {
+        city: place.city,
+        state: place.state,
+        country: place.country,
+        location: place.location,
+      };
+    });
+
+    const uniqueCities = [
+      ...new Set(
+        placesCities.map((city) => `${city.city}#${city.state}#${city.country}`)
+      ),
+    ];
+
+    artist["cities"] = uniqueCities.map((uniqueCity) =>
+      placesCities.find(
+        (city) => `${city.city}#${city.state}#${city.country}` === uniqueCity
+      )
+    );
   });
 
   return filled;
