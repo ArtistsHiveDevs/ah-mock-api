@@ -81,6 +81,34 @@ function filterResultsByQuery(req, result) {
         fillResultWithFields(fields, result);
       }
     }
+
+    result.forEach((place) => {
+      // Social Networks ==================================================================================
+      const socialNetworks = [
+        "appleMusic",
+        "cd_baby",
+        "deezer",
+        "facebook",
+        "instagram",
+        "linkedin",
+        "soundcloud",
+        "spotify",
+        "tiktok",
+        "twitch",
+        "twitter",
+        "vimeo",
+        "youtube",
+      ].filter((socialNetwork) => !!place[socialNetwork]);
+
+      place.stats["socialNetworks"] = socialNetworks.map((socialNetwork) => {
+        return {
+          name: socialNetwork,
+          followers: Math.round(Math.random() * 100000),
+          variation: (Math.random() * 200 - 100).toFixed(2),
+          timelapse: Math.random() > 0.5 ? "semanal" : "mensual",
+        };
+      });
+    });
   } catch (error) {
     console.log(error);
     result = undefined;

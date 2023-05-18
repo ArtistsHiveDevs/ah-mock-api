@@ -52,6 +52,7 @@ function fillResultWithFields(fields, result) {
     const placesEvents =
       [...new Set(artist["events"].map((event) => event.place_id))] || [];
 
+    // VISITED CITIES ==================================================================================
     const places = helpers.getEntityData("Place");
 
     const placesCities = placesEvents.map((placeID) => {
@@ -75,6 +76,32 @@ function fillResultWithFields(fields, result) {
         (city) => `${city.city}#${city.state}#${city.country}` === uniqueCity
       )
     );
+
+    // Social Networks ==================================================================================
+    const socialNetworks = [
+      "appleMusic",
+      "cd_baby",
+      "deezer",
+      "facebook",
+      "instagram",
+      "linkedin",
+      "soundcloud",
+      "spotify",
+      "tiktok",
+      "twitch",
+      "twitter",
+      "vimeo",
+      "youtube",
+    ].filter((socialNetwork) => !!artist[socialNetwork]);
+
+    artist.stats["socialNetworks"] = socialNetworks.map((socialNetwork) => {
+      return {
+        name: socialNetwork,
+        followers: Math.round(Math.random() * 100000),
+        variation: (Math.random() * 200 - 100).toFixed(2),
+        timelapse: Math.random() > 0.5 ? "semanal" : "mensual",
+      };
+    });
   });
 
   return filled;
