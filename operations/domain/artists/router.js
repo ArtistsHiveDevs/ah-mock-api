@@ -102,6 +102,30 @@ function fillResultWithFields(fields, result) {
         timelapse: Math.random() > 0.5 ? "semanal" : "mensual",
       };
     });
+
+    // Albums from Spotify ===============================================================================
+    const albums = helpers.getEntityData("Album");
+
+    artist.arts = {};
+
+    const albumsInfo = albums.find(
+      (artistInfo) => `${artistInfo.ah_id}` === `${artist.id}`
+    );
+
+    if (albumsInfo?.total > 0) {
+      artist.arts["music"] = {
+        albums: albumsInfo.items.map((album) => {
+          return {
+            images: album.images,
+            name: album.name,
+            release_date: album.release_date,
+            release_date_precision: album.release_date_precision,
+            spotify: { id: album.id, url: album.external_urls.spotify },
+            total_tracks: album.total_tracks,
+          };
+        }),
+      };
+    }
   });
 
   return filled;

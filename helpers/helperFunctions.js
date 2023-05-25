@@ -272,6 +272,9 @@ module.exports = {
     const artists = JSON.parse(
       fs.readFileSync(`./assets/mocks/domain/artists/artistsList.json`)
     );
+    const albums = JSON.parse(
+      fs.readFileSync(`./assets/mocks/domain/artists/albumsList.json`)
+    );
     const events = JSON.parse(
       fs.readFileSync(`./assets/mocks/domain/events/eventsList.json`)
     );
@@ -294,6 +297,8 @@ module.exports = {
     );
     if (entityName === "Artist") {
       response = [...artists];
+    } else if (entityName === "Album") {
+      response = [...albums];
     } else if (entityName === "Event") {
       response = [...events];
     } else if (entityName === "Instrument") {
