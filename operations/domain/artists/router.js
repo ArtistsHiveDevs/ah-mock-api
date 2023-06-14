@@ -65,17 +65,30 @@ function fillResultWithFields(fields, result) {
       };
     });
 
-    const uniqueCities = [
-      ...new Set(
-        placesCities.map((city) => `${city.city}#${city.state}#${city.country}`)
-      ),
-    ];
-
-    artist["cities"] = uniqueCities.map((uniqueCity) =>
-      placesCities.find(
-        (city) => `${city.city}#${city.state}#${city.country}` === uniqueCity
-      )
+    const joinedData = placesCities.map(
+      (city) => `${city.city}#${city.state}#${city.country}`
     );
+
+    const counts = {};
+    artist["events"].forEach(function (event) {
+      const place = places.find(
+        (place) => `${place.id}` === `${event.place_id}`
+      );
+      const joinedDataOfPlace = `${place.city}#${place.state}#${place.country}`;
+
+      counts[joinedDataOfPlace] = (counts[joinedDataOfPlace] || 0) + 1;
+    });
+
+    const uniqueCities = [...new Set(joinedData)];
+
+    artist["cities"] = uniqueCities.map((uniqueCityJoinedName) => {
+      const uniqueCity = placesCities.find(
+        (city) =>
+          `${city.city}#${city.state}#${city.country}` === uniqueCityJoinedName
+      );
+      uniqueCity["totalEvents"] = counts[uniqueCityJoinedName];
+      return uniqueCity;
+    });
 
     // Social Networks ==================================================================================
     const socialNetworks = [
