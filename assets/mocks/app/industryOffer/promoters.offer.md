@@ -16,7 +16,7 @@ La plataforma cuenta con una amplia base de datos de artistas de diferentes gén
 
 Al promocionar sus eventos a través de la plataforma, los promotores pueden llegar a una audiencia mucho más amplia que si utilizaran métodos tradicionales de promoción. La plataforma les brinda la posibilidad de llegar a un público más diverso y numeroso, lo que puede resultar en una mayor asistencia y éxito de los eventos.
 
-![Events](https://npcarlos.co/artistsHive_mocks/IndustryOffer/promoter_audience.jpg)
+![Events](https://npcarlos.co/artistsHive_mocks/IndustryOffer/promoter_audiences.jpg)
 
 ## Mayor interacción y feedback con el público
 
