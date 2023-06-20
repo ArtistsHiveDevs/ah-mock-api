@@ -301,6 +301,33 @@ module.exports = {
       response = [...albums];
     } else if (entityName === "Event") {
       response = [...events];
+
+      const one_day = 1000 * 60 * 60 * 24;
+      const firstEventDate = new Date("2022-12-06");
+      const today = new Date();
+      const DAYS_DIFERENCE =
+        Math.round((today - firstEventDate) / one_day) - 50;
+
+      const fechas = ["timetable__initial_date", "timetable__end_date"];
+
+      response.forEach((event) => {
+        fechas.forEach((fecha) => {
+          const eventOriginalDate = new Date(event[fecha]);
+
+          const eventUpdatedDate = new Date(eventOriginalDate);
+          eventUpdatedDate.setDate(
+            eventOriginalDate.getDate() + DAYS_DIFERENCE
+          );
+          const year = eventUpdatedDate.getFullYear();
+          const month = String(eventUpdatedDate.getMonth() + 1).padStart(
+            2,
+            "0"
+          );
+          const day = String(eventUpdatedDate.getDate()).padStart(2, "0");
+
+          event[fecha] = `${year}-${month}-${day}`;
+        });
+      });
     } else if (entityName === "Instrument") {
       response = [...instruments];
     } else if (entityName === "Place") {
