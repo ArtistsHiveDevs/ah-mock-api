@@ -112,11 +112,17 @@ module.exports = [
     );
 
     try {
-      return res.json(
-        filterResultsByQuery(req, searchUser) || {
+      if (searchUser) {
+        return res.json(
+          filterResultsByQuery(req, searchUser) || {
+            message: helpers.noResultDefaultLabel,
+          }
+        );
+      } else {
+        res.json({
           message: helpers.noResultDefaultLabel,
-        }
-      );
+        });
+      }
     } catch (error) {
       console.log(error);
 

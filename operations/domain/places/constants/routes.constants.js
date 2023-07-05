@@ -1,4 +1,7 @@
 module.exports = {
-    eventList: "/",
-    findEventById: "/:eventId"
+  eventList: "/",
+  findEventById: "/:eventId",
+  updateById: "/:id",
+  deleteById: "/:id",
+  create: "/",
 };

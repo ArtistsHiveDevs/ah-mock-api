@@ -50,6 +50,10 @@ function fillResultWithFields(fields, result) {
 
 function filterResultsByQuery(req, result) {
   try {
+    const isArray = Array.isArray(result);
+    if (!isArray) {
+      result = [result];
+    }
     if (req.query) {
       // Consulta por palabra clave
       if (req.query.q) {
@@ -109,6 +113,9 @@ function filterResultsByQuery(req, result) {
         };
       });
     });
+    if (!isArray) {
+      result = result[0];
+    }
   } catch (error) {
     console.log(error);
     result = undefined;
@@ -147,5 +154,26 @@ module.exports = [
 
       return res.status(500).json({});
     }
+  }),
+
+  router.post(RoutesConstants.create, (req, res) => {
+    const items = helpers.getEntityData("Place");
+    return res
+      .status(200)
+      .json(items[Math.round(Math.random() * items.length)]);
+  }),
+
+  router.put(RoutesConstants.updateById, (req, res) => {
+    const items = helpers.getEntityData("Place");
+    return res
+      .status(200)
+      .json(items[Math.round(Math.random() * items.length)]);
+  }),
+
+  router.delete(RoutesConstants.deleteById, (req, res) => {
+    const items = helpers.getEntityData("Place");
+    return res
+      .status(200)
+      .json(items[Math.round(Math.random() * items.length)]);
   }),
 ];
