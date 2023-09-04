@@ -116,6 +116,7 @@ function filterResultsByQuery(req) {
 
         places = helpers.findMany(helpers.getEntityData("Place"), req.query.q, [
           "name",
+          "country",
           "state",
           "city",
           "facebook",
