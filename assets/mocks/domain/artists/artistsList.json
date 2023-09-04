@@ -46,6 +46,11 @@
         "respectfulness": 1.8984376596560317,
         "total_rates": 8290
       }
+    },
+    "arts": {
+      "music": {
+        "albums": []
+      }
     }
   },
   {
@@ -177,8 +182,8 @@
     "mobile_phone": "+57 (300)765 43 21",
     "whatsapp": "+57 (300)765 43 21",
 
-    "facebook": "",
-    "instagram": "",
+    "facebook": "espiral7banda",
+    "instagram": "espiral7_",
     "spotify": "05Y9z2ZOtMMuD5lnZZc6VM",
     "soundcloud": "espiral7",
     "youtube": "espiral7",
@@ -836,7 +841,7 @@
     "facebook": "loscanaveralesdelbohio",
     "twitter": "TWcañaverales",
     "instagram": "los_canaverales",
-    "spotify": "",
+    "spotify": "3O08E697JnrOi9nAFA7yc6",
     "youtube": "loscanaverales",
     "youtube_widget_id": "w28v3q8jiOk",
     "cd_baby": "Cañaverales",
