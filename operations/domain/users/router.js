@@ -150,4 +150,82 @@ module.exports = [
       .status(200)
       .json(items[Math.round(Math.random() * items.length)]);
   }),
+
+  userRouter.get(RoutesConstants.favorites, (req, res) => {
+    const MAX_ELEMENTS = 10;
+    const artistsRandom = helpers
+      .getEntityData("Artist")
+      .sort(() => 0.5 - Math.random());
+    const randomArtistSize = Math.floor(Math.random() * artistsRandom.length);
+    const artistsFinalSize =
+      randomArtistSize > MAX_ELEMENTS ? MAX_ELEMENTS : randomArtistSize;
+
+    const artists = artistsRandom.slice(0, artistsFinalSize);
+
+    const placesRandom = helpers
+      .getEntityData("Place")
+      .sort(() => 0.5 - Math.random());
+
+    const randomPlacesSize = Math.floor(Math.random() * placesRandom.length);
+    const placesFinalSize =
+      randomPlacesSize > MAX_ELEMENTS ? MAX_ELEMENTS : randomPlacesSize;
+
+    const places = placesRandom.slice(0, placesFinalSize);
+
+    const eventsRandom = helpers
+      .getEntityData("Event")
+      .sort(() => 0.5 - Math.random());
+
+    const randomEventsSize = Math.floor(Math.random() * eventsRandom.length);
+    const eventsFinalSize =
+      randomPlacesSize > MAX_ELEMENTS ? MAX_ELEMENTS : randomPlacesSize;
+
+    const events = eventsRandom.slice(0, eventsFinalSize);
+
+    return res.status(200).json({ artists, places, events });
+  }),
+
+  userRouter.get(RoutesConstants.tours_outline, (req, res) => {
+    const MAX_ELEMENTS = 10;
+
+    const numeroTours = Math.floor(Math.random() * 5);
+
+    const toursOutlines = Array(numeroTours)
+      .fill()
+      .map((x, i) => {
+        const tourNumber = i + 1;
+
+        // Liked artists for the tour
+        const artistsRandom = helpers
+          .getEntityData("Artist")
+          .sort(() => 0.5 - Math.random());
+        const randomArtistSize = Math.floor(
+          Math.random() * artistsRandom.length
+        );
+        const artistsFinalSize =
+          randomArtistSize > MAX_ELEMENTS ? MAX_ELEMENTS : randomArtistSize;
+        const artists = artistsRandom.slice(0, artistsFinalSize);
+
+        // Liked places for the tour
+        const placesRandom = helpers
+          .getEntityData("Place")
+          .sort(() => 0.5 - Math.random());
+        const randomPlacesSize = Math.floor(
+          Math.random() * placesRandom.length
+        );
+        const placesFinalSize =
+          randomPlacesSize > MAX_ELEMENTS ? MAX_ELEMENTS : randomPlacesSize;
+        const places = [...placesRandom].slice(0, placesFinalSize);
+
+        return {
+          name: `Tour #${tourNumber}`,
+          likedPlaces: places,
+          likedArtists: artists,
+          confirmedEvents: [],
+          pendingEvents: [],
+        };
+      });
+
+    return res.status(200).json(toursOutlines);
+  }),
 ];
