@@ -182,7 +182,13 @@ module.exports = [
 
     const events = eventsRandom.slice(0, eventsFinalSize);
 
-    return res.status(200).json({ artists, places, events });
+    const pagination = {
+      total_artists: randomArtistSize,
+      total_events: randomEventsSize,
+      total_places: randomPlacesSize,
+    };
+
+    return res.status(200).json({ artists, places, events, pagination });
   }),
 
   userRouter.get(RoutesConstants.tours_outline, (req, res) => {
@@ -217,12 +223,19 @@ module.exports = [
           randomPlacesSize > MAX_ELEMENTS ? MAX_ELEMENTS : randomPlacesSize;
         const places = [...placesRandom].slice(0, placesFinalSize);
 
+        const pagination = {
+          total_artists: randomArtistSize,
+          total_events: randomEventsSize,
+          total_places: randomPlacesSize,
+        };
+
         return {
           name: `Tour #${tourNumber}`,
           likedPlaces: places,
           likedArtists: artists,
           confirmedEvents: [],
           pendingEvents: [],
+          pagination,
         };
       });
 
