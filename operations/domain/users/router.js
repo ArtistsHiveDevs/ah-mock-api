@@ -284,7 +284,7 @@ module.exports = [
                 public_transportation: 123123,
                 van: 123123,
               },
-              intercity_trans: {
+              intercity_transportation: {
                 public_bus: 123123,
                 private_bus: 123123,
                 car: 123123,
