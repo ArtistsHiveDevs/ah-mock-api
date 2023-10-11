@@ -303,6 +303,7 @@ module.exports = [
         };
 
         return {
+          id: `Tour${tourNumber}`,
           summary,
           name: `Tour #${tourNumber}`,
           pictures: {
