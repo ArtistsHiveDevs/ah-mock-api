@@ -1,6 +1,9 @@
 var express = require("express");
 var helpers = require("../../../helpers/index");
 var RoutesConstants = require("./constants/index");
+const {
+  generateTourOutlines,
+} = require("../favourites/toursOutlines/generators");
 
 var userRouter = express.Router({ mergeParams: true });
 
@@ -192,133 +195,10 @@ module.exports = [
   }),
 
   userRouter.get(RoutesConstants.tours_outline, (req, res) => {
-    const MAX_ELEMENTS = 10;
-
-    const numeroTours = Math.floor(Math.random() * 5);
-
-    const toursOutlines = Array(numeroTours)
-      .fill()
-      .map((x, i) => {
-        const tourNumber = i + 1;
-
-        // Liked artists for the tour
-        const artistsRandom = helpers
-          .getEntityData("Artist")
-          .sort(() => 0.5 - Math.random());
-        const randomArtistSize = Math.floor(
-          Math.random() * artistsRandom.length
-        );
-        const artistsFinalSize =
-          randomArtistSize > MAX_ELEMENTS ? MAX_ELEMENTS : randomArtistSize;
-        const artists = artistsRandom.slice(0, artistsFinalSize);
-
-        // Liked places for the tour
-        const placesRandom = helpers
-          .getEntityData("Place")
-          .sort(() => 0.5 - Math.random());
-        const randomPlacesSize = Math.floor(
-          Math.random() * placesRandom.length
-        );
-        const placesFinalSize =
-          randomPlacesSize > MAX_ELEMENTS ? MAX_ELEMENTS : randomPlacesSize;
-        const places = [...placesRandom].slice(0, placesFinalSize);
-
-        // // Liked events for the tour
-        // const placesRandom = helpers
-        //   .getEntityData("Place")
-        //   .sort(() => 0.5 - Math.random());
-        // const randomPlacesSize = Math.floor(
-        //   Math.random() * placesRandom.length
-        // );
-        // const placesFinalSize =
-        //   randomPlacesSize > MAX_ELEMENTS ? MAX_ELEMENTS : randomPlacesSize;
-        // const places = [...placesRandom].slice(0, placesFinalSize);
-
-        const pagination = {
-          total_artists: randomArtistSize,
-          // total_events: randomEventsSize,
-          total_places: randomPlacesSize,
-        };
-
-        const countryNames = Array.from(
-          new Set(places.map((place) => place.country))
-        );
-
-        const today = new Date();
-        const initial_date = new Date(
-          today.setMonth(today.getMonth() + 8 * Math.random())
-        );
-
-        const summary = {
-          days: {
-            initial_date,
-            final_date: new Date(
-              new Date(initial_date).setDate(
-                initial_date.getDate() + 90 * Math.random()
-              )
-            ),
-          },
-          countries: countryNames.map((countryName) => {
-            const cities = Array.from(
-              new Set(
-                places
-                  .filter((place) => place.country === countryName)
-                  .map((place) => place.city)
-              )
-            );
-            return {
-              name: countryName,
-              cities,
-            };
-          }),
-
-          budget: {
-            food: 1231231,
-            transportation: {
-              internal_transportation: {
-                uber: 123123,
-                bike: 123123,
-                motorbike: 123123,
-                car: 123123,
-                car_rental: 12323,
-                public_transportation: 123123,
-                van: 123123,
-              },
-              intercity_transportation: {
-                public_bus: 123123,
-                private_bus: 123123,
-                car: 123123,
-                car_rental: 123123,
-                flights: 123123,
-                boats: 123123,
-              },
-            },
-            accomodation: {
-              airbnb: 123123,
-              booking: 123123,
-              hotels: 123123,
-              house_rental: 123123,
-            },
-          },
-        };
-
-        return {
-          id: `Tour${tourNumber}`,
-          summary,
-          name: `Tour #${tourNumber}`,
-          pictures: {
-            thumbnail: "",
-            poster: "",
-            cover: "",
-          },
-          likedPlaces: places,
-          likedArtists: artists,
-          confirmedEvents: [],
-          pendingEvents: [],
-          pagination,
-        };
-      });
-
-    return res.status(200).json(toursOutlines);
+    return res.status(200).json(generateTourOutlines());
+  }),
+  userRouter.get(RoutesConstants.findUserById, (req, res) => {
+    const { userId } = req.params;
+    return res.status(200).json(generateTourOutline(userId));
   }),
 ];

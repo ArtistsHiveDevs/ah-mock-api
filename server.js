@@ -13,6 +13,7 @@ var instrumentsRouter = require("./operations/parametrics/domain/instruments/rou
 var placesRouter = require("./operations/domain/places/router");
 var ridersRouter = require("./operations/domain/riders/router");
 var usersRouter = require("./operations/domain/users/router");
+var toursOutlinesRouter = require("./operations/domain/favourites/toursOutlines/router");
 var errorsRouter = require("./operations/parametrics/general/error/router");
 var industryOfferRouter = require("./operations/app/industryOffer/industryOffer/router");
 var termsAndConditionsRouter = require("./operations/app/policies/termsAndConditions/router");
@@ -36,6 +37,7 @@ var routes = [
   { path: "/industryOffer", route: industryOfferRouter },
   { path: "/riders", route: ridersRouter },
   { path: "/users", route: usersRouter },
+  { path: "/tours_outlines", route: toursOutlinesRouter },
   { path: "/error", route: errorsRouter },
   { path: "/terms", route: termsAndConditionsRouter },
   { path: "/privacy", route: privacyRouter },
