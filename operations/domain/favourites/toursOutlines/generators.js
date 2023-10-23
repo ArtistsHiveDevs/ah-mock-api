@@ -39,7 +39,15 @@ function mockGenerator(amountElements = MAX_ELEMENTS) {
       const randomEventsSize = Math.floor(Math.random() * eventsRandom.length);
       const eventsFinalSize =
         randomEventsSize > MAX_ELEMENTS ? MAX_ELEMENTS : randomEventsSize;
-      const events = [...eventsRandom].slice(0, eventsFinalSize);
+      let events = [...eventsRandom].slice(0, eventsFinalSize);
+
+      events.forEach((event) => {
+        const place = placesRandom.find(
+          (place) => `${place.id}` === `${event.place_id}`
+        );
+        event["place"] = place;
+        return event;
+      });
 
       const pagination = {
         total_artists: randomArtistSize,
@@ -90,6 +98,8 @@ function mockGenerator(amountElements = MAX_ELEMENTS) {
               car_rental: 1632323,
               public_transportation: 1123123,
               van: 123123,
+              parking: 5343,
+              scooter: 6443,
             },
             intercity_transportation: {
               public_bus: 32123123,
@@ -98,6 +108,7 @@ function mockGenerator(amountElements = MAX_ELEMENTS) {
               car_rental: 123123,
               flights: 123123,
               boats: 123123,
+              bike: 0,
             },
           },
           accomodation: {
