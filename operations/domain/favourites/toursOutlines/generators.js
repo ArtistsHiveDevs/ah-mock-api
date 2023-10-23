@@ -49,6 +49,14 @@ function mockGenerator(amountElements = MAX_ELEMENTS) {
         return event;
       });
 
+      events.sort((event1, event2) =>
+        event1.timetable__initial_date > event2.timetable__initial_date
+          ? 1
+          : event2.timetable__initial_date > event1.timetable__initial_date
+          ? -1
+          : 0
+      );
+
       const pagination = {
         total_artists: randomArtistSize,
         total_events: randomEventsSize,
@@ -59,19 +67,14 @@ function mockGenerator(amountElements = MAX_ELEMENTS) {
         new Set(places.map((place) => place.country))
       );
 
-      const today = new Date();
-      const initial_date = new Date(
-        today.setMonth(today.getMonth() + 8 * Math.random())
-      );
-
       const summary = {
         days: {
-          initial_date,
-          final_date: new Date(
-            new Date(initial_date).setDate(
-              initial_date.getDate() + 90 * Math.random()
-            )
-          ),
+          initial_date:
+            events.length > 0 ? events[0].timetable__initial_date : undefined,
+          final_date:
+            events.length > 0
+              ? events[events.length - 1].timetable__end_date
+              : undefined,
         },
         countries: countryNames.map((countryName) => {
           const cities = Array.from(
