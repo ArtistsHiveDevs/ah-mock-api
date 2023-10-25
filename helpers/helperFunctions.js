@@ -338,7 +338,7 @@ module.exports = {
           event[fecha] = `${year}-${month}-${day}`;
         });
 
-        event["confirmationStatus"] = Object.keys(EVENT_CONFIRMATION_STATUS)[
+        event["confirmation_status"] = Object.keys(EVENT_CONFIRMATION_STATUS)[
           Math.floor(
             Math.random() * Object.keys(EVENT_CONFIRMATION_STATUS).length
           )
