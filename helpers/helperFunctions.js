@@ -310,6 +310,16 @@ module.exports = {
 
       const fechas = ["timetable__initial_date", "timetable__end_date"];
 
+      const EVENT_CONFIRMATION_STATUS = {
+        DRAFT: "DRAFT",
+        CREATED: "CREATED",
+        UNDER_REVIEW: "UNDER_REVIEW",
+        RETURNED: "RETURNED",
+        APPROVED: "APPROVED",
+        REJECTED: "REJECTED",
+        CANCELLED: "CANCELLED",
+      };
+
       response.forEach((event) => {
         fechas.forEach((fecha) => {
           const eventOriginalDate = new Date(event[fecha]);
@@ -327,6 +337,12 @@ module.exports = {
 
           event[fecha] = `${year}-${month}-${day}`;
         });
+
+        event["confirmationStatus"] = Object.keys(EVENT_CONFIRMATION_STATUS)[
+          Math.floor(
+            Math.random() * Object.keys(EVENT_CONFIRMATION_STATUS).length
+          )
+        ];
       });
     } else if (entityName === "Instrument") {
       response = [...instruments];
