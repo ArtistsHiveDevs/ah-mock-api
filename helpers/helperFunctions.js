@@ -286,6 +286,11 @@ module.exports = {
     const places = JSON.parse(
       fs.readFileSync(`./assets/mocks/domain/places/placesList.json`)
     );
+    const rehearsalRooms = JSON.parse(
+      fs.readFileSync(
+        `./assets/mocks/domain/rehearsal_rooms/rehearsal_roomsList.json`
+      )
+    );
     const users = JSON.parse(
       fs.readFileSync(`./assets/mocks/domain/users/usersList.json`)
     );
@@ -354,6 +359,8 @@ module.exports = {
       response = [...riders];
     } else if (entityName === "Academy") {
       response = [...academies];
+    } else if (entityName === "RehearsalRoom") {
+      response = [...rehearsalRooms];
     }
     return response;
   },
