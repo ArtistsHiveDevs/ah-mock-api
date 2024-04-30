@@ -391,7 +391,69 @@
       "uk": "Аргентина",
       "zh": "阿根廷",
       "zh-tw": "阿根廷"
-    }
+    },
+    "official_name": "Argentine Republic",
+    "top_five_cities": [
+      "Buenos Aires",
+      "Córdoba",
+      "Rosario",
+      "Mendoza",
+      "Mar del Plata"
+    ],
+    "top_10_dishes": [
+      "Asado",
+      "Empanadas",
+      "Milanesa",
+      "Locro",
+      "Humita",
+      "Matambre",
+      "Choripán",
+      "Dulce de Leche",
+      "Carbonada",
+      "Ñoquis"
+    ],
+    "top_10_non_alcoholic_beverages": [
+      "Mate",
+      "Yerba Mate",
+      "Agua Fresca",
+      "Chicha",
+      "Jugos Naturales",
+      "Lemonade",
+      "Pomelo Juice",
+      "Tea",
+      "Coffee",
+      "Mint Tea"
+    ],
+    "top_10_alcoholic_beverages": [
+      "Malbec Wine",
+      "Fernet",
+      "Quilmes Beer",
+      "Pisco",
+      "Caipirinha",
+      "Torrontés Wine",
+      "Mendoza Wine",
+      "Cider",
+      "Craft Beer",
+      "Amargo"
+    ],
+    "top_10_touristic_activities": [
+      "Tango Shows",
+      "Iguazu Falls",
+      "Perito Moreno Glacier",
+      "Bariloche Skiing",
+      "Ushuaia Exploration",
+      "Valdés Peninsula Wildlife",
+      "Patagonia Trekking",
+      "Salta Train to the Clouds",
+      "Buenos Aires Architecture",
+      "Quebrada de Humahuaca"
+    ],
+    "official_languages": ["Spanish"],
+    "languages_understood": [
+      { "language": "English", "percentage": 30 },
+      { "language": "Portuguese", "percentage": 10 },
+      { "language": "Italian", "percentage": 5 }
+    ]
   },
   "AS": {
     "name": "American Samoa",
@@ -1095,7 +1157,69 @@
       "uk": "Болівія",
       "zh": "玻利维亚",
       "zh-tw": "玻利維亞"
-    }
+    },
+    "official_name": "Plurinational State of Bolivia",
+    "top_five_cities": [
+      "La Paz",
+      "Santa Cruz",
+      "Cochabamba",
+      "Sucre",
+      "Tarija"
+    ],
+    "top_10_dishes": [
+      "Salteñas",
+      "Sopa de Maní",
+      "Pique Macho",
+      "Silpancho",
+      "Chairo",
+      "Lomo de Cerdo a la Parilla",
+      "Picante de Pollo",
+      "Chorizos Chuquisaqueños",
+      "Fricasé",
+      "Plato Pacumeño"
+    ],
+    "top_10_non_alcoholic_beverages": [
+      "Chicha Morada",
+      "Api",
+      "Mocochinchi",
+      "Licuado de Tumbo",
+      "Yungueño",
+      "Jugos Naturales",
+      "Chicha de Maní",
+      "Mate de Coca",
+      "Horchata",
+      "Coca Tea"
+    ],
+    "top_10_alcoholic_beverages": [
+      "Singani",
+      "Chicha",
+      "Cerveza Paceña",
+      "Yungueño Beer",
+      "Mojito Boliviano",
+      "Coca Leaf Liqueur",
+      "Guindao",
+      "Tarijeña Wine",
+      "Negroni",
+      "Piña Colada"
+    ],
+    "top_10_touristic_activities": [
+      "Salar de Uyuni",
+      "Tiwanaku",
+      "Lake Titicaca",
+      "Potosi Silver Mines",
+      "Yungas Road",
+      "Madidi National Park",
+      "Torotoro National Park",
+      "Carnival of Oruro",
+      "La Paz Cable Car",
+      "Chacaltaya Ski Resort"
+    ],
+    "official_languages": ["Spanish", "Quechua", "Aymara"],
+    "languages_understood": [
+      { "language": "English", "percentage": 10 },
+      { "language": "Portuguese", "percentage": 5 },
+      { "language": "Italian", "percentage": 3 }
+    ]
   },
   "BQ": {
     "name": "Bonaire",
@@ -1151,7 +1275,69 @@
       "uk": "Бразилія",
       "zh": "巴西",
       "zh-tw": "巴西"
-    }
+    },
+    "official_name": "Federative Republic of Brazil",
+    "top_five_cities": [
+      "São Paulo",
+      "Rio de Janeiro",
+      "Brasília",
+      "Salvador",
+      "Fortaleza"
+    ],
+    "top_10_dishes": [
+      "Feijoada",
+      "Churrasco",
+      "Moqueca",
+      "Coxinha",
+      "Pão de Queijo",
+      "Pastel",
+      "Açaí",
+      "Tapioca",
+      "Coxinha",
+      "Brigadeiro"
+    ],
+    "top_10_non_alcoholic_beverages": [
+      "Guarana",
+      "Açaí Juice",
+      "Cajuína",
+      "Mate",
+      "Chimarrão",
+      "Coconut Water",
+      "Caldo de Cana",
+      "Suco de Frutas",
+      "Aguapé",
+      "Caipirinha Sem Álcool"
+    ],
+    "top_10_alcoholic_beverages": [
+      "Cachaça",
+      "Caipirinha",
+      "Caipiroska",
+      "Cerveja",
+      "Chopp",
+      "Cubalibre",
+      "Martini",
+      "Mojito",
+      "Brazilian Wine",
+      "Caipiroska de Tangerina"
+    ],
+    "top_10_touristic_activities": [
+      "Rio Carnival",
+      "Christ the Redeemer",
+      "Iguazu Falls",
+      "Amazon Rainforest",
+      "Carnival of Recife",
+      "Pantanal",
+      "São Paulo Museum of Art",
+      "Fernando de Noronha",
+      "Salvador Carnival",
+      "Lençóis Maranhenses National Park"
+    ],
+    "official_languages": ["Portuguese"],
+    "languages_understood": [
+      { "language": "Spanish", "percentage": 20 },
+      { "language": "English", "percentage": 15 },
+      { "language": "French", "percentage": 5 }
+    ]
   },
   "BS": {
     "name": "Bahamas",
@@ -1742,7 +1928,69 @@
       "uk": "Чилі",
       "zh": "智利",
       "zh-tw": "智利"
-    }
+    },
+    "official_name": "Republic of Chile",
+    "top_five_cities": [
+      "Santiago",
+      "Valparaíso",
+      "Concepción",
+      "Viña del Mar",
+      "Antofagasta"
+    ],
+    "top_10_dishes": [
+      "Empanadas",
+      "Asado",
+      "Cazuela",
+      "Pastel de Choclo",
+      "Chilean Seafood",
+      "Churrasco",
+      "Curanto",
+      "Charquicán",
+      "Porotos Granados",
+      "Humitas"
+    ],
+    "top_10_non_alcoholic_beverages": [
+      "Mote con Huesillo",
+      "Pisco Sour",
+      "Chilean Wine",
+      "Chilean Beer",
+      "Terremoto",
+      "Cola de Mono",
+      "Schop",
+      "Jote",
+      "Leche con Plátano",
+      "Guaripolo"
+    ],
+    "top_10_alcoholic_beverages": [
+      "Pisco",
+      "Chicha",
+      "Mote con Huesillo",
+      "Terremoto",
+      "Cola de Mono",
+      "Schop",
+      "Jote",
+      "Leche con Plátano",
+      "Guaripolo",
+      "Borgoña"
+    ],
+    "top_10_touristic_activities": [
+      "Easter Island",
+      "Torres del Paine National Park",
+      "Valle de la Luna",
+      "Atacama Desert",
+      "Lake District",
+      "Patagonia",
+      "Skiing in the Andes",
+      "Chiloé Island",
+      "San Pedro de Atacama",
+      "Santiago's Historic Center"
+    ],
+    "official_languages": ["Spanish"],
+    "languages_understood": [
+      { "language": "English", "percentage": 30 },
+      { "language": "French", "percentage": 10 },
+      { "language": "German", "percentage": 5 }
+    ]
   },
   "CM": {
     "name": "Cameroon",
@@ -1883,7 +2131,69 @@
       "uk": "Колумбія",
       "zh": "哥伦比亚",
       "zh-tw": "哥倫比亞"
-    }
+    },
+    "official_name": "Republic of Colombia",
+    "top_five_cities": [
+      "Bogotá",
+      "Medellín",
+      "Cali",
+      "Barranquilla",
+      "Cartagena"
+    ],
+    "top_10_dishes": [
+      "Bandeja Paisa",
+      "Ajiaco",
+      "Sancocho",
+      "Arepa",
+      "Lechona",
+      "Empanadas",
+      "Bandeja de Pescado",
+      "Tamales",
+      "Fritanga",
+      "Hormigas Culonas"
+    ],
+    "top_10_non_alcoholic_beverages": [
+      "Aguapanela",
+      "Lulada",
+      "Chicha",
+      "Guarapo",
+      "Canelazo",
+      "Colombian Coffee",
+      "Horchata",
+      "Salpicón",
+      "Jugo de Lulo",
+      "Chicha de Maíz"
+    ],
+    "top_10_alcoholic_beverages": [
+      "Aguardiente",
+      "Rum",
+      "Beer",
+      "Chicha",
+      "Canelazo",
+      "Rum and Coke",
+      "Canelazo with Aguardiente",
+      "Pilsen Beer",
+      "Michelada",
+      "Club Colombia Beer"
+    ],
+    "top_10_touristic_activities": [
+      "Tayrona National Park",
+      "Cartagena Old Town",
+      "Cocora Valley",
+      "Lost City Trek",
+      "San Andres and Providencia Islands",
+      "Coffee Region Tours",
+      "Amazon Rainforest",
+      "Rosario Islands",
+      "Ciudad Perdida",
+      "Villa de Leyva"
+    ],
+    "official_languages": ["Spanish"],
+    "languages_understood": [
+      { "language": "English", "percentage": 30 },
+      { "language": "Portuguese", "percentage": 10 },
+      { "language": "French", "percentage": 5 }
+    ]
   },
   "CR": {
     "name": "Costa Rica",
