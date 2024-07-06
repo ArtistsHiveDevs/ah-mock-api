@@ -113,6 +113,10 @@ function filterResultsByQuery(req, result) {
           timelapse: Math.random() > 0.5 ? "semanal" : "mensual",
         };
       });
+
+      if (!place.stats.socialNetworks) {
+        place.stats.socialNetworks = [];
+      }
     });
     if (!isArray) {
       result = result[0];
