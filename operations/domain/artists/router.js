@@ -176,9 +176,9 @@ function filterResultsByQuery(req, result) {
 module.exports = [
   artistRouter.get(RoutesConstants.artistsList, (req, res) => {
     try {
-      return res.json(
-        filterResultsByQuery(req, helpers.getEntityData("Artist"))
-      );
+      let result = filterResultsByQuery(req, helpers.getEntityData("Artist"));
+      // result = helpers.hideProperties(result, RoutesConstants.public_fields);
+      return res.json(result);
     } catch (error) {
       console.log(error);
       return res.status(500).json([]);

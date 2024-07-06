@@ -50,6 +50,7 @@ function fillResultWithFields(fields, result) {
 
 function filterResultsByQuery(req, result) {
   try {
+    console.log("FILTRANDO ????", req.userId);
     const isArray = Array.isArray(result);
     if (!isArray) {
       result = [result];
@@ -115,6 +116,8 @@ function filterResultsByQuery(req, result) {
     });
     if (!isArray) {
       result = result[0];
+    } else {
+      result = helpers.paginate(result);
     }
   } catch (error) {
     console.log(error);
@@ -126,9 +129,13 @@ function filterResultsByQuery(req, result) {
 
 module.exports = [
   router.get(RoutesConstants.eventList, (req, res) => {
+    helpers.validateAuthenticatedUser(req, res);
     let result = helpers.getEntityData("Place");
     try {
-      return res.json(filterResultsByQuery(req, result));
+      result = filterResultsByQuery(req, result);
+      // result = helpers.hideProperties(result, RoutesConstants.public_fields);
+
+      return res.json(result);
     } catch (error) {
       console.error(error);
 
@@ -136,25 +143,38 @@ module.exports = [
     }
   }),
 
-  router.get(RoutesConstants.findEventById, (req, res) => {
-    const { eventId: placeId } = req.params;
-    const searchPlace = helpers.searchResult(
-      helpers.getEntityData("Place"),
-      placeId,
-      "id"
-    );
-    try {
-      return res.json(
-        filterResultsByQuery(req, searchPlace) || {
-          message: helpers.noResultDefaultLabel,
-        }
+  router.get(
+    RoutesConstants.findEventById,
+    helpers.validateAuthenticatedUser,
+    (req, res) => {
+      const { eventId: placeId } = req.params;
+      const searchPlace = helpers.searchResult(
+        helpers.getEntityData("Place"),
+        placeId,
+        "id"
       );
-    } catch (error) {
-      console.error(error);
 
-      return res.status(500).json({});
+      if (!req.userId) {
+        response = filterResultsByQuery(req, searchPlace);
+        // response = helpers.hideProperties(response, [
+        //   "id",
+        //   "name",
+        //   "profile_pic",
+        // ]);
+      }
+      try {
+        return res.json(
+          response || {
+            message: helpers.noResultDefaultLabel,
+          }
+        );
+      } catch (error) {
+        console.error(error);
+
+        return res.status(500).json({});
+      }
     }
-  }),
+  ),
 
   router.post(RoutesConstants.create, (req, res) => {
     const items = helpers.getEntityData("Place");

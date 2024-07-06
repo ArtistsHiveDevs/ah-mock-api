@@ -1,7 +1,9 @@
 var textConstants = require("./text.constants");
 var helperFunctions = require("./helperFunctions");
+var apiKeyFunctions = require("./api_key");
 
 module.exports = {
-    ...textConstants,
-    ...helperFunctions
-}
+  ...apiKeyFunctions,
+  ...textConstants,
+  ...helperFunctions,
+};

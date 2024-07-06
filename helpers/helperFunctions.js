@@ -362,6 +362,38 @@ module.exports = {
     } else if (entityName === "RehearsalRoom") {
       response = [...rehearsalRooms];
     }
+
+    this.shuffle(response);
     return response;
+  },
+  paginate(array, current_page = 1, page_size = 5) {
+    const initialIndex = (current_page - 1) * page_size;
+    return array.slice(initialIndex, initialIndex + page_size);
+  },
+  shuffle(array) {
+    let currentIndex = array.length;
+
+    // While there remain elements to shuffle...
+    while (currentIndex != 0) {
+      // Pick a remaining element...
+      let randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex],
+        array[currentIndex],
+      ];
+    }
+  },
+  hideProperties(array, properties) {
+    return array.map((element) =>
+      properties.reduce((acc, prop) => {
+        if (element.hasOwnProperty(prop)) {
+          acc[prop] = element[prop];
+        }
+        return acc;
+      }, {})
+    );
   },
 };

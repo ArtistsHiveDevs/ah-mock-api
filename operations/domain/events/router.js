@@ -2,6 +2,9 @@ const { query } = require("express");
 var express = require("express");
 var helpers = require("../../../helpers/index");
 var RoutesConstants = require("./constants/index");
+const { public_fields: ArtistPublicFields } = require("../artists/constants");
+const { public_fields: PlacePublicFields } = require("../places/constants");
+
 var eventsRouter = express.Router({ mergeParams: true });
 
 // Data import
@@ -57,6 +60,9 @@ function filterResultsByQuery(req, elements) {
       elements = helpers.findByDistance(elements, latlong, "place.location");
     }
   }
+
+  elements = helpers.paginate(elements);
+
   return elements;
 }
 
@@ -64,14 +70,26 @@ function fillRelationships(element) {
   let eventos = helpers.fillRelationships(element, [
     {
       relationshipName: "place_id",
+      // relationshipData: helpers.hideProperties(
+      //   helpers.getEntityData("Place"),
+      //   PlacePublicFields
+      // ),
       relationshipData: helpers.getEntityData("Place"),
     },
     {
       relationshipName: "main_artist_id",
+      // relationshipData: helpers.hideProperties(
+      //   helpers.getEntityData("Artist"),
+      //   ArtistPublicFields
+      // ),
       relationshipData: helpers.getEntityData("Artist"),
     },
     {
       relationshipName: "guest_artist_id",
+      // relationshipData: helpers.hideProperties(
+      //   helpers.getEntityData("Artist"),
+      //   ArtistPublicFields
+      // ),
       relationshipData: helpers.getEntityData("Artist"),
     },
   ]);
@@ -165,11 +183,14 @@ module.exports = [
     try {
       const filled = fillRelationships(helpers.getEntityData("Event"));
       const filtered = filterResultsByQuery(req, filled);
-      const sorted = helpers.sortByDate(
+      let sorted = helpers.sortByDate(
         filtered,
         "timetable__initial_date",
         "timetable__openning_doors"
       );
+
+      // sorted = helpers.hideProperties(sorted, RoutesConstants.public_fields);
+
       return res.json(sorted);
     } catch (error) {
       console.error(error);
