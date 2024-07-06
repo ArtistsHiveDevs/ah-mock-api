@@ -114,8 +114,8 @@ function filterResultsByQuery(req, result) {
         };
       });
 
-      if (!place.stats.socialNetworks) {
-        place.stats.socialNetworks = [];
+      if (!place.stats["socialNetworks"]) {
+        place.stats.socialNetworks = {};
       }
     });
     if (!isArray) {

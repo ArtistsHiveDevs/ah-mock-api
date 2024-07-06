@@ -116,8 +116,8 @@ function fillResultWithFields(fields, result) {
       };
     });
 
-    if (!artist.stats.socialNetworks) {
-      artist.stats.socialNetworks = [];
+    if (!artist.stats["socialNetworks"]) {
+      artist.stats.socialNetworks = {};
     }
 
     // Albums from Spotify ===============================================================================
