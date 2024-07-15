@@ -6,7 +6,7 @@
     "username": "pepito",
     "artistic_name": "",
     "email": "pepitoperez@mail.com",
-    "password": 1234556768,
+    "password": "12345",
     "phone_number": 7123456,
     "access_token": 123456789,
     "emergency_contact": [
@@ -57,7 +57,7 @@
     "username": "fgomez",
     "artistic_name": "",
     "email": "fgomez@mail.com",
-    "password": 1234556768,
+    "password": "12345",
     "phone_number": 7123456,
     "access_token": 123456789,
     "emergency_contact": [
@@ -130,7 +130,7 @@
     "username": "mpachon",
     "artistic_name": "Florecita Rockera",
     "email": "mpachon@mail.com",
-    "password": 1234556768,
+    "password": "12345",
     "phone_number": 7123456,
     "access_token": 123456789,
     "emergency_contact": [
@@ -200,7 +200,7 @@
     "username": "jrod",
     "artistic_name": "JuanchoRod",
     "email": "jrod@mail.com",
-    "password": 1234556768,
+    "password": "12345",
     "phone_number": 7123456,
     "access_token": 123456789,
     "emergency_contact": [
@@ -292,7 +292,7 @@
     "username": "ljimenez",
     "artistic_name": "",
     "email": "ljimenez@mail.com",
-    "password": 1234556768,
+    "password": "12345",
     "phone_number": 7123456,
     "access_token": 123456789,
     "emergency_contact": [
@@ -357,7 +357,7 @@
     "username": "dmejia",
     "artistic_name": "",
     "email": "dmejia@mail.com",
-    "password": 1234556768,
+    "password": "12345",
     "phone_number": 7123456,
     "access_token": 123456789,
     "emergency_contact": [
