@@ -27,6 +27,7 @@ var industryOfferRouter = require("./operations/app/industryOffer/industryOffer/
 var termsAndConditionsRouter = require("./operations/app/policies/termsAndConditions/router");
 var privacyRouter = require("./operations/app/policies/privacyPolicy/router");
 const helpers = require("./helpers");
+const ErrorCodes = require("./constants/errors");
 
 var app = express();
 var port = process.env.PORT || 3000;
@@ -40,10 +41,16 @@ app.post("/api/generate-key", (req, res) => {
   const password = req.body.password; // Puedes agregar más lógica de autenticación aquí
 
   if (!userId) {
-    return res.status(400).send({ message: "User ID is required." });
+    return res.status(400).send({
+      message: "User ID is required.",
+      errorCode: ErrorCodes.AUTH_NO_USER_PROVIDED,
+    });
   }
   if (!password) {
-    return res.status(400).send({ message: "Password is required." });
+    return res.status(400).send({
+      message: "Password is required.",
+      errorCode: ErrorCodes.AUTH_NO_PASSWORD_PROVIDED,
+    });
   }
 
   const users = helpers.getEntityData("User");
@@ -52,7 +59,17 @@ app.post("/api/generate-key", (req, res) => {
   );
 
   if (!requestedUser) {
-    return res.status(404).send({ message: "User is not found" });
+    return res.status(404).send({
+      message: "User is not found",
+      errorCode: ErrorCodes.AUTH_USER_NOT_FOUND,
+    });
+  }
+
+  if (requestedUser.password !== password) {
+    return res.status(404).send({
+      message: "Password is incorrect",
+      errorCode: ErrorCodes.AUTH_WRONG_PASSWORD,
+    });
   }
 
   const authTokenPayload = { id: userId, lalala: "asd3412" };
@@ -95,7 +112,10 @@ app.get("/me", validateApiKey, (req, res) => {
   );
 
   if (!requestedUser) {
-    return res.status(404).send({ message: "User is not found" });
+    return res.status(404).send({
+      message: "User is not found",
+      errorCode: ErrorCodes.AUTH_USER_NOT_FOUND,
+    });
   }
 
   res.status(200).send(requestedUser);
