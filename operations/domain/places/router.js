@@ -158,8 +158,9 @@ module.exports = [
         "id"
       );
 
+      response = searchPlace;
       if (!req.userId) {
-        response = filterResultsByQuery(req, searchPlace);
+        response = filterResultsByQuery(req, response);
         // response = helpers.hideProperties(response, [
         //   "id",
         //   "name",
