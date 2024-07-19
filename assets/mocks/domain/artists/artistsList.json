@@ -1,7 +1,7 @@
 [
   {
     "artistType": "musician",
-    "id": "1",
+    "id": "art_1",
     "name": "Petrona Martínez",
     "username": "petronamartinez",
     "subtitle": "Música folclórica del caribe",
@@ -56,7 +56,7 @@
   },
   {
     "artistType": "musician",
-    "id": "2",
+    "id": "art_2",
     "name": "Gualajo",
     "username": "gualajo",
     "subtitle": "El piano de la selva",
@@ -107,7 +107,7 @@
   },
   {
     "artistType": "musician",
-    "id": "3",
+    "id": "art_3",
     "name": "Bluefinch & The Wanderlust",
     "username": "bluefinchtheband",
     "subtitle": "Just Rockers!",
@@ -156,7 +156,7 @@
   },
   {
     "artistType": "musician",
-    "id": "4",
+    "id": "art_4",
     "name": "Espiral 7",
     "username": "espiral7",
     "subtitle": "Música folclórica del caribe",
@@ -213,7 +213,7 @@
   },
   {
     "artistType": "musician",
-    "id": "5",
+    "id": "art_5",
     "name": "Juan Pablo Vega",
     "username": "juanpablovega",
     "subtitle": "Música folclórica del caribe",
@@ -271,7 +271,7 @@
   },
   {
     "artistType": "musician",
-    "id": "6",
+    "id": "art_6",
     "name": "Monsieur Periné",
     "username": "monsieurperine",
     "subtitle": "Jazz a la colombiana",
@@ -324,7 +324,7 @@
   },
   {
     "artistType": "musician",
-    "id": "7",
+    "id": "art_7",
     "name": "La Pacifican Power",
     "username": "pacificanpower",
     "subtitle": "Música folclórica del caribe",
@@ -374,7 +374,7 @@
   },
   {
     "artistType": "musician",
-    "id": "8",
+    "id": "art_8",
     "name": "Los Rolling Ruanas",
     "username": "losrollingruanas",
     "subtitle": "El piano de la selva",
@@ -423,7 +423,7 @@
   },
   {
     "artistType": "musician",
-    "id": "18",
+    "id": "art_18",
     "name": "Puerto Candelaria",
     "username": "puertocandelaria",
     "subtitle": "Just Rockers!",
@@ -481,7 +481,7 @@
   },
   {
     "artistType": "musician",
-    "id": "9",
+    "id": "art_9",
     "name": "Lunalé",
     "username": "lunalemusica",
     "subtitle": "Música folclórica del caribe",
@@ -530,7 +530,7 @@
   },
   {
     "artistType": "musician",
-    "id": "10",
+    "id": "art_10",
     "name": "Ministerio del beat",
     "username": "ministeriodelbeat",
     "subtitle": "El piano de la selva",
@@ -579,7 +579,7 @@
   },
   {
     "artistType": "musician",
-    "id": "11",
+    "id": "art_11",
     "name": "La mojarra eléctrica",
     "username": "lamojarraelectrica",
     "subtitle": "Just Rockers!",
@@ -629,7 +629,7 @@
   },
   {
     "artistType": "musician",
-    "id": "12",
+    "id": "art_12",
     "name": "Pacífico Libre",
     "username": "pacifico.libre",
     "subtitle": "Música del pacífico",
@@ -678,7 +678,7 @@
   },
   {
     "artistType": "musician",
-    "id": "13",
+    "id": "art_13",
     "name": "Gregorio Uribe",
     "username": "gregoriouribe",
     "subtitle": "Cantautor y acordenista",
@@ -727,7 +727,7 @@
   },
   {
     "artistType": "musician",
-    "id": "14",
+    "id": "art_14",
     "name": "Sonoras Mil",
     "username": "sonorasmilband",
     "subtitle": "Just Rockers!",
@@ -783,7 +783,7 @@
   },
   {
     "artistType": "musician",
-    "id": "15",
+    "id": "art_15",
     "name": "La 33",
     "username": "la33orquesta",
     "subtitle": "Salsa bogotana",
@@ -832,7 +832,7 @@
   },
   {
     "artistType": "musician",
-    "id": "16",
+    "id": "art_16",
     "name": "Los Cañaverales",
     "username": "los_canaverales",
     "subtitle": "El piano de la selva",
@@ -883,7 +883,7 @@
   },
   {
     "artistType": "musician",
-    "id": "17",
+    "id": "art_17",
     "name": "LauraMare",
     "username": "lauraamare_",
     "subtitle": "Cantautora",

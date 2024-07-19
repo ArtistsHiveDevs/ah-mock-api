@@ -1430,7 +1430,7 @@
     "offset": 0,
     "previous": null,
     "total": 7,
-    "ah_id": "1"
+    "ah_id": "art_1"
   },
   {
     "href": "https://api.spotify.com/v1/artists/3iUaVpAVimcgE96g2ei73y/albums?offset=0&limit=50&include_groups=album",
@@ -1440,7 +1440,7 @@
     "offset": 0,
     "previous": null,
     "total": 0,
-    "ah_id": "2"
+    "ah_id": "art_2"
   },
   {
     "href": "https://api.spotify.com/v1/artists/5wVJiZKzEWvrxHyP5WhDFu/albums?offset=0&limit=50&include_groups=album",
@@ -1450,7 +1450,7 @@
     "offset": 0,
     "previous": null,
     "total": 0,
-    "ah_id": "3"
+    "ah_id": "art_3"
   },
   {
     "href": "https://api.spotify.com/v1/artists/05Y9z2ZOtMMuD5lnZZc6VM/albums?offset=0&limit=50&include_groups=album",
@@ -1921,7 +1921,7 @@
     "offset": 0,
     "previous": null,
     "total": 2,
-    "ah_id": "4"
+    "ah_id": "art_4"
   },
   {
     "href": "https://api.spotify.com/v1/artists/2PfyKA4qhjkxUVkerTCxz0/albums?offset=0&limit=50&include_groups=album",
@@ -2850,7 +2850,7 @@
     "offset": 0,
     "previous": null,
     "total": 4,
-    "ah_id": "5"
+    "ah_id": "art_5"
   },
   {
     "href": "https://api.spotify.com/v1/artists/36KsCCwgI0Dep97yVJWmkK/albums?offset=0&limit=50&include_groups=album",
@@ -4101,7 +4101,7 @@
     "offset": 0,
     "previous": null,
     "total": 7,
-    "ah_id": "6"
+    "ah_id": "art_6"
   },
   {
     "href": "https://api.spotify.com/v1/artists/2xp0qk4c05JNAzXNxrMtL3/albums?offset=0&limit=50&include_groups=album",
@@ -4342,7 +4342,7 @@
     "offset": 0,
     "previous": null,
     "total": 1,
-    "ah_id": "7"
+    "ah_id": "art_7"
   },
   {
     "href": "https://api.spotify.com/v1/artists/1XPFAsXCMflKBKZuNIkru3/albums?offset=0&limit=50&include_groups=album",
@@ -5273,7 +5273,7 @@
     "offset": 0,
     "previous": null,
     "total": 4,
-    "ah_id": "8"
+    "ah_id": "art_8"
   },
   {
     "href": "https://api.spotify.com/v1/artists/19JUD3vdAL8B0G7hpxQHuu/albums?offset=0&limit=50&include_groups=album",
@@ -5514,7 +5514,7 @@
     "offset": 0,
     "previous": null,
     "total": 1,
-    "ah_id": "9"
+    "ah_id": "art_9"
   },
   {
     "href": "https://api.spotify.com/v1/artists/62pT9zuSevqNr3Q2MtXXPb/albums?offset=0&limit=50&include_groups=album",
@@ -5524,7 +5524,7 @@
     "offset": 0,
     "previous": null,
     "total": 0,
-    "ah_id": "10"
+    "ah_id": "art_10"
   },
   {
     "href": "https://api.spotify.com/v1/artists/5TxbFuGvOqV9OI30Q1CqVH/albums?offset=0&limit=50&include_groups=album",
@@ -5765,7 +5765,7 @@
     "offset": 0,
     "previous": null,
     "total": 1,
-    "ah_id": "11"
+    "ah_id": "art_11"
   },
   {
     "href": "https://api.spotify.com/v1/artists/7I0JHYC6RcFLui9rldxlm7/albums?offset=0&limit=50&include_groups=album",
@@ -5775,7 +5775,7 @@
     "offset": 0,
     "previous": null,
     "total": 0,
-    "ah_id": "12"
+    "ah_id": "art_12"
   },
   {
     "href": "https://api.spotify.com/v1/artists/1nmfhcpodsNRKK9FuW01fM/albums?offset=0&limit=50&include_groups=album",
@@ -6476,7 +6476,7 @@
     "offset": 0,
     "previous": null,
     "total": 3,
-    "ah_id": "13"
+    "ah_id": "art_13"
   },
   {
     "href": "https://api.spotify.com/v1/artists/2pbfinO11kaKjnGcCxRQQn/albums?offset=0&limit=50&include_groups=album",
@@ -6947,7 +6947,7 @@
     "offset": 0,
     "previous": null,
     "total": 2,
-    "ah_id": "14"
+    "ah_id": "art_14"
   },
   {
     "href": "https://api.spotify.com/v1/artists/1Y2yzHPbBWZouNYTOGFq7u/albums?offset=0&limit=50&include_groups=album",
@@ -7878,7 +7878,7 @@
     "offset": 0,
     "previous": null,
     "total": 4,
-    "ah_id": "15"
+    "ah_id": "art_15"
   },
   {
     "href": "https://api.spotify.com/v1/artists/3O08E697JnrOi9nAFA7yc6/albums?offset=0&limit=50&include_groups=album",
@@ -7888,7 +7888,7 @@
     "offset": 0,
     "previous": null,
     "total": 0,
-    "ah_id": "16"
+    "ah_id": "art_16"
   },
   {
     "href": "https://api.spotify.com/v1/artists/7HbTUSCJyiR4vi7XHwaZLk/albums?offset=0&limit=50&include_groups=album",
@@ -7898,7 +7898,7 @@
     "offset": 0,
     "previous": null,
     "total": 0,
-    "ah_id": "17"
+    "ah_id": "art_17"
   },
   {
     "href": "https://api.spotify.com/v1/artists/27neIga89YKdkCk6Yzv0ni/albums?offset=0&limit=50&include_groups=album",
@@ -11120,6 +11120,6 @@
     "offset": 0,
     "previous": null,
     "total": 15,
-    "ah_id": "18"
+    "ah_id": "art_18"
   }
 ]

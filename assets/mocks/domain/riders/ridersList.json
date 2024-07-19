@@ -2,7 +2,7 @@
   {
     "artistId": "",
     "name": "Rider Principal",
-    "id": "1",
+    "id": "rid_1",
     "instruments": [],
     "requirements": {
       "audio": {
@@ -442,7 +442,7 @@
   {
     "artistId": "",
     "name": "Rider Tarima pequeña",
-    "id": "2",
+    "id": "rid_2",
     "instruments": [],
     "requirements": {
       "audio": {

@@ -1,12 +1,12 @@
 [
   {
-    "id": "1",
+    "id": "us_1",
     "given_names": "Pepito",
     "surnames": "Pérez",
     "username": "pepito",
     "artistic_name": "",
     "email": "pepitoperez@mail.com",
-    "password": "12345",
+    "password": "A1B2",
     "phone_number": 7123456,
     "access_token": 123456789,
     "emergency_contact": [
@@ -42,22 +42,38 @@
       "awards": []
     },
     "events_as_artist": {
-      "next_events": ["63", "81", "263"],
-      "past_events": ["26", "34", "95", "62", "281", "203", "209"]
+      "next_events": ["eve_63", "eve_81", "eve_263"],
+      "past_events": [
+        "eve_26",
+        "eve_34",
+        "eve_95",
+        "eve_62",
+        "eve_281",
+        "eve_203",
+        "eve_209"
+      ]
     },
     "subscribed_events": {
-      "next_events": ["63", "81", "263"],
-      "past_events": ["26", "34", "95", "62", "281", "203", "209"]
+      "next_events": ["eve_63", "eve_81", "eve_263"],
+      "past_events": [
+        "eve_26",
+        "eve_34",
+        "eve_95",
+        "eve_62",
+        "eve_281",
+        "eve_203",
+        "eve_209"
+      ]
     }
   },
   {
-    "id": "2",
+    "id": "us_2",
     "given_names": "Fulanito",
     "surnames": "Gómez",
     "username": "fgomez",
     "artistic_name": "",
     "email": "fgomez@mail.com",
-    "password": "12345",
+    "password": "A1B2",
     "phone_number": 7123456,
     "access_token": 123456789,
     "emergency_contact": [
@@ -86,7 +102,7 @@
         "entityName": "Artist",
         "entityRoleMap": [
           {
-            "id": "4",
+            "id": "art_4",
             "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_e7.jpg",
             "name": "Espiral 7",
             "subtitle": "Música folclórica del caribe",
@@ -94,7 +110,7 @@
             "roles": ["ROADIE", "ARTIST_OWNER", "ARTIST_MEMBER", "MANAGER"]
           },
           {
-            "id": "5",
+            "id": "art_5",
             "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_jpv.jpg",
             "name": "Juan Pablo Vega",
             "subtitle": "Música folclórica del caribe",
@@ -115,22 +131,22 @@
       "awards": []
     },
     "events_as_artist": {
-      "next_events": ["176", "208", "35", "107", "30"],
-      "past_events": ["299", "183", "298", "111"]
+      "next_events": ["eve_176", "eve_208", "eve_35", "eve_107", "eve_30"],
+      "past_events": ["eve_299", "eve_183", "eve_298", "eve_111"]
     },
     "subscribed_events": {
-      "next_events": ["176", "208", "35", "107", "30"],
-      "past_events": ["299", "183", "298", "111"]
+      "next_events": ["eve_176", "eve_208", "eve_35", "eve_107", "eve_30"],
+      "past_events": ["eve_299", "eve_183", "eve_298", "eve_111"]
     }
   },
   {
-    "id": "3",
+    "id": "us_3",
     "given_names": "María",
     "surnames": "Pachón",
     "username": "mpachon",
     "artistic_name": "Florecita Rockera",
     "email": "mpachon@mail.com",
-    "password": "12345",
+    "password": "A1B2",
     "phone_number": 7123456,
     "access_token": 123456789,
     "emergency_contact": [
@@ -159,7 +175,7 @@
         "entityName": "Artist",
         "entityRoleMap": [
           {
-            "id": "10",
+            "id": "art_10",
             "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_mb.jpg",
             "name": "Ministerio del beat",
             "subtitle": "El piano de la selva",
@@ -185,22 +201,22 @@
       "awards": []
     },
     "events_as_artist": {
-      "next_events": ["252", "167", "100", "295", "88"],
-      "past_events": ["144", "44", "278"]
+      "next_events": ["eve_252", "eve_167", "eve_100", "eve_295", "eve_88"],
+      "past_events": ["eve_144", "eve_44", "eve_278"]
     },
     "subscribed_events": {
-      "next_events": ["252", "167", "100", "295", "88"],
-      "past_events": ["144", "44", "278"]
+      "next_events": ["eve_252", "eve_167", "eve_100", "eve_295", "eve_88"],
+      "past_events": ["eve_144", "eve_44", "eve_278"]
     }
   },
   {
-    "id": "4",
+    "id": "us_4",
     "given_names": "Juanito",
     "surnames": "Rodríguez",
     "username": "jrod",
     "artistic_name": "JuanchoRod",
     "email": "jrod@mail.com",
-    "password": "12345",
+    "password": "A1B2",
     "phone_number": 7123456,
     "access_token": 123456789,
     "emergency_contact": [
@@ -235,7 +251,7 @@
         "entityName": "Artist",
         "entityRoleMap": [
           {
-            "id": "13",
+            "id": "art_13",
             "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_gu.jpg",
             "name": "Gregorio Uribe",
             "subtitle": "Cantautor y acordenista",
@@ -248,7 +264,7 @@
         "entityName": "Place",
         "entityRoleMap": [
           {
-            "id": "3",
+            "id": "ven_3",
             "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_gcl.jpg",
             "name": "Galería Café Libro 93",
             "subtitle": "",
@@ -256,7 +272,7 @@
             "roles": ["PLACE_OWNER", "MEDIA_MANAGER"]
           },
           {
-            "id": "7",
+            "id": "ven_7",
             "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_ck.jpg",
             "name": "Casa Kilele",
             "subtitle": "",
@@ -277,22 +293,36 @@
       "awards": []
     },
     "events_as_artist": {
-      "next_events": ["190", "110", "18", "137", "323", "171"],
-      "past_events": ["310", "309", "232"]
+      "next_events": [
+        "eve_190",
+        "eve_110",
+        "eve_18",
+        "eve_137",
+        "eve_323",
+        "eve_171"
+      ],
+      "past_events": ["eve_310", "eve_309", "eve_232"]
     },
     "subscribed_events": {
-      "next_events": ["190", "110", "18", "137", "323", "171"],
-      "past_events": ["310", "309", "232"]
+      "next_events": [
+        "eve_190",
+        "eve_110",
+        "eve_18",
+        "eve_137",
+        "eve_323",
+        "eve_171"
+      ],
+      "past_events": ["eve_310", "eve_309", "eve_232"]
     }
   },
   {
-    "id": "5",
+    "id": "us_5",
     "given_names": "Laura",
     "surnames": "Jiménez",
     "username": "ljimenez",
     "artistic_name": "",
     "email": "ljimenez@mail.com",
-    "password": "12345",
+    "password": "A1B2",
     "phone_number": 7123456,
     "access_token": 123456789,
     "emergency_contact": [
@@ -321,7 +351,7 @@
         "entityName": "Place",
         "entityRoleMap": [
           {
-            "id": "8",
+            "id": "ven_8",
             "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_dj.jpg",
             "name": "Disco Jaguar",
             "subtitle": "",
@@ -342,22 +372,40 @@
       "awards": []
     },
     "events_as_artist": {
-      "next_events": ["130", "295", "180", "74", "332", "71", "70", "183"],
-      "past_events": ["28", "316", "101", "75"]
+      "next_events": [
+        "eve_130",
+        "eve_295",
+        "eve_180",
+        "eve_74",
+        "eve_332",
+        "eve_71",
+        "eve_70",
+        "eve_183"
+      ],
+      "past_events": ["eve_28", "eve_316", "eve_101", "eve_75"]
     },
     "subscribed_events": {
-      "next_events": ["130", "295", "180", "74", "332", "71", "70", "183"],
-      "past_events": ["28", "316", "101", "75"]
+      "next_events": [
+        "eve_130",
+        "eve_295",
+        "eve_180",
+        "eve_74",
+        "eve_332",
+        "eve_71",
+        "eve_70",
+        "eve_183"
+      ],
+      "past_events": ["eve_28", "eve_316", "eve_101", "eve_75"]
     }
   },
   {
-    "id": "6",
+    "id": "us_6",
     "given_names": "Daniela",
     "surnames": "Mejía",
     "username": "dmejia",
     "artistic_name": "",
     "email": "dmejia@mail.com",
-    "password": "12345",
+    "password": "A1B2",
     "phone_number": 7123456,
     "access_token": 123456789,
     "emergency_contact": [
@@ -386,7 +434,7 @@
         "entityName": "Artist",
         "entityRoleMap": [
           {
-            "id": "16",
+            "id": "art_16",
             "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_cb.jpg",
             "name": "Los Cañaverales del Bohío",
             "subtitle": "El piano de la selva",
@@ -399,7 +447,7 @@
         "entityName": "Place",
         "entityRoleMap": [
           {
-            "id": "5",
+            "id": "ven_5",
             "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_lp.png",
             "name": "La Pascasia",
             "subtitle": "",
@@ -420,12 +468,30 @@
       "awards": []
     },
     "events_as_artist": {
-      "next_events": ["295", "113", "164", "248", "190", "323", "287", "71"],
-      "past_events": ["173", "38", "173", "218"]
+      "next_events": [
+        "eve_295",
+        "eve_113",
+        "eve_164",
+        "eve_248",
+        "eve_190",
+        "eve_323",
+        "eve_287",
+        "eve_71"
+      ],
+      "past_events": ["eve_173", "eve_38", "eve_173", "eve_218"]
     },
     "subscribed_events": {
-      "next_events": ["295", "113", "164", "248", "190", "323", "287", "71"],
-      "past_events": ["173", "38", "173", "218"]
+      "next_events": [
+        "eve_295",
+        "eve_113",
+        "eve_164",
+        "eve_248",
+        "eve_190",
+        "eve_323",
+        "eve_287",
+        "eve_71"
+      ],
+      "past_events": ["eve_173", "eve_38", "eve_173", "eve_218"]
     }
   }
 ]

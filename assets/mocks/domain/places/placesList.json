@@ -1,6 +1,6 @@
 [
   {
-    "id": "1",
+    "id": "ven_1",
     "name": "Matik Matik",
     "username": "matikbogota",
     "place_type": "Bar Restaurante",
@@ -347,7 +347,7 @@
     }
   },
   {
-    "id": "2",
+    "id": "ven_2",
     "name": "Teatro Jorge Eliécer Gaitán",
     "username": "teatrojeg",
     "place_type": "Teatro",
@@ -682,7 +682,7 @@
     }
   },
   {
-    "id": "3",
+    "id": "ven_3",
     "name": "Galería Café Libro 93",
     "username": "galeriacafelibro",
     "place_type": "",
@@ -1025,7 +1025,7 @@
     }
   },
   {
-    "id": "4",
+    "id": "ven_4",
     "name": "Galería Café Libro Palermo",
     "username": "galeriacafelibro",
     "place_type": "",
@@ -1367,7 +1367,7 @@
     }
   },
   {
-    "id": "5",
+    "id": "ven_5",
     "name": "La Pascasia",
     "username": "lapascasia",
     "place_type": "Bar , galeria de arte",
@@ -1712,7 +1712,7 @@
     }
   },
   {
-    "id": "6",
+    "id": "ven_6",
     "name": "Sonora Casa Cultural",
     "username": "sonoracali",
     "place_type": "",
@@ -2060,7 +2060,7 @@
     }
   },
   {
-    "id": "7",
+    "id": "ven_7",
     "name": "Casa Kilele",
     "username": "casakilele",
     "place_type": "fundación sin ánimo de lucro",
@@ -2406,7 +2406,7 @@
     }
   },
   {
-    "id": "8",
+    "id": "ven_8",
     "name": "Disco Jaguar",
     "username": "discojaguar.bta",
     "place_type": "Club nocturno bar",
@@ -2751,7 +2751,7 @@
     }
   },
   {
-    "id": "9",
+    "id": "ven_9",
     "name": "Cuban Jazz",
     "username": "cubanjazzcafebogota",
     "place_type": "CERRADO DEFINITIVAMENTE",
@@ -3084,7 +3084,7 @@
     }
   },
   {
-    "id": "10",
+    "id": "ven_10",
     "name": "PuraPizza",
     "username": "purapizzaorganicbogota",
     "place_type": "",
@@ -3416,7 +3416,7 @@
     }
   },
   {
-    "id": "11",
+    "id": "ven_11",
     "name": "Latino Power",
     "username": "latinopowerchapinero",
     "place_type": "",
@@ -3758,7 +3758,7 @@
     }
   },
   {
-    "id": "12",
+    "id": "ven_12",
     "name": "Boogaloop CLUB",
     "username": "boogaloopcolombia",
     "place_type": "iscoteca crossunder de Chapinero. Música en vivo y cultura Dj",
@@ -4100,7 +4100,7 @@
     }
   },
   {
-    "id": "13",
+    "id": "ven_13",
     "name": "Café cinema La resistencia",
     "username": "cafecinema90",
     "place_type": "",
@@ -4440,7 +4440,7 @@
     }
   },
   {
-    "id": "14",
+    "id": "ven_14",
     "name": "El Goce Pagano",
     "username": "elgocepagano",
     "place_type": "",
@@ -4774,7 +4774,7 @@
     }
   },
   {
-    "id": "15",
+    "id": "ven_15",
     "name": "Salsa Camará",
     "username": "salsacamaraoficial",
     "place_type": "",
@@ -5107,7 +5107,7 @@
     }
   },
   {
-    "id": "16",
+    "id": "ven_16",
     "name": "Longo's",
     "username": "soylongos",
     "place_type": "",
@@ -5442,7 +5442,7 @@
     }
   },
   {
-    "id": "17",
+    "id": "ven_17",
     "name": "Café Vallejo",
     "username": "cafevallejo",
     "place_type": "",
@@ -5777,7 +5777,7 @@
     }
   },
   {
-    "id": "18",
+    "id": "ven_18",
     "name": "Revellion Bar",
     "username": "revellioncultubar",
     "place_type": "",
@@ -6112,7 +6112,7 @@
     }
   },
   {
-    "id": "19",
+    "id": "ven_19",
     "name": "Jackass Rock Bar",
     "username": "jackassrockbar",
     "place_type": "",
@@ -6446,7 +6446,7 @@
     }
   },
   {
-    "id": "20",
+    "id": "ven_20",
     "name": "El anónimo",
     "username": "el_anonimo_bar",
     "place_type": "centro cultural",
@@ -6777,7 +6777,7 @@
     }
   },
   {
-    "id": "21",
+    "id": "ven_21",
     "name": "Son Havana",
     "username": "sonhavana",
     "place_type": "",
@@ -7118,7 +7118,7 @@
     }
   },
   {
-    "id": "22",
+    "id": "ven_22",
     "name": "Teatro Charlot",
     "username": "charloteatro",
     "place_type": "",
@@ -7452,7 +7452,7 @@
     }
   },
   {
-    "id": "23",
+    "id": "ven_23",
     "name": "A seis manos",
     "username": "aseismanos",
     "place_type": "Espacio cultural",
@@ -7797,7 +7797,7 @@
     }
   },
   {
-    "id": "60",
+    "id": "ven_60",
     "name": "Casa Astor",
     "username": "astorbcn",
     "country": "España",
@@ -8140,7 +8140,7 @@
     }
   },
   {
-    "id": "69",
+    "id": "ven_69",
     "name": "Café Berlín",
     "username": "cafeberlinmadrid",
     "country": "España",
@@ -8483,7 +8483,7 @@
     }
   },
   {
-    "id": "89",
+    "id": "ven_89",
     "name": "Marula Café Barcelona",
     "username": "marulacafe",
     "country": "España",
@@ -8826,7 +8826,7 @@
     }
   },
   {
-    "id": "90",
+    "id": "ven_90",
     "name": "Big bang bar",
     "username": "bigbangbarcelona",
     "country": "España",
@@ -9169,7 +9169,7 @@
     }
   },
   {
-    "id": "91",
+    "id": "ven_91",
     "name": "Paral·lel 62",
     "username": "parallel62bcn",
     "country": "España",
@@ -9512,7 +9512,7 @@
     }
   },
   {
-    "id": "118",
+    "id": "ven_118",
     "name": "La Mole",
     "username": "barlamole",
     "country": "España",
@@ -9855,7 +9855,7 @@
     }
   },
   {
-    "id": "205",
+    "id": "ven_205",
     "name": "Ciro's Pizza Pomodoro",
     "username": "cirospomodoro",
     "country": "Inglaterra",
@@ -10198,7 +10198,7 @@
     }
   },
   {
-    "id": "206",
+    "id": "ven_206",
     "name": "TAm Temple Of Art & Music",
     "username": "templeartmusic",
     "country": "Inglaterra",
@@ -10541,7 +10541,7 @@
     }
   },
   {
-    "id": "207",
+    "id": "ven_207",
     "name": "The Blues Kitchen Camden",
     "username": "theblueskitchen",
     "country": "Inglaterra",
@@ -10884,7 +10884,7 @@
     }
   },
   {
-    "id": "218",
+    "id": "ven_218",
     "name": "La Gaia",
     "username": "lagaia_books",
     "country": "España",
@@ -11227,7 +11227,7 @@
     }
   },
   {
-    "id": "234",
+    "id": "ven_234",
     "name": "Sidecar Barcelona",
     "username": "sidecarbcn",
     "country": "España",
@@ -11570,7 +11570,7 @@
     }
   },
   {
-    "id": "247",
+    "id": "ven_247",
     "name": "Soda Acústica",
     "username": "sodacustic",
     "country": "España",
@@ -11913,7 +11913,7 @@
     }
   },
   {
-    "id": "257",
+    "id": "ven_257",
     "name": "Jamboree Jazz",
     "username": "jamboree.jazz",
     "country": "España",
@@ -12256,7 +12256,7 @@
     }
   },
   {
-    "id": "266",
+    "id": "ven_266",
     "name": "Bar La Raíz",
     "username": "barlaraizcoop",
     "country": "España",
@@ -12599,7 +12599,7 @@
     }
   },
   {
-    "id": "291",
+    "id": "ven_291",
     "name": "espai ku",
     "username": "espai___ku",
     "country": "España",
@@ -12942,7 +12942,7 @@
     }
   },
   {
-    "id": "314",
+    "id": "ven_314",
     "name": "Milano Jazz Club",
     "username": "milano_jazzclub",
     "country": "España",
@@ -13285,7 +13285,7 @@
     }
   },
   {
-    "id": "321",
+    "id": "ven_321",
     "name": "CCDEA La Parcería",
     "username": "laparceria",
     "country": "España",
@@ -13628,7 +13628,7 @@
     }
   },
   {
-    "id": "336",
+    "id": "ven_336",
     "name": "Susurro",
     "username": "susurrobarcelona",
     "country": "España",
@@ -13971,7 +13971,7 @@
     }
   },
   {
-    "id": "342",
+    "id": "ven_342",
     "name": "Razzmatazz Club",
     "username": "razzmatazzclubs",
     "country": "España",
@@ -14315,7 +14315,7 @@
     }
   },
   {
-    "id": "343",
+    "id": "ven_343",
     "name": "Matisse Club",
     "username": "matisseclubvlc",
     "country": "España",
@@ -14658,7 +14658,7 @@
     }
   },
   {
-    "id": "345",
+    "id": "ven_345",
     "name": "Sala Stereo Alicante",
     "username": "stereo_alicante",
     "country": "España",
@@ -15001,7 +15001,7 @@
     }
   },
   {
-    "id": "346",
+    "id": "ven_346",
     "name": "Taberna J&J Granada",
     "username": "tabernajj",
     "country": "España",
@@ -15344,7 +15344,7 @@
     }
   },
   {
-    "id": "347",
+    "id": "ven_347",
     "name": "Sala Funclub",
     "username": "funclubsevilla",
     "country": "España",
@@ -15687,7 +15687,7 @@
     }
   },
   {
-    "id": "348",
+    "id": "ven_348",
     "name": "Nazca Music Live",
     "username": "sala_nazca",
     "country": "España",
@@ -16030,7 +16030,7 @@
     }
   },
   {
-    "id": "349",
+    "id": "ven_349",
     "name": "Sala Mon Live",
     "username": "sala_mon_live",
     "country": "España",
@@ -16373,7 +16373,7 @@
     }
   },
   {
-    "id": "350",
+    "id": "ven_350",
     "name": "Copernico",
     "username": "sala_copernico_conciertos",
     "country": "España",
@@ -16716,7 +16716,7 @@
     }
   },
   {
-    "id": "394",
+    "id": "ven_394",
     "name": "Notting Hill Arts Club",
     "username": "nhaclondon",
     "country": "Inglaterra",
@@ -17059,7 +17059,7 @@
     }
   },
   {
-    "id": "396",
+    "id": "ven_396",
     "name": "Sinestesia",
     "username": "sinestesia.barcelona",
     "country": "España",
@@ -17402,7 +17402,7 @@
     }
   },
   {
-    "id": "403",
+    "id": "ven_403",
     "name": "16 Toneladas Rock Club",
     "username": "16toneladas_rockclub",
     "country": "España",
@@ -17745,7 +17745,7 @@
     }
   },
   {
-    "id": "404",
+    "id": "ven_404",
     "name": "La Nau",
     "username": "lanaubcn",
     "country": "España",
@@ -18088,7 +18088,7 @@
     }
   },
   {
-    "id": "405",
+    "id": "ven_405",
     "name": "Cooperativa Ítaca",
     "username": "cooperativaitacamurcia",
     "country": "España",
@@ -18431,7 +18431,7 @@
     }
   },
   {
-    "id": "406",
+    "id": "ven_406",
     "name": "Sala Creedence",
     "username": "sala_creedence",
     "country": "España",
@@ -18774,7 +18774,7 @@
     }
   },
   {
-    "id": "414",
+    "id": "ven_414",
     "name": "Calvario Bar",
     "username": "calvariobar",
     "country": "España",
@@ -19117,7 +19117,7 @@
     }
   },
   {
-    "id": "415",
+    "id": "ven_415",
     "name": "Rosazul",
     "username": "rosazulmusica",
     "country": "España",
@@ -19460,7 +19460,7 @@
     }
   },
   {
-    "id": "426",
+    "id": "ven_426",
     "name": "Ronda Barcelona",
     "username": "rondabarcelona",
     "country": "España",
@@ -19803,7 +19803,7 @@
     }
   },
   {
-    "id": "427",
+    "id": "ven_427",
     "name": "The Post Bar",
     "username": "thepostbartottenham",
     "country": "Inglaterra",
@@ -20146,7 +20146,7 @@
     }
   },
   {
-    "id": "442",
+    "id": "ven_442",
     "name": "The Cavern Club",
     "username": "cavernliverpool",
     "country": "Inglaterra",
@@ -20489,7 +20489,7 @@
     }
   },
   {
-    "id": "464",
+    "id": "ven_464",
     "name": "Sala El Sol",
     "username": "salaelsol",
     "country": "España",
@@ -20832,7 +20832,7 @@
     }
   },
   {
-    "id": "466",
+    "id": "ven_466",
     "name": "The Jacaranda",
     "username": "jacarandaliverpool",
     "country": "Inglaterra",
@@ -21175,7 +21175,7 @@
     }
   },
   {
-    "id": "480",
+    "id": "ven_480",
     "name": "Espacio Mumuki",
     "username": "espaciomumuki",
     "country": "España",
