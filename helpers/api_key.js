@@ -8,12 +8,10 @@ const API_KEY_EXPIRATION = "1h"; // Expiración de la API key, puede ser '1h', '
 function validateApiKey(req, res, next) {
   const token = req.headers["x-api-key"];
   if (!token) {
-    return res
-      .status(403)
-      .send({
-        message: "No API key provided.",
-        errorCode: ErrorCodes.AUTH_NO_TOKEN_PROVIDED,
-      });
+    return res.status(403).send({
+      message: "No API key provided.",
+      errorCode: ErrorCodes.AUTH_NO_TOKEN_PROVIDED,
+    });
   }
   jwt.verify(token, SECRET_KEY, (err, decoded) => {
     if (err) {
