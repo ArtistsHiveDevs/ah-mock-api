@@ -1,0 +1,81 @@
+{
+  "docs": [
+    { "en": "Lounge", "id": "yb8DOKXBMTGb2UPOCyV3", "es": "Lounge" },
+    { "en": "Tropical", "id": "wYdsO1ReZCxUDUWgpERi", "es": "Tropical" },
+    { "en": "Chill Out", "id": "ukdRYOhwpMh5zj96YXmF", "es": "Chill Out" },
+    {
+      "en": "Regional Mexicano",
+      "id": "u3yg59lIodLjqwomqnNp",
+      "es": "Regional Mexicano"
+    },
+    { "en": "Minimal", "id": "tfnEE37YeReEmfzBJGQv", "es": "Minimal" },
+    { "en": "Disco", "id": "sLVtOsG8hkAKrV2uSTNU", "es": "Disco" },
+    { "en": "Fusion", "id": "rKZIxOy6K2NEJE3hOrpc", "es": "Fusion" },
+    { "en": "Norteño", "id": "qiwQHhi5i345x4L4q81O", "es": "Norteño" },
+    { "en": "Alternative", "es": "Alternativo", "id": "oDL6W2DL55a7wmfGOBmT" },
+    { "en": "Hip Hop", "id": "nW57AljQ8ZejHTGMORx3", "es": "Hip Hop" },
+    {
+      "en": "Video Game Music",
+      "id": "nJJ2jTpxE5mZf38frJUw",
+      "es": "Música para Video Juegos"
+    },
+    { "en": "Folk", "id": "mbIgyV52NIfAm1MxED78", "es": "Folk" },
+    {
+      "en": "Experimental",
+      "id": "l42sfKvevbunkHq14XZZ",
+      "es": "Experimental"
+    },
+    { "en": "Covers", "id": "k46XoIPjHUaHJiaNWmDD", "es": "Covers" },
+    { "en": "Classical", "id": "hyzsrfQOFuTLKnAylpRn", "es": "Clásica" },
+    { "en": "Rock", "id": "hrF0Jnc92yf9JbTPHQ8i", "es": "Rock" },
+    { "en": "Latin", "id": "h7vKy4nKMX1pHIfGzX4w", "es": "Latina" },
+    { "en": "Rap", "id": "fzaSIKEnigoxQyCkjQMx", "es": "Rap" },
+    { "en": "Funk", "id": "fhFdSJ0znfqPKw29VBHI", "es": "Funk" },
+    { "en": "Idm", "id": "eskZEVsKRViEubo7IJbA", "es": "Idm" },
+    { "id": "e8GxCBkl16YzL0Wx69TD", "en": "Electronic", "es": "Electrónica" },
+    { "en": "TV Themes", "id": "ZV1EwBxmx58aBqaHiOvw", "es": "Música para TV" },
+    { "en": "Dubstep", "id": "ZJ0DjgvhIDpLnp2qMvKe", "es": "Dubstep" },
+    { "en": "Trip Hop", "id": "YCUt8shQBBQ5Xbm5uwub", "es": "Trip Hop" },
+    { "en": "Country", "id": "Xode3HtVYK7iqH2pcDGH", "es": "Country" },
+    { "en": "Metal", "id": "Unw8RyiuroDEOcWGEqZT", "es": "Metal" },
+    { "en": "Bachata", "id": "UQkTum6wEQxoHOrFW9K6", "es": "Bachata" },
+    { "en": "Reggae", "id": "U0I861MWd18Wd2DyvGRb", "es": "Reggae" },
+    { "en": "Bossa Nova", "id": "RxjCYblswCmUCWwg7Dmv", "es": "Bossa Nova" },
+    { "en": "Lo-fi", "id": "RDSCYDV3CRsFhkuGDC78", "es": "Lo-fi" },
+    {
+      "en": "Psychedelic",
+      "id": "Q1I3yvaVOvTDbGel95As",
+      "es": "Rock Psicodélico"
+    },
+    { "en": "Gospel", "id": "PKnKUvcZ8ExZWgNHBRyf", "es": "Gospel" },
+    { "en": "Jazz", "id": "MwsLAZAqBM6FPYStUaU1", "es": "Jazz" },
+    { "en": "K-Pop", "id": "LmpDDAtJYVgDNYyKw4xI", "es": "K-Pop" },
+    { "en": "Breakbeat", "id": "KijHY9MIKWWSiESyliUI", "es": "Breakbeat" },
+    { "en": "Reggaeton", "id": "GOrN6g1ye03FehuE4l1I", "es": "Reggaeton" },
+    { "en": "Pop", "id": "EralNeNbJBXke8EAkk33", "es": "Pop" },
+    { "en": "Tango", "id": "DugoE2bi5EGNmRaDgSAO", "es": "Tango" },
+    {
+      "en": "Progressive Rock",
+      "id": "Cp2k4jhFlplDAk0M9DW2",
+      "es": "Rock Progresivo"
+    },
+    { "en": "Trance", "id": "CLgC7Z80HjNeSbHgVJpm", "es": "Trance" },
+    { "en": "Trova", "id": "AvqsOZSzxElUV7iIs1Oj", "es": "Trova" },
+    { "en": "Dancehall", "id": "AsOfhf6K992aP5B3xIuq", "es": "Dancehall" },
+    { "en": "R&B", "id": "96LOumcbOIdJdC0MwimE", "es": "R&B" },
+    { "en": "Drum & Bass", "id": "8tbzwWDH6UMlLNRHeKCl", "es": "Drum & Bass" },
+    { "en": "Trap", "id": "8gQsEzNHmXypx7in8PTy", "es": "Trap" },
+    { "en": "Indie", "id": "7DTIPsUrwaQXvUBlbFS9", "es": "Independiente" },
+    { "en": "House", "es": "House", "id": "6CQspGSmVuNKecaMMErO" },
+    { "en": "Ska", "id": "67CZTIhy4wPlR2zqmmcK", "es": "Ska" },
+    { "en": "Symphonic", "id": "42ddQuZRkfJRCmtd42LZ", "es": "Sinfónica" },
+    { "en": "Punk", "id": "2PKa1mSWGWhjZtdbz3Mx", "es": "Punk" },
+    { "en": "Techno", "id": "257R84X4pSwqPXLblQyy", "es": "Techno" },
+    { "en": "New Wave", "id": "0yDKcg18WNomSXsQokcA", "es": "New Wave" },
+    { "en": "EDM", "id": "0rr3rnE418VX2MJL62he", "es": "EDM" },
+    { "en": "Ambient", "id": "0jbVhFZiHy6yzV6kcVqt", "es": "Ambiente" },
+    { "en": "Dance", "id": "0HLzXRgBsDIrJt749foc", "es": "Dance" }
+  ],
+  "firstSnapshot": "yb8DOKXBMTGb2UPOCyV3",
+  "lastSnapshot": "0HLzXRgBsDIrJt749foc"
+}

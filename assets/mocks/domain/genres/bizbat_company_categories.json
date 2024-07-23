@@ -1,0 +1,172 @@
+[
+  {
+    "en": "Photo Studio",
+    "id": "1LmMySMhYoFqQwRQEyhV",
+    "es": "Estudio Fotográfico"
+  },
+  {
+    "en": "Rehearsal Studio",
+    "id": "1bahLEJudubV2ZckPCba",
+    "es": "Estudio de Ensayos"
+  },
+  {
+    "en": "Instrument Mantainance & Repair",
+    "id": "6MTJXzk5YaSuzTUb79tb",
+    "es": "Mantenimiento y Reparaciones de Instrumentos"
+  },
+  {
+    "en": "Music Distribution Agency",
+    "id": "9Hu8eRFcgcUSlfMFfMyw",
+    "es": "Agencia de Distribución Musical"
+  },
+  {
+    "en": "Music University",
+    "id": "BI5k6cp4tKq66zCVRaVL",
+    "es": "Universidad de Música"
+  },
+  {
+    "en": "Accounting/Finance Firm",
+    "id": "CI6XaWvASt3KC0bjEQlP",
+    "es": "Despacho de Contadores y Finanzas"
+  },
+  {
+    "en": "Software Company",
+    "id": "DeDiO6dWxe7NnQJr2EOa",
+    "es": "Compañía de Software"
+  },
+  {
+    "en": "Record Label",
+    "id": "Mx5BEji87CMR75a5MWLR",
+    "es": "Sello Discográfico"
+  },
+  {
+    "en": "TV Station ",
+    "id": "OGEmrFRj3xwnoGt64yeZ",
+    "es": "Estación de Televisión"
+  },
+  {
+    "en": "Music Magazine",
+    "id": "R9zQ95OiITjEOtoWwsAQ",
+    "es": "Revista Musical"
+  },
+  {
+    "en": "Event Planning Agency",
+    "id": "S9Be4oYwraQLNVnYWvUp",
+    "es": "Agencia de Planeación de Eventos"
+  },
+  {
+    "en": "Record Label",
+    "id": "Svhi3q5vdxZLqX08wWvJ",
+    "es": "Sello Discográfico"
+  },
+  {
+    "en": "Engineering Agency",
+    "id": "TFejxuqJmYpkDp4X6rG1",
+    "es": "Agencia de Ingenieria"
+  },
+  {
+    "en": "Radio Station ",
+    "id": "UhKFp7e3msP6hnWYqG00",
+    "es": "Estación de Radio"
+  },
+  {
+    "en": "Music School",
+    "id": "VWwuWpvxEXpqYJSkROJL",
+    "es": "Escuela de Música"
+  },
+  {
+    "en": "Booking Agency",
+    "id": "Xv8LQo5MqDzU6JlOcDpu",
+    "es": "Agencia de Booking"
+  },
+  { "en": "Festival", "id": "YnmT38KatjObwmkEXVvJ", "es": "Festival" },
+  {
+    "en": "Publishing Agency",
+    "id": "b2tVFX8tlHoksljou9kP",
+    "es": "Agencia de Talentos"
+  },
+  {
+    "en": "Concert Production",
+    "id": "eo35zVZtcc5FSx1tNuoM",
+    "es": "Producción de Conciertos"
+  },
+  {
+    "en": "Lighting Production Company",
+    "id": "gCPE1Cid15rPbHMeVf8J",
+    "es": "Compañía de Producción e Iluminación"
+  },
+  { "en": "Music Blog", "id": "gF2YsLcHxxt3Ys9iIEw2", "es": "Blog Musical" },
+  {
+    "en": "Music Newspaper",
+    "id": "h2ez4zs3i98kHZ9YySxi",
+    "es": "Periodico Musical"
+  },
+  {
+    "en": "Video Studio",
+    "id": "iUugF5G8iBqh5c6w559V",
+    "es": "Estudio de Video "
+  },
+  {
+    "en": "Music Tech Company",
+    "id": "jamek1xwbRdab2Y77vZB",
+    "es": "Compañia de Music Tech"
+  },
+  {
+    "en": "Tickets Sale",
+    "id": "l1SvrVfMW4ehc7L33LNN",
+    "es": "Venta de Boletos"
+  },
+  {
+    "en": "Instrument/Backline Rental",
+    "id": "lOqtukrklz63UMEYMQLt",
+    "es": "Renta de Instrumentos/Backline"
+  },
+  {
+    "en": "Music Journal",
+    "id": "mrh60eBOrE2cS1V55H19",
+    "es": "Diario Musical"
+  },
+  {
+    "en": "Film Production",
+    "id": "nUsgKXGhz8GPge7MWcsL",
+    "es": "Producción de Cine"
+  },
+  { "en": "Art Studio", "id": "nj5Jut0eljDMdOFDD6RW", "es": "Estudio de Arte" },
+  {
+    "en": "Entertainment Law Firm",
+    "id": "oxc6GEkL6ShI2RFCWNXE",
+    "es": "Despacho de Abogados de Entretenimiento"
+  },
+  {
+    "en": "Independent Record Label",
+    "id": "q4wi51VYPWuygHwYKhEy",
+    "es": "Sello Discográfico Independiente"
+  },
+  {
+    "en": "Management Agency",
+    "id": "qtpi1QFcvD26Y1RgFkvT",
+    "es": "Agencia de Management"
+  },
+  {
+    "en": "Recording Studio",
+    "id": "txrOGIGzBnEiUrJdtVGY",
+    "es": "Estudio de Grabación"
+  },
+  {
+    "en": "Licensing Agency",
+    "id": "uc69yC8BHSE6n6GxPCsl",
+    "es": "Agencia de Licenicas"
+  },
+  {
+    "en": "Instrument Store",
+    "id": "vAR0XOG1RzmYIeDgG9OJ",
+    "es": "Tienda de Instrumentos"
+  },
+  { "en": "Venue", "id": "vB7KwPefl2cMH3oxWr1o", "es": "Establecimiento" },
+  { "en": "Other", "id": "vevXiEKcSCzRhGWK5tUr", "es": "Otro" },
+  {
+    "en": "Synchronization Agency",
+    "id": "zLQ619Q4DxJivL7Ylw94",
+    "es": "Agencia de Sincronización"
+  }
+]

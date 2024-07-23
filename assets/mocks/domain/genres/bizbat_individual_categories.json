@@ -1,0 +1,352 @@
+[
+  {
+    "en": "Lighting Tecnician",
+    "id": "0dya0W4AvdqFfhRasbhT",
+    "es": "Técnico de iluminación"
+  },
+  {
+    "en": "Recording Engineer",
+    "id": "0qRJO0gj9emjkOCWFv4b",
+    "es": "Ingeniero de Audio"
+  },
+  {
+    "en": "Live photographer",
+    "id": "1u6vpZSrSflhrAmDEiQO",
+    "es": "Fotógrafo"
+  },
+  {
+    "en": "A&R (Artists & Repertoire)",
+    "id": "5FAgCsRISah58uV29WKE",
+    "es": "Artistas y Repertorio"
+  },
+  {
+    "en": "Label Marketing",
+    "id": "7RSS3fxmZ6ihWfLqQGIk",
+    "es": "Marketing del Sello"
+  },
+  {
+    "id": "7qanxTilmoHatc3Wywao",
+    "es": "Técnico de instrumentos",
+    "en": "Instrument Technician"
+  },
+  {
+    "en": "Backline/Rider Tecnician",
+    "id": "8dlMY1vjnxTOfrl5AaXq",
+    "es": "Técnico de Rider/Backline"
+  },
+  {
+    "en": "Camera Operator",
+    "id": "9QKSkLUd5wAxs6logi8g",
+    "es": "Operador de cámara"
+  },
+  {
+    "en": "Front End Developer",
+    "id": "CTFLvLXFrSphnB2J5jgH",
+    "es": "Desarrollador de Front End"
+  },
+  {
+    "en": "Studio Manager",
+    "id": "DFQrvXLVMdIAv4wN95TB",
+    "es": "Gerente de Estudio"
+  },
+  {
+    "en": "Hospitality Manager",
+    "id": "DY4Q2DQ7zW0bdPtto6UO",
+    "es": "Gerente de RP"
+  },
+  {
+    "en": "Radio host ",
+    "id": "DaLK26MOvX04iGGapU6w",
+    "es": "Locutor de Radio"
+  },
+  {
+    "en": "Rehearsal Studio Owner",
+    "id": "DtrrIEaTIuNZST9VWycs",
+    "es": "Dueño de estudio de ensayo"
+  },
+  {
+    "en": "Art Designer",
+    "id": "EylyPFWihvUXg4j1SpxE",
+    "es": "Diseñador de arte"
+  },
+  { "en": "Music Writer", "id": "F4x8YwQRAtz1gDneAQYe", "es": "Escritor" },
+  {
+    "en": "Stage Manager",
+    "id": "FUneOh0FQsuCrDeLpZPP",
+    "es": "Gerente del Escenario"
+  },
+  {
+    "en": "Lighting Designer",
+    "id": "FhR9qgO143UD9U7FMN56",
+    "es": "Diseñador de iluminación"
+  },
+  {
+    "en": "Instrument Instructor",
+    "id": "FnTneBEP6qT8BrpmjOgr",
+    "es": "Profesor de instrumento"
+  },
+  {
+    "en": "Tour Manager",
+    "id": "GBfJBDMjnlgy2UwuSQ54",
+    "es": "Gerente del Tour"
+  },
+  { "en": "RF", "id": "GGWQPRCwzz1majWsYRZj", "es": "RF" },
+  { "en": "Luthier", "id": "GhMi74JRHPJVeTwBGJnf", "es": "Laudero" },
+  { "en": "Producer", "id": "Gw3AJSPXg1JzjcKL7KWj", "es": "Productor" },
+  {
+    "en": "Master Engineer",
+    "id": "HCcnp9zj7sJW8zC0EP2p",
+    "es": "Ingeniero de Master"
+  },
+  {
+    "en": "Video Editor",
+    "id": "Hs9Qh2JVIYU4zKosEcFj",
+    "es": "Editor de video"
+  },
+  {
+    "en": "Catering Specialist",
+    "id": "IZjyb6q6GtfmvdDzhjTS",
+    "es": "Especialista en Catering"
+  },
+  {
+    "en": "Venue Booker",
+    "id": "J1mBLRTiRXjIocRVAlDr",
+    "es": "Booker de Venue"
+  },
+  {
+    "en": "Live Sound Engineer",
+    "id": "KV40gWEq7tcRR42xjFfS",
+    "es": "Ingeniero de sonido"
+  },
+  {
+    "en": "Video Engineer",
+    "id": "MHdepFGT2UNbXrPUBwTf",
+    "es": "Ingeniero en video"
+  },
+  {
+    "en": "Music Historian",
+    "id": "MadZiGxcyqY7aLxMcIxm",
+    "es": "Historiador"
+  },
+  {
+    "en": "Radio Producer ",
+    "id": "Nm28di4EKc9XDUyAQuo9",
+    "es": "Productor de Radio"
+  },
+  {
+    "en": "Music Tech Entrepreneur",
+    "id": "OF1TDp5lvz32MdKJl5x9",
+    "es": "Emprendedor en Music Tech"
+  },
+  {
+    "en": "Rehearsal Studio Operator",
+    "id": "OkLmvIj1RM9g4Sf3Guui",
+    "es": "Operador de estudio de ensayo"
+  },
+  {
+    "en": "Backline / Rider Provider",
+    "id": "OozJ7R4rgzvTFoiktGMI",
+    "es": "Proovedores de Backline y Rider"
+  },
+  {
+    "en": "Venue Owner",
+    "id": "P9FE6FJNxnF4w80ug7l6",
+    "es": "Dueño de establecimiento"
+  },
+  {
+    "en": "Festival Booker",
+    "id": "PPKTJsAE4EQ4xIl2VSwS",
+    "es": "Booker de festival"
+  },
+  {
+    "en": "Label Manager",
+    "id": "QjQClRuWRE7iaW7KkycQ",
+    "es": "Gerente del Sello"
+  },
+  { "en": "Other", "id": "RvSMe1ym0PUycdX1tv8v", "es": "Otro" },
+  { "en": "Illustrator", "id": "SMbXJrqgjM9HLazNQZmu", "es": "Ilustrador" },
+  {
+    "en": "Festival Owner",
+    "id": "T2KEBiUZQRVNxkZkIEry",
+    "es": "Dueño de Festival"
+  },
+  {
+    "en": "Backline Specialist",
+    "id": "TubyalEVg8Q2jMkGJmvy",
+    "es": "Especialista de Backline"
+  },
+  {
+    "en": "Personal Manager",
+    "id": "UMoSqhQVHXWZV3KLT7Ja",
+    "es": "Representate personal"
+  },
+  {
+    "en": "Video Animator",
+    "id": "UcqiA5itv3Qz5rFGJcrB",
+    "es": "Animador de video"
+  },
+  {
+    "en": "Festival Operator",
+    "id": "UxHatakWNJQfG49OAymK",
+    "es": "Operador de Festival"
+  },
+  {
+    "en": "Production Manager",
+    "id": "WtVGN0X5yeNDNkVREg7O",
+    "es": "Gerente de Producción"
+  },
+  { "en": "Music Lawyer", "id": "XctbYY4w6RhRpZhNzjdT", "es": "Abogado" },
+  {
+    "en": "Academic Director",
+    "id": "Xg7dZyurYuT1yZ2ngABw",
+    "es": "Director Académico"
+  },
+  {
+    "en": "Music Journalist",
+    "id": "YSqSdgEUDxgFUcvhJCCQ",
+    "es": "Periodista"
+  },
+  { "en": "Music Accountant", "id": "Yyh5t5C4LAgJ7yQlyObv", "es": "Contador" },
+  {
+    "en": "Event Planner",
+    "id": "ZXz7dutIecpADOQav6yO",
+    "es": "Organizador de Eventos"
+  },
+  {
+    "en": "Web Developer",
+    "id": "ZuByzSmnzWqKFfGZMd34",
+    "es": "Desarrollador Web"
+  },
+  {
+    "en": "Independent  Booker",
+    "id": "aKpjoYunK8e91lrUJHGU",
+    "es": "Booker independiente"
+  },
+  {
+    "en": "Music Business teacher",
+    "id": "aeSvWs8RL0SGSrgddwYy",
+    "es": "Profesor de Negocios en la Música"
+  },
+  {
+    "en": "Wedding planner",
+    "id": "cGNQQnk2U5K6SbDwMSNN",
+    "es": "Organizador de Bodas"
+  },
+  { "en": "Technician", "id": "cnj0RY8N3reyJOnGOSEq", "es": "Técnicos" },
+  {
+    "en": "TV host ",
+    "id": "dC9r0XawHx21cOgonraY",
+    "es": "Presentador de Televisión"
+  },
+  {
+    "en": "Mixing Engineer",
+    "id": "dFdW5iiKWr2iLd94k0XX",
+    "es": "Ingeniero de Mezcla"
+  },
+  {
+    "en": "Full Stack Developer",
+    "id": "feBkWXskKq3dP6LZhdrr",
+    "es": "Desarrollador Full Stack"
+  },
+  {
+    "en": "Sound Engineer",
+    "id": "g5ncceJk3nxHV7xAAMLK",
+    "es": "Ingeniero en audio"
+  },
+  { "en": "Music Critic", "id": "i6SWOTe0PlrPyUuMjAfD", "es": "Crítico" },
+  {
+    "en": "Software Developer ",
+    "id": "jBfEuLMZCv21jPDjeh8V",
+    "es": "Desarrollador de Software"
+  },
+  {
+    "en": "Art Director",
+    "id": "jigbJalaQLSIq9Cfz0X9",
+    "es": "Director de arte"
+  },
+  { "en": "Filmmaker", "id": "l7zDZAYHEXliZUMUG6I5", "es": "Cineasta" },
+  {
+    "en": "Music Supervisor",
+    "id": "lGqRonUwSRQZlZjRcgLU",
+    "es": "Supervisor de música"
+  },
+  {
+    "en": "Label Relations",
+    "id": "mDsCIUFMwD1IkWiq5qcS",
+    "es": "RP del Sello"
+  },
+  {
+    "en": "Tour Manager",
+    "id": "mMQa4vC4gCvyUg1eAHqe",
+    "es": "Gerente del tour"
+  },
+  {
+    "en": "Stage Hands",
+    "id": "nAY95dSJRV5o96oe5FwB",
+    "es": "Asistente de Escenografia"
+  },
+  { "en": "Assistant", "id": "nf4CENl5IfnVaxUCTW7N", "es": "Asistentes" },
+  {
+    "en": "Back End Developer",
+    "id": "oJrnAlTiDCRByfl50Ebj",
+    "es": "Desarrollador de Back End"
+  },
+  {
+    "en": "TV Programmer ",
+    "id": "oSyKAKhAJuSEyFvC1KdP",
+    "es": "Programador de Televisión"
+  },
+  { "en": "Store Salesman", "id": "omfyhqW4zntpdz4KsVPF", "es": "Ventas" },
+  {
+    "en": "TV Producer ",
+    "id": "ondWHXzjD7nLLk4ietVv",
+    "es": "Productor de Televisión"
+  },
+  {
+    "en": "Video Ilustrator",
+    "id": "qNwNmUiplTfQNvjXF41H",
+    "es": "Ilustrador de video"
+  },
+  {
+    "en": "Editorial photographer",
+    "id": "qkAY6bbKXmu2fK0oXEYD",
+    "es": "Editor de fotografia"
+  },
+  { "en": "Music Financier", "id": "rQF4QKQJuI8SdJ98zamW", "es": "Financiero" },
+  { "en": "Music Blogger", "id": "rtzc6bbH6SgfjqcSPykI", "es": "Blogger" },
+  {
+    "en": "Venue Operator",
+    "id": "rvS2JcAFNUqhGpzenP6K",
+    "es": "Operador de establecimiento"
+  },
+  {
+    "en": "Film Producer",
+    "id": "sCRY26gRT0cajqjdrPOV",
+    "es": "Productor de Cine"
+  },
+  {
+    "en": "Artist Manager ",
+    "id": "sGcjVR4DWNZPVgjHE7pF",
+    "es": "Representante"
+  },
+  {
+    "en": "Store Manager",
+    "id": "sWH7dpeLqrd7gx358IbU",
+    "es": "Gerente de tienda"
+  },
+  {
+    "en": "Tickets Sale",
+    "id": "u3DtqPyovi6bdLZdcr8A",
+    "es": "Venta de Boletos"
+  },
+  {
+    "en": "Radio Programmer ",
+    "id": "u6A0oJoIHB6j7t2TLoG6",
+    "es": "Programador de Radio"
+  },
+  {
+    "en": "Video Director",
+    "id": "y2R9GYUVm9vjgWrhyA8S",
+    "es": "Director de video"
+  }
+]
