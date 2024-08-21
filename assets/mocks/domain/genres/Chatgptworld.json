@@ -1,0 +1,321 @@
+{
+  "World": {
+    "African": {
+      "North African": {
+        "Genres": ["Raï", "Chaabi", "Gnawa", "Andalusian Classical", "Taarab"],
+        "Subgenres": {
+          "Raï": ["Modern Raï", "Pop Raï"],
+          "Gnawa": ["Gnawa Fusion"],
+          "Chaabi": ["Modern Chaabi", "Chaabi Algiers"],
+          "Andalusian Classical": ["Malouf", "Muwashshah"]
+        }
+      },
+      "West African": {
+        "Genres": [
+          "Afrobeat",
+          "Highlife",
+          "Jùjú",
+          "Palm-wine",
+          "Mbalax",
+          "Griot Music",
+          "Afropop",
+          "Fuji",
+          "Makossa",
+          "Kora Music"
+        ],
+        "Subgenres": {
+          "Afrobeat": ["Afrofunk", "Afro Jazz"],
+          "Highlife": ["Ewe Music", "Igbo Highlife"],
+          "Jùjú": ["Modern Jùjú", "Traditional Jùjú"],
+          "Mbalax": ["Sabar", "Xalam"],
+          "Griot Music": ["Mande Music", "Wassoulou"],
+          "Kora Music": ["Traditional Kora", "Contemporary Kora"]
+        }
+      },
+      "Central African": {
+        "Genres": ["Soukous", "Rumba", "Makossa", "Bikutsi", "Mbube", "Benga"],
+        "Subgenres": {
+          "Soukous": ["Kwassa Kwassa", "Ndombolo"],
+          "Rumba": ["Congolese Rumba"],
+          "Makossa": ["Makossa Fusion", "Modern Makossa"],
+          "Bikutsi": ["Traditional Bikutsi", "Urban Bikutsi"],
+          "Mbube": ["Isicathamiya"]
+        }
+      },
+      "East African": {
+        "Genres": ["Taarab", "Benga", "Swahili Music", "Bongo Flava"],
+        "Subgenres": {
+          "Taarab": ["Zanzibari Taarab", "Modern Taarab"],
+          "Benga": ["Kenyan Benga", "Modern Benga"],
+          "Swahili Music": ["Zilizopendwa"]
+        }
+      },
+      "Southern African": {
+        "Genres": [
+          "Mbaqanga",
+          "Kwela",
+          "Marabi",
+          "Maskandi",
+          "Shangaan Electro",
+          "Kwaito",
+          "Zimbabwean Chimurenga",
+          "Isicathamiya",
+          "Kwela",
+          "Zamrock"
+        ],
+        "Subgenres": {
+          "Mbaqanga": ["Traditional Mbaqanga", "Soweto Sound"],
+          "Kwela": ["Pennywhistle Jive"],
+          "Marabi": ["African Jazz", "Cape Jazz"],
+          "Maskandi": ["Traditional Maskandi", "Modern Maskandi"],
+          "Shangaan Electro": ["Traditional Shangaan"],
+          "Chimurenga": ["Traditional Chimurenga", "Modern Chimurenga"]
+        }
+      }
+    },
+    "Asian": {
+      "East Asian": {
+        "Genres": [
+          "J-Pop",
+          "K-Pop",
+          "C-Pop",
+          "Cantopop",
+          "Enka",
+          "Gagaku",
+          "Kayo",
+          "Minyo",
+          "Nanguan",
+          "Peking Opera",
+          "Shamisen Music"
+        ],
+        "Subgenres": {
+          "J-Pop": ["Shibuya-kei", "City Pop", "J-Rock"],
+          "K-Pop": ["Hallyu", "Trot", "Ballad"],
+          "C-Pop": ["Mandopop", "Taiwanese Pop"],
+          "Cantopop": ["Hong Kong Pop"],
+          "Enka": ["Modern Enka"]
+        }
+      },
+      "South Asian": {
+        "Genres": [
+          "Bollywood",
+          "Bhangra",
+          "Qawwali",
+          "Carnatic Music",
+          "Hindustani Classical",
+          "Baião",
+          "Ghazal",
+          "Rabindra Sangeet"
+        ],
+        "Subgenres": {
+          "Bollywood": ["Filmi", "Item Songs"],
+          "Bhangra": ["Modern Bhangra", "Traditional Bhangra"],
+          "Qawwali": ["Sufi Qawwali", "Modern Qawwali"],
+          "Carnatic Music": ["Kriti", "Ragam Thanam Pallavi"],
+          "Hindustani Classical": ["Dhrupad", "Khayal", "Thumri"]
+        }
+      },
+      "Southeast Asian": {
+        "Genres": [
+          "Gamelan",
+          "Dangdut",
+          "Luk Thung",
+          "Morlam",
+          "Pinpeat",
+          "Kroncong",
+          "Tembang Sunda"
+        ],
+        "Subgenres": {
+          "Gamelan": ["Balinese Gamelan", "Javanese Gamelan"],
+          "Dangdut": ["Dangdut Koplo", "Classic Dangdut"],
+          "Luk Thung": ["Luk Thung Mahanakorn"],
+          "Morlam": ["Morlam Sing"],
+          "Kroncong": ["Langgam Jawa", "Keroncong Tugu"],
+          "Tembang Sunda": ["Kawih", "Panambih"]
+        }
+      }
+    },
+    "European": {
+      "Western European": {
+        "Genres": [
+          "Flamenco",
+          "Fado",
+          "Chanson",
+          "Celtic Music",
+          "Alpine Folk",
+          "Schlager",
+          "Eurodance",
+          "Bal-musette"
+        ],
+        "Subgenres": {
+          "Flamenco": ["Cante Jondo", "Fandangos", "Bulerías"],
+          "Fado": ["Fado Canção", "Fado Menor"],
+          "Chanson": ["Chanson Réaliste", "Modern Chanson"],
+          "Celtic Music": [
+            "Irish Traditional",
+            "Breton Music",
+            "Scottish Folk"
+          ],
+          "Alpine Folk": ["Yodeling", "Schuhplattler"]
+        }
+      },
+      "Eastern European": {
+        "Genres": [
+          "Balkan Folk",
+          "Klezmer",
+          "Russian Folk",
+          "Polka",
+          "Góralska",
+          "Romani Music",
+          "Manele",
+          "Tamburica"
+        ],
+        "Subgenres": {
+          "Balkan Folk": ["Sevdalinka", "Balkan Brass", "Turbo-folk"],
+          "Klezmer": ["Traditional Klezmer", "Modern Klezmer"],
+          "Russian Folk": ["Bard Music", "Balalaika Music"],
+          "Polka": ["Czech Polka", "Slovenian Polka"],
+          "Góralska": ["Highlander Folk", "Podhale Music"]
+        }
+      }
+    },
+    "Middle Eastern": {
+      "Genres": [
+        "Raï",
+        "Dabke",
+        "Arabic Pop",
+        "Mizrahi",
+        "Turkish Pop",
+        "Persian Classical",
+        "Muwashshah",
+        "Tarab",
+        "Sufi Music",
+        "Kurdish Folk"
+      ],
+      "Subgenres": {
+        "Raï": ["Algerian Raï", "Modern Raï"],
+        "Dabke": ["Levantine Dabke", "Modern Dabke"],
+        "Arabic Pop": ["Egyptian Pop", "Lebanese Pop"],
+        "Mizrahi": ["Sephardic Music"],
+        "Persian Classical": ["Radif", "Dastgah"],
+        "Tarab": ["Andalusian Tarab", "Modern Tarab"],
+        "Sufi Music": ["Whirling Dervish Music", "Qawwali"]
+      }
+    },
+    "Latin American": {
+      "South American": {
+        "Genres": [
+          "Samba",
+          "Bossa Nova",
+          "Tango",
+          "Cueca",
+          "Cumbia",
+          "Chacarera",
+          "Zamba",
+          "Forró",
+          "Vallenato",
+          "Joropo"
+        ],
+        "Subgenres": {
+          "Samba": ["Samba de Roda", "Pagode"],
+          "Bossa Nova": ["Modern Bossa Nova"],
+          "Tango": ["Nuevo Tango", "Tango Canção"],
+          "Cueca": ["Cueca Chilena", "Cueca Boliviana"],
+          "Cumbia": ["Cumbia Villera", "Cumbia Sonidera"],
+          "Zamba": ["Traditional Zamba", "Modern Zamba"],
+          "Forró": ["Forró Pé-de-Serra", "Forró Universitário"],
+          "Vallenato": ["Traditional Vallenato", "New Wave Vallenato"],
+          "Joropo": ["Joropo Llanero", "Joropo Central"]
+        }
+      },
+      "Caribbean": {
+        "Genres": [
+          "Reggae",
+          "Dancehall",
+          "Soca",
+          "Calypso",
+          "Zouk",
+          "Compas",
+          "Dub",
+          "Mento",
+          "Ska",
+          "Ragga",
+          "Merengue",
+          "Bachata"
+        ],
+        "Subgenres": {
+          "Reggae": ["Roots Reggae", "Dub"],
+          "Dancehall": ["Ragga", "Digital Dancehall"],
+          "Soca": ["Power Soca", "Groovy Soca"],
+          "Calypso": ["Modern Calypso", "Kaiso"],
+          "Zouk": ["Zouk Love", "Zouk Beton"],
+          "Compas": ["Kadans", "Konpa"],
+          "Dub": ["Roots Dub", "Digital Dub"],
+          "Mento": ["Traditional Mento", "Modern Mento"],
+          "Ska": ["2 Tone Ska", "Ska Punk"],
+          "Merengue": ["Pambiche", "Merengue Típico"],
+          "Bachata": ["Traditional Bachata", "Modern Bachata"]
+        }
+      },
+      "Central American": {
+        "Genres": [
+          "Marimba",
+          "Garifuna Music",
+          "Punta",
+          "Ranchera",
+          "Banda",
+          "Mariachi",
+          "Cumbia Sonidera"
+        ],
+        "Subgenres": {
+          "Marimba": ["Traditional Marimba", "Marimba de Arco"],
+          "Garifuna Music": ["Punta Rock"],
+          "Ranchera": ["Corridos", "Norteño"],
+          "Banda": ["Sinaloense", "Banda Duranguense"],
+          "Mariachi": ["Traditional Mariachi", "Modern Mariachi"]
+        }
+      }
+    },
+    "Oceania": {
+      "Genres": [
+        "Haka",
+        "Maori Folk",
+        "Didgeridoo Music",
+        "Hula",
+        "Pacific Reggae",
+        "Aboriginal Music",
+        "Island Music"
+      ],
+      "Subgenres": {
+        "Haka": ["Traditional Haka", "Modern Haka"],
+        "Didgeridoo Music": [
+          "Traditional Didgeridoo",
+          "Contemporary Didgeridoo"
+        ],
+        "Hula": ["Traditional Hula", "Modern Hula"],
+        "Pacific Reggae": [
+          "Roots Pacific Reggae",
+          "Contemporary Pacific Reggae"
+        ]
+      }
+    },
+    "Native American": {
+      "Genres": [
+        "Pow Wow",
+        "Navajo Music",
+        "Inuit Throat Singing",
+        "Cherokee Music",
+        "Lakota Music"
+      ],
+      "Subgenres": {
+        "Pow Wow": ["Northern Pow Wow", "Southern Pow Wow"],
+        "Navajo Music": ["Traditional Navajo", "Navajo Hymns"],
+        "Inuit Throat Singing": [
+          "Traditional Throat Singing",
+          "Contemporary Throat Singing"
+        ],
+        "Lakota Music": ["Traditional Lakota", "Modern Lakota"]
+      }
+    }
+  }
+}
