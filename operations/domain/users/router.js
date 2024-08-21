@@ -1,6 +1,9 @@
 var express = require("express");
+const mongoose = require("mongoose");
 var helpers = require("../../../helpers/index");
 var RoutesConstants = require("./constants/index");
+const User = require("../../../models/appbase/User");
+
 const {
   generateTourOutlines,
 } = require("../favourites/toursOutlines/generators");
@@ -97,47 +100,118 @@ function filterResultsByQuery(req, result) {
 }
 
 module.exports = [
-  userRouter.get(RoutesConstants.usersList, (req, res) => {
+  userRouter.get(RoutesConstants.usersList, async (req, res) => {
+    // try {
+    //   return res.json(filterResultsByQuery(req, helpers.getEntityData("User")));
+    // } catch (error) {
+    //   console.log(error);
+    //   return res.status(500).json([]);
+    // }
+    const { page = 1, limit = 10, fields } = req.query;
+
+    const modelFields = RoutesConstants.public_fields.join(",");
+
+    const projection = (modelFields || fields || "")
+      .split(",")
+      .reduce((acc, field) => {
+        acc[field] = 1;
+        return acc;
+      }, {});
+
     try {
-      return res.json(filterResultsByQuery(req, helpers.getEntityData("User")));
-    } catch (error) {
-      console.log(error);
-      return res.status(500).json([]);
+      const users = await User.find({})
+        .select(projection)
+        .skip((page - 1) * limit)
+        .limit(Number(limit));
+
+      res.json({
+        data: users,
+        currentPage: page,
+        totalPages: Math.ceil(users.length / limit),
+      });
+    } catch (err) {
+      res.status(500).json({ message: err.message });
     }
   }),
 
-  userRouter.get(RoutesConstants.findUserById, (req, res) => {
-    const { userId } = req.params;
-    const searchUser = helpers.searchResult(
-      helpers.getEntityData("User"),
-      userId,
-      "id"
-    );
+  userRouter.get(
+    RoutesConstants.findUserById,
+    helpers.validateAuthenticatedUser,
+    async (req, res) => {
+      const { userId } = req.params;
+      const currentUserId = req.userId;
 
-    try {
-      if (searchUser) {
-        return res.json(
-          filterResultsByQuery(req, searchUser) || {
-            message: helpers.noResultDefaultLabel,
-          }
-        );
+      let query = {};
+
+      if (mongoose.Types.ObjectId.isValid(userId)) {
+        // Si es un ObjectId válido, busca por _id
+        query._id = userId; // mongoose.Types.ObjectId(userId);
       } else {
-        res.json({
-          message: helpers.noResultDefaultLabel,
-        });
+        // Si no es un ObjectId, busca por otros campos
+        query = {
+          $or: [
+            // { shortId: artistId },
+            { username: userId },
+          ],
+        };
       }
-    } catch (error) {
-      console.log(error);
 
-      return res.status(500).json({});
+      // let modelFields = RoutesConstants.authenticated_fields.join(",");
+
+      // const projection = (modelFields || fields || "")
+      //   .split(",")
+      //   .reduce((acc, field) => {
+      //     acc[field] = 1;
+      //     return acc;
+      //   }, {});
+
+      const searchUser = await User.findOne(query);
+
+      // const searchUser = helpers.searchResult(
+      //   helpers.getEntityData("User"),
+      //   userId,
+      //   "id"
+      // );
+
+      let visibleAttributes = RoutesConstants.authenticated_fields;
+
+      const userData = visibleAttributes.reduce((acc, field) => {
+        acc[field] = searchUser[field];
+        return acc;
+      }, {});
+
+      try {
+        if (searchUser) {
+          if (currentUserId === searchUser._id.toString()) {
+            return res.json(searchUser);
+          } else {
+            return res.json(userData);
+          }
+        } else {
+          res.json({
+            message: helpers.noResultDefaultLabel,
+          });
+        }
+      } catch (error) {
+        console.log(error);
+
+        return res.status(500).json({});
+      }
     }
-  }),
+  ),
 
-  userRouter.post(RoutesConstants.create, (req, res) => {
-    const items = helpers.getEntityData("User");
-    return res
-      .status(200)
-      .json(items[Math.round(Math.random() * items.length)]);
+  userRouter.post(RoutesConstants.create, async (req, res) => {
+    // const items = helpers.getEntityData("User");
+    // return res
+    //   .status(200)
+    //   .json(items[Math.round(Math.random() * items.length)]);
+    try {
+      const user = new User(req.body);
+      await user.save();
+      res.status(201).send(user);
+    } catch (err) {
+      res.status(400).send(err);
+    }
   }),
 
   userRouter.put(RoutesConstants.updateById, (req, res) => {

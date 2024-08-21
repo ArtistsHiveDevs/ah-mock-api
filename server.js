@@ -5,9 +5,13 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const _ = require("lodash");
 var { validateApiKey } = require("./helpers");
+const User = require("./models/appbase/User");
+
+// Importar la conexión a la base de datos
+require("./db/db");
 
 const SECRET_KEY = "your_secret_key"; // Debes usar una clave secreta segura en producción
-const API_KEY_EXPIRATION = "1h"; // Expiración de la API key, puede ser '1h', '1d', etc.
+const API_KEY_EXPIRATION = "10h"; // Expiración de la API key, puede ser '1h', '1d', etc.
 
 var textConstants = require("./helpers/index");
 var allRouter = require("./operations/domain/all/router");
@@ -36,9 +40,8 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // Ruta para generar una nueva API key
-app.post("/api/generate-key", (req, res) => {
-  const userId = req.body.userId; // Puedes agregar más lógica de autenticación aquí
-  const password = req.body.password; // Puedes agregar más lógica de autenticación aquí
+app.post("/api/generate-key", async (req, res) => {
+  const { userId, password } = req.body;
 
   if (!userId) {
     return res.status(400).send({
@@ -53,32 +56,58 @@ app.post("/api/generate-key", (req, res) => {
     });
   }
 
-  const users = helpers.getEntityData("User");
-  const requestedUser = users.find(
-    (user) => user.username === userId || user.email === userId
-  );
+  // const users = helpers.getEntityData("User");
+  // const requestedUser = users.find(
+  //   (user) => user.username === userId || user.email === userId
+  // );
 
-  if (!requestedUser) {
-    return res.status(404).send({
-      message: "User is not found",
-      errorCode: ErrorCodes.AUTH_USER_NOT_FOUND,
+  // if (!requestedUser) {
+  //   return res.status(404).send({
+  //     message: "User is not found",
+  //     errorCode: ErrorCodes.AUTH_USER_NOT_FOUND,
+  //   });
+  // }
+
+  // if (requestedUser.password !== password) {
+  //   return res.status(404).send({
+  //     message: "Password is incorrect",
+  //     errorCode: ErrorCodes.AUTH_WRONG_PASSWORD,
+  //   });
+  // if (!requestedUser) {
+  //   return res.status(404).send({ message: "User is not found" });
+  // }
+
+  // const authTokenPayload = { id: userId, lalala: "asd3412" };
+
+  // const token = jwt.sign(authTokenPayload, SECRET_KEY, {
+  //   expiresIn: API_KEY_EXPIRATION,
+  // });
+
+  // res.status(200).send({ apiKey: token });
+
+  try {
+    const requestedUser = await User.findOne({
+      $or: [{ username: userId }, { email: userId }],
     });
-  }
 
-  if (requestedUser.password !== password) {
-    return res.status(404).send({
-      message: "Password is incorrect",
-      errorCode: ErrorCodes.AUTH_WRONG_PASSWORD,
+    if (!requestedUser) {
+      return res.status(404).send({ message: "User not found" });
+    }
+
+    // Aquí puedes agregar la lógica para verificar la contraseña (ej. hash comparision)
+    if (requestedUser.password !== password) {
+      return res.status(401).send({ message: "Invalid password" });
+    }
+
+    const authTokenPayload = { id: requestedUser._id };
+    const token = jwt.sign(authTokenPayload, SECRET_KEY, {
+      expiresIn: API_KEY_EXPIRATION,
     });
+
+    res.status(200).send({ apiKey: token });
+  } catch (err) {
+    res.status(500).send({ message: "Server error", error: err.message });
   }
-
-  const authTokenPayload = { id: userId, lalala: "asd3412" };
-
-  const token = jwt.sign(authTokenPayload, SECRET_KEY, {
-    expiresIn: API_KEY_EXPIRATION,
-  });
-
-  res.status(200).send({ apiKey: token });
 });
 
 var routes = [

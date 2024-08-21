@@ -1,11 +1,12 @@
 const jwt = require("jsonwebtoken");
 const { default: ErrorCodes } = require("../constants/errors");
+// const Artist = require("../models/domain/Artist");
 
 const SECRET_KEY = "your_secret_key"; // Debes usar una clave secreta segura en producción
 const API_KEY_EXPIRATION = "1h"; // Expiración de la API key, puede ser '1h', '1d', etc.
 
 // Middleware para validar API key
-function validateApiKey(req, res, next) {
+async function validateApiKey(req, res, next) {
   const token = req.headers["x-api-key"];
   if (!token) {
     return res.status(403).send({
@@ -13,6 +14,28 @@ function validateApiKey(req, res, next) {
       errorCode: ErrorCodes.AUTH_NO_TOKEN_PROVIDED,
     });
   }
+
+  try {
+    const decoded = jwt.verify(token, SECRET_KEY);
+    const user = await User.findById(decoded.id);
+    if (!user) {
+      return res.status(401).send({ message: "Invalid or expired API key." });
+    }
+    req.user = user; // Guardar la información del usuario en el request
+    next();
+  } catch (err) {
+    return res.status(401).send({ message: "Invalid or expired API key." });
+  }
+}
+
+// Middleware para validar API key y autenticar usuario
+function validateAuthenticatedUser(req, res, next) {
+  const token = req.headers["x-api-key"];
+
+  if (!token) {
+    return res.status(403).send({ message: "No API key provided." });
+  }
+
   jwt.verify(token, SECRET_KEY, (err, decoded) => {
     if (err) {
       if (err.name === "TokenExpiredError") {
@@ -33,24 +56,49 @@ function validateApiKey(req, res, next) {
       }
     }
 
-    req.userId = decoded.id;
+    req.userId = decoded.id; // Guarda el ID del usuario en la solicitud
     next();
   });
 }
 
-// Middleware para validar API key
-function validateAuthenticatedUser(req, res, next) {
-  const token = req.headers["x-api-key"];
-  if (token) {
-    jwt.verify(token, SECRET_KEY, (err, decoded) => {
-      if (!err) {
-        req.userId = decoded.id;
-      }
-    });
-  }
-  if (next) {
-    next();
-  }
-}
+// async function validateOwnerRole(req, res, next) {
+//   try {
+//     const artistId = req.params.id; // Obtener el ID del artista desde los parámetros de la ruta
+//     const userId = req.userId; // Suponiendo que el ID del usuario autenticado está en `req.userId`
 
-module.exports = { validateApiKey, validateAuthenticatedUser };
+//     // Buscar el artista en la base de datos
+//     const artist = await Artist.findById(artistId);
+
+//     if (!artist) {
+//       return res.status(404).json({ message: "Artist not found" });
+//     }
+
+//     // Verificar si el usuario tiene el rol de OWNER en el Artist
+//     const ownerRole = artist.roles.find(
+//       (role) =>
+//         role.entityName === "Artist" &&
+//         role.entityRoleMap.some(
+//           (roleMap) =>
+//             roleMap.id === artistId && roleMap.roles.includes("OWNER")
+//         )
+//     );
+
+//     if (!ownerRole) {
+//       return res.status(403).json({
+//         message: "Access denied. You are not the owner of this artist.",
+//       });
+//     }
+
+//     // Si tiene el rol de OWNER, continuar con la siguiente función
+//     next();
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ message: "Server error" });
+//   }
+// }
+
+module.exports = {
+  validateApiKey,
+  validateAuthenticatedUser,
+  // validateOwnerRole,
+};
