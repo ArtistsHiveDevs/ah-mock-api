@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { default: ErrorCodes } = require("../constants/errors");
+const ErrorCodes = require("../constants/errors");
 // const Artist = require("../models/domain/Artist");
 
 const SECRET_KEY = "your_secret_key"; // Debes usar una clave secreta segura en producción

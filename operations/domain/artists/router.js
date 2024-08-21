@@ -1,6 +1,9 @@
 var express = require("express");
+const mongoose = require("mongoose");
 var helpers = require("../../../helpers/index");
 var RoutesConstants = require("./constants/index");
+const Artist = require("../../../models/domain/Artist");
+const User = require("../../../models/appbase/User");
 
 var artistRouter = express.Router({ mergeParams: true });
 
@@ -178,56 +181,294 @@ function filterResultsByQuery(req, result) {
 }
 
 module.exports = [
-  artistRouter.get(RoutesConstants.artistsList, (req, res) => {
+  artistRouter.get(RoutesConstants.artistsList, async (req, res) => {
+    // try {
+    //   let result = filterResultsByQuery(req, helpers.getEntityData("Artist"));
+    //   // result = helpers.hideProperties(result, RoutesConstants.public_fields);
+    //   return res.json(result);
+    // } catch (error) {
+    //   console.log(error);
+    //   return res.status(500).json([]);
+    // }
+    // try {
+    //   const artists = await Artist.find();
+    //   res.status(200).send(artists);
+    // } catch (err) {
+    //   res.status(500).send(err);
+    // }
+    const { page = 1, limit = 10, fields } = req.query;
+
+    const modelFields = RoutesConstants.public_fields.join(",");
+
+    const projection = (modelFields || fields || "")
+      .split(",")
+      .reduce((acc, field) => {
+        acc[field] = 1;
+        return acc;
+      }, {});
+
     try {
-      let result = filterResultsByQuery(req, helpers.getEntityData("Artist"));
-      // result = helpers.hideProperties(result, RoutesConstants.public_fields);
-      return res.json(result);
-    } catch (error) {
-      console.log(error);
-      return res.status(500).json([]);
+      const artists = await Artist.find({})
+        .select(projection)
+        .skip((page - 1) * limit)
+        .limit(Number(limit));
+
+      res.json({
+        data: artists,
+        currentPage: page,
+        totalPages: Math.ceil(artists.length / limit),
+      });
+    } catch (err) {
+      res.status(500).json({ message: err.message });
     }
   }),
 
-  artistRouter.get(RoutesConstants.findArtistById, (req, res) => {
-    const { artistId } = req.params;
-    const searchArtist = helpers.searchResult(
-      helpers.getEntityData("Artist"),
-      artistId,
-      "id"
-    );
+  artistRouter.get(
+    RoutesConstants.findArtistById,
+    helpers.validateAuthenticatedUser,
+    async (req, res) => {
+      // const { artistId } = req.params;
+      // const searchArtist = helpers.searchResult(
+      //   helpers.getEntityData("Artist"),
+      //   artistId,
+      //   "id"
+      // );
 
-    try {
-      return res.json(
-        filterResultsByQuery(req, searchArtist) || {
-          message: helpers.noResultDefaultLabel,
+      // try {
+      //   return res.json(
+      //     filterResultsByQuery(req, searchArtist) || {
+      //       message: helpers.noResultDefaultLabel,
+      //     }
+      //   );
+      // } catch (error) {
+      //   console.log(error);
+
+      //   return res.status(500).json({});
+      // }
+      const { artistId } = req.params;
+      const userId = req.userId;
+
+      if (!artistId) {
+        res
+          .status(404)
+          .json({ message: "Must search an id, username or name" });
+      }
+      try {
+        let query = {};
+
+        if (mongoose.Types.ObjectId.isValid(artistId)) {
+          // Si es un ObjectId válido, busca por _id
+          query._id = artistId; // mongoose.Types.ObjectId(artistId);
+        } else {
+          // Si no es un ObjectId, busca por otros campos
+          query = {
+            $or: [
+              // { shortId: artistId },
+              { username: artistId },
+              { name: artistId },
+            ],
+          };
         }
-      );
-    } catch (error) {
-      console.log(error);
+        const artist = await Artist.findOne(query);
 
-      return res.status(500).json({});
+        if (!artist) {
+          return res.status(404).json({ message: "Artist not found" });
+        }
+
+        // Definir los campos visibles según el rol del usuario
+        let visibleAttributes = !req.userId
+          ? RoutesConstants.public_fields
+          : RoutesConstants.authenticated_fields; // Atributos públicos por defecto
+
+        const currentUser = await User.findById(req.userId);
+
+        const roleAsArtist = currentUser.roles.find(
+          (role) =>
+            role.entityName === "Artist" &&
+            role.entityRoleMap.some((entityRole) => {
+              // Verifica si entityRole.id es un ObjectId válido
+              if (mongoose.Types.ObjectId.isValid(entityRole.id)) {
+                // Compara si los ObjectIds son iguales
+                return new mongoose.Types.ObjectId(entityRole.id).equals(
+                  artist._id
+                );
+              } else {
+                // Compara como strings si no es un ObjectId válido
+                return entityRole.id === artist._id.toString();
+              }
+            })
+        );
+
+        if (roleAsArtist) {
+          const roleMap = roleAsArtist.entityRoleMap;
+          const rolesInArtist = roleMap.find((artistPermissions) => {
+            if (mongoose.Types.ObjectId.isValid(artistPermissions.id)) {
+              // Compara si los ObjectIds son iguales
+              return new mongoose.Types.ObjectId(artistPermissions.id).equals(
+                artist._id
+              );
+            } else {
+              // Compara como strings si no es un ObjectId válido
+              return artistPermissions.id === artist._id.toString();
+            }
+            return false;
+          });
+
+          if ((rolesInArtist || []).roles.includes("OWNER")) {
+            visibleAttributes = [
+              ...visibleAttributes,
+              // "email",
+              // "phone_number",
+              // "address",
+            ]; // Ejemplo de campos adicionales para OWNER
+          } else if (roleAsArtist.roles.includes("PHOTOGRAPHER")) {
+            visibleAttributes = [...visibleAttributes, "photo", "description"];
+          }
+        }
+
+        const artistData = visibleAttributes.reduce((acc, field) => {
+          acc[field] = artist[field];
+          return acc;
+        }, {});
+
+        res.json(artistData);
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: err.message });
+      }
     }
+  ),
+
+  // Crear Artista
+  artistRouter.post(
+    RoutesConstants.create,
+    helpers.validateAuthenticatedUser,
+    async (req, res) => {
+      try {
+        const info = { ...req.body };
+
+        info.entityRoleMap = [
+          {
+            role: "OWNER",
+            ids: [new mongoose.Types.ObjectId(req.userId)],
+          },
+        ];
+
+        const newArtist = new Artist(info);
+        await newArtist.save();
+
+        const ownerUser = await User.findById(req.userId);
+        const ownerRoles = (ownerUser.roles || []).find(
+          (role) => role.entityName === "Artist"
+        ) || { entityName: "Artist", entityRoleMap: [] };
+        let bandInfo = (ownerRoles.entityRoleMap || []).find(
+          (band) => band.id === newArtist._id
+        );
+        if (!bandInfo) {
+          bandInfo = {
+            id: newArtist._id,
+            profile_pic: newArtist.profile_pic,
+            name: newArtist.name,
+            subtitle: newArtist.subtitle,
+            verified_status: newArtist.verified_status,
+            roles: ["OWNER"],
+          };
+          ownerRoles.entityRoleMap.push(bandInfo);
+        }
+
+        bandInfo.roles.push("OWNER");
+        ownerUser.save();
+
+        res.status(201).send(newArtist);
+      } catch (err) {
+        res.status(400).send(err);
+      }
+
+      // try {
+      //   const info = { ...req.body };
+      //   info.entityRoleMap = [
+      //     {
+      //       id: req.userId,
+      //       roles: ["OWNER"],
+      //     },
+      //   ];
+
+      //   console.log("LOG 1", info);
+      //   const user = new Artist(info);
+      //   console.log("LOG 2");
+      //   await user.save();
+      //   console.log("LOG 3");
+      //   res.status(201).send(user);
+      //   console.log("LOG 4");
+      // } catch (err) {
+      //   console.log("LOG 5", err);
+      //   console.error(err);
+      //   if (!res.headersSent) {
+      //     // Asegúrate de que los encabezados no se hayan enviado
+      //     res.status(400).send(err);
+      //   }
+      // }
+    }
+  ),
+
+  artistRouter.put(RoutesConstants.updateById, async (req, res) => {
+    const { identifier } = req.params;
+
+    try {
+      const artist = await Artist.findOneAndUpdate(
+        {
+          $or: [
+            { id: identifier },
+            { shortId: identifier },
+            { username: identifier },
+          ],
+        },
+        req.body,
+        { new: true } // Retorna el documento actualizado
+      );
+
+      if (!artist) {
+        return res.status(404).json({ message: "Artist not found" });
+      }
+
+      res.json(artist);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+
+    // const items = helpers.getEntityData("Artist");
+    // return res
+    //   .status(200)
+    //   .json(items[Math.round(Math.random() * items.length)]);
   }),
 
-  artistRouter.post(RoutesConstants.create, (req, res) => {
-    const items = helpers.getEntityData("Artist");
-    return res
-      .status(200)
-      .json(items[Math.round(Math.random() * items.length)]);
-  }),
+  artistRouter.delete(RoutesConstants.deleteById, async (req, res) => {
+    //   const items = helpers.getEntityData("Artist");
+    //   return res
+    //     .status(200)
+    //     .json(items[Math.round(Math.random() * items.length)]);
+    const { identifier } = req.params;
 
-  artistRouter.put(RoutesConstants.updateById, (req, res) => {
-    const items = helpers.getEntityData("Artist");
-    return res
-      .status(200)
-      .json(items[Math.round(Math.random() * items.length)]);
-  }),
+    try {
+      const artist = await Artist.findOneAndDelete(
+        {
+          $or: [
+            { id: identifier },
+            { shortId: identifier },
+            { username: identifier },
+          ],
+        },
+        req.body,
+        { new: true } // Retorna el documento actualizado
+      );
 
-  artistRouter.delete(RoutesConstants.deleteById, (req, res) => {
-    const items = helpers.getEntityData("Artist");
-    return res
-      .status(200)
-      .json(items[Math.round(Math.random() * items.length)]);
+      if (!artist) {
+        return res.status(404).json({ message: "Artist not found" });
+      }
+
+      res.json(artist);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
   }),
 ];
