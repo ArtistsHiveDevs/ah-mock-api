@@ -4,6 +4,7 @@ var helpers = require("../../../helpers/index");
 var RoutesConstants = require("./constants/index");
 const Artist = require("../../../models/domain/Artist");
 const User = require("../../../models/appbase/User");
+const ErrorCodes = require("../../../constants/errors");
 
 var artistRouter = express.Router({ mergeParams: true });
 
@@ -196,7 +197,7 @@ module.exports = [
     // } catch (err) {
     //   res.status(500).send(err);
     // }
-    const { page = 1, limit = 10, fields } = req.query;
+    const { page = 1, limit = 50, fields } = req.query;
 
     const modelFields = RoutesConstants.public_fields.join(",");
 
@@ -269,18 +270,18 @@ module.exports = [
             ],
           };
         }
-        const artist = await Artist.findOne(query);
+        const artistInfo = await Artist.findOne(query);
 
-        if (!artist) {
+        if (!artistInfo) {
           return res.status(404).json({ message: "Artist not found" });
         }
 
         // Definir los campos visibles según el rol del usuario
-        let visibleAttributes = !req.userId
+        let visibleAttributes = !userId
           ? RoutesConstants.public_fields
           : RoutesConstants.authenticated_fields; // Atributos públicos por defecto
 
-        const currentUser = await User.findById(req.userId);
+        const currentUser = await User.findById(userId);
 
         const roleAsArtist = currentUser.roles.find(
           (role) =>
@@ -290,48 +291,54 @@ module.exports = [
               if (mongoose.Types.ObjectId.isValid(entityRole.id)) {
                 // Compara si los ObjectIds son iguales
                 return new mongoose.Types.ObjectId(entityRole.id).equals(
-                  artist._id
+                  artistInfo._id
                 );
               } else {
                 // Compara como strings si no es un ObjectId válido
-                return entityRole.id === artist._id.toString();
+                return entityRole.id === artistInfo._id.toString();
               }
             })
         );
 
+        let currentUserIsOwner = false;
         if (roleAsArtist) {
-          const roleMap = roleAsArtist.entityRoleMap;
-          const rolesInArtist = roleMap.find((artistPermissions) => {
-            if (mongoose.Types.ObjectId.isValid(artistPermissions.id)) {
-              // Compara si los ObjectIds son iguales
-              return new mongoose.Types.ObjectId(artistPermissions.id).equals(
-                artist._id
-              );
-            } else {
-              // Compara como strings si no es un ObjectId válido
-              return artistPermissions.id === artist._id.toString();
+          const roleMapInAllArtists = roleAsArtist.entityRoleMap;
+          const rolesInArtist = roleMapInAllArtists.find(
+            (artistPermissions) => {
+              if (mongoose.Types.ObjectId.isValid(artistPermissions.id)) {
+                // Compara si los ObjectIds son iguales
+                return new mongoose.Types.ObjectId(artistPermissions.id).equals(
+                  artistInfo._id
+                );
+              } else {
+                // Compara como strings si no es un ObjectId válido
+                return artistPermissions.id === artistInfo._id.toString();
+              }
             }
-            return false;
-          });
+          );
 
-          if ((rolesInArtist || []).roles.includes("OWNER")) {
+          if ((rolesInArtist?.roles || []).includes("OWNER")) {
+            currentUserIsOwner = true;
             visibleAttributes = [
               ...visibleAttributes,
               // "email",
               // "phone_number",
               // "address",
             ]; // Ejemplo de campos adicionales para OWNER
-          } else if (roleAsArtist.roles.includes("PHOTOGRAPHER")) {
+          } else if ((rolesInArtist?.roles || []).includes("PHOTOGRAPHER")) {
             visibleAttributes = [...visibleAttributes, "photo", "description"];
           }
         }
+        if (!currentUserIsOwner) {
+          let reducedArtistData = visibleAttributes.reduce((acc, field) => {
+            acc[field] = artistInfo[field];
+            return acc;
+          }, {});
 
-        const artistData = visibleAttributes.reduce((acc, field) => {
-          acc[field] = artist[field];
-          return acc;
-        }, {});
-
-        res.json(artistData);
+          res.json(reducedArtistData);
+        } else {
+          res.json(artistInfo);
+        }
       } catch (err) {
         console.error(err);
         res.status(500).json({ message: err.message });
@@ -358,9 +365,14 @@ module.exports = [
         await newArtist.save();
 
         const ownerUser = await User.findById(req.userId);
-        const ownerRoles = (ownerUser.roles || []).find(
+        let ownerRoles = (ownerUser.roles || []).find(
           (role) => role.entityName === "Artist"
-        ) || { entityName: "Artist", entityRoleMap: [] };
+        );
+        if (!ownerRoles) {
+          ownerUser.roles.push({ entityName: "Artist", entityRoleMap: [] });
+          ownerRoles = ownerUser.roles[ownerUser.roles.length - 1];
+        }
+
         let bandInfo = (ownerRoles.entityRoleMap || []).find(
           (band) => band.id === newArtist._id
         );
@@ -377,6 +389,7 @@ module.exports = [
         }
 
         bandInfo.roles.push("OWNER");
+
         ownerUser.save();
 
         res.status(201).send(newArtist);
@@ -411,36 +424,106 @@ module.exports = [
     }
   ),
 
-  artistRouter.put(RoutesConstants.updateById, async (req, res) => {
-    const { identifier } = req.params;
+  artistRouter.put(
+    RoutesConstants.updateById,
+    helpers.validateAuthenticatedUser,
+    async (req, res) => {
+      const { id: searchValue } = req.params;
+      const userId = req.userId;
 
-    try {
-      const artist = await Artist.findOneAndUpdate(
-        {
+      try {
+        // let query = {};
+
+        // if (mongoose.Types.ObjectId.isValid(artistId)) {
+        //   // Si es un ObjectId válido, busca por _id
+        //   query._id = artistId; // mongoose.Types.ObjectId(artistId);
+        // } else {
+        //   // Si no es un ObjectId, busca por otros campos
+        //   query = {
+        //     $or: [
+        //       // { shortId: artistId },
+        //       { username: artistId },
+        //       { name: artistId },
+        //     ],
+        //   };
+        // }
+        // const artist = await Artist.findOneAndUpdate(
+        //   query,
+        //   req.body,
+        //   { new: true } // Retorna el documento actualizado
+        // );
+
+        // if (!artist) {
+        //   return res.status(404).json({ message: "Artist not found" });
+        // }
+
+        // res.json(artist);
+
+        // Primero, intentamos encontrar el documento basado en el searchValue
+        const artist = await Artist.findOne({
           $or: [
-            { id: identifier },
-            { shortId: identifier },
-            { username: identifier },
-          ],
-        },
-        req.body,
-        { new: true } // Retorna el documento actualizado
-      );
+            mongoose.Types.ObjectId.isValid(searchValue)
+              ? { _id: searchValue }
+              : null,
+            { username: searchValue },
+            { name: searchValue },
+          ].filter(Boolean), // Filtra valores nulos si el cast a ObjectId no es válido
+        });
 
-      if (!artist) {
-        return res.status(404).json({ message: "Artist not found" });
+        if (!artist) {
+          // Caso 1: El documento no se encontró
+          console.log("El artista no fue encontrado.");
+          res.status(404).json({
+            message: `Artista '${searchValue}' no fue encontrado`,
+            errorCode: ErrorCodes.CONTENT_NOT_FOUND,
+          });
+        } else {
+          // Caso 2: El documento fue encontrado, ahora verificamos el userId en los roles
+          const hasRole = artist.entityRoleMap.some(
+            (role) =>
+              ["OWNER", "ADMIN"].includes(role.role) &&
+              role.ids.includes(userId)
+          );
+
+          if (hasRole) {
+            // Si el userId coincide con OWNER o ADMIN, hacemos la actualización
+            const updatedArtist = await Artist.findOneAndUpdate(
+              {
+                _id: artist._id,
+                entityRoleMap: {
+                  $elemMatch: {
+                    role: { $in: ["OWNER", "ADMIN"] },
+                    ids: userId,
+                  },
+                },
+              },
+              {
+                $set: {
+                  instagram: `INSTAGRAM CAMBIADOOOOO   ${new Date().toLocaleTimeString()}`,
+                },
+              }, // Ejemplo: Actualizar el campo verified_status a 1
+              { new: true }
+            );
+
+            return res.status(201).send(updatedArtist);
+          } else {
+            // Caso 3: El userId no tiene los roles OWNER o ADMIN
+            res.status(401).json({
+              message: "Unauthorized user",
+              errorCode: ErrorCodes.AUTH_PERMISSION_DENIED,
+            });
+          }
+        }
+      } catch (err) {
+        res.status(500).json({ message: err.message });
       }
 
-      res.json(artist);
-    } catch (err) {
-      res.status(500).json({ message: err.message });
+      // const items = helpers.getEntityData("Artist");
+      // return res
+      //   .status(200)
+      //   .json(items[Math.round(Math.random() * items.length)]);
     }
-
-    // const items = helpers.getEntityData("Artist");
-    // return res
-    //   .status(200)
-    //   .json(items[Math.round(Math.random() * items.length)]);
-  }),
+  ),
 
   artistRouter.delete(RoutesConstants.deleteById, async (req, res) => {
     //   const items = helpers.getEntityData("Artist");

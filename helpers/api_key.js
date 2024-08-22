@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken");
 const ErrorCodes = require("../constants/errors");
+const mongoose = require("mongoose");
+const User = require("../models/appbase/User");
 // const Artist = require("../models/domain/Artist");
 
 const SECRET_KEY = "your_secret_key"; // Debes usar una clave secreta segura en producción
@@ -17,9 +19,13 @@ async function validateApiKey(req, res, next) {
 
   try {
     const decoded = jwt.verify(token, SECRET_KEY);
+
     const user = await User.findById(decoded.id);
+
     if (!user) {
-      return res.status(401).send({ message: "Invalid or expired API key." });
+      return res
+        .status(401)
+        .send({ message: "Invalid user or expired API key." });
     }
     req.user = user; // Guardar la información del usuario en el request
     next();
@@ -57,7 +63,9 @@ function validateAuthenticatedUser(req, res, next) {
     }
 
     req.userId = decoded.id; // Guarda el ID del usuario en la solicitud
-    next();
+    if (next) {
+      next();
+    }
   });
 }
 
