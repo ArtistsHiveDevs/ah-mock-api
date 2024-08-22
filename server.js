@@ -134,20 +134,14 @@ var routes = [
 routes.forEach((route) => app.use(route.path, route.route));
 
 app.get("/me", validateApiKey, (req, res) => {
-  const users = helpers.getEntityData("User");
-
-  const requestedUser = users.find(
-    (user) => user.username === req.userId || user.email === req.userId
-  );
-
-  if (!requestedUser) {
+  if (!req.user) {
     return res.status(404).send({
       message: "User is not found",
       errorCode: ErrorCodes.AUTH_USER_NOT_FOUND,
     });
   }
 
-  res.status(200).send(requestedUser);
+  res.status(200).send(req.user);
 });
 
 // Ruta protegida
