@@ -1,6 +1,9 @@
 var express = require("express");
 var helpers = require("../../../helpers/index");
 var RoutesConstants = require("./constants/index");
+const {
+  createPaginatedDataResponse,
+} = require("../../../helpers/apiHelperFunctions");
 var router = express.Router({ mergeParams: true });
 
 // Data import
@@ -133,13 +136,13 @@ function filterResultsByQuery(req, result) {
 
 module.exports = [
   router.get(RoutesConstants.eventList, (req, res) => {
-    helpers.validateAuthenticatedUser(req, res);
+    // helpers.validateAuthenticatedUser(req, res);
     let result = helpers.getEntityData("Place");
     try {
       result = filterResultsByQuery(req, result);
       // result = helpers.hideProperties(result, RoutesConstants.public_fields);
 
-      return res.json(result);
+      return res.json(createPaginatedDataResponse(result));
     } catch (error) {
       console.error(error);
 
@@ -169,9 +172,11 @@ module.exports = [
       }
       try {
         return res.json(
-          response || {
-            message: helpers.noResultDefaultLabel,
-          }
+          createPaginatedDataResponse(
+            response || {
+              message: helpers.noResultDefaultLabel,
+            }
+          )
         );
       } catch (error) {
         console.error(error);
@@ -185,20 +190,32 @@ module.exports = [
     const items = helpers.getEntityData("Place");
     return res
       .status(200)
-      .json(items[Math.round(Math.random() * items.length)]);
+      .json(
+        createPaginatedDataResponse(
+          items[Math.round(Math.random() * items.length)]
+        )
+      );
   }),
 
   router.put(RoutesConstants.updateById, (req, res) => {
     const items = helpers.getEntityData("Place");
     return res
       .status(200)
-      .json(items[Math.round(Math.random() * items.length)]);
+      .json(
+        createPaginatedDataResponse(
+          items[Math.round(Math.random() * items.length)]
+        )
+      );
   }),
 
   router.delete(RoutesConstants.deleteById, (req, res) => {
     const items = helpers.getEntityData("Place");
     return res
       .status(200)
-      .json(items[Math.round(Math.random() * items.length)]);
+      .json(
+        createPaginatedDataResponse(
+          items[Math.round(Math.random() * items.length)]
+        )
+      );
   }),
 ];

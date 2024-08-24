@@ -4,6 +4,9 @@ var helpers = require("../../../helpers/index");
 var RoutesConstants = require("./constants/index");
 const { public_fields: ArtistPublicFields } = require("../artists/constants");
 const { public_fields: PlacePublicFields } = require("../places/constants");
+const {
+  createPaginatedDataResponse,
+} = require("../../../helpers/apiHelperFunctions");
 
 var eventsRouter = express.Router({ mergeParams: true });
 
@@ -191,7 +194,7 @@ module.exports = [
 
       // sorted = helpers.hideProperties(sorted, RoutesConstants.public_fields);
 
-      return res.json(sorted);
+      return res.json(createPaginatedDataResponse(sorted));
     } catch (error) {
       console.error(error);
       return res.status(500).json([]);
@@ -208,9 +211,11 @@ module.exports = [
     try {
       const filled = fillRelationships(searchEvent);
       return res.json(
-        filled || {
-          message: helpers.noResultDefaultLabel,
-        }
+        createPaginatedDataResponse(
+          filled || {
+            message: helpers.noResultDefaultLabel,
+          }
+        )
       );
     } catch (error) {
       console.error(error);
@@ -223,20 +228,32 @@ module.exports = [
     const items = helpers.getEntityData("Event");
     return res
       .status(200)
-      .json(items[Math.round(Math.random() * items.length)]);
+      .json(
+        createPaginatedDataResponse(
+          items[Math.round(Math.random() * items.length)]
+        )
+      );
   }),
 
   eventsRouter.put(RoutesConstants.updateById, (req, res) => {
     const items = helpers.getEntityData("Event");
     return res
       .status(200)
-      .json(items[Math.round(Math.random() * items.length)]);
+      .json(
+        createPaginatedDataResponse(
+          items[Math.round(Math.random() * items.length)]
+        )
+      );
   }),
 
   eventsRouter.delete(RoutesConstants.deleteById, (req, res) => {
     const items = helpers.getEntityData("Event");
     return res
       .status(200)
-      .json(items[Math.round(Math.random() * items.length)]);
+      .json(
+        createPaginatedDataResponse(
+          items[Math.round(Math.random() * items.length)]
+        )
+      );
   }),
 ];

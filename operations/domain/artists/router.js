@@ -5,6 +5,9 @@ var RoutesConstants = require("./constants/index");
 const Artist = require("../../../models/domain/Artist");
 const User = require("../../../models/appbase/User");
 const ErrorCodes = require("../../../constants/errors");
+const {
+  createPaginatedDataResponse,
+} = require("../../../helpers/apiHelperFunctions");
 
 var artistRouter = express.Router({ mergeParams: true });
 
@@ -214,11 +217,13 @@ module.exports = [
         .skip((page - 1) * limit)
         .limit(Number(limit));
 
-      res.json({
-        data: artists,
-        currentPage: page,
-        totalPages: Math.ceil(artists.length / limit),
-      });
+      res.json(
+        createPaginatedDataResponse(
+          artists,
+          page,
+          Math.ceil(artists.length / limit)
+        )
+      );
     } catch (err) {
       res.status(500).json({ message: err.message });
     }
@@ -283,7 +288,7 @@ module.exports = [
 
         const currentUser = await User.findById(userId);
 
-        const roleAsArtist = currentUser.roles.find(
+        const roleAsArtist = currentUser?.roles.find(
           (role) =>
             role.entityName === "Artist" &&
             role.entityRoleMap.some((entityRole) => {
@@ -335,9 +340,9 @@ module.exports = [
             return acc;
           }, {});
 
-          res.json(reducedArtistData);
+          res.json(createPaginatedDataResponse(reducedArtistData));
         } else {
-          res.json(artistInfo);
+          res.json(createPaginatedDataResponse(artistInfo));
         }
       } catch (err) {
         console.error(err);
@@ -381,6 +386,7 @@ module.exports = [
             id: newArtist._id,
             profile_pic: newArtist.profile_pic,
             name: newArtist.name,
+            username: newArtist.username,
             subtitle: newArtist.subtitle,
             verified_status: newArtist.verified_status,
             roles: ["OWNER"],
@@ -392,7 +398,7 @@ module.exports = [
 
         ownerUser.save();
 
-        res.status(201).send(newArtist);
+        res.status(201).send(createPaginatedDataResponse(newArtist));
       } catch (err) {
         res.status(400).send(err);
       }
@@ -505,7 +511,9 @@ module.exports = [
               { new: true }
             );
 
-            return res.status(201).send(updatedArtist);
+            return res
+              .status(201)
+              .send(createPaginatedDataResponse(updatedArtist));
           } else {
             // Caso 3: El userId no tiene los roles OWNER o ADMIN
             res.status(401).json({
@@ -549,7 +557,7 @@ module.exports = [
         return res.status(404).json({ message: "Artist not found" });
       }
 
-      res.json(artist);
+      res.json(createPaginatedDataResponse(artist));
     } catch (err) {
       res.status(500).json({ message: err.message });
     }
