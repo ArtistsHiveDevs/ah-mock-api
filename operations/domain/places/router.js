@@ -152,7 +152,7 @@ module.exports = [
 
   router.get(
     RoutesConstants.findEventById,
-    helpers.validateAuthenticatedUser,
+    // helpers.validateAuthenticatedUser,
     (req, res) => {
       const { eventId: placeId } = req.params;
       const searchPlace = helpers.searchResult(

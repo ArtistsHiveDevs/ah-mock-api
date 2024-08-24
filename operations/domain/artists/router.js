@@ -231,7 +231,7 @@ module.exports = [
 
   artistRouter.get(
     RoutesConstants.findArtistById,
-    helpers.validateAuthenticatedUser,
+    // helpers.validateAuthenticatedUser,
     async (req, res) => {
       // const { artistId } = req.params;
       // const searchArtist = helpers.searchResult(
@@ -282,9 +282,10 @@ module.exports = [
         }
 
         // Definir los campos visibles según el rol del usuario
-        let visibleAttributes = !userId
-          ? RoutesConstants.public_fields
-          : RoutesConstants.authenticated_fields; // Atributos públicos por defecto
+        // let visibleAttributes = !userId
+        //   ? RoutesConstants.public_fields
+        //   : RoutesConstants.authenticated_fields; // Atributos públicos por defecto
+        let visibleAttributes = RoutesConstants.authenticated_fields;
 
         const currentUser = await User.findById(userId);
 
