@@ -1,6 +1,9 @@
 var express = require("express");
 var helpers = require("../../../helpers/index");
 var RoutesConstants = require("./constants/index");
+const {
+  createPaginatedDataResponse,
+} = require("../../../helpers/apiHelperFunctions");
 var router = express.Router({ mergeParams: true });
 
 // Data import
@@ -93,7 +96,7 @@ module.exports = [
   router.get(RoutesConstants.eventList, (req, res) => {
     let result = helpers.getEntityData("Rider");
     try {
-      return res.json(result);
+      return res.json(createPaginatedDataResponse(result));
     } catch (error) {
       console.error(error);
 
@@ -110,9 +113,11 @@ module.exports = [
     );
     try {
       return res.json(
-        searchRider || {
-          message: helpers.noResultDefaultLabel,
-        }
+        createPaginatedDataResponse(
+          searchRider || {
+            message: helpers.noResultDefaultLabel,
+          }
+        )
       );
     } catch (error) {
       console.error(error);

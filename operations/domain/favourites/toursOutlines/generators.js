@@ -146,7 +146,7 @@ module.exports = {
     return mockGenerator();
   },
   generateTourOutline(tourId) {
-    const tourNumber = tourId.slice(-1);
+    const tourNumber = 3;
     const listaTours = mockGenerator(tourNumber);
     return listaTours[tourNumber - 1];
   },
