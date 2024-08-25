@@ -438,6 +438,8 @@ module.exports = [
       const { id: searchValue } = req.params;
       const userId = req.userId;
 
+      const newInfo = { ...req.body };
+
       try {
         // let query = {};
 
@@ -506,7 +508,8 @@ module.exports = [
               },
               {
                 $set: {
-                  instagram: `INSTAGRAM CAMBIADOOOOO   ${new Date().toLocaleTimeString()}`,
+                  //instagram: `INSTAGRAM CAMBIADOOOOO   ${new Date().toLocaleTimeString()}`,
+                  ...newInfo,
                 },
               }, // Ejemplo: Actualizar el campo verified_status a 1
               { new: true }
