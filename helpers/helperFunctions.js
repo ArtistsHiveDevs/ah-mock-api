@@ -1,3 +1,12 @@
+const userRoleMapFields = [
+  "id",
+  "profile_pic",
+  "name",
+  "username",
+  "subtitle",
+  "verified_status",
+  "roles",
+];
 module.exports = {
   removeStringAccents: function (string) {
     return string.replace(/[^A-Za-z0-9\[\] ]/g, function (a) {
@@ -395,5 +404,32 @@ module.exports = {
         return acc;
       }, {})
     );
+  },
+  userRoleMapFields,
+  hasToUpdateUserRoleMap(updateInfo) {
+    return Object.keys(updateInfo).some((updateKey) =>
+      userRoleMapFields.includes(updateKey)
+    );
+  },
+  flattenObject(obj, parentPath = "") {
+    const updateFields = {};
+    for (const key in obj) {
+      const path = parentPath ? `${parentPath}.${key}` : key;
+
+      if (
+        typeof obj[key] === "object" &&
+        !Array.isArray(obj[key]) &&
+        obj[key] !== null
+      ) {
+        // Verifica si el objeto intermedio existe y si no, lo crea
+        if (!updateFields[path]) {
+          updateFields[path] = {};
+        }
+        flattenObject(obj[key], path);
+      } else {
+        updateFields[path] = obj[key];
+      }
+    }
+    return updateFields;
   },
 };

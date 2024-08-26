@@ -7,6 +7,9 @@ const User = require("../../../models/appbase/User");
 const {
   generateTourOutlines,
 } = require("../favourites/toursOutlines/generators");
+const {
+  createPaginatedDataResponse,
+} = require("../../../helpers/apiHelperFunctions");
 
 var userRouter = express.Router({ mergeParams: true });
 
@@ -214,11 +217,51 @@ module.exports = [
     }
   }),
 
-  userRouter.put(RoutesConstants.updateById, (req, res) => {
-    const items = helpers.getEntityData("User");
-    return res
-      .status(200)
-      .json(items[Math.round(Math.random() * items.length)]);
+  userRouter.put(RoutesConstants.updateById, async (req, res) => {
+    const { id: searchValue } = req.params;
+    const userId = searchValue;
+
+    const newInfo = { ...req.body };
+
+    try {
+      // Generar el objeto de actualización
+      const updateFields = helpers.flattenObject(newInfo);
+
+      let query = {};
+
+      if (mongoose.Types.ObjectId.isValid(userId)) {
+        // Si es un ObjectId válido, busca por _id
+        query._id = userId; // mongoose.Types.ObjectId(userId);
+      } else {
+        // Si no es un ObjectId, busca por otros campos
+        query = {
+          $or: [
+            // { shortId: userId },
+            { username: userId },
+            { name: userId },
+          ],
+        };
+      }
+
+      // Realizar la consulta de actualización con $set
+      const updatedUser = await User.findByIdAndUpdate(
+        query,
+        {
+          $set: updateFields,
+        },
+        { new: true } // Retorna el documento actualizado
+      );
+
+      // Verifica si el usuario fue encontrado y actualizado
+      if (!updatedUser) {
+        throw new Error("Usuario no encontrado.");
+      }
+
+      return res.status(200).json(createPaginatedDataResponse(updatedUser));
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: err.message });
+    }
   }),
 
   userRouter.delete(RoutesConstants.deleteById, (req, res) => {

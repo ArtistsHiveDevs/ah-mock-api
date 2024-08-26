@@ -508,13 +508,57 @@ module.exports = [
               },
               {
                 $set: {
-                  //instagram: `INSTAGRAM CAMBIADOOOOO   ${new Date().toLocaleTimeString()}`,
                   ...newInfo,
                 },
               }, // Ejemplo: Actualizar el campo verified_status a 1
               { new: true }
             );
 
+            if (helpers.hasToUpdateUserRoleMap(newInfo)) {
+              const roleMapNewInfo = helpers.userRoleMapFields.reduce(
+                (result, key) => {
+                  if (newInfo.hasOwnProperty(key)) {
+                    result[key] = newInfo[key];
+                  }
+                  return result;
+                },
+                {}
+              );
+
+              updatedArtist.entityRoleMap?.forEach((role) =>
+                role.ids.forEach(async (relatedId) => {
+                  const entityName = "Artist"; // El nombre de la entidad cuyo rol deseas actualizar
+                  const entityRoleMapId = updatedArtist._id; // El ID dentro del entityRoleMap que deseas actualizar
+
+                  // Construye el objeto de actualización dinámicamente
+                  const updateFields = {};
+                  Object.keys(roleMapNewInfo).forEach((key) => {
+                    updateFields[
+                      `roles.$[roleElement].entityRoleMap.$[mapElement].${key}`
+                    ] = roleMapNewInfo[key];
+                  });
+
+                  // Realizar la consulta de actualización solo para los campos presentes
+                  const roleMapUpdateResult = await User.findOneAndUpdate(
+                    {
+                      _id: new mongoose.Types.ObjectId(userId),
+                      "roles.entityName": entityName,
+                      "roles.entityRoleMap.id": entityRoleMapId,
+                    },
+                    {
+                      $set: updateFields, // Aplica solo los campos presentes en updateData
+                    },
+                    {
+                      arrayFilters: [
+                        { "roleElement.entityName": entityName },
+                        { "mapElement.id": entityRoleMapId },
+                      ],
+                      new: true,
+                    }
+                  );
+                })
+              );
+            }
             return res
               .status(201)
               .send(createPaginatedDataResponse(updatedArtist));
