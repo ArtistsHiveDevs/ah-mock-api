@@ -425,7 +425,7 @@ module.exports = {
         if (!updateFields[path]) {
           updateFields[path] = {};
         }
-        flattenObject(obj[key], path);
+        this.flattenObject(obj[key], path);
       } else {
         updateFields[path] = obj[key];
       }

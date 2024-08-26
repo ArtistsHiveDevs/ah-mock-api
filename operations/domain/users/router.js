@@ -244,7 +244,7 @@ module.exports = [
       }
 
       // Realizar la consulta de actualización con $set
-      const updatedUser = await User.findByIdAndUpdate(
+      const updatedUser = await User.findOneAndUpdate(
         query,
         {
           $set: updateFields,
