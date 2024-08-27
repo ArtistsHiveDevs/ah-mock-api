@@ -8,6 +8,27 @@ const userRoleMapFields = [
   "roles",
 ];
 module.exports = {
+  sleep: function (ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  },
+  convertMillis: function (milliseconds) {
+    if (milliseconds < 1000) {
+      return `${milliseconds} ms`;
+    }
+
+    const seconds = (milliseconds / 1000).toFixed(2);
+    if (seconds < 60) {
+      return `${seconds} s`;
+    }
+
+    const minutes = (seconds / 60).toFixed(2);
+    if (minutes < 60) {
+      return `${minutes} min`;
+    }
+
+    const hours = (minutes / 60).toFixed(2);
+    return `${hours} hr`;
+  },
   removeStringAccents: function (string) {
     return string.replace(/[^A-Za-z0-9\[\] ]/g, function (a) {
       const { StringAccentsMap } = require("./stringAccentsMap");
@@ -274,7 +295,7 @@ module.exports = {
     });
   },
 
-  getEntityData(entityName) {
+  getEntityData(entityName, randomize = true) {
     let response = [];
     const fs = require("fs");
 
@@ -371,8 +392,9 @@ module.exports = {
     } else if (entityName === "RehearsalRoom") {
       response = [...rehearsalRooms];
     }
-
-    this.shuffle(response);
+    if (randomize) {
+      this.shuffle(response);
+    }
     return response;
   },
   paginate(array, current_page = 1, page_size = 5) {
@@ -395,8 +417,8 @@ module.exports = {
       ];
     }
   },
-  hideProperties(array, properties) {
-    return array.map((element) =>
+  hideProperties(arrayObjects, properties) {
+    return arrayObjects.map((element) =>
       properties.reduce((acc, prop) => {
         if (element.hasOwnProperty(prop)) {
           acc[prop] = element[prop];

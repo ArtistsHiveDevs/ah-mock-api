@@ -8,7 +8,8 @@ var { validateApiKey } = require("./helpers");
 const User = require("./models/appbase/User");
 
 // Importar la conexión a la base de datos
-require("./db/db");
+const connectToDatabase = require("./db/db");
+connectToDatabase();
 
 const SECRET_KEY = "your_secret_key"; // Debes usar una clave secreta segura en producción
 const API_KEY_EXPIRATION = "10h"; // Expiración de la API key, puede ser '1h', '1d', etc.
@@ -32,6 +33,9 @@ var termsAndConditionsRouter = require("./operations/app/policies/termsAndCondit
 var privacyRouter = require("./operations/app/policies/privacyPolicy/router");
 const helpers = require("./helpers");
 const ErrorCodes = require("./constants/errors");
+const createCRUDRoutes = require("./helpers/crud-routes");
+const Place = require("./models/domain/Place.schema");
+const Event = require("./models/domain/Event.schema");
 
 var app = express();
 var port = process.env.PORT || 3000;
@@ -116,9 +120,10 @@ var routes = [
   { path: "/artists", route: artistRouter },
   { path: "/cities", route: citiesRouter },
   { path: "/countries", route: countriesRouter },
-  { path: "/events", route: eventsRouter },
+  { path: "/events", route: createCRUDRoutes(Event, "Event") },
   { path: "/instruments", route: instrumentsRouter },
-  { path: "/places", route: placesRouter },
+  // { path: "/places", route: placesRouter },
+  { path: "/places", route: createCRUDRoutes(Place, "Place") },
   { path: "/rehearsal_rooms", route: rehearsalRoomsRouter },
   { path: "/industryOffer", route: industryOfferRouter },
   { path: "/riders", route: ridersRouter },

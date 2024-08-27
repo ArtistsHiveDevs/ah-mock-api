@@ -10,6 +10,7 @@ const {
 const {
   createPaginatedDataResponse,
 } = require("../../../helpers/apiHelperFunctions");
+const routesConstants = require("./constants/routes.constants");
 
 var userRouter = express.Router({ mergeParams: true });
 
@@ -176,16 +177,16 @@ module.exports = [
       //   "id"
       // );
 
-      let visibleAttributes = RoutesConstants.authenticated_fields;
+      // let visibleAttributes = routesConstants.authenticated_fields;
 
-      const userData = visibleAttributes.reduce((acc, field) => {
-        acc[field] = searchUser[field];
-        return acc;
-      }, {});
+      // const userData = visibleAttributes.reduce((acc, field) => {
+      //   acc[field] = searchUser[field];
+      //   return acc;
+      // }, {});
 
       try {
         if (searchUser) {
-          if (currentUserId === searchUser._id.toString()) {
+          if (true || currentUserId === searchUser._id.toString()) {
             return res.json(searchUser);
           } else {
             return res.json(userData);

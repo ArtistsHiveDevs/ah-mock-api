@@ -7,20 +7,23 @@ const emergencyContactSchema = new mongoose.Schema({
   phone_number: String,
 });
 
-const roleSchema = new mongoose.Schema({
-  entityName: String,
-  entityRoleMap: [
-    {
-      id: String,
-      profile_pic: String,
-      name: String,
-      username: String,
-      subtitle: String,
-      verified_status: Number,
-      roles: [String],
-    },
-  ],
-});
+const roleSchema = new mongoose.Schema(
+  {
+    entityName: String,
+    entityRoleMap: [
+      {
+        id: String,
+        profile_pic: String,
+        name: String,
+        username: String,
+        subtitle: String,
+        verified_status: Number,
+        roles: [String],
+      },
+    ],
+  },
+  { _id: false }
+);
 
 const userSchema = new mongoose.Schema({
   given_names: String,

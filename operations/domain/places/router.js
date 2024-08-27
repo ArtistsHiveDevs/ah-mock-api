@@ -106,7 +106,7 @@ function filterResultsByQuery(req, result) {
         "twitter",
         "vimeo",
         "youtube",
-      ].filter((socialNetwork) => !!place[socialNetwork]);
+      ].filter((socialNetwork) => !!place && !!place[socialNetwork]);
 
       place.stats["socialNetworks"] = socialNetworks.map((socialNetwork) => {
         return {
@@ -135,87 +135,79 @@ function filterResultsByQuery(req, result) {
 }
 
 module.exports = [
-  router.get(RoutesConstants.eventList, (req, res) => {
-    // helpers.validateAuthenticatedUser(req, res);
-    let result = helpers.getEntityData("Place");
-    try {
-      result = filterResultsByQuery(req, result);
-      // result = helpers.hideProperties(result, RoutesConstants.public_fields);
-
-      return res.json(createPaginatedDataResponse(result));
-    } catch (error) {
-      console.error(error);
-
-      return res.status(500).json([]);
-    }
-  }),
-
-  router.get(
-    RoutesConstants.findEventById,
-    // helpers.validateAuthenticatedUser,
-    (req, res) => {
-      const { eventId: placeId } = req.params;
-      const searchPlace = helpers.searchResult(
-        helpers.getEntityData("Place"),
-        placeId,
-        "id"
-      );
-
-      response = searchPlace;
-      if (!req.userId) {
-        response = filterResultsByQuery(req, response);
-        // response = helpers.hideProperties(response, [
-        //   "id",
-        //   "name",
-        //   "profile_pic",
-        // ]);
-      }
-      try {
-        return res.json(
-          createPaginatedDataResponse(
-            response || {
-              message: helpers.noResultDefaultLabel,
-            }
-          )
-        );
-      } catch (error) {
-        console.error(error);
-
-        return res.status(500).json({});
-      }
-    }
-  ),
-
-  router.post(RoutesConstants.create, (req, res) => {
-    const items = helpers.getEntityData("Place");
-    return res
-      .status(200)
-      .json(
-        createPaginatedDataResponse(
-          items[Math.round(Math.random() * items.length)]
-        )
-      );
-  }),
-
-  router.put(RoutesConstants.updateById, (req, res) => {
-    const items = helpers.getEntityData("Place");
-    return res
-      .status(200)
-      .json(
-        createPaginatedDataResponse(
-          items[Math.round(Math.random() * items.length)]
-        )
-      );
-  }),
-
-  router.delete(RoutesConstants.deleteById, (req, res) => {
-    const items = helpers.getEntityData("Place");
-    return res
-      .status(200)
-      .json(
-        createPaginatedDataResponse(
-          items[Math.round(Math.random() * items.length)]
-        )
-      );
-  }),
+  // router.get(RoutesConstants.eventList, (req, res) => {
+  //   // helpers.validateAuthenticatedUser(req, res);
+  //   let result = helpers.getEntityData("Place");
+  //   try {
+  //     result = filterResultsByQuery(req, result);
+  //     // result = helpers.hideProperties(result, RoutesConstants.public_fields);
+  //     return res.json(createPaginatedDataResponse(result));
+  //   } catch (error) {
+  //     console.error(error);
+  //     return res.status(500).json([]);
+  //   }
+  // }),
+  // router.get(
+  //   RoutesConstants.findEventById,
+  //   // helpers.validateAuthenticatedUser,
+  //   (req, res) => {
+  //     const { eventId: placeId } = req.params;
+  //     const searchPlace = helpers.searchResult(
+  //       helpers.getEntityData("Place"),
+  //       placeId,
+  //       "id"
+  //     );
+  //     response = searchPlace;
+  //     if (!req.userId) {
+  //       response = filterResultsByQuery(req, response);
+  //       // response = helpers.hideProperties(response, [
+  //       //   "id",
+  //       //   "name",
+  //       //   "profile_pic",
+  //       // ]);
+  //     }
+  //     try {
+  //       return res.json(
+  //         createPaginatedDataResponse(
+  //           response || {
+  //             message: helpers.noResultDefaultLabel,
+  //           }
+  //         )
+  //       );
+  //     } catch (error) {
+  //       console.error(error);
+  //       return res.status(500).json({});
+  //     }
+  //   }
+  // ),
+  // router.post(RoutesConstants.create, (req, res) => {
+  //   const items = helpers.getEntityData("Place");
+  //   return res
+  //     .status(200)
+  //     .json(
+  //       createPaginatedDataResponse(
+  //         items[Math.round(Math.random() * items.length)]
+  //       )
+  //     );
+  // }),
+  // router.put(RoutesConstants.updateById, (req, res) => {
+  //   const items = helpers.getEntityData("Place");
+  //   return res
+  //     .status(200)
+  //     .json(
+  //       createPaginatedDataResponse(
+  //         items[Math.round(Math.random() * items.length)]
+  //       )
+  //     );
+  // }),
+  // router.delete(RoutesConstants.deleteById, (req, res) => {
+  //   const items = helpers.getEntityData("Place");
+  //   return res
+  //     .status(200)
+  //     .json(
+  //       createPaginatedDataResponse(
+  //         items[Math.round(Math.random() * items.length)]
+  //       )
+  //     );
+  // }),
 ];
