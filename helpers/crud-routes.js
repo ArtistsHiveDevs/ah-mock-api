@@ -15,35 +15,45 @@ function createCRUDRoutes(model, modelName) {
   const modelActions = createCRUDActions(model, modelName);
 
   // GET list route
-  router.get(routesConstants.artistsList, async (req, res) => {
-    try {
-      const response = await modelActions.listEntities({
-        page: req.query.page,
-        limit: req.query.limit,
-        fields: req.query.fields,
-      });
-      res.json(response);
-    } catch (err) {
-      res.status(500).json({ message: err.message });
+  router.get(
+    routesConstants.artistsList,
+    helpers.validateIfUserExists,
+    async (req, res) => {
+      try {
+        const response = await modelActions.listEntities({
+          page: req.query.page,
+          limit: req.query.limit,
+          fields: req.query.fields,
+        });
+
+        res.json(response);
+      } catch (err) {
+        res.status(500).json({ message: err.message });
+      }
     }
-  });
+  );
 
   // GET by ID route
-  router.get(routesConstants.findArtistById, async (req, res) => {
-    try {
-      const response = await modelActions.findEntityById({
-        id: req.params.artistId,
-        userId: req.userId,
-      });
-      res.json(response);
-    } catch (err) {
-      res.status(500).json({ message: err.message });
+  router.get(
+    routesConstants.findArtistById,
+    helpers.validateIfUserExists,
+    async (req, res) => {
+      try {
+        const response = await modelActions.findEntityById({
+          id: req.params.artistId,
+          userId: req.userId,
+        });
+        res.json(response);
+      } catch (err) {
+        res.status(500).json({ message: err.message });
+      }
     }
-  });
+  );
 
   // POST create route
   router.post(
     routesConstants.create,
+    helpers.validateIfUserExists,
     helpers.validateAuthenticatedUser,
     async (req, res) => {
       try {
@@ -61,6 +71,7 @@ function createCRUDRoutes(model, modelName) {
   // PUT update route
   router.put(
     routesConstants.updateById,
+    helpers.validateIfUserExists,
     helpers.validateAuthenticatedUser,
     async (req, res) => {
       try {

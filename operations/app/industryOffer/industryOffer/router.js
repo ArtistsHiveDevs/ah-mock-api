@@ -1,15 +1,17 @@
 var express = require("express");
+const { validateIfUserExists } = require("../../../../helpers");
 
 var userRouter = express.Router({ mergeParams: true });
 
 module.exports = [
-  userRouter.get("/", (req, res) => {
+  userRouter.get("/", validateIfUserExists, (req, res) => {
     const { role: entityRole } = req.query;
+
     try {
       if (entityRole) {
         const fs = require("fs");
         const offer = fs.readFileSync(
-          `./assets/mocks/app/industryOffer/${entityRole}.offer.md`,
+          `./assets/mocks/i18n/${req.lang}/app/industryOffer/${entityRole}.offer.md`,
           { encoding: "utf8", flag: "r" }
         );
         return res.status(200).json({ offer });
