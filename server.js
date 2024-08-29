@@ -31,6 +31,7 @@ var errorsRouter = require("./operations/parametrics/general/error/router");
 var industryOfferRouter = require("./operations/app/industryOffer/industryOffer/router");
 var termsAndConditionsRouter = require("./operations/app/policies/termsAndConditions/router");
 var privacyRouter = require("./operations/app/policies/privacyPolicy/router");
+var faqRouter = require("./operations/app/faq/router");
 const helpers = require("./helpers");
 const ErrorCodes = require("./constants/errors");
 const createCRUDRoutes = require("./helpers/crud-routes");
@@ -132,6 +133,7 @@ var routes = [
   { path: "/error", route: errorsRouter },
   { path: "/terms", route: termsAndConditionsRouter },
   { path: "/privacy", route: privacyRouter },
+  { path: "/faq", route: faqRouter },
 ];
 
 // Todos los paths debe pedir API KEY
