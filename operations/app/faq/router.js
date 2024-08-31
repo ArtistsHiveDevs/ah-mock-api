@@ -1,5 +1,6 @@
 var express = require("express");
 const { validateIfUserExists } = require("../../../helpers");
+const apiHelperFunctions = require("../../../helpers/apiHelperFunctions");
 
 var userRouter = express.Router({ mergeParams: true });
 
@@ -14,7 +15,14 @@ module.exports = [
       );
       return res
         .status(200)
-        .json({ content, lang: req.lang, version: 1, creationDate: 1 });
+        .json(
+          apiHelperFunctions.createPaginatedDataResponse({
+            content,
+            lang: req.lang,
+            version: 1,
+            creationDate: 1,
+          })
+        );
     } catch (error) {
       console.log(error.code);
       if (error.code === "ENOENT") {

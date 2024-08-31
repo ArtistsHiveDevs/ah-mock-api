@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const ErrorCodes = require("../constants/errors");
 const mongoose = require("mongoose");
 const User = require("../models/appbase/User");
+const { getAvailableTranslation } = require("./lang");
 // const Artist = require("../models/domain/Artist");
 
 const SECRET_KEY = "your_secret_key"; // Debes usar una clave secreta segura en producción
@@ -108,7 +109,10 @@ async function validateIfUserExists(req, res, next) {
     if (user) {
       req.user = user;
     }
-    req.lang = user?.user_language || req.headers["Lang"] || "es";
+
+    req.lang = getAvailableTranslation(
+      user?.user_language || req.headers["lang"] || "es"
+    );
     if (next) {
       next();
     }

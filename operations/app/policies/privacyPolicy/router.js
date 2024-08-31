@@ -1,4 +1,5 @@
 var express = require("express");
+const apiHelperFunctions = require("../../../../helpers/apiHelperFunctions");
 
 var router = express.Router({ mergeParams: true });
 
@@ -22,7 +23,9 @@ module.exports = [
         },
       ];
 
-      const version = req.query.v;
+      let version = req.query.v || "latest";
+      version = version === "latest" ? "1.0" : version;
+
       if (!version) {
         return res.json(versions);
       } else {
@@ -36,7 +39,14 @@ module.exports = [
             { encoding: "utf8", flag: "r" }
           );
 
-          return res.status(200).json({ ...versionObj, policy });
+          return res.status(200).json(
+            apiHelperFunctions.createPaginatedDataResponse({
+              content: policy,
+              lang: req.lang,
+              version: 1,
+              creationDate: 1,
+            })
+          );
         } else {
           return res.status(404).json({
             message: `Privacy Policy version ${version} was not found`,

@@ -1,9 +1,11 @@
 var express = require("express");
+const apiHelperFunctions = require("../../../../helpers/apiHelperFunctions");
+const { validateIfUserExists } = require("../../../../helpers");
 
 var userRouter = express.Router({ mergeParams: true });
 
 module.exports = [
-  userRouter.get("/", (req, res) => {
+  userRouter.get("/", validateIfUserExists, (req, res) => {
     try {
       const versions = [
         {
@@ -22,7 +24,9 @@ module.exports = [
         },
       ];
 
-      const version = req.query.v;
+      let version = req.query.v || "latest";
+      version = version === "latest" ? "1.0" : version;
+
       if (!version) {
         return res.json(versions);
       } else {
@@ -32,11 +36,18 @@ module.exports = [
         if (versionObj) {
           const fs = require("fs");
           const terms = fs.readFileSync(
-            `./assets/mocks/app/termsAndConditions/termsAndConditions.v${version}.md`,
+            `./assets/mocks/i18n/${req.lang}/app/policies/termsAndConditions/termsAndConditions.v${version}.md`,
             { encoding: "utf8", flag: "r" }
           );
 
-          return res.status(200).json({ ...versionObj, terms });
+          return res.status(200).json(
+            apiHelperFunctions.createPaginatedDataResponse({
+              content: terms,
+              lang: req.lang,
+              version: 1,
+              creationDate: 1,
+            })
+          );
         } else {
           return res.status(404).json({
             message: `Terms & Conditions version ${version} was not found`,
