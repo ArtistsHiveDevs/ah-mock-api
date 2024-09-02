@@ -85,6 +85,7 @@ module.exports = {
         "currency",
         "alpha2",
         "alpha3",
+        "languages",
       ],
       detail: [
         "name",

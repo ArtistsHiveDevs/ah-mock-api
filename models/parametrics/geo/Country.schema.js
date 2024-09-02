@@ -8,7 +8,7 @@ const countrySchema = new Schema({
   continent: { type: Schema.Types.ObjectId, ref: "Continent" },
   capital: { type: String },
   currency: [{ type: Schema.Types.ObjectId, ref: "Currency" }],
-  languages: [{ type: Schema.Types.ObjectId, ref: "Languages" }],
+  languages: [{ type: Schema.Types.ObjectId, ref: "Language" }],
   alpha2: { type: String },
   alpha3: { type: String },
   i18n: {

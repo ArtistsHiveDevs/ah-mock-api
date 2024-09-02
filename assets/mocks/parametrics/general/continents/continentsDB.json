@@ -1,0 +1,86 @@
+[
+  {
+    "key": "AF",
+    "name": "Africa",
+    "i18n": {
+      "de": { "name": "Afrika" },
+      "en": { "name": "Africa" },
+      "es": { "name": "África" },
+      "fr": { "name": "Afrique" },
+      "it": { "name": "Africa" },
+      "pt": { "name": "África" }
+    }
+  },
+  {
+    "key": "AN",
+    "name": "Antarctica",
+    "i18n": {
+      "de": { "name": "Antarktis" },
+      "en": { "name": "Antarctica" },
+      "es": { "name": "Antártida" },
+      "fr": { "name": "Antarctique" },
+      "it": { "name": "Antartide" },
+      "pt": { "name": "Antártida" }
+    }
+  },
+  {
+    "key": "AS",
+    "name": "Asia",
+    "i18n": {
+      "de": { "name": "Asien" },
+      "en": { "name": "Asia" },
+      "es": { "name": "Asia" },
+      "fr": { "name": "Asie" },
+      "it": { "name": "Asia" },
+      "pt": { "name": "Ásia" }
+    }
+  },
+  {
+    "key": "EU",
+    "name": "Europe",
+    "i18n": {
+      "de": { "name": "Europa" },
+      "en": { "name": "Europe" },
+      "es": { "name": "Europa" },
+      "fr": { "name": "Europe" },
+      "it": { "name": "Europa" },
+      "pt": { "name": "Europa" }
+    }
+  },
+  {
+    "key": "NA",
+    "name": "North America",
+    "i18n": {
+      "de": { "name": "Nordamerika" },
+      "en": { "name": "North America" },
+      "es": { "name": "América del Norte" },
+      "fr": { "name": "Amérique du Nord" },
+      "it": { "name": "America del Nord" },
+      "pt": { "name": "América do Norte" }
+    }
+  },
+  {
+    "key": "OC",
+    "name": "Oceania",
+    "i18n": {
+      "de": { "name": "Ozeanien" },
+      "en": { "name": "Oceania" },
+      "es": { "name": "Oceanía" },
+      "fr": { "name": "Océanie" },
+      "it": { "name": "Oceania" },
+      "pt": { "name": "Oceania" }
+    }
+  },
+  {
+    "key": "SA",
+    "name": "South America",
+    "i18n": {
+      "de": { "name": "Südamerika" },
+      "en": { "name": "South America" },
+      "es": { "name": "América del Sur" },
+      "fr": { "name": "Amérique du Sud" },
+      "it": { "name": "America del Sud" },
+      "pt": { "name": "América do Sul" }
+    }
+  }
+]
