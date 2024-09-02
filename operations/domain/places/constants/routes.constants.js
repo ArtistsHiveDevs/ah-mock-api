@@ -26,7 +26,7 @@ module.exports = {
     // "promoter",
     // "tiktok",
     "profile_pic",
-    // "image_gallery",
+    "image_gallery",
     // "genres",
     // "stages",
     // "backline",

@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
+const imageSchema = new mongoose.Schema({
+  src: { type: String, required: true },
+});
+
 const PlaceRatingSchema = new Schema(
   {
     overall: { type: Number },
@@ -54,7 +58,7 @@ const PlaceSchema = new Schema({
   subtitle: { type: String },
   profile_pic: { type: String },
   verified_status: { type: Number, default: 0 },
-  //   imageGallery: [{ type: Schema.Types.ObjectId, ref: "Image" }],
+  image_gallery: [imageSchema],
 
   //   events: [EventSchema],
   genres: {
