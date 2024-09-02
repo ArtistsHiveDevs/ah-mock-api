@@ -37,6 +37,10 @@ const ErrorCodes = require("./constants/errors");
 const createCRUDRoutes = require("./helpers/crud-routes");
 const Place = require("./models/domain/Place.schema");
 const Event = require("./models/domain/Event.schema");
+const Currency = require("./models/parametrics/geo/Currency.schema");
+const Continent = require("./models/parametrics/geo/Continent.schema");
+const Country = require("./models/parametrics/geo/Country.schema");
+const Language = require("./models/parametrics/geo/Language.schema");
 
 var app = express();
 var port = process.env.PORT || 3000;
@@ -120,11 +124,26 @@ var routes = [
   { path: "/academies", route: academyRouter },
   { path: "/artists", route: artistRouter },
   { path: "/cities", route: citiesRouter },
-  { path: "/countries", route: countriesRouter },
-  { path: "/events", route: createCRUDRoutes(Event, "Event") },
-  { path: "/instruments", route: instrumentsRouter },
+  {
+    path: "/countries",
+    route: createCRUDRoutes({
+      model: Country,
+      options: { listEntities: { limit: 10 } },
+    }),
+  },
+  { path: "/continents", route: createCRUDRoutes({ model: Continent }) },
+  {
+    path: "/currencies",
+    route: createCRUDRoutes({
+      model: Currency,
+      options: { listEntities: { limit: 0 } },
+    }),
+  },
+  { path: "/events", route: createCRUDRoutes({ model: Event }) },
+  { path: "/langs", route: createCRUDRoutes({ model: Language }) },
+  // { path: "/instruments", route: createCRUDRoutes({model:Instrument, "Instrument") },
   // { path: "/places", route: placesRouter },
-  { path: "/places", route: createCRUDRoutes(Place, "Place") },
+  { path: "/places", route: createCRUDRoutes({ model: Place }) },
   { path: "/rehearsal_rooms", route: rehearsalRoomsRouter },
   { path: "/industryOffer", route: industryOfferRouter },
   { path: "/riders", route: ridersRouter },

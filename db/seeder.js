@@ -6,6 +6,10 @@ const helpers = require("../helpers");
 const Place = require("../models/domain/Place.schema");
 const connectToDatabase = require("./db");
 const Event = require("../models/domain/Event.schema");
+const Currency = require("../models/parametrics/geo/Currency.schema");
+const Continent = require("../models/parametrics/geo/Continent.schema");
+const Country = require("../models/parametrics/geo/Country.schema");
+const Language = require("../models/parametrics/geo/Language.schema");
 helpers.sleep(1000);
 
 console.log("Seeder\n");
@@ -35,18 +39,19 @@ async function seedData() {
   };
 
   seedConfig.Parametrics.seed = true;
-  seedConfig.app_base.seed = true;
-  seedConfig.domain.seed = true;
+  seedConfig.app_base.seed = false;
+  seedConfig.domain.seed = false;
 
   // ------------------------------------------------------------------------------- DROP COLLECTIONS
   if (Object.values(seedConfig).every((value) => value.seed)) {
     await mongoose.connection.dropDatabase();
     console.log("Base de datos eliminada completamente");
-  }
-  for (const key of Object.keys(seedConfig).filter(
-    (modelGroup) => seedConfig[modelGroup].seed
-  )) {
-    await seedConfig[key].dropFunction();
+  } else {
+    for (const key of Object.keys(seedConfig).filter(
+      (modelGroup) => seedConfig[modelGroup].seed
+    )) {
+      await seedConfig[key].dropFunction();
+    }
   }
 
   // ------------------------------------------------------------------------------- PRE USER ID
@@ -67,20 +72,61 @@ async function seedData() {
   )) {
     await seedConfig[key].seedFunction();
   }
-  await seedDomainModels("_v2");
-  await seedDomainModels("_v3");
-  await seedDomainModels("_v4");
+  // await seedDomainModels("_v2");
+  // await seedDomainModels("_v3");
+  // await seedDomainModels("_v4");
   // ------------------------------------------------------------------------------- CLOSE MONGO
   await mongoose.connection.close();
 }
 
 // ******************************************
 async function dropParametricsModels() {
-  await dropMultipleCollections([]);
+  await dropMultipleCollections([
+    "countries",
+    // "languages",
+    // "continents",
+    // "currencies",
+  ]);
 }
 
 async function seedParametricsModels() {
-  const models = [];
+  const models = [
+    // ===================================================== USERS
+    // {
+    //   model: Currency,
+    //   forbiddenKeys: [],
+    //   defaultValues: [],
+    // },
+    // {
+    //   model: Continent,
+    //   forbiddenKeys: [],
+    //   defaultValues: [],
+    // },
+    // {
+    //   model: Language,
+    //   forbiddenKeys: [],
+    //   defaultValues: [],
+    // },
+    {
+      model: Country,
+      forbiddenKeys: [],
+      defaultValues: [],
+      relationships: [
+        { relationshipName: "continent", ref: Continent, refField: "key" },
+        {
+          relationshipName: "currency",
+          ref: Currency,
+          refField: "ISO_4217_key",
+        },
+        {
+          relationshipName: "languages",
+          ref: Language,
+          refField: "key",
+        },
+      ],
+    },
+  ];
+
   await seedModels(models);
 }
 
@@ -94,7 +140,6 @@ async function seedAppBaseModels() {
     // ===================================================== USERS
     {
       model: User,
-      modelName: "User",
       forbiddenKeys: ["id"],
       defaultValues: [{ password: "1234556768", roles: [] }],
     },
@@ -113,7 +158,6 @@ async function seedDomainModels(domainSuffix) {
     // ===================================================== ARTISTS
     {
       model: Artist,
-      modelName: "Artist",
       userId,
       forbiddenKeys: ["id"],
       suffix: ` DB${domainSuffix || ""}`,
@@ -122,7 +166,6 @@ async function seedDomainModels(domainSuffix) {
     // ===================================================== PLACES
     {
       model: Place,
-      modelName: "Place",
       userId,
       forbiddenKeys: ["id"],
       suffix: ` DB${domainSuffix || ""}`,
@@ -133,7 +176,6 @@ async function seedDomainModels(domainSuffix) {
     // ===================================================== EVENT
     {
       model: Event,
-      modelName: "Event",
       userId,
       forbiddenKeys: [
         "id",

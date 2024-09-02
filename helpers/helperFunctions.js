@@ -305,12 +305,32 @@ module.exports = {
     const albums = JSON.parse(
       fs.readFileSync(`./assets/mocks/domain/artists/albumsList.json`)
     );
+    const continents = JSON.parse(
+      fs.readFileSync(
+        `./assets/mocks/parametrics/general/continents/continentsDB.json`
+      )
+    );
+    const countries = JSON.parse(
+      fs.readFileSync(
+        `./assets/mocks/parametrics/general/countries/fullCountriesTips.json`
+      )
+    );
+    const currencies = JSON.parse(
+      fs.readFileSync(
+        `./assets/mocks/parametrics/general/currencies/currencies.json`
+      )
+    );
     const events = JSON.parse(
       fs.readFileSync(`./assets/mocks/domain/events/eventsList.json`)
     );
     const instruments = JSON.parse(
       fs.readFileSync(
         `./assets/mocks/parametrics/domain/instruments/instrumentsList.json`
+      )
+    );
+    const languages = JSON.parse(
+      fs.readFileSync(
+        `./assets/mocks/parametrics/general/languages/languages_full.json`
       )
     );
     const places = JSON.parse(
@@ -330,10 +350,17 @@ module.exports = {
     const academies = JSON.parse(
       fs.readFileSync(`./assets/mocks/domain/academies/academiesList.json`)
     );
+
     if (entityName === "Artist") {
       response = [...artists];
     } else if (entityName === "Album") {
       response = [...albums];
+    } else if (entityName === "Continent") {
+      response = [...continents];
+    } else if (entityName === "Country") {
+      response = [...countries];
+    } else if (entityName === "Currency") {
+      response = [...currencies];
     } else if (entityName === "Event") {
       response = [...events];
 
@@ -381,6 +408,8 @@ module.exports = {
       });
     } else if (entityName === "Instrument") {
       response = [...instruments];
+    } else if (entityName === "Language") {
+      response = [...languages];
     } else if (entityName === "Place") {
       response = [...places];
     } else if (entityName === "User") {

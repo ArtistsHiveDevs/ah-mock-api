@@ -3,15 +3,16 @@ const helpers = require("./helperFunctions");
 
 async function seed({
   model,
-  modelName,
   userId,
-  forbiddenKeys,
+  forbiddenKeys = [],
   defaultValues = {},
   suffix = "",
   printEachNumberElements = 30,
   sleepTimeBetweenInstances = 100,
+  relationships = [],
 }) {
-  const modelActions = createCRUDActions(model, modelName);
+  const modelActions = createCRUDActions({ model });
+  const modelName = model.modelName;
   const data = helpers.getEntityData(modelName, false);
 
   let startTime = Date.now();
@@ -26,6 +27,20 @@ async function seed({
   );
   printEachNumberElements = Math.floor(
     (data.length * printEachNumberElements) / 100
+  );
+
+  const relationshipData = await Promise.all(
+    relationships.map(async (relationship) => {
+      const modelFields = [relationship.refField].join(",");
+      const projection = (modelFields || fields || "")
+        .split(",")
+        .reduce((acc, field) => {
+          acc[field] = 1;
+          return acc;
+        }, {});
+      const relationshipData = await relationship.ref.find().select(projection); // Asegúrate de que .find() sea asíncrono
+      return { name: relationship.ref.modelName, data: relationshipData };
+    })
   );
 
   if (data.length > 0) {
@@ -58,29 +73,69 @@ async function seed({
         if (allowedKeys.includes("name")) {
           instanceData.name = `${instanceData.name}${suffix}`;
         }
-        await modelActions.createEntity({
-          userId: finalUserId,
-          body: instanceData,
+
+        relationships.forEach((relationship) => {
+          // instanceData[relationship.relationshipName] = relationshipData
+          // console.log(
+          //   Object.keys(relationshipData).find((relationshipKey) =>
+          //     relationshipData[relationshipKey].data.find(
+          //       (relObject) => relObject[relationship.relationshipName]
+          //     )
+          //   )
+          // );
+          const mockValue = instanceData[relationship.relationshipName];
+          const isArray = Array.isArray(mockValue);
+          let mockValues = mockValue;
+          if (!isArray) {
+            mockValues = [mockValue];
+          }
+          mockValues = mockValues.map((value) => {
+            const relObjectData = relationshipData
+              .find((entity) => entity.name === relationship.ref.modelName)
+              .data.find((element) => element[relationship.refField] === value);
+            if (!relObjectData) {
+              console.log(
+                `no se encontró "${relationship.ref.modelName}": ${value} en el ${modelName} ${instanceData["name"]}`
+              );
+            }
+            return relObjectData?._id;
+          });
+
+          // if (modelName === "Country" && index === 4) {
+          //   console.log(instanceData["name"], mockValues);
+          // }
+          if (!isArray) {
+            mockValues = mockValues[0];
+          }
+          instanceData[relationship.relationshipName] = mockValues;
         });
 
-        // Si se desea realizar una pausa entre las operaciones, puedes usar `sleep`
-        if ((index + 1) % printEachNumberElements === 0) {
-          const currentTime = Date.now();
-          const delta = currentTime - startTime;
-          totalTime += delta;
-          startTime = currentTime;
+        // Por si se quiere evitar el registro en la DB
+        if (true) {
+          const re = await modelActions.createEntity({
+            userId: finalUserId,
+            body: instanceData,
+          });
 
-          console.log(
-            "\t\t(",
-            index + 1,
-            " / ",
-            data.length,
-            ")    -     ",
-            Math.round(((index + 1) * 100) / data.length),
-            "%      ",
-            `${helpers.convertMillis(delta)}      `,
-            `${helpers.convertMillis(totalTime)}`
-          );
+          // Si se desea realizar una pausa entre las operaciones, puedes usar `sleep`
+          if ((index + 1) % printEachNumberElements === 0) {
+            const currentTime = Date.now();
+            const delta = currentTime - startTime;
+            totalTime += delta;
+            startTime = currentTime;
+
+            console.log(
+              "\t\t(",
+              index + 1,
+              " / ",
+              data.length,
+              ")    -     ",
+              Math.round(((index + 1) * 100) / data.length),
+              "%      ",
+              `${helpers.convertMillis(delta)}      `,
+              `${helpers.convertMillis(totalTime)}`
+            );
+          }
         }
 
         // Pausa entre instancias

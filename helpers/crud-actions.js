@@ -5,26 +5,94 @@ const apiHelperFunctions = require("./apiHelperFunctions");
 const routesConstants = require("../operations/domain/artists/constants/routes.constants");
 
 function modelRequiresAuth(modelName) {
-  return !["User"].includes(modelName);
+  return !["Continent", "Country", "Currency", "Language", "User"].includes(
+    modelName
+  );
+}
+function modelRequiresEntityIndex(modelName) {
+  return ["Artist", "Place", "User"].includes(modelName);
 }
 
-function createCRUDActions(model, modelName) {
+function createCRUDActions({ model, options = {} }) {
+  const modelName = model.modelName;
   // Función para listar entidades
-  async function listEntities({ page = 1, limit = 50, fields }) {
-    const modelFields = routesConstants.public_fields.join(",");
+  async function listEntities({
+    page = 1,
+    limit = options?.listEntities?.limit === undefined
+      ? 50
+      : options?.listEntities?.limit,
+    fields,
+    lang = "en",
+  }) {
+    // Obtener campos de proyección de la configuración
+    const projectionFields = routesConstants?.parametric_public_fields?.[
+      modelName
+    ]?.summary ??
+      routesConstants?.public_fields ?? ["name"];
+
+    // Crear proyección para select()
+    const modelFields = model.schema.paths.i18n
+      ? [...projectionFields, `i18n.${lang}`]
+      : projectionFields;
+
     const projection = (modelFields || fields || "")
-      .split(",")
+      .filter(Boolean) // Filtrar cualquier campo vacío o undefined
       .reduce((acc, field) => {
         acc[field] = 1;
         return acc;
       }, {});
 
-    const results = await model
+    // Identificar campos que necesitan populate
+    const populateFields = modelFields
+      .filter((field) => {
+        const fieldType = model.schema.paths[field];
+        return (
+          fieldType &&
+          (fieldType.instance.toLowerCase() === "objectid" ||
+            (fieldType.instance.toLowerCase() === "array" &&
+              fieldType.caster &&
+              fieldType.caster.instance.toLowerCase() === "objectid"))
+        );
+      })
+      .map((field) => {
+        const refModel =
+          model.schema.paths[field].options.ref ||
+          model.schema.paths[field].caster.options.ref;
+        const refModelFields = model.schema.paths.i18n
+          ? [
+              `i18n.${lang}`,
+              ...(routesConstants?.parametric_public_fields?.[refModel]
+                ?.summary ??
+                routesConstants?.public_fields ?? ["name"]),
+            ]
+          : routesConstants?.parametric_public_fields?.[refModel]?.summary ??
+            routesConstants?.public_fields ?? ["name"];
+
+        return {
+          path: field,
+          select: refModelFields.join(" "),
+        };
+      });
+
+    // Consulta a la base de datos con select y populate
+    let query = model
       .find({})
       .select(projection)
       .skip((page - 1) * limit)
       .limit(Number(limit));
 
+    if (populateFields.length > 0) {
+      populateFields.forEach((populateOption) => {
+        query = query.populate(populateOption);
+      });
+    }
+
+    let results = await query.exec();
+
+    // Traducir los resultados utilizando translateDBResults
+    results = apiHelperFunctions.translateDBResults({ results, lang });
+
+    // Crear la respuesta paginada
     return apiHelperFunctions.createPaginatedDataResponse(
       results,
       page,
@@ -33,7 +101,7 @@ function createCRUDActions(model, modelName) {
   }
 
   // Función para buscar entidad por ID
-  async function findEntityById({ id, userId }) {
+  async function findEntityById({ id, userId, lang = "en" }) {
     if (!id) {
       throw new Error("Must search an id, username or name");
     }
@@ -47,15 +115,23 @@ function createCRUDActions(model, modelName) {
       query._id = id;
     } else {
       query = {
-        $or: [{ username: id }, { name: id }],
+        $or: [
+          { username: { $regex: new RegExp(`^${id}$`, "i") } },
+          { name: { $regex: new RegExp(`^${id}$`, "i") } },
+        ],
       };
     }
 
-    const entityInfo = await model.findOne(query);
+    let entityInfo = await model.findOne(query);
 
     if (!entityInfo) {
       throw new Error(`${modelName} not found`);
     }
+
+    entityInfo = apiHelperFunctions.translateDBResults({
+      results: entityInfo,
+      lang,
+    });
 
     const roleAsEntity = currentUser?.roles.find(
       (role) =>
@@ -99,7 +175,8 @@ function createCRUDActions(model, modelName) {
   async function createEntity({ userId, body }) {
     if (modelRequiresAuth(modelName) && !userId) {
       throw new Error(
-        "Unauthorized operation. To execute this operation you require a valid session"
+        "Unauthorized operation. To execute this operation you require a valid session. Model: " +
+          modelName
       );
     }
     const info = { ...body };
@@ -114,17 +191,6 @@ function createCRUDActions(model, modelName) {
           ids: [new mongoose.Types.ObjectId(userId)],
         },
       ];
-      //   console.log(
-      //     "Creando a.... ",
-      //     info.name,
-      //     "\t",
-      //     info.username,
-      //     "\t(",
-      //     ownerUser.name,
-      //     " - ",
-      //     ownerUser.username,
-      //     ")"
-      //   );
     }
     const newEntity = new model(info);
     await newEntity.save();
@@ -154,12 +220,13 @@ function createCRUDActions(model, modelName) {
           verified_status: newEntity.verified_status,
           roles: ["OWNER"],
         };
-        const entityDirectory = new EntityDirectory({
-          ...entityInfo,
-          entityType: modelName,
-        });
-        await entityDirectory.save();
-
+        if (modelRequiresEntityIndex(modelName)) {
+          const entityDirectory = new EntityDirectory({
+            ...entityInfo,
+            entityType: modelName,
+          });
+          await entityDirectory.save();
+        }
         ownerRoles.entityRoleMap.push(entityInfo);
         entityInfo.roles.push("OWNER");
 
