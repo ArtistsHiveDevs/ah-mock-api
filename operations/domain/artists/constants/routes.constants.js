@@ -75,6 +75,10 @@ module.exports = {
     "arts",
   ],
   parametric_public_fields: {
+    Allergy: {
+      summary: ["type", "name", "percentage", "code"],
+      detail: ["type", "name", "percentage", "code"],
+    },
     Continent: { summary: ["key", "name"], detail: ["key", "name"] },
     Country: {
       summary: [
@@ -106,5 +110,9 @@ module.exports = {
       ],
     },
     Currency: ["ISO_4217_key", "name", "symbol", "decimals"],
+    Language: {
+      summary: ["key", "name", "main_flag_2", "main_flag_3"],
+      detail: ["key", "name", "main_flag_2", "main_flag_3"],
+    },
   },
 };

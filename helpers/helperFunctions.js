@@ -305,6 +305,9 @@ module.exports = {
     const albums = JSON.parse(
       fs.readFileSync(`./assets/mocks/domain/artists/albumsList.json`)
     );
+    const allergies = JSON.parse(
+      fs.readFileSync(`./assets/mocks/parametrics/demographics/allergies.json`)
+    );
     const continents = JSON.parse(
       fs.readFileSync(
         `./assets/mocks/parametrics/general/continents/continentsDB.json`
@@ -355,6 +358,8 @@ module.exports = {
       response = [...artists];
     } else if (entityName === "Album") {
       response = [...albums];
+    } else if (entityName === "Allergy") {
+      response = [...allergies];
     } else if (entityName === "Continent") {
       response = [...continents];
     } else if (entityName === "Country") {

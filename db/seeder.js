@@ -10,6 +10,7 @@ const Currency = require("../models/parametrics/geo/Currency.schema");
 const Continent = require("../models/parametrics/geo/Continent.schema");
 const Country = require("../models/parametrics/geo/Country.schema");
 const Language = require("../models/parametrics/geo/Language.schema");
+const Allergy = require("../models/parametrics/geo/demographics/Allergies.schema");
 helpers.sleep(1000);
 
 console.log("Seeder\n");
@@ -82,7 +83,8 @@ async function seedData() {
 // ******************************************
 async function dropParametricsModels() {
   await dropMultipleCollections([
-    "countries",
+    "allergies",
+    // "countries",
     // "languages",
     // "continents",
     // "currencies",
@@ -92,6 +94,11 @@ async function dropParametricsModels() {
 async function seedParametricsModels() {
   const models = [
     // ===================================================== USERS
+    {
+      model: Allergy,
+      forbiddenKeys: [],
+      defaultValues: [],
+    },
     // {
     //   model: Currency,
     //   forbiddenKeys: [],
@@ -107,24 +114,24 @@ async function seedParametricsModels() {
     //   forbiddenKeys: [],
     //   defaultValues: [],
     // },
-    {
-      model: Country,
-      forbiddenKeys: [],
-      defaultValues: [],
-      relationships: [
-        { relationshipName: "continent", ref: Continent, refField: "key" },
-        {
-          relationshipName: "currency",
-          ref: Currency,
-          refField: "ISO_4217_key",
-        },
-        {
-          relationshipName: "languages",
-          ref: Language,
-          refField: "key",
-        },
-      ],
-    },
+    // {
+    //   model: Country,
+    //   forbiddenKeys: [],
+    //   defaultValues: [],
+    //   relationships: [
+    //     { relationshipName: "continent", ref: Continent, refField: "key" },
+    //     {
+    //       relationshipName: "currency",
+    //       ref: Currency,
+    //       refField: "ISO_4217_key",
+    //     },
+    //     {
+    //       relationshipName: "languages",
+    //       ref: Language,
+    //       refField: "key",
+    //     },
+    //   ],
+    // },
   ];
 
   await seedModels(models);

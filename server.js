@@ -41,6 +41,7 @@ const Currency = require("./models/parametrics/geo/Currency.schema");
 const Continent = require("./models/parametrics/geo/Continent.schema");
 const Country = require("./models/parametrics/geo/Country.schema");
 const Language = require("./models/parametrics/geo/Language.schema");
+const Allergy = require("./models/parametrics/geo/demographics/Allergies.schema");
 
 var app = express();
 var port = process.env.PORT || 3000;
@@ -122,13 +123,20 @@ app.post("/api/generate-key", async (req, res) => {
 var routes = [
   { path: "/search", route: allRouter },
   { path: "/academies", route: academyRouter },
+  {
+    path: "/allergies",
+    route: createCRUDRoutes({
+      model: Allergy,
+      options: { listEntities: { limit: 0 } },
+    }),
+  },
   { path: "/artists", route: artistRouter },
   { path: "/cities", route: citiesRouter },
   {
     path: "/countries",
     route: createCRUDRoutes({
       model: Country,
-      options: { listEntities: { limit: 10 } },
+      options: { listEntities: { limit: 0 } },
     }),
   },
   { path: "/continents", route: createCRUDRoutes({ model: Continent }) },
@@ -140,7 +148,13 @@ var routes = [
     }),
   },
   { path: "/events", route: createCRUDRoutes({ model: Event }) },
-  { path: "/langs", route: createCRUDRoutes({ model: Language }) },
+  {
+    path: "/langs",
+    route: createCRUDRoutes({
+      model: Language,
+      options: { listEntities: { limit: 0 } },
+    }),
+  },
   // { path: "/instruments", route: createCRUDRoutes({model:Instrument, "Instrument") },
   // { path: "/places", route: placesRouter },
   { path: "/places", route: createCRUDRoutes({ model: Place }) },

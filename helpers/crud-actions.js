@@ -5,9 +5,14 @@ const apiHelperFunctions = require("./apiHelperFunctions");
 const routesConstants = require("../operations/domain/artists/constants/routes.constants");
 
 function modelRequiresAuth(modelName) {
-  return !["Continent", "Country", "Currency", "Language", "User"].includes(
-    modelName
-  );
+  return ![
+    "Allergy",
+    "Continent",
+    "Country",
+    "Currency",
+    "Language",
+    "User",
+  ].includes(modelName);
 }
 function modelRequiresEntityIndex(modelName) {
   return ["Artist", "Place", "User"].includes(modelName);
