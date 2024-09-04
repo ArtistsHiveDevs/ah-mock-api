@@ -2,7 +2,7 @@ var express = require("express");
 const mongoose = require("mongoose");
 var helpers = require("../../../helpers/index");
 var RoutesConstants = require("./constants/index");
-const Artist = require("../../../models/domain/Artist");
+const Artist = require("../../../models/domain/Artist.schema");
 const User = require("../../../models/appbase/User");
 const ErrorCodes = require("../../../constants/errors");
 const {

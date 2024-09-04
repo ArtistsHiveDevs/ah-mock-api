@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const seed = require("../helpers/seed");
-const Artist = require("../models/domain/Artist");
+const Artist = require("../models/domain/Artist.schema");
 const User = require("../models/appbase/User");
 const helpers = require("../helpers");
 const Place = require("../models/domain/Place.schema");
@@ -39,9 +39,9 @@ async function seedData() {
     },
   };
 
-  seedConfig.Parametrics.seed = true;
+  seedConfig.Parametrics.seed = false;
   seedConfig.app_base.seed = false;
-  seedConfig.domain.seed = false;
+  seedConfig.domain.seed = true;
 
   // ------------------------------------------------------------------------------- DROP COLLECTIONS
   if (Object.values(seedConfig).every((value) => value.seed)) {
@@ -73,6 +73,7 @@ async function seedData() {
   )) {
     await seedConfig[key].seedFunction();
   }
+
   // await seedDomainModels("_v2");
   // await seedDomainModels("_v3");
   // await seedDomainModels("_v4");
@@ -168,6 +169,46 @@ async function seedDomainModels(domainSuffix) {
       userId,
       forbiddenKeys: ["id"],
       suffix: ` DB${domainSuffix || ""}`,
+      extraInfoFunction: (data) => {
+        const fs = require("fs");
+        console.log("> agregando albums: ", data.length);
+        const artistsSpotifyInfo = JSON.parse(
+          fs.readFileSync(
+            `./assets/mocks/domain/artists/output_20_08_2024.json`
+          )
+        );
+
+        let print = true;
+        data.forEach((artist) => {
+          artist.arts = {};
+          if (print) {
+            console.log(artist.spotify);
+            print = false;
+          }
+
+          const spotifyInfoId = Object.keys(artistsSpotifyInfo).find(
+            (artistSpotifyId) => `${artist.spotify}` == `${artistSpotifyId}`
+          );
+
+          if (spotifyInfoId) {
+            const artistInfo = artistsSpotifyInfo[spotifyInfoId];
+            if (artistInfo?.albums?.total > 0) {
+              artist.arts["music"] = {
+                albums: artistInfo?.albums?.items.map((album) => {
+                  return {
+                    images: album.images,
+                    name: album.name,
+                    release_date: album.release_date,
+                    release_date_precision: album.release_date_precision,
+                    spotify: { id: album.id, url: album.external_urls.spotify },
+                    total_tracks: album.total_tracks,
+                  };
+                }),
+              };
+            }
+          }
+        });
+      },
     },
 
     // ===================================================== PLACES

@@ -10,6 +10,7 @@ async function seed({
   printEachNumberElements = 30,
   sleepTimeBetweenInstances = 100,
   relationships = [],
+  extraInfoFunction = undefined,
 }) {
   const modelActions = createCRUDActions({ model });
   const modelName = model.modelName;
@@ -28,6 +29,10 @@ async function seed({
   printEachNumberElements = Math.floor(
     (data.length * printEachNumberElements) / 100
   );
+
+  if (extraInfoFunction) {
+    extraInfoFunction(data);
+  }
 
   const relationshipData = await Promise.all(
     relationships.map(async (relationship) => {
