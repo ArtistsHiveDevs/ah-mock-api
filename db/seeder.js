@@ -177,6 +177,11 @@ async function seedDomainModels(domainSuffix) {
             `./assets/mocks/domain/artists/output_20_08_2024.json`
           )
         );
+        const albumTracksInfo = JSON.parse(
+          fs.readFileSync(
+            `./assets/mocks/domain/artists/tracksByAlbumList_04_09_2024.json`
+          )
+        );
 
         let print = true;
         data.forEach((artist) => {
@@ -195,6 +200,9 @@ async function seedDomainModels(domainSuffix) {
             if (artistInfo?.albums?.total > 0) {
               artist.arts["music"] = {
                 albums: artistInfo?.albums?.items.map((album) => {
+                  const albumWithTracksID = Object.keys(albumTracksInfo).find(
+                    (albumId) => `${album.id}` == `${albumId}`
+                  );
                   return {
                     images: album.images,
                     name: album.name,
@@ -202,6 +210,9 @@ async function seedDomainModels(domainSuffix) {
                     release_date_precision: album.release_date_precision,
                     spotify: { id: album.id, url: album.external_urls.spotify },
                     total_tracks: album.total_tracks,
+                    tracks: albumWithTracksID
+                      ? albumTracksInfo[albumWithTracksID].items
+                      : [],
                   };
                 }),
               };

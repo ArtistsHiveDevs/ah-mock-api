@@ -1,5 +1,35 @@
 const mongoose = require("mongoose");
 
+const ArtistInTrackSchema = new mongoose.Schema({
+  // external_urls: {
+  //     spotify: { type: String, required: true }
+  // },
+  // href: { type: String, required: true },
+  id: { type: String, required: true },
+  name: { type: String, required: true },
+  // type: { type: String, default: 'artist' },
+  // uri: { type: String, required: true }
+});
+
+const TrackSchema = new mongoose.Schema({
+  artists: [ArtistInTrackSchema],
+  disc_number: { type: Number, required: true },
+  duration_ms: { type: Number, required: true },
+  explicit: { type: Boolean, default: false },
+  // external_urls: {
+  //     spotify: { type: String, required: true }
+  // },
+  // href: { type: String, required: true },
+  id: { type: String, required: true },
+  // is_local: { type: Boolean, default: false },
+  // is_playable: { type: Boolean, default: true },
+  name: { type: String, required: true },
+  // preview_url: { type: String },
+  track_number: { type: Number, required: true },
+  // type: { type: String, default: 'track' },
+  // uri: { type: String, required: true }
+});
+
 const SpotifySchema = new mongoose.Schema(
   {
     id: { type: String, required: true },
@@ -16,6 +46,7 @@ const AlbumSchema = new mongoose.Schema(
     release_date_precision: { type: String },
     spotify: SpotifySchema,
     total_tracks: { type: Number },
+    tracks: [TrackSchema],
   },
   { _id: false }
 );
