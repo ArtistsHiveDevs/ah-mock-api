@@ -168,7 +168,7 @@ async function seedDomainModels(domainSuffix) {
       model: Artist,
       userId,
       forbiddenKeys: ["id"],
-      suffix: ` DB${domainSuffix || ""}`,
+      suffix: `${domainSuffix || ""}`,
       extraInfoFunction: (data) => {
         const fs = require("fs");
         console.log("> agregando albums: ", data.length);
@@ -227,7 +227,7 @@ async function seedDomainModels(domainSuffix) {
       model: Place,
       userId,
       forbiddenKeys: ["id"],
-      suffix: ` DB${domainSuffix || ""}`,
+      suffix: `${domainSuffix || ""}`,
       //   printEachNumberElements: 15,
       //   sleepTimeBetweenInstances: 200,
     },
@@ -243,7 +243,7 @@ async function seedDomainModels(domainSuffix) {
         "place_id",
         "confirmation_status",
       ],
-      suffix: ` DB${domainSuffix || ""}`,
+      suffix: `${domainSuffix || ""}`,
       printEachNumberElements: 15,
       //   sleepTimeBetweenInstances: 200,
     },
