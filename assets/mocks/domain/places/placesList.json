@@ -20,13 +20,13 @@
     "website": "http://www.matik-matik.com",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_mm.png",
+    "profile_pic": "s3://public/profile_mm.png",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/mm_1.jpeg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/mm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/mm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/mm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/mm_5.jpg" }
+      { "src": "s3://public/galeria/mm_1.jpeg" },
+      { "src": "s3://public/galeria/mm_2.jpg" },
+      { "src": "s3://public/galeria/mm_3.jpg" },
+      { "src": "s3://public/galeria/mm_4.jpg" },
+      { "src": "s3://public/galeria/mm_5.jpg" }
     ],
     "genres": {
       "music": [
@@ -367,12 +367,12 @@
     "website": "https://www.teatrojorgeeliecer.gov.co",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_tjeg.jpg",
+    "profile_pic": "s3://public/profile_tjeg.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/tejg_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/tejg_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/tejg_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/tejg_4.jpg" }
+      { "src": "s3://public/galeria/tejg_1.jpg" },
+      { "src": "s3://public/galeria/tejg_2.jpg" },
+      { "src": "s3://public/galeria/tejg_3.jpg" },
+      { "src": "s3://public/galeria/tejg_4.jpg" }
     ],
     "genres": {
       "music": ["all"],
@@ -702,13 +702,13 @@
     "website": "",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_gcl.jpg",
+    "profile_pic": "s3://public/profile_gcl.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gcl_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gcl_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gcl_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gcl_4.jpeg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gcl_5.jpg" }
+      { "src": "s3://public/galeria/gcl_1.jpg" },
+      { "src": "s3://public/galeria/gcl_2.jpg" },
+      { "src": "s3://public/galeria/gcl_3.jpg" },
+      { "src": "s3://public/galeria/gcl_4.jpeg" },
+      { "src": "s3://public/galeria/gcl_5.jpg" }
     ],
     "genres": {
       "music": [
@@ -1045,13 +1045,13 @@
     "website": "",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_gcl.jpg",
+    "profile_pic": "s3://public/profile_gcl.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gcl_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gcl_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gcl_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gcl_4.jpeg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gcl_5.jpg" }
+      { "src": "s3://public/galeria/gcl_1.jpg" },
+      { "src": "s3://public/galeria/gcl_2.jpg" },
+      { "src": "s3://public/galeria/gcl_3.jpg" },
+      { "src": "s3://public/galeria/gcl_4.jpeg" },
+      { "src": "s3://public/galeria/gcl_5.jpg" }
     ],
     "genres": {
       "music": [
@@ -1387,13 +1387,13 @@
     "website": "https://www.comunycorriente.org/lapascasia",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_lp.png",
+    "profile_pic": "s3://public/profile_lp.png",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/lp_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/lp_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/lp_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/lp_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/lp_5.jpg" }
+      { "src": "s3://public/galeria/lp_1.jpg" },
+      { "src": "s3://public/galeria/lp_2.jpg" },
+      { "src": "s3://public/galeria/lp_3.jpg" },
+      { "src": "s3://public/galeria/lp_4.jpg" },
+      { "src": "s3://public/galeria/lp_5.jpg" }
     ],
 
     "genres": {
@@ -1732,14 +1732,14 @@
     "website": "",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_sccc.jpg",
+    "profile_pic": "s3://public/profile_sccc.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sc_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sc_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sc_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sc_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sc_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sc_6.jpg" }
+      { "src": "s3://public/galeria/sc_1.jpg" },
+      { "src": "s3://public/galeria/sc_2.jpg" },
+      { "src": "s3://public/galeria/sc_3.jpg" },
+      { "src": "s3://public/galeria/sc_4.jpg" },
+      { "src": "s3://public/galeria/sc_5.jpg" },
+      { "src": "s3://public/galeria/sc_6.jpg" }
     ],
     "genres": {
       "music": [
@@ -2080,14 +2080,14 @@
     "website": "https://www.casakilele.com",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_ck.jpg",
+    "profile_pic": "s3://public/profile_ck.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/ck_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/ck_2.png" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/ck_3.jpeg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/ck_4.jpeg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/ck_5.jpeg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/ck_6.jpg" }
+      { "src": "s3://public/galeria/ck_1.jpg" },
+      { "src": "s3://public/galeria/ck_2.png" },
+      { "src": "s3://public/galeria/ck_3.jpeg" },
+      { "src": "s3://public/galeria/ck_4.jpeg" },
+      { "src": "s3://public/galeria/ck_5.jpeg" },
+      { "src": "s3://public/galeria/ck_6.jpg" }
     ],
     "genres": {
       "music": [
@@ -2426,13 +2426,13 @@
     "website": "http://www.discojaguar.inf.travel/company/section",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_dj.jpg",
+    "profile_pic": "s3://public/profile_dj.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/dj_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/dj_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/dj_3.jpeg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/dj_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/dj_5.jpg" }
+      { "src": "s3://public/galeria/dj_1.jpg" },
+      { "src": "s3://public/galeria/dj_2.jpg" },
+      { "src": "s3://public/galeria/dj_3.jpeg" },
+      { "src": "s3://public/galeria/dj_4.jpg" },
+      { "src": "s3://public/galeria/dj_5.jpg" }
     ],
 
     "genres": {
@@ -2771,12 +2771,12 @@
     "website": "",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_cj.jpg",
+    "profile_pic": "s3://public/profile_cj.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cj_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cj_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cj_3.webp" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cj_4.jpg" }
+      { "src": "s3://public/galeria/cj_1.jpg" },
+      { "src": "s3://public/galeria/cj_2.jpg" },
+      { "src": "s3://public/galeria/cj_3.webp" },
+      { "src": "s3://public/galeria/cj_4.jpg" }
     ],
     "genres": {
       "music": ["salsa", "timba", "jazz", "fusiones", "cumbia"]
@@ -3104,11 +3104,11 @@
     "website": "https://www.purapizzaorganic.com/copia-de-inicio",
     "promoter": "Diego Santanelli , santanelliart@gmail.com",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_ppjazz.jpg",
+    "profile_pic": "s3://public/profile_ppjazz.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/pp_1.jfif" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/pp_2.jfif" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/pp_3.jfif" }
+      { "src": "s3://public/galeria/pp_1.jfif" },
+      { "src": "s3://public/galeria/pp_2.jfif" },
+      { "src": "s3://public/galeria/pp_3.jfif" }
     ],
     "genres": {
       "music": ["músicas improvisadas", "jazz", "fusiones"]
@@ -3436,12 +3436,12 @@
     "website": "http://latinopower.co",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_latp.jpg",
+    "profile_pic": "s3://public/profile_latp.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/lpbta_1.webp" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/lpbta_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/lpbta_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/lpbta_4.jpg" }
+      { "src": "s3://public/galeria/lpbta_1.webp" },
+      { "src": "s3://public/galeria/lpbta_2.jpg" },
+      { "src": "s3://public/galeria/lpbta_3.jpg" },
+      { "src": "s3://public/galeria/lpbta_4.jpg" }
     ],
     "genres": {
       "music": [
@@ -3778,12 +3778,12 @@
     "website": "https://ra.co/clubs/149900",
     "promoter": "http://boogaloopteve.com",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_b.jpg",
+    "profile_pic": "s3://public/profile_b.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/bc_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/bc_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/bc_3.webp" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/bc_4.jpg" }
+      { "src": "s3://public/galeria/bc_1.jpg" },
+      { "src": "s3://public/galeria/bc_2.jpg" },
+      { "src": "s3://public/galeria/bc_3.webp" },
+      { "src": "s3://public/galeria/bc_4.jpg" }
     ],
     "genres": {
       "music": [
@@ -4120,12 +4120,12 @@
     "website": "https://cinemaparaiso.com.co",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_cc.jpg",
+    "profile_pic": "s3://public/profile_cc.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cc53_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cc53_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cc53_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cc53_4.jpg" }
+      { "src": "s3://public/galeria/cc53_1.jpg" },
+      { "src": "s3://public/galeria/cc53_2.jpg" },
+      { "src": "s3://public/galeria/cc53_3.jpg" },
+      { "src": "s3://public/galeria/cc53_4.jpg" }
     ],
     "genres": {
       "music": [
@@ -4460,13 +4460,13 @@
     "website": "https://elgocepagano.co/salsa",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_egp.jpg",
+    "profile_pic": "s3://public/profile_egp.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gp_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gp_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gp_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gp_4.webp" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/gp_5.jpg" }
+      { "src": "s3://public/galeria/gp_1.jpg" },
+      { "src": "s3://public/galeria/gp_2.jpg" },
+      { "src": "s3://public/galeria/gp_3.jpg" },
+      { "src": "s3://public/galeria/gp_4.webp" },
+      { "src": "s3://public/galeria/gp_5.jpg" }
     ],
     "genres": {
       "music": ["salsa", "timba", "fusiones", "cumbia", "porro"]
@@ -4794,12 +4794,12 @@
     "website": "",
     "promoter": "",
     "tiktok": "salsa-camara",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_sc.jpg",
+    "profile_pic": "s3://public/profile_sc.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sc_bta_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sc_bta_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sc_bta_3.webp" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sc_bta_4.webp" }
+      { "src": "s3://public/galeria/sc_bta_1.jpg" },
+      { "src": "s3://public/galeria/sc_bta_2.jpg" },
+      { "src": "s3://public/galeria/sc_bta_3.webp" },
+      { "src": "s3://public/galeria/sc_bta_4.webp" }
     ],
     "genres": {
       "music": ["salsa", "timba", "fusiones", "cumbia", "porro"]
@@ -5127,14 +5127,14 @@
     "website": "",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_sl.jpg",
+    "profile_pic": "s3://public/profile_sl.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/cover_pl.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/cover_pl.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/cover_pl.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/cover_pl.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/cover_pl.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/cover_pl.jpg" }
+      { "src": "s3://public/cover_pl.jpg" },
+      { "src": "s3://public/cover_pl.jpg" },
+      { "src": "s3://public/cover_pl.jpg" },
+      { "src": "s3://public/cover_pl.jpg" },
+      { "src": "s3://public/cover_pl.jpg" },
+      { "src": "s3://public/cover_pl.jpg" }
     ],
     "genres": {
       "music": ["salsa", "timba", "fusiones", "cumbia", "porro"]
@@ -5462,14 +5462,14 @@
     "website": "",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_cv.png",
+    "profile_pic": "s3://public/profile_cv.png",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cv_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cv_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cv_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cv_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cv_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/cv_6.jpg" }
+      { "src": "s3://public/galeria/cv_1.jpg" },
+      { "src": "s3://public/galeria/cv_2.jpg" },
+      { "src": "s3://public/galeria/cv_3.jpg" },
+      { "src": "s3://public/galeria/cv_4.jpg" },
+      { "src": "s3://public/galeria/cv_5.jpg" },
+      { "src": "s3://public/galeria/cv_6.jpg" }
     ],
     "genres": {
       "music": ["salsa", "timba", "fusiones", "cumbia", "porro"]
@@ -5797,14 +5797,14 @@
     "website": "",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_r.jpg",
+    "profile_pic": "s3://public/profile_r.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/rcb_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/rcb_2.jpeg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/rcb_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/rcb_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/rcb_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/rcb_6.jpg" }
+      { "src": "s3://public/galeria/rcb_1.jpg" },
+      { "src": "s3://public/galeria/rcb_2.jpeg" },
+      { "src": "s3://public/galeria/rcb_3.jpg" },
+      { "src": "s3://public/galeria/rcb_4.jpg" },
+      { "src": "s3://public/galeria/rcb_5.jpg" },
+      { "src": "s3://public/galeria/rcb_6.jpg" }
     ],
     "genres": {
       "music": ["rock", "ska"]
@@ -6132,13 +6132,13 @@
     "website": "https://www.jackassrockbar.com",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_j.jpg",
+    "profile_pic": "s3://public/profile_j.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/j_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/j_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/j_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/j_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/j_5.jpg" }
+      { "src": "s3://public/galeria/j_1.jpg" },
+      { "src": "s3://public/galeria/j_2.jpg" },
+      { "src": "s3://public/galeria/j_3.jpg" },
+      { "src": "s3://public/galeria/j_4.jpg" },
+      { "src": "s3://public/galeria/j_5.jpg" }
     ],
     "genres": {
       "music": ["rock", "ska"]
@@ -6466,10 +6466,10 @@
     "website": "",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_ea.jpg",
+    "profile_pic": "s3://public/profile_ea.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/ea_1.webp" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/ea_2.webp" }
+      { "src": "s3://public/galeria/ea_1.webp" },
+      { "src": "s3://public/galeria/ea_2.webp" }
     ],
     "genres": {
       "music": ["rock", "ska", "cantautor", "cumbia", "fusiones", "afrobeat"]
@@ -6797,12 +6797,12 @@
     "website": "http://www.sonhavana.co",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_sh.jpg",
+    "profile_pic": "s3://public/profile_sh.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sh_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sh_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sh_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/sh_4.jpg" }
+      { "src": "s3://public/galeria/sh_1.jpg" },
+      { "src": "s3://public/galeria/sh_2.jpg" },
+      { "src": "s3://public/galeria/sh_3.jpg" },
+      { "src": "s3://public/galeria/sh_4.jpg" }
     ],
     "genres": {
       "music": [
@@ -7138,11 +7138,11 @@
     "website": "http://www.academiacharlot.co",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_tc.jpg",
+    "profile_pic": "s3://public/profile_tc.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/tc_1.webp" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/tc_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/tc_3.jpg" }
+      { "src": "s3://public/galeria/tc_1.webp" },
+      { "src": "s3://public/galeria/tc_2.jpg" },
+      { "src": "s3://public/galeria/tc_3.jpg" }
     ],
     "genres": {
       "music": ["all"],
@@ -7472,17 +7472,17 @@
     "website": "http://aseismanos.com.co",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_a6m.jpg",
+    "profile_pic": "s3://public/profile_a6m.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -7815,17 +7815,17 @@
     "website": "https://casaastor.cat/",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_bcn_astor.jpg",
+    "profile_pic": "s3://public/profile_bcn_astor.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -8158,17 +8158,17 @@
     "website": "https://berlincafe.es/",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_default_place.png",
+    "profile_pic": "s3://public/profile_default_place.png",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -8501,17 +8501,17 @@
     "website": "",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_default_place.png",
+    "profile_pic": "s3://public/profile_default_place.png",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -8844,17 +8844,17 @@
     "website": "https://www.bigbangbarcelona.com/",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_bcn_bbb.jpg",
+    "profile_pic": "s3://public/profile_bcn_bbb.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -9187,17 +9187,17 @@
     "website": "http://www.paral-lel62.cat/",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_bcn_parallel.jpg",
+    "profile_pic": "s3://public/profile_bcn_parallel.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -9530,17 +9530,17 @@
     "website": "",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_bcn_lamole.jpg",
+    "profile_pic": "s3://public/profile_bcn_lamole.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -9873,17 +9873,17 @@
     "website": "http://www.pomodoro.co.uk/",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_londres_ciros.jpg",
+    "profile_pic": "s3://public/profile_londres_ciros.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -10216,17 +10216,17 @@
     "website": "",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_londres_tam.jpg",
+    "profile_pic": "s3://public/profile_londres_tam.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -10559,17 +10559,17 @@
     "website": "http://www.theblueskitchen.com/camden/",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_londres_bluesk.jpg",
+    "profile_pic": "s3://public/profile_londres_bluesk.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -10902,17 +10902,17 @@
     "website": "",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_bcn_lagaia.jpg",
+    "profile_pic": "s3://public/profile_bcn_lagaia.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -11245,17 +11245,17 @@
     "website": "http://www.sidecar.es/",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_bcn_sidecar.jpg",
+    "profile_pic": "s3://public/profile_bcn_sidecar.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -11588,17 +11588,17 @@
     "website": "http://soda.cat/",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_bcn_soda.jpg",
+    "profile_pic": "s3://public/profile_bcn_soda.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -11931,17 +11931,17 @@
     "website": "http://www.jamboreejazz.com/",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_bcn_jamboree.jpg",
+    "profile_pic": "s3://public/profile_bcn_jamboree.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -12274,17 +12274,17 @@
     "website": "http://www.barlaraiz.org/",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_bcn_laraiz.jpg",
+    "profile_pic": "s3://public/profile_bcn_laraiz.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -12617,17 +12617,17 @@
     "website": "http://espaiku.blogspot.com.es/",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_default_place.png",
+    "profile_pic": "s3://public/profile_default_place.png",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -12960,17 +12960,17 @@
     "website": "http://www.camparimilano.com/",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_default_place.png",
+    "profile_pic": "s3://public/profile_default_place.png",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -13303,17 +13303,17 @@
     "website": "https://laparceria.org/",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_default_place.png",
+    "profile_pic": "s3://public/profile_default_place.png",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -13646,17 +13646,17 @@
     "website": "http://www.susurrobarcelona.com/",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_default_place.png",
+    "profile_pic": "s3://public/profile_default_place.png",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -13990,17 +13990,17 @@
     "promoter": "",
     "tiktok": "",
     "wikipedia": "Razzmatazz_(club)",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_bcn_razzmatazz.jpg",
+    "profile_pic": "s3://public/profile_bcn_razzmatazz.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -14333,17 +14333,17 @@
     "website": "https://www.matisseclub.com",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_default_place.png",
+    "profile_pic": "s3://public/profile_default_place.png",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -14676,17 +14676,17 @@
     "website": "http://www.salastereo.com/",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_default_place.png",
+    "profile_pic": "s3://public/profile_default_place.png",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -15019,17 +15019,17 @@
     "website": "https://jjtaberna.es",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_default_place.png",
+    "profile_pic": "s3://public/profile_default_place.png",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -15362,17 +15362,17 @@
     "website": "https://funclubsevilla.com",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_default_place.png",
+    "profile_pic": "s3://public/profile_default_place.png",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -15705,17 +15705,17 @@
     "website": "https://www.salanazcaconciertos.com",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_default_place.png",
+    "profile_pic": "s3://public/profile_default_place.png",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -16048,17 +16048,17 @@
     "website": "http://www.monmadrid.es/",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_default_place.png",
+    "profile_pic": "s3://public/profile_default_place.png",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -16391,17 +16391,17 @@
     "website": "http://www.salacopernico.es/",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_madrid_copernico.jpg",
+    "profile_pic": "s3://public/profile_madrid_copernico.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -16734,17 +16734,17 @@
     "website": "http://www.nottinghillartsclub.com/",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_londres_nhac.jpg",
+    "profile_pic": "s3://public/profile_londres_nhac.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -17077,17 +17077,17 @@
     "website": "http://sinestesia.barcelona/",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_default_place.png",
+    "profile_pic": "s3://public/profile_default_place.png",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -17420,17 +17420,17 @@
     "website": "http://www.16toneladas.com/",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_default_place.png",
+    "profile_pic": "s3://public/profile_default_place.png",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -17763,17 +17763,17 @@
     "website": "http://www.lanaubcn.es/",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_default_place.png",
+    "profile_pic": "s3://public/profile_default_place.png",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -18106,17 +18106,17 @@
     "website": "",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_default_place.png",
+    "profile_pic": "s3://public/profile_default_place.png",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -18449,17 +18449,17 @@
     "website": "https://aragonenvivo.com/sala/sala-creedence/",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_default_place.png",
+    "profile_pic": "s3://public/profile_default_place.png",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -18792,17 +18792,17 @@
     "website": "",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_default_place.png",
+    "profile_pic": "s3://public/profile_default_place.png",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -19135,17 +19135,17 @@
     "website": "http://www.rosazul.com/",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_default_place.png",
+    "profile_pic": "s3://public/profile_default_place.png",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -19478,17 +19478,17 @@
     "website": "http://rondabarcelona.com/",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_default_place.png",
+    "profile_pic": "s3://public/profile_default_place.png",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -19821,17 +19821,17 @@
     "website": "https://www.thepostbar.co.uk/",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_londres_postbar.jpg",
+    "profile_pic": "s3://public/profile_londres_postbar.jpg",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -20164,17 +20164,17 @@
     "website": "https://www.cavernclub.com/",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_default_place.png",
+    "profile_pic": "s3://public/profile_default_place.png",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -20507,17 +20507,17 @@
     "website": "http://www.salaelsol.com/",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_default_place.png",
+    "profile_pic": "s3://public/profile_default_place.png",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -20850,17 +20850,17 @@
     "website": "",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_default_place.png",
+    "profile_pic": "s3://public/profile_default_place.png",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
@@ -21193,17 +21193,17 @@
     "website": "",
     "promoter": "",
     "tiktok": "",
-    "profile_pic": "https://npcarlos.co/artistsHive_mocks/profile_default_place.png",
+    "profile_pic": "s3://public/profile_default_place.png",
     "image_gallery": [
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_1.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_2.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_3.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_4.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_5.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_6.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_7.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_8.jpg" },
-      { "src": "https://npcarlos.co/artistsHive_mocks/galeria/asm_9.jpg" }
+      { "src": "s3://public/galeria/asm_1.jpg" },
+      { "src": "s3://public/galeria/asm_2.jpg" },
+      { "src": "s3://public/galeria/asm_3.jpg" },
+      { "src": "s3://public/galeria/asm_4.jpg" },
+      { "src": "s3://public/galeria/asm_5.jpg" },
+      { "src": "s3://public/galeria/asm_6.jpg" },
+      { "src": "s3://public/galeria/asm_7.jpg" },
+      { "src": "s3://public/galeria/asm_8.jpg" },
+      { "src": "s3://public/galeria/asm_9.jpg" }
     ],
     "genres": {
       "music": [
