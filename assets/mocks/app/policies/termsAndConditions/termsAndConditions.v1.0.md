@@ -260,6 +260,194 @@ Los usuarios pueden gestionar las preferencias de cookies desde su navegador, au
 
 Para más detalles sobre el uso de cookies, los usuarios deben consultar la Política de Cookies de **Artist Hive**, disponible en la plataforma.
 
+
 ---
+
+## 5. Propiedad Intelectual
+
+### 5.1 Derechos de Propiedad Intelectual de Artist Hive
+
+Todo el contenido, diseño, gráficos, interfaz de usuario, y funcionalidades presentes en la plataforma **Artist Hive** son propiedad exclusiva de **Artist Hive** o de sus licenciantes, y están protegidos por las leyes de derechos de autor, marcas comerciales y otras leyes aplicables a la propiedad intelectual, tanto en Colombia como a nivel internacional.
+
+Ningún contenido o material presente en la plataforma podrá ser copiado, reproducido, distribuido, transmitido, exhibido, vendido, licenciado o explotado para cualquier propósito sin el previo consentimiento por escrito de **Artist Hive S.A.S.**. El uso indebido de cualquier material protegido está sujeto a sanciones legales, incluyendo, pero no limitándose a, demandas civiles o penales.
+
+### 5.2 Derechos de Propiedad Intelectual del Usuario
+
+El **Usuario** declara que es el propietario legítimo de todos los derechos de propiedad intelectual sobre el contenido que publique en la plataforma. Esto incluye, pero no se limita a, fotografías, vídeos, grabaciones de audio, textos, gráficos, y cualquier otro tipo de material.
+
+Al subir contenido a **Artist Hive**, el **Usuario** otorga a **Artist Hive S.A.S.** una licencia no exclusiva, mundial, irrevocable, sublicenciable y transferible para utilizar, modificar, mostrar públicamente, reproducir y distribuir dicho contenido en relación con el funcionamiento y promoción de la plataforma. Sin embargo, **Artist Hive** no adquiere la titularidad de los derechos de autor sobre dicho contenido, a menos que se acuerde lo contrario por escrito.
+
+El **Usuario** garantiza que cualquier contenido subido no infringe los derechos de propiedad intelectual de terceros y se compromete a indemnizar a **Artist Hive** en caso de reclamaciones derivadas del incumplimiento de esta garantía.
+
+### 5.3 Reporte de Infracciones
+
+En caso de que cualquier **Usuario** o tercero considere que algún contenido publicado en **Artist Hive** infringe sus derechos de propiedad intelectual, deberá notificarlo de inmediato a través de los canales oficiales proporcionados en la [página de contacto](#página_de_contacto).
+
+Una vez recibida la notificación, **Artist Hive** investigará el reclamo y tomará las medidas que considere oportunas, que pueden incluir la eliminación del contenido infractor y la suspensión o cancelación de la cuenta del **Usuario** responsable, en caso de confirmarse la infracción.
+
+---
+
+
+## 6. Política de Privacidad y Protección de Datos
+
+### 6.1 Compromiso con la Protección de Datos
+
+En **Artist Hive**, nos comprometemos a proteger la privacidad de nuestros usuarios. Esta sección describe cómo recopilamos, utilizamos, almacenamos y protegemos la información personal de los usuarios, en conformidad con las leyes aplicables, incluyendo el **Reglamento General de Protección de Datos (GDPR)** y la **Ley 1581 de 2012** en Colombia.
+
+### 6.2 Información que Recopilamos
+
+Recopilamos diversos tipos de datos personales cuando interactúas con nuestra plataforma, como:
+
+- **Datos personales**: Nombre, correo electrónico, número de teléfono, dirección IP.
+- **Información de perfiles**: Datos sobre los agentes y usuarios, como artistas, festivales, eventos, y otros agentes de la industria.
+- **Datos de navegación**: Información sobre el historial de uso de la plataforma.
+- **Datos financieros**: Información de pago proporcionada para la adquisición de membresías o servicios adicionales en la plataforma.
+
+### 6.3 Uso de la Información
+
+La información que recopilamos es utilizada para los siguientes fines:
+
+- **Provisión de servicios**: Para facilitar el uso de la plataforma y sus funcionalidades.
+- **Mejora de la experiencia del usuario**: Personalización de contenido y recomendaciones.
+- **Comunicación**: Envío de notificaciones importantes relacionadas con el uso de la plataforma, actualizaciones o eventos.
+- **Cumplimiento legal**: Para cumplir con las obligaciones legales aplicables y para proteger los derechos de **Artist Hive** y sus usuarios.
+- **Análisis y evaluación de comportamientos**: La información puede ser utilizada para analizar y evaluar comportamientos de los usuarios con el fin de generar buenas prácticas en la industria musical, basadas en el know-how propio de **Artist Hive** y sus aliados estratégicos. Esto contribuirá a la mejora continua de los servicios y prácticas dentro del ecosistema cultural.
+
+### 6.4 Almacenamiento y Protección de Datos
+
+Todos los datos personales que recopilamos son almacenados de forma segura en servidores protegidos con altos estándares de seguridad. Implementamos medidas técnicas y organizativas adecuadas para prevenir accesos no autorizados, pérdidas o alteraciones de los datos.
+
+### 6.5 Derechos del Usuario
+
+Como usuario de **Artist Hive**, tienes derecho a:
+
+- **Acceder a tu información personal**: Puedes solicitar una copia de tus datos personales en cualquier momento.
+- **Modificar o rectificar tus datos**: Tienes el derecho de corregir cualquier información incorrecta o incompleta.
+- **Eliminar tu información personal**: Puedes solicitar la eliminación de tus datos cuando no sean necesarios para los fines para los que fueron recopilados.
+- **Restringir el uso de tus datos**: En determinados casos, puedes solicitar que se limite el procesamiento de tus datos.
+
+Para ejercer cualquiera de estos derechos, puedes ponerte en contacto con nosotros en [info@artist-hive.com](mailto:info@artist-hive.com).
+
+### 6.6 Terceros y Transferencia Internacional de Datos
+
+En algunos casos, es posible que compartamos tu información con terceros de confianza, como servicios de pago o socios comerciales. También podemos transferir tus datos a servidores ubicados fuera de Colombia, garantizando siempre que se mantengan los niveles de protección adecuados.
+
+### 6.7 Actualización de la Política de Privacidad
+
+**Artist Hive** se reserva el derecho de actualizar esta Política de Privacidad en cualquier momento. Te notificaremos sobre cualquier cambio a través de nuestra plataforma o por correo electrónico. Recomendamos revisar esta sección regularmente para mantenerte informado sobre cómo protegemos tu privacidad.
+
+---
+
+## 7. Limitaciones de Responsabilidad
+
+### 7.1 Uso de la Plataforma Bajo Propio Riesgo
+
+El uso de **Artist Hive** es bajo el propio riesgo del usuario. La plataforma, sus funcionalidades, y todo el contenido disponible se proporcionan "tal cual" y "según disponibilidad", sin garantías de ningún tipo, ya sea expresa o implícita, incluidas, entre otras, las garantías de comerciabilidad, idoneidad para un propósito particular, o no infracción.
+
+**Artist Hive** no garantiza que la plataforma estará disponible de manera ininterrumpida, libre de errores, o que cualquier defecto será corregido en un plazo determinado. Del mismo modo, no garantizamos que los resultados obtenidos del uso de la plataforma cumplirán con tus expectativas o que la plataforma será compatible con cualquier software, hardware o configuración particular.
+
+### 7.2 Responsabilidad por Contenido de Terceros
+
+**Artist Hive** puede contener enlaces a sitios web, servicios, productos o contenido de terceros. No somos responsables de la veracidad, precisión, integridad o disponibilidad de dicho contenido. Cualquier transacción o interacción con servicios de terceros es responsabilidad exclusiva del usuario y el tercero, y **Artist Hive** no tendrá responsabilidad alguna en estos casos.
+
+### 7.3 Exclusión de Responsabilidad en Casos Específicos
+
+En la medida permitida por la ley aplicable, **Artist Hive** no será responsable en ningún caso de:
+
+- Pérdidas o daños directos, indirectos, incidentales, especiales, punitivos o consecuentes derivados del uso o imposibilidad de uso de la plataforma.
+- Pérdida de ingresos, lucro cesante, interrupción de negocios, pérdida de datos, o cualquier otro daño económico.
+- Cualquier problema técnico, incluidos fallos de hardware o software, conexiones interrumpidas, virus u otros problemas relacionados con la tecnología.
+
+### 7.4 Limitación de Responsabilidad en la Medida Permitida por la Ley
+
+En cualquier circunstancia en la que **Artist Hive** deba asumir responsabilidad, esta se limitará al monto que el usuario haya pagado por los servicios en los últimos seis meses o, en su defecto, a una suma máxima de 100 USD, el monto que sea menor.
+
+Esta limitación no se aplicará en caso de dolo o mala fe por parte de **Artist Hive**.
+
+### 7.5 Legislación Aplicable
+
+Esta sección se regirá e interpretará de acuerdo con las leyes aplicables de la jurisdicción correspondiente, en la medida en que estas limitaciones no contradigan las normativas legales locales que otorguen derechos adicionales a los usuarios.
+
+---
+
+## 8. Indemnización
+
+### 8.1 Obligación del Usuario
+
+El usuario se compromete a indemnizar, defender y mantener indemne a **Artist Hive**, sus directores, empleados, agentes, socios y afiliados, de cualquier reclamación, demanda, acción, pérdida, daño, costo o gasto (incluidos honorarios de abogados) que surjan de:
+
+- El uso o mal uso de la plataforma.
+- El incumplimiento de los presentes Términos y Condiciones.
+- La violación de cualquier ley, regulación o derechos de terceros, incluidos, entre otros, derechos de propiedad intelectual.
+- El contenido que el usuario publique, cargue o transmita a través de la plataforma.
+
+### 8.2 Alcance de la Indemnización
+
+Esta obligación de indemnización se aplicará en su totalidad incluso después de que el usuario haya dejado de utilizar la plataforma, y será válida en cualquier jurisdicción en la que **Artist Hive** sea objeto de tales reclamaciones o demandas.
+
+### 8.3 Cooperación en la Defensa
+
+En el caso de que **Artist Hive** deba enfrentar cualquier acción legal como resultado de las actividades del usuario, nos reservamos el derecho de asumir la defensa y control exclusivos de cualquier asunto sujeto a indemnización por parte del usuario. En dicho caso, el usuario acepta cooperar plenamente con nosotros en la defensa de cualquier reclamación.
+
+### 8.4 Exoneración por Parte de **Artist Hive**
+
+**Artist Hive** se reserva el derecho de resolver cualquier reclamación o demanda a su entera discreción, sin la necesidad de obtener el consentimiento previo del usuario, cuando lo consideremos necesario para proteger los intereses de la plataforma y de nuestros usuarios.
+
+
+
+---
+
+## 9. Limitación de Responsabilidad
+
+### 9.1 Exclusión de Garantías
+
+**Artist Hive** proporciona la plataforma "tal cual" y "según disponibilidad", sin ninguna garantía de ningún tipo, ya sea expresa o implícita, incluidas, entre otras, las garantías de comerciabilidad, adecuación para un propósito particular o no infracción de derechos. No garantizamos que el acceso a la plataforma será continuo, seguro o libre de errores.
+
+### 9.2 Limitación de Daños
+
+En ningún caso, **Artist Hive**, sus directores, empleados, agentes, socios o afiliados serán responsables de ningún daño indirecto, incidental, especial, consecuente o punitivo, ni de la pérdida de datos, ingresos, beneficios, uso u otras pérdidas económicas derivadas de:
+
+- El uso o la incapacidad de utilizar la plataforma.
+- Cualquier contenido proporcionado por terceros a través de la plataforma.
+- El acceso no autorizado, la alteración o el uso no autorizado de los datos del usuario.
+- Cualquier otro asunto relacionado con el uso de la plataforma.
+
+### 9.3 Límite Máximo de Responsabilidad
+
+La responsabilidad total de **Artist Hive** ante cualquier reclamación derivada o relacionada con estos Términos y Condiciones no excederá, en ningún caso, la cantidad pagada por el usuario, si la hubiera, por acceder a la plataforma durante los seis (6) meses anteriores al evento que dio lugar a la reclamación.
+
+### 9.4 Exenciones Legales
+
+Algunas jurisdicciones no permiten la exclusión o limitación de garantías o responsabilidad por daños incidentales o consecuentes. En estos casos, la limitación de responsabilidad de **Artist Hive** se aplicará en la máxima medida permitida por la ley aplicable.
+
+---
+
+## 10. Resolución de Disputas
+
+### 10.1 Negociación Amistosa
+
+En caso de cualquier controversia o disputa relacionada con el uso de la plataforma, las partes intentarán resolver el conflicto de manera amistosa. Los usuarios deben contactar a **Artist Hive** a través de los medios de contacto establecidos, y ambas partes se comprometen a realizar todos los esfuerzos razonables para alcanzar una solución satisfactoria en un plazo de treinta (30) días.
+
+### 10.2 Mediación
+
+Si después del período de negociación amistosa no se logra un acuerdo, las partes podrán optar por someterse a un proceso de mediación, utilizando un mediador neutral certificado, con sede en [país donde opera la plataforma] o en un lugar acordado por ambas partes. Los costos de la mediación serán compartidos entre las partes, salvo acuerdo en contrario.
+
+### 10.3 Arbitraje Vinculante
+
+En caso de que la mediación no resulte en un acuerdo, las disputas serán sometidas a arbitraje vinculante conforme a las reglas del [institución arbitral pertinente] en [ubicación], siendo el arbitraje confidencial. El laudo arbitral será definitivo y vinculante para las partes y podrá ejecutarse en cualquier tribunal de jurisdicción competente.
+
+### 10.4 Excepciones a la Resolución de Disputas
+
+Las disposiciones anteriores no impedirán a **Artist Hive** de buscar medidas cautelares (o cualquier otro tipo de reparación equitativa urgente) ante los tribunales cuando sea necesario para proteger sus derechos de propiedad intelectual u otros derechos legales.
+
+### 10.5 Legislación Aplicable
+
+Este acuerdo y cualquier controversia o reclamación que surja del uso de la plataforma se regirá por las leyes de [jurisdicción], sin perjuicio de sus disposiciones sobre conflictos de leyes. Los tribunales de [jurisdicción] tendrán jurisdicción exclusiva sobre cualquier controversia que no pueda resolverse mediante arbitraje o mediación.
+
+---
+
+
+
+
 
 
