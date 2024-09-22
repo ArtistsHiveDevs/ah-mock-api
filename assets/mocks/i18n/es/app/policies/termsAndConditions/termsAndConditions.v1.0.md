@@ -445,3 +445,47 @@ Las disposiciones anteriores no impedirán a **Artist Hive** de buscar medidas c
 Este acuerdo y cualquier controversia o reclamación que surja del uso de la plataforma se regirá por las leyes de [jurisdicción], sin perjuicio de sus disposiciones sobre conflictos de leyes. Los tribunales de [jurisdicción] tendrán jurisdicción exclusiva sobre cualquier controversia que no pueda resolverse mediante arbitraje o mediación.
 
 ---
+## 11. Modificaciones a los Términos y Condiciones
+
+### 11.1 Facultades de Modificación
+
+**Artist Hive** se reserva el derecho de modificar estos Términos y Condiciones en cualquier momento, a su discreción y sin necesidad de previo aviso. Cualquier modificación entrará en vigor de manera inmediata una vez que los nuevos Términos y Condiciones sean publicados en la plataforma.
+
+### 11.2 Notificación de Cambios
+
+En caso de que se realicen cambios materiales o significativos a estos Términos y Condiciones, **Artist Hive** hará esfuerzos razonables para notificar a los usuarios mediante los medios disponibles en la plataforma, como notificaciones en la interfaz de usuario, correos electrónicos o alertas en la aplicación. 
+
+### 11.3 Aceptación de las Modificaciones
+
+El uso continuado de la plataforma después de la fecha de publicación de los Términos y Condiciones modificados constituye la aceptación por parte del usuario de las modificaciones introducidas. Si el usuario no está de acuerdo con los cambios, deberá cesar el uso de la plataforma y podrá solicitar la eliminación de su cuenta en cualquier momento.
+
+### 11.4 Revisión de los Términos
+
+Es responsabilidad del usuario revisar periódicamente estos Términos y Condiciones para estar al tanto de cualquier cambio. **Artist Hive** no será responsable por la falta de conocimiento del usuario respecto a las modificaciones realizadas a los Términos y Condiciones si no revisa la plataforma de manera periódica.
+
+### 11.5 Conservación de los Términos Previos
+
+En caso de disputas que se deriven de los Términos y Condiciones anteriores, estos seguirán siendo aplicables hasta la resolución de la disputa, siempre que la disputa se haya generado antes de la entrada en vigor de los nuevos términos.
+
+---
+
+## 12. Terminación de la Relación Contractual
+
+### 12.1 Terminación por parte del Usuario
+
+Los usuarios pueden optar por dar de baja su cuenta de **Artist Hive** en cualquier momento mediante la solicitud de eliminación de cuenta, utilizando los mecanismos disponibles en la plataforma o contactando a los canales de soporte proporcionados. Al cerrar su cuenta, el usuario perderá el acceso a su perfil, datos, y cualquier contenido generado en la plataforma.
+
+### 12.2 Terminación por parte de Artist Hive
+
+**Artist Hive** se reserva el derecho de suspender o cancelar cualquier cuenta de usuario sin previo aviso en caso de que considere que se ha producido una violación a estos Términos y Condiciones, la normativa legal aplicable, o que el uso de la plataforma afecta negativamente a la comunidad. Artist Hive también puede, a su discreción, dar por terminada la relación contractual con cualquier usuario si decide descontinuar los servicios o si se ve obligado a hacerlo por orden de una autoridad competente.
+
+### 12.3 Consecuencias de la Terminación
+
+En caso de terminación, ya sea por el usuario o por **Artist Hive**, el acceso a la plataforma y a todos los datos almacenados en ella se suspenderá inmediatamente. **Artist Hive** no estará obligado a retener, mantener o proporcionar acceso a los datos del usuario tras la terminación, salvo disposición legal en contrario.
+
+### 12.4 Reclamaciones Post-Terminación
+
+La terminación de la cuenta de usuario no exonera al mismo de sus responsabilidades legales derivadas de acciones realizadas durante el uso de la plataforma. Cualquier disputa o reclamo que surja en relación con los actos realizados antes de la terminación podrá ser objeto de una reclamación legal incluso después de la finalización de la relación contractual.
+
+---
+
