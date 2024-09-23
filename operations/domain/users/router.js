@@ -239,23 +239,23 @@ module.exports = [
       const user = new User(req.body);
       await user.save();
 
-      // entityInfo = {
-      //   id: user._id,
-      //   shortId: user.shortId,
-      //   profile_pic: user.profile_pic,
-      //   name: user.name,
-      //   username: user.username,
-      //   subtitle: user.subtitle,
-      //   verified_status: user.verified_status,
-      // };
-      // const entityDirectory = new EntityDirectory({
-      //   ...entityInfo,
-      //   entityType: "User",
-      // });
-      // await entityDirectory.save();
+      entityInfo = {
+        id: user._id,
+        shortId: user.shortId,
+        profile_pic: user.profile_pic,
+        name: user.name,
+        username: user.username,
+        subtitle: user.subtitle,
+        verified_status: user.verified_status,
+      };
+      const entityDirectory = new EntityDirectory({
+        ...entityInfo,
+        entityType: "User",
+      });
+      await entityDirectory.save();
 
 
-      res.status(201).send(user);
+      res.status(201).send(createPaginatedDataResponse(user));
     } catch (err) {
       res.status(400).send(err);
     }
