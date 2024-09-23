@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const User = require("../models/appbase/User");
 const EntityDirectory = require("../models/appbase/EntityDirectory");
 const apiHelperFunctions = require("./apiHelperFunctions");
-const helperFunctions = require("./helperFunctions")
+const helpers = require("./helperFunctions");
 const routesConstants = require("../operations/domain/artists/constants/routes.constants");
 
 function modelRequiresAuth(modelName) {
@@ -99,7 +99,7 @@ function createCRUDActions({ model, options = {} }) {
     results = apiHelperFunctions.translateDBResults({ results, lang });
 
     if(options?.randomizeGetAll){
-      helperFunctions.suffle(results);
+      helpers.shuffle(results);
     }
 
     // Crear la respuesta paginada
