@@ -26,6 +26,7 @@ const roleSchema = new mongoose.Schema(
 );
 
 const userSchema = new mongoose.Schema({
+  sub:String,
   given_names: String,
   surnames: String,
   username: String,
