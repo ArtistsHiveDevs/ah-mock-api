@@ -5,6 +5,7 @@ module.exports = {
   deleteById: "/:id",
   create: "/",
   favorites: "/:id/favourites",
+  checkId:"cid/:id",
   tours_outline: "/:id/tours_outlines",
   public_fields: [
     // "artistType",

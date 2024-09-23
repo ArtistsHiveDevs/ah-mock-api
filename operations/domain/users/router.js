@@ -11,6 +11,8 @@ const {
   createPaginatedDataResponse,
 } = require("../../../helpers/apiHelperFunctions");
 const routesConstants = require("./constants/routes.constants");
+const EntityDirectory = require("../../../models/appbase/EntityDirectory");
+const apiHelperFunctions = require("../../../helpers/apiHelperFunctions");
 
 var userRouter = express.Router({ mergeParams: true });
 
@@ -212,6 +214,23 @@ module.exports = [
     try {
       const user = new User(req.body);
       await user.save();
+
+      // entityInfo = {
+      //   id: user._id,
+      //   shortId: user.shortId,
+      //   profile_pic: user.profile_pic,
+      //   name: user.name,
+      //   username: user.username,
+      //   subtitle: user.subtitle,
+      //   verified_status: user.verified_status,
+      // };
+      // const entityDirectory = new EntityDirectory({
+      //   ...entityInfo,
+      //   entityType: "User",
+      // });
+      // await entityDirectory.save();
+
+
       res.status(201).send(user);
     } catch (err) {
       res.status(400).send(err);
@@ -318,5 +337,28 @@ module.exports = [
   userRouter.get(RoutesConstants.findUserById, (req, res) => {
     const { userId } = req.params;
     return res.status(200).json(generateTourOutline(userId));
+  }),
+  userRouter.get(RoutesConstants.checkId, async (req, res) => {
+    const { id } = req.params;
+    let response = 'AVAILABLE';
+    const query = {
+      $or: [
+        { username: { $regex: new RegExp(`^${id}$`, "i") } },
+        // { name: { $regex: new RegExp(`^${id}$`, "i") } },
+      ],
+    };
+
+    let queryResult = EntityDirectory.findOne(query); //.select(projection);
+
+
+    // Ejecutar la consulta
+    let entityInfo = await queryResult.exec();
+
+
+    if (entityInfo?.username === id) {
+      response = 'TAKEN';
+    }
+
+    return res.status(200).json(apiHelperFunctions.createPaginatedDataResponse({ status: response }));
   }),
 ];
