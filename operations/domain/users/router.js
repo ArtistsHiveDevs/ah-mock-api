@@ -106,6 +106,30 @@ function filterResultsByQuery(req, result) {
 }
 
 module.exports = [
+  
+  userRouter.get(RoutesConstants.checkId, async (req, res) => {
+    const { id } = req.params;
+    let response = 'AVAILABLE';
+    const query = {
+      $or: [
+        { username: { $regex: new RegExp(`^${id}$`, "i") } },
+        // { name: { $regex: new RegExp(`^${id}$`, "i") } },
+      ],
+    };
+
+    let queryResult = EntityDirectory.findOne(query); //.select(projection);
+
+
+    // Ejecutar la consulta
+    let entityInfo = await queryResult.exec();
+
+
+    if (entityInfo?.username === id) {
+      response = 'TAKEN';
+    }
+
+    return res.status(200).json(apiHelperFunctions.createPaginatedDataResponse({ status: response }));
+  }),
   userRouter.get(RoutesConstants.usersList, async (req, res) => {
     // try {
     //   return res.json(filterResultsByQuery(req, helpers.getEntityData("User")));
@@ -337,28 +361,5 @@ module.exports = [
   userRouter.get(RoutesConstants.findUserById, (req, res) => {
     const { userId } = req.params;
     return res.status(200).json(generateTourOutline(userId));
-  }),
-  userRouter.get(RoutesConstants.checkId, async (req, res) => {
-    const { id } = req.params;
-    let response = 'AVAILABLE';
-    const query = {
-      $or: [
-        { username: { $regex: new RegExp(`^${id}$`, "i") } },
-        // { name: { $regex: new RegExp(`^${id}$`, "i") } },
-      ],
-    };
-
-    let queryResult = EntityDirectory.findOne(query); //.select(projection);
-
-
-    // Ejecutar la consulta
-    let entityInfo = await queryResult.exec();
-
-
-    if (entityInfo?.username === id) {
-      response = 'TAKEN';
-    }
-
-    return res.status(200).json(apiHelperFunctions.createPaginatedDataResponse({ status: response }));
   }),
 ];
