@@ -156,8 +156,8 @@ var routes = [
     }),
   },
   // { path: "/instruments", route: createCRUDRoutes({model:Instrument, "Instrument") },
-  // { path: "/places", route: placesRouter },
-  { path: "/places", route: createCRUDRoutes({ model: Place }) },
+  // { path: "/places", route: placesRoutetrue
+  { path: "/places", route: createCRUDRoutes({ model: Place, options:{randomizeGetAll:true} }) },
   { path: "/rehearsal_rooms", route: rehearsalRoomsRouter },
   { path: "/industryOffer", route: industryOfferRouter },
   { path: "/riders", route: ridersRouter },

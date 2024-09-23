@@ -217,6 +217,8 @@ module.exports = [
         .skip((page - 1) * limit)
         .limit(Number(limit));
 
+      helpers.shuffle(artists);
+      
       res.json(
         createPaginatedDataResponse(
           artists,
