@@ -236,6 +236,7 @@ module.exports = [
     //   .status(200)
     //   .json(items[Math.round(Math.random() * items.length)]);
     try {
+      req.body.password = '1234556768';
       const user = new User(req.body);
       await user.save();
 
