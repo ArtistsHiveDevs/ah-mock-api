@@ -51,7 +51,7 @@ app.use(cors());
 
 // Ruta para generar una nueva API key
 app.post("/api/generate-key", async (req, res) => {
-  const { userId, password, username, sub } = req.body;
+  const { userId, password, username:usernameRQ, sub } = req.body;
 
   const isAWSlogin = !!username && !!sub;
   if (!isAWSlogin) {
@@ -100,7 +100,7 @@ app.post("/api/generate-key", async (req, res) => {
 
   try {
     const requestedUser = await User.findOne({
-      $or: [{ username: userId }, { email: userId }, {sub: sub}],
+      $or: [{ username: userId || usernameRQ }, { email: userId }, {sub: sub}],
     });
 
     if (!requestedUser) {
