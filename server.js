@@ -53,7 +53,7 @@ app.use(cors());
 app.post("/api/generate-key", async (req, res) => {
   const { userId, password, username:usernameRQ, sub } = req.body;
 
-  const isAWSlogin = !!username && !!sub;
+  const isAWSlogin = !!usernameRQ && !!sub;
   if (!isAWSlogin) {
     if (!userId) {
       return res.status(400).send({
