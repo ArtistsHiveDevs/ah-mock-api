@@ -51,19 +51,22 @@ app.use(cors());
 
 // Ruta para generar una nueva API key
 app.post("/api/generate-key", async (req, res) => {
-  const { userId, password } = req.body;
+  const { userId, password, username, sub } = req.body;
 
-  if (!userId) {
-    return res.status(400).send({
-      message: "User ID is required.",
-      errorCode: ErrorCodes.AUTH_NO_USER_PROVIDED,
-    });
-  }
-  if (!password) {
-    return res.status(400).send({
-      message: "Password is required.",
-      errorCode: ErrorCodes.AUTH_NO_PASSWORD_PROVIDED,
-    });
+  const isAWSlogin = !!username && !!sub;
+  if (!isAWSlogin) {
+    if (!userId) {
+      return res.status(400).send({
+        message: "User ID is required.",
+        errorCode: ErrorCodes.AUTH_NO_USER_PROVIDED,
+      });
+    }
+    if (!password) {
+      return res.status(400).send({
+        message: "Password is required.",
+        errorCode: ErrorCodes.AUTH_NO_PASSWORD_PROVIDED,
+      });
+    }
   }
 
   // const users = helpers.getEntityData("User");
@@ -97,15 +100,20 @@ app.post("/api/generate-key", async (req, res) => {
 
   try {
     const requestedUser = await User.findOne({
-      $or: [{ username: userId }, { email: userId }],
+      $or: [{ username: userId }, { email: userId }, {sub: sub}],
     });
 
     if (!requestedUser) {
       return res.status(404).send({ message: "User not found" });
     }
 
+    if(isAWSlogin){
+      if (requestedUser.sub !== sub) {
+        return res.status(401).send({ message: "Invalid sub" });
+      }
+    }
     // Aquí puedes agregar la lógica para verificar la contraseña (ej. hash comparision)
-    if (requestedUser.password !== password) {
+    else if (requestedUser.password !== password) {
       return res.status(401).send({ message: "Invalid password" });
     }
 
