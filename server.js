@@ -108,9 +108,9 @@ app.post("/api/generate-key", async (req, res) => {
     }
 
     if(isAWSlogin){
-      if (requestedUser.sub !== sub) {
-        return res.status(401).send({ message: "Invalid sub" });
-      }
+      // if (requestedUser.sub !== sub) {
+      //   return res.status(401).send({ message: "Invalid sub" });
+      // }
     }
     // Aquí puedes agregar la lógica para verificar la contraseña (ej. hash comparision)
     else if (requestedUser.password !== password) {
