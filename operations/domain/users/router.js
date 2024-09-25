@@ -268,6 +268,17 @@ module.exports = [
 
     const newInfo = { ...req.body };
 
+    if(newInfo.gender){
+      const genders = [
+        { label: 'Man', value: 'male' },
+        { label: 'Woman', value: 'female' },
+        { label: 'Non binary', value: 'non_binary' },
+        { label: 'Non specified', value: 'non_specified' },
+      ];
+
+      newInfo.gender = genders.findIndex(gender => gender.value === newInfo.gender);
+    }
+
     try {
       // Generar el objeto de actualización
       const updateFields = helpers.flattenObject(newInfo);
