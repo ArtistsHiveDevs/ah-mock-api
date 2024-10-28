@@ -335,14 +335,14 @@
         "artists": [
           {
             "name": "Carlos Valencia",
-            "artistic_name": "Tostao",
+            "stage_name": "Tostao",
             "role": "Director & voz líder",
             "document_type": "CC",
             "document_number": "1234566789"
           },
           {
             "name": "Gloria Martínez",
-            "artistic_name": "Goyo",
+            "stage_name": "Goyo",
             "role": "Voz líder",
             "document_type": "CC",
             "document_number": "1234566789",
@@ -351,7 +351,7 @@
           },
           {
             "name": "Miguel Martínez",
-            "artistic_name": "Mike",
+            "stage_name": "Mike",
             "role": "Voz líder & secuencias",
             "document_type": "CC",
             "document_number": "1234566789",

@@ -51,7 +51,7 @@ app.use(cors());
 
 // Ruta para generar una nueva API key
 app.post("/api/generate-key", async (req, res) => {
-  const { userId, password, username:usernameRQ, sub } = req.body;
+  const { userId, password, username: usernameRQ, sub } = req.body;
 
   const isAWSlogin = !!usernameRQ && !!sub;
   if (!isAWSlogin) {
@@ -99,15 +99,21 @@ app.post("/api/generate-key", async (req, res) => {
   // res.status(200).send({ apiKey: token });
 
   try {
-    const requestedUser = await User.findOne({
-      $or: [{ username: userId || usernameRQ }, { email: userId }, {sub: sub}],
-    });
-
+    let requestedUser;
+    if (isAWSlogin) {
+      requestedUser = await User.findOne({
+        $and: [{ username: userId || usernameRQ }, { sub: sub }],
+      });
+    } else {
+      requestedUser = await User.findOne({
+        $or: [{ username: userId || usernameRQ }, { email: userId }],
+      });
+    }
     if (!requestedUser) {
       return res.status(404).send({ message: "User not found" });
     }
 
-    if(isAWSlogin){
+    if (isAWSlogin) {
       // if (requestedUser.sub !== sub) {
       //   return res.status(401).send({ message: "Invalid sub" });
       // }
@@ -165,7 +171,13 @@ var routes = [
   },
   // { path: "/instruments", route: createCRUDRoutes({model:Instrument, "Instrument") },
   // { path: "/places", route: placesRoutetrue
-  { path: "/places", route: createCRUDRoutes({ model: Place, options:{randomizeGetAll:true} }) },
+  {
+    path: "/places",
+    route: createCRUDRoutes({
+      model: Place,
+      options: { randomizeGetAll: true },
+    }),
+  },
   { path: "/rehearsal_rooms", route: rehearsalRoomsRouter },
   { path: "/industryOffer", route: industryOfferRouter },
   { path: "/riders", route: ridersRouter },
