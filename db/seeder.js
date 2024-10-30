@@ -51,7 +51,11 @@ async function seedData() {
     for (const key of Object.keys(seedConfig).filter(
       (modelGroup) => seedConfig[modelGroup].seed
     )) {
-      await seedConfig[key].dropFunction();
+      try {
+        await seedConfig[key].dropFunction();
+      } catch (error) {
+        console.log("ERROR DROP COLLECTIONS ", error);
+      }
     }
   }
 
@@ -60,7 +64,11 @@ async function seedData() {
     (modelGroup) =>
       seedConfig[modelGroup].seed && seedConfig[modelGroup].preUserIds
   )) {
-    await seedConfig[key].seedFunction();
+    try {
+      await seedConfig[key].seedFunction();
+    } catch (error) {
+      console.log("PRE USER ID ", error);
+    }
   }
 
   // ------------------------------------------------------------------------------- USER ID
@@ -71,7 +79,11 @@ async function seedData() {
     (modelGroup) =>
       seedConfig[modelGroup].seed && !seedConfig[modelGroup].preUserIds
   )) {
-    await seedConfig[key].seedFunction();
+    try {
+      await seedConfig[key].seedFunction();
+    } catch (error) {
+      console.log("POST USER ID ", error);
+    }
   }
 
   // await seedDomainModels("_v2");
@@ -159,115 +171,113 @@ async function seedAppBaseModels() {
 // ******************************************
 async function dropDomainModels() {
   await dropMultipleCollections([
-    // "artists", "places",
-    "events",
+    "artists",
+    "places",
+    // "events",
   ]);
 }
 
 async function seedDomainModels(domainSuffix) {
   const models = [
     // ===================================================== ARTISTS
-    // {
-    //   model: Artist,
-    //   userId,
-    //   forbiddenKeys: ["id"],
-    //   suffix: `${domainSuffix || ""}`,
-    //   extraInfoFunction: (data) => {
-    //     const fs = require("fs");
-    //     // console.log("> agregando albums: ", data.length);
-    //     const artistsSpotifyInfo = JSON.parse(
-    //       fs.readFileSync(
-    //         `./assets/mocks/domain/artists/output_20_08_2024.json`
-    //       )
-    //     );
-    //     const albumTracksInfo = JSON.parse(
-    //       fs.readFileSync(
-    //         `./assets/mocks/domain/artists/tracksByAlbumList_04_09_2024.json`
-    //       )
-    //     );
-
-    //     let print = false;
-    //     data.forEach((artist) => {
-    //       artist.arts = {};
-    //       if (print) {
-    //         console.log(artist.spotify);
-    //         print = false;
-    //       }
-
-    //       const spotifyInfoId = Object.keys(artistsSpotifyInfo).find(
-    //         (artistSpotifyId) => `${artist.spotify}` == `${artistSpotifyId}`
-    //       );
-
-    //       if (spotifyInfoId) {
-    //         const artistInfo = artistsSpotifyInfo[spotifyInfoId];
-    //         if (artistInfo?.albums?.total > 0) {
-    //           artist.arts["music"] = {
-    //             albums: artistInfo?.albums?.items.map((album) => {
-    //               const albumWithTracksID = Object.keys(albumTracksInfo).find(
-    //                 (albumId) => `${album.id}` == `${albumId}`
-    //               );
-    //               return {
-    //                 images: album.images,
-    //                 name: album.name,
-    //                 release_date: album.release_date,
-    //                 release_date_precision: album.release_date_precision,
-    //                 spotify: { id: album.id, url: album.external_urls.spotify },
-    //                 total_tracks: album.total_tracks,
-    //                 tracks: albumWithTracksID
-    //                   ? albumTracksInfo[albumWithTracksID].items
-    //                   : [],
-    //               };
-    //             }),
-    //           };
-    //         }
-    //       }
-    //     });
-    //   },
-    // },
-
-    // ===================================================== PLACES
-    // {
-    //   model: Place,
-    //   userId,
-    //   forbiddenKeys: ["id"],
-    //   suffix: `${domainSuffix || ""}`,
-    //   //   printEachNumberElements: 15,
-    //   //   sleepTimeBetweenInstances: 200,
-    // },
-
-    // ===================================================== EVENT
     {
-      model: Event,
+      model: Artist,
       userId,
-      forbiddenKeys: [
-        "id",
-        "main_artist_id",
-        "guest_artist_id",
-        "place_id",
-        "confirmation_status",
-      ],
+      forbiddenKeys: ["id"],
       suffix: `${domainSuffix || ""}`,
-      printEachNumberElements: 15,
-      relationships: [
-        { relationshipName: "place", ref: Place, refField: "username" },
-        { relationshipName: "artists", ref: Artist, refField: "username" },
-      ],
-      //   sleepTimeBetweenInstances: 200,
-
       extraInfoFunction: (data) => {
-        // data = [...data[0], data[1], data[2]];
-        data = data.map((event) => {
-          // const random = Math.floor(Math.random() * 63);
-          // const randomPlace = await Place.findOne().skip(random);
-          event.place = "lapascasia";
-          event.artists = ["espiral7", "puertocandelaria", "monsieurperine"];
-
-          // console.log("+++++", event);
-          return event;
-        });
-        console.log("% % % ", data);
+        // const fs = require("fs");
+        // // console.log("> agregando albums: ", data.length);
+        // const artistsSpotifyInfo = JSON.parse(
+        //   fs.readFileSync(
+        //     `./assets/mocks/domain/artists/output_20_08_2024.json`
+        //   )
+        // );
+        // const albumTracksInfo = JSON.parse(
+        //   fs.readFileSync(
+        //     `./assets/mocks/domain/artists/tracksByAlbumList_04_09_2024.json`
+        //   )
+        // );
+        // let print = false;
+        // data.forEach((artist) => {
+        //   artist.arts = {};
+        //   if (print) {
+        //     console.log(artist.spotify);
+        //     print = false;
+        //   }
+        //   const spotifyInfoId = Object.keys(artistsSpotifyInfo).find(
+        //     (artistSpotifyId) => `${artist.spotify}` == `${artistSpotifyId}`
+        //   );
+        //   if (spotifyInfoId) {
+        //     const artistInfo = artistsSpotifyInfo[spotifyInfoId];
+        //     if (artistInfo?.albums?.total > 0) {
+        //       artist.arts["music"] = {
+        //         albums: artistInfo?.albums?.items.map((album) => {
+        //           const albumWithTracksID = Object.keys(albumTracksInfo).find(
+        //             (albumId) => `${album.id}` == `${albumId}`
+        //           );
+        //           return {
+        //             images: album.images,
+        //             name: album.name,
+        //             release_date: album.release_date,
+        //             release_date_precision: album.release_date_precision,
+        //             spotify: { id: album.id, url: album.external_urls.spotify },
+        //             total_tracks: album.total_tracks,
+        //             tracks: albumWithTracksID
+        //               ? albumTracksInfo[albumWithTracksID].items
+        //               : [],
+        //           };
+        //         }),
+        //       };
+        //     }
+        //   }
+        // });
       },
     },
+
+    // ===================================================== PLACES
+    {
+      model: Place,
+      userId,
+      forbiddenKeys: ["id"],
+      suffix: `${domainSuffix || ""}`,
+      //   printEachNumberElements: 15,
+      //   sleepTimeBetweenInstances: 200,
+    },
+
+    // ===================================================== EVENT
+    // {
+    //   model: Event,
+    //   userId,
+    //   forbiddenKeys: [
+    //     "id",
+    //     "main_artist_id",
+    //     "guest_artist_id",
+    //     "place_id",
+    //     "confirmation_status",
+    //   ],
+    //   suffix: `${domainSuffix || ""}`,
+    //   printEachNumberElements: 15,
+    //   relationships: [
+    //     { relationshipName: "place", ref: Place, refField: "username" },
+    //     { relationshipName: "artists", ref: Artist, refField: "username" },
+    //   ],
+    //   //   sleepTimeBetweenInstances: 200,
+
+    //   extraInfoFunction: (data) => {
+    //     // data = [...data[0], data[1], data[2]];
+    //     data = data.map((event) => {
+    //       // const random = Math.floor(Math.random() * 63);
+    //       // const randomPlace = await Place.findOne().skip(random);
+    //       event.place = "lapascasia";
+    //       event.artists = ["espiral7", "puertocandelaria", "monsieurperine"];
+
+    //       // console.log("+++++", event);
+    //       return event;
+    //     });
+    //     console.log("% % % ", data);
+    //   },
+    // },
   ];
   await seedModels(models);
 }
@@ -305,7 +315,7 @@ async function main() {
     await connectToDatabase();
 
     // Ejecuta el script
-    await seedData().catch(console.error);
+    await seedData(); //.catch(console.error);
   } catch (error) {
     console.error("Error en la conexión o en la ejecución:", error);
   } finally {

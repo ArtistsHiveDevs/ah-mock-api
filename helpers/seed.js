@@ -7,7 +7,7 @@ async function seed({
   forbiddenKeys = [],
   defaultValues = {},
   suffix = "",
-  printEachNumberElements = 30,
+  printEachNumberElements = 10,
   sleepTimeBetweenInstances = 100,
   relationships = [],
   extraInfoFunction = undefined,
@@ -54,6 +54,7 @@ async function seed({
     );
 
     const errors = [];
+    // console.log(">>> ", data);
     const seedData = helpers.hideProperties(data, allowedKeys);
 
     const defaultValuesIsArray = Array.isArray(defaultValues);

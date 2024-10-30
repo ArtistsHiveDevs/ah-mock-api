@@ -29,8 +29,8 @@ module.exports = {
     const hours = (minutes / 60).toFixed(2);
     return `${hours} hr`;
   },
-  removeStringAccents: function (string) {
-    return string.replace(/[^A-Za-z0-9\[\] ]/g, function (a) {
+  removeStringAccents: function (str) {
+    return str.replace(/[^A-Za-z0-9\[\] ]/g, function (a) {
       const { StringAccentsMap } = require("./stringAccentsMap");
       return StringAccentsMap[a] || a;
     });
@@ -69,9 +69,16 @@ module.exports = {
               searchValue = this.removeStringAccents(
                 searchValue.toLowerCase().trim()
               );
-              objectPropertyValue = this.removeStringAccents(
-                objectPropertyValue.toLowerCase().trim()
+              console.log(
+                "TYPEE!!!!!  ",
+                typeof objectPropertyValue,
+                JSON.stringify(objectPropertyValue, null, 2)
               );
+              objectPropertyValue = !!objectPropertyValue
+                ? this.removeStringAccents(
+                    objectPropertyValue.toLowerCase().trim()
+                  )
+                : "";
             }
           }
 

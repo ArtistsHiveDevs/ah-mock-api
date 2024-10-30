@@ -200,7 +200,7 @@ module.exports = [
     // } catch (err) {
     //   res.status(500).send(err);
     // }
-    const { page = 1, limit = 50, fields } = req.query;
+    const { page = 1, limit = 100, fields } = req.query;
 
     const modelFields = RoutesConstants.public_fields.join(",");
 
@@ -218,7 +218,7 @@ module.exports = [
         .limit(Number(limit));
 
       helpers.shuffle(artists);
-      
+
       res.json(
         createPaginatedDataResponse(
           artists,
