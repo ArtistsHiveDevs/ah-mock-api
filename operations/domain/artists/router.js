@@ -200,7 +200,7 @@ module.exports = [
     // } catch (err) {
     //   res.status(500).send(err);
     // }
-    const { page = 1, limit = 100, fields } = req.query;
+    let { page = 1, limit = 1000, fields } = req.query;
 
     const modelFields = RoutesConstants.public_fields.join(",");
 
@@ -212,16 +212,17 @@ module.exports = [
       }, {});
 
     try {
-      const artists = await Artist.find({})
-        .select(projection)
-        .skip((page - 1) * limit)
-        .limit(Number(limit));
+      const artists = await Artist.find({}).select(projection);
+      // .skip((page - 1) * limit)
+      // .limit(Number(limit));
 
       helpers.shuffle(artists);
 
+      limit = 100;
+
       res.json(
         createPaginatedDataResponse(
-          artists,
+          artists.slice(0, limit),
           page,
           Math.ceil(artists.length / limit)
         )
