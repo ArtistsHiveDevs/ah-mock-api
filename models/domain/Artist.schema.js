@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
 const ArtistInTrackSchema = new mongoose.Schema({
   // external_urls: {
@@ -63,7 +64,8 @@ const ArtistSchema = new mongoose.Schema(
     description: { type: String },
     since: { type: Number },
     home_city: { type: String },
-    country: { type: String },
+    country_alpha2: { type: String },
+    country: { type: Schema.Types.ObjectId, ref: "Country" },
     city: { type: String },
     genres: {
       music: [String],

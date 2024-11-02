@@ -98,7 +98,7 @@ function createCRUDActions({ model, options = {} }) {
     // Traducir los resultados utilizando translateDBResults
     results = apiHelperFunctions.translateDBResults({ results, lang });
 
-    if(options?.randomizeGetAll){
+    if (options?.randomizeGetAll) {
       helpers.shuffle(results);
     }
 
@@ -243,7 +243,13 @@ function createCRUDActions({ model, options = {} }) {
   //   }
   // }
   // Función para buscar entidad por ID
-  async function findEntityById({ id, userId, lang = "en" }) {
+  async function findEntityById({
+    id,
+    userId,
+    lang = "en",
+    idFields = [],
+    specific_projection = undefined,
+  }) {
     if (!id) {
       throw new Error("Must search an id, username or name");
     }
@@ -254,16 +260,21 @@ function createCRUDActions({ model, options = {} }) {
     let visibleAttributes = routesConstants.authenticated_fields;
     const currentUser = await User.findById(userId);
 
+    // console.log("current user ", currentUser?.username);
+    idFields.push("username");
+    idFields.push("name");
+
+    const idFieldsRegexFilter = idFields.map((field) => {
+      return { [field]: { $regex: new RegExp(`^${id}$`, "i") } };
+    });
+
     // Validar si `id` es un ObjectId válido
     if (mongoose.Types.ObjectId.isValid(id)) {
       query._id = id;
     } else {
       // Búsqueda por `username` o `name` si `id` no es un ObjectId
       query = {
-        $or: [
-          { username: { $regex: new RegExp(`^${id}$`, "i") } },
-          { name: { $regex: new RegExp(`^${id}$`, "i") } },
-        ],
+        $or: idFieldsRegexFilter,
       };
     }
 
@@ -278,7 +289,7 @@ function createCRUDActions({ model, options = {} }) {
       ? [...projectionFields, `i18n.${lang}`]
       : projectionFields;
 
-    console.log(modelFields);
+    // console.log(modelName, " fields ", modelFields);
 
     const projection = (modelFields || [])
       .filter(Boolean) // Filtrar cualquier campo vacío o undefined
@@ -300,17 +311,23 @@ function createCRUDActions({ model, options = {} }) {
         );
       })
       .map((field) => {
-        const refModel =
+        const refModelName =
           model.schema.paths[field].options.ref ||
           model.schema.paths[field].caster.options.ref;
-        const refModelFields = model.schema.paths.i18n
+
+        // Obtener el modelo de referencia dinámicamente
+        const refModel = mongoose.model(refModelName);
+        const hasI18n = refModel.schema.paths.i18n;
+
+        const refModelFields = hasI18n
           ? [
               `i18n.${lang}`,
-              ...(routesConstants?.parametric_public_fields?.[refModel]
+              ...(routesConstants?.parametric_public_fields?.[refModelName]
                 ?.summary ??
                 routesConstants?.public_fields ?? ["name"]),
             ]
-          : routesConstants?.parametric_public_fields?.[refModel]?.summary ??
+          : routesConstants?.parametric_public_fields?.[refModelName]
+              ?.summary ??
             routesConstants?.public_fields ?? ["name"];
 
         return {
@@ -322,7 +339,7 @@ function createCRUDActions({ model, options = {} }) {
     // Construir la consulta con proyección y populate
     let queryResult = model.findOne(query); //.select(projection);
 
-    console.log(populateFields);
+    // console.log(modelName, " Populate ", populateFields);
     // Aplicar `populate` a los campos correspondientes
     if (populateFields.length > 0) {
       populateFields.forEach((populateOption) => {
@@ -371,7 +388,16 @@ function createCRUDActions({ model, options = {} }) {
       }
     }
 
-    console.log(JSON.stringify(entityInfo, null, 4));
+    if (specific_projection) {
+      entityInfo = specific_projection.reduce((acc, field) => {
+        if (entityInfo.hasOwnProperty(field)) {
+          acc[field] = entityInfo[field];
+        }
+        return acc;
+      }, {});
+    }
+
+    // console.log(JSON.stringify(entityInfo, null, 4));
     // Retornar los datos visibles para el usuario
     if (false && !currentUserIsOwner) {
       let reducedEntityData = visibleAttributes.reduce((acc, field) => {
@@ -387,65 +413,69 @@ function createCRUDActions({ model, options = {} }) {
 
   // Función para crear una nueva entidad
   async function createEntity({ userId, body }) {
-    if (modelRequiresAuth(modelName) && !userId) {
-      throw new Error(
-        "Unauthorized operation. To execute this operation you require a valid session. Model: " +
-          modelName
-      );
-    }
-    const info = { ...body };
-
-    let ownerUser;
-
-    if (modelRequiresAuth(modelName)) {
-      ownerUser = await User.findById(userId);
-      info.entityRoleMap = [
-        {
-          role: "OWNER",
-          ids: [new mongoose.Types.ObjectId(userId)],
-        },
-      ];
-    }
-    const newEntity = new model(info);
-    await newEntity.save();
-
-    if (modelRequiresAuth(modelName)) {
-      let ownerRoles = ownerUser.roles.find(
-        (role) => role.entityName === modelName
-      );
-
-      if (!ownerRoles) {
-        ownerUser.roles.push({ entityName: modelName, entityRoleMap: [] });
-        ownerRoles = ownerUser.roles[ownerUser.roles.length - 1];
+    try {
+      if (modelRequiresAuth(modelName) && !userId) {
+        throw new Error(
+          "Unauthorized operation. To execute this operation you require a valid session. Model: " +
+            modelName
+        );
       }
+      const info = { ...body };
 
-      let entityInfo = ownerRoles.entityRoleMap.find(
-        (entity) => entity.id === newEntity._id
-      );
+      let ownerUser;
 
-      if (!entityInfo) {
-        entityInfo = {
-          id: newEntity._id,
-          shortId: newEntity.shortId,
-          profile_pic: newEntity.profile_pic,
-          name: newEntity.name,
-          username: newEntity.username,
-          subtitle: newEntity.subtitle,
-          verified_status: newEntity.verified_status,
-          roles: ["OWNER"],
-        };
-        if (modelRequiresEntityIndex(modelName)) {
-          const entityDirectory = new EntityDirectory({
-            ...entityInfo,
-            entityType: modelName,
-          });
-          await entityDirectory.save();
+      if (modelRequiresAuth(modelName)) {
+        ownerUser = await User.findById(userId);
+        info.entityRoleMap = [
+          {
+            role: "OWNER",
+            ids: [new mongoose.Types.ObjectId(userId)],
+          },
+        ];
+      }
+      const newEntity = new model(info);
+      await newEntity.save();
+
+      if (modelRequiresAuth(modelName)) {
+        let ownerRoles = ownerUser.roles.find(
+          (role) => role.entityName === modelName
+        );
+
+        if (!ownerRoles) {
+          ownerUser.roles.push({ entityName: modelName, entityRoleMap: [] });
+          ownerRoles = ownerUser.roles[ownerUser.roles.length - 1];
         }
-        ownerRoles.entityRoleMap.push(entityInfo);
-        entityInfo.roles.push("OWNER");
 
-        ownerUser.save();
+        let entityInfo = ownerRoles.entityRoleMap.find(
+          (entity) => entity.id === newEntity._id
+        );
+
+        if (!entityInfo) {
+          entityInfo = {
+            id: newEntity._id,
+            shortId: newEntity.shortId,
+            profile_pic: newEntity.profile_pic,
+            name: newEntity.name,
+            username: newEntity.username,
+            subtitle: newEntity.subtitle,
+            verified_status: newEntity.verified_status,
+            roles: ["OWNER"],
+          };
+          if (modelRequiresEntityIndex(modelName)) {
+            const entityDirectory = new EntityDirectory({
+              ...entityInfo,
+              entityType: modelName,
+            });
+            await entityDirectory.save();
+          }
+          ownerRoles.entityRoleMap.push(entityInfo);
+          entityInfo.roles.push("OWNER");
+
+          ownerUser.save();
+        }
       }
+    } catch (error) {
+      console.log("ERROR: ", modelName, ", UserId: ", userId, ", body: ", body);
     }
 
     return apiHelperFunctions.createPaginatedDataResponse(newEntity);

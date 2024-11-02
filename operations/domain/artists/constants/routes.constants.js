@@ -98,6 +98,7 @@ module.exports = {
         "native",
         "phone",
         "continent",
+        "capital",
         "currency",
         "alpha2",
         "alpha3",

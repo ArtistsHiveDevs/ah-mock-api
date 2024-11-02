@@ -1,0 +1,3001 @@
+[
+  {
+    "artistType": "musician",
+    "name": "La Pambelé",
+    "username": "lapambele",
+    "subtitle": "",
+    "verified_status": 1,
+    "profile_pic": "https://i.scdn.co/image/ab6761610000e5ebf986a0b4009dd62b540f866a",
+    "photo": "",
+    "description": "La Pambelé es la orquesta de salsa que está sorprendiendo a la escena de la música por interpretar la salsa que se hacía en las décadas de los 70 (o salsa brava) con letras que narran la actualidad. Canciones con sabor nostálgico pero actuales o como tituló un medio colombiano: “una nueva apuesta por la salsa vieja”. Sus canciones ya han sido interpretadas en vivo en Salsa al Parque o el Teatro Colsubsidio. Sus canciones suenan regularmente en la programación de Radio Nacional de Colombia y la emisora antioqueña especializada en salsa Latina Stereo; la industria musical reconoce su nombre gracias a sus showcases en Circulart (Medellín), Bime Bogotá y Bogotá Music Market. En 2022 publicaron su disco debut titulado Primer Round, el cual les permitió darse a conocer y llevar al mercado global dos vinilos. En sus influencias resaltan nombres como Markolino Dimond, Eddie Palmieri, Edy Martínez, El Pantera, Ismael Miranda, Quintana, Rivera, entre otros. La Pambelé is the salsa orchestra that is surprising the music scene by performing salsa from the 70s (or heavy guaguanco) with lyrics that narrate contemporary issues. Their songs have a nostalgic yet current flavor, or as a Colombian media outlet described them: “a new take on old salsa.” Their songs have already been performed live at Salsa al Parque and the Teatro Colsubsidio. Their songs are regularly played on Radio Nacional de Colombia and the Antioquian salsa radio station Latina Stereo. The music industry recognizes their name thanks to their showcases at Circulart (Medellín), Bime Bogotá, and Bogotá Music Market. In 2022, they released their debut album titled Primer Round, which allowed them to make a name for themselves and bring two vinyl records to the global market. Their influences include names like Markolino Dimond, Eddie Palmieri, Edy Martínez, El Pantera, Ismael Miranda, Quintana, Rivera, among others.",
+    "is_active": "",
+    "country": "co",
+    "city": "",
+    "since": 0,
+    "home_city": "",
+    "genres": {
+      "music": []
+    },
+    "spoken_languages": [],
+    "stage_languages": [],
+    "arts_languages": [],
+    "website": "https://express.adobe.com/page/8AUMa7QUGdZYh/",
+    "email": "lapambeleorchestra@gmail.com",
+    "mobile_phone": 3164932906,
+    "whatsapp": "",
+    "facebook": "LaPambele",
+    "tiktok": "",
+    "twitch": "",
+    "instagram": "lapambele",
+    "spotify": "0CRVq33mNJl6sTcWvH6WzV",
+    "soundcloud": "",
+    "youtube": "https://www.youtube.com/channel/UC-AdoV8k1LILvwcA3PKYgEg",
+    "youtube_widget_id": "",
+    "chartmetric": 9000394,
+    "spotify_data": {
+      "followers": 3615,
+      "name": "La Pambelé",
+      "popularity": 14
+    },
+    "chartmetric_data": {
+      "name": "La Pambelé",
+      "sp_where_people_listen": [
+        {
+          "code2": "co",
+          "listeners": 1371,
+          "name": "Bogotá"
+        },
+        {
+          "code2": "co",
+          "listeners": 214,
+          "name": "Medellín"
+        },
+        {
+          "code2": "mx",
+          "listeners": 178,
+          "name": "Mexico City"
+        },
+        {
+          "code2": "co",
+          "listeners": 124,
+          "name": "Santiago de Cali"
+        },
+        {
+          "code2": "mx",
+          "listeners": 88,
+          "name": "Gustavo Adolfo Madero"
+        }
+      ],
+      "stats": {
+        "airplay_streams": 364,
+        "airplay_top_city": [2141],
+        "airplay_top_country": ["CO"],
+        "anghami_followers": 0,
+        "anghami_plays": 63,
+        "bs_followers": 105,
+        "deezer_ed_playlist_count": 1,
+        "deezer_ed_playlist_total_reach": 41001,
+        "deezer_fans": 84,
+        "deezer_playlist_count": 1,
+        "deezer_playlist_total_reach": 41001,
+        "earliest_album_release_date": "2022-04-01",
+        "earliest_album_upc": "5050580781085",
+        "facebook_followers": 552,
+        "fs_likes": 395,
+        "fs_talks": 3,
+        "ins_engagement_rate": 2.9593,
+        "ins_followers": 8881,
+        "latest_album_release_date": "2024-07-15",
+        "latest_album_upc": "085365236356",
+        "rank": {
+          "code2": {
+            "code2": "CO",
+            "perc_25_75": 0.919682,
+            "perc_eg": 0.916845,
+            "perc_fb": 0.933602,
+            "rank_25_75": 2435,
+            "rank_eg": 2521,
+            "rank_fb": 2013
+          },
+          "genre": [
+            {
+              "cm_tag": 501130,
+              "perc_25_75": 0.870482,
+              "perc_eg": 0.863078,
+              "perc_fb": 0.896774,
+              "rank_25_75": 36626,
+              "rank_eg": 38720,
+              "rank_fb": 29191
+            },
+            {
+              "cm_tag": 501215,
+              "perc_25_75": 0.787319,
+              "perc_eg": 0.776742,
+              "perc_fb": 0.831645,
+              "rank_25_75": 15282,
+              "rank_eg": 16042,
+              "rank_fb": 12097
+            },
+            {
+              "cm_tag": 501147,
+              "perc_25_75": 0.904941,
+              "perc_eg": 0.89955,
+              "perc_fb": 0.924999,
+              "rank_25_75": 74473,
+              "rank_eg": 78697,
+              "rank_fb": 58759
+            },
+            {
+              "cm_tag": 501206,
+              "perc_25_75": 0.571933,
+              "perc_eg": 0.526579,
+              "perc_fb": 0.679281,
+              "rank_25_75": 2907,
+              "rank_eg": 3215,
+              "rank_fb": 2178
+            },
+            {
+              "cm_tag": 501146,
+              "perc_25_75": 0.890556,
+              "perc_eg": 0.884128,
+              "perc_fb": 0.915661,
+              "rank_25_75": 123398,
+              "rank_eg": 130646,
+              "rank_fb": 95092
+            },
+            {
+              "cm_tag": 501216,
+              "perc_25_75": 0.698921,
+              "perc_eg": 0.680134,
+              "perc_fb": 0.760678,
+              "rank_25_75": 9375,
+              "rank_eg": 9960,
+              "rank_fb": 7452
+            }
+          ],
+          "overall": {
+            "nml_25_75": 0.0001008333238454394,
+            "perc_25_75": 0.51318,
+            "perc_eg": 0.955361,
+            "perc_fb": 0.964766,
+            "rank_100": 345313,
+            "rank_25_75": 486820,
+            "rank_eg": 492718,
+            "rank_fb": 388665,
+            "score_100": 4.468082855446415,
+            "score_25_75": 0.000057026496,
+            "score_percentile": 0.95602,
+            "score_percentile_100": 0.057212
+          }
+        },
+        "shazam_count": 4680,
+        "signed": false,
+        "songkick_fans": 216,
+        "soundcloud_followers": 4,
+        "sp_followers": 3595,
+        "sp_followers_to_listeners_ratio": 0.709213,
+        "sp_listeners_to_followers_ratio": 1.410014,
+        "sp_monthly_listeners": 5069,
+        "sp_popularity": 15,
+        "sp_where_people_listen": "[{\"code2\":\"co\",\"listeners\":1371,\"name\":\"Bogotá\"},{\"code2\":\"co\",\"listeners\":214,\"name\":\"Medellín\"},{\"code2\":\"mx\",\"listeners\":178,\"name\":\"Mexico City\"},{\"code2\":\"co\",\"listeners\":124,\"name\":\"Santiago de Cali\"},{\"code2\":\"mx\",\"listeners\":88,\"name\":\"Gustavo Adolfo Madero\"}]",
+        "spotify_ed_playlist_count": 0,
+        "spotify_ed_playlist_total_reach": 0,
+        "spotify_playlist_count": 502,
+        "spotify_playlist_total_reach": 135474,
+        "spotify_popular_playlist_count": 2,
+        "spotify_popular_playlist_total_reach": 11574087,
+        "spotify_popular_playlist_tracks": 197,
+        "ss_followers": 4,
+        "stats_ranked": {
+          "airplay_streams": 118301,
+          "anghami_followers": 584548,
+          "anghami_plays": 332759,
+          "bs_followers": 103028,
+          "deezer_ed_playlist_count": 49511,
+          "deezer_ed_playlist_total_reach": 21783,
+          "deezer_fans": 340312,
+          "deezer_playlist_count": 163557,
+          "deezer_playlist_total_reach": 31626,
+          "facebook_followers": 150308,
+          "fs_likes": 154842,
+          "fs_talks": 76125,
+          "ins_engagement_rate": 89881,
+          "ins_followers": 92922,
+          "shazam_count": 483024,
+          "songkick_fans": 174445,
+          "soundcloud_followers": 106993,
+          "sp_followers": 212430,
+          "sp_followers_to_listeners_ratio": 1312427,
+          "sp_listeners_to_followers_ratio": 883895,
+          "sp_monthly_listeners": 343768,
+          "sp_popularity": 392413,
+          "spotify_ed_playlist_count": 1431407,
+          "spotify_ed_playlist_total_reach": 2055219,
+          "spotify_playlist_count": 415914,
+          "spotify_playlist_total_reach": 381789,
+          "ss_followers": 95133,
+          "tiktok_engagement_rate": 20268,
+          "tiktok_followers": 43218,
+          "tiktok_likes": 44382,
+          "tiktok_top_video_comments": 1107747,
+          "tiktok_top_video_views": 844267,
+          "tiktok_track_posts": 778439,
+          "ts_followers": 33986,
+          "youtube_engagement_rate": 17202
+        },
+        "tiktok_engagement_rate": 5.477300000000001,
+        "tiktok_followers": 640,
+        "tiktok_likes": 2849,
+        "tiktok_top_video_comments": 6,
+        "tiktok_top_video_views": 7583,
+        "tiktok_track_posts": 12,
+        "ts_followers": 129,
+        "youtube_engagement_rate": 3.6029
+      }
+    },
+    "general_rate": 4.6,
+    "followers": 0,
+    "event_followers": 0,
+    "stats": {
+      "rating": {
+        "overall": 1.9526856251219205,
+        "talent": 0.25238794935722564,
+        "performance": 0.48012940099588236,
+        "proffesionalism": 3.7132583055733512,
+        "stage_presence": 4.569076484520532,
+        "charisma": 4.315508331689809,
+        "timeliness": 4.776021096801581,
+        "communication": 1.4758946837965081,
+        "respectfulness": 1.8984376596560317,
+        "total_rates": 8290
+      }
+    },
+    "arts": {
+      "music": {
+        "albums": []
+      }
+    }
+  },
+  {
+    "artistType": "musician",
+    "name": "Ministerio del beat",
+    "username": "ministeriodelbeat",
+    "subtitle": "",
+    "verified_status": 1,
+    "profile_pic": "https://i.scdn.co/image/ab6761610000e5eb6a688780f0793d33c6667335",
+    "photo": "",
+    "description": "Somos Bruno Mondora (voz) Nahuel Aloisio (voz) Julián Martin Avellaneda (bajo, voz y composición) Ema Garraza (guitarra) Marcos Navarrete (percusión) Clara Zivano (batería) y Andrés Mora (teclado y voz) Mezclamos funk, hip hop, lofi y rock.",
+    "is_active": "",
+    "country": "ar",
+    "city": "",
+    "since": 0,
+    "home_city": "",
+    "genres": {
+      "music": []
+    },
+    "spoken_languages": [],
+    "stage_languages": [],
+    "arts_languages": [],
+    "website": "",
+    "email": "",
+    "mobile_phone": "",
+    "whatsapp": "",
+    "facebook": "peopleMinisterio-Internacional-Beat100067546701027",
+    "tiktok": "",
+    "twitch": "",
+    "instagram": "ministeriodelbeat",
+    "spotify": "62pT9zuSevqNr3Q2MtXXPb",
+    "soundcloud": "",
+    "youtube": "https://www.youtube.com/channel/UC-SjipW0BM6pKnjndEqZ6Yw",
+    "youtube_widget_id": "",
+    "chartmetric": 7622558,
+    "spotify_data": {
+      "followers": 125,
+      "name": "Ministerio Del Beat",
+      "popularity": 1
+    },
+    "chartmetric_data": {
+      "name": "Ministerio Del Beat",
+      "sp_where_people_listen": null,
+      "stats": {
+        "earliest_album_release_date": "2019-07-19",
+        "earliest_album_upc": "633696139886",
+        "latest_album_release_date": "2020-06-20",
+        "latest_album_upc": "707856400076",
+        "rank": {
+          "code2": {
+            "code2": "AR",
+            "perc_25_75": 0.290747,
+            "perc_eg": 0.291564,
+            "perc_fb": 0.340347,
+            "rank_25_75": 38194,
+            "rank_eg": 38150,
+            "rank_fb": 35523
+          },
+          "genre": [
+            {
+              "cm_tag": 501147,
+              "perc_25_75": 0.298181,
+              "perc_eg": 0.045488,
+              "perc_fb": 0.346826,
+              "rank_25_75": 549745,
+              "rank_eg": 747683,
+              "rank_fb": 511640
+            }
+          ],
+          "overall": {
+            "score_25_75": 5e-8,
+            "score_percentile": 0.52834
+          }
+        },
+        "signed": false,
+        "spotify_ed_playlist_count": 0,
+        "spotify_ed_playlist_total_reach": 0,
+        "spotify_playlist_count": 4,
+        "spotify_playlist_total_reach": 421,
+        "stats_ranked": {
+          "spotify_ed_playlist_count": 3398861,
+          "spotify_ed_playlist_total_reach": 1307380,
+          "spotify_playlist_count": 4042683,
+          "spotify_playlist_total_reach": 3392908
+        }
+      }
+    },
+    "general_rate": 4.6,
+    "followers": 0,
+    "event_followers": 0,
+    "stats": {
+      "rating": {
+        "overall": 1.9526856251219205,
+        "talent": 0.25238794935722564,
+        "performance": 0.48012940099588236,
+        "proffesionalism": 3.7132583055733512,
+        "stage_presence": 4.569076484520532,
+        "charisma": 4.315508331689809,
+        "timeliness": 4.776021096801581,
+        "communication": 1.4758946837965081,
+        "respectfulness": 1.8984376596560317,
+        "total_rates": 8290
+      }
+    },
+    "arts": {
+      "music": {
+        "albums": []
+      }
+    }
+  },
+  {
+    "artistType": "musician",
+    "name": "Pacífico libre",
+    "username": "pacifico.libre",
+    "subtitle": "",
+    "verified_status": 1,
+    "profile_pic": "https://i.scdn.co/image/ab6761610000e5eb7b0591a64a49ecf7967280d6",
+    "photo": "",
+    "description": "",
+    "is_active": "",
+    "country": "co",
+    "city": "Cali",
+    "since": 0,
+    "home_city": "",
+    "genres": {
+      "music": []
+    },
+    "spoken_languages": [],
+    "stage_languages": [],
+    "arts_languages": [],
+    "website": "",
+    "email": "pacificolibre.gm@gmail.com",
+    "mobile_phone": "318 4014655",
+    "whatsapp": "",
+    "facebook": "pacificolibre",
+    "tiktok": "",
+    "twitch": "",
+    "instagram": "pacifico.libre",
+    "spotify": "7I0JHYC6RcFLui9rldxlm7",
+    "soundcloud": "",
+    "youtube": "https://www.youtube.com/channel/UCdcIm3CucJ6ArZAp_9EZjaQ",
+    "youtube_widget_id": "",
+    "chartmetric": 5397139,
+    "spotify_data": {
+      "followers": 198,
+      "name": "Pacífico Libre",
+      "popularity": 0
+    },
+    "chartmetric_data": {
+      "name": "Pacífico Libre",
+      "sp_where_people_listen": [
+        {
+          "code2": "co",
+          "listeners": 30,
+          "name": "Bogotá"
+        },
+        {
+          "code2": "co",
+          "listeners": 18,
+          "name": "Santiago de Cali"
+        },
+        {
+          "code2": "co",
+          "listeners": 16,
+          "name": "Medellín"
+        },
+        {
+          "code2": "co",
+          "listeners": 3,
+          "name": "Bucaramanga"
+        },
+        {
+          "code2": "cl",
+          "listeners": 2,
+          "name": "Santiago"
+        }
+      ],
+      "stats": {
+        "airplay_streams": 18,
+        "airplay_top_city": [2141],
+        "airplay_top_country": ["CO"],
+        "earliest_album_release_date": "2020-04-24",
+        "earliest_album_upc": "5059435530137",
+        "latest_album_release_date": "2023-10-13",
+        "latest_album_upc": "5063346957075",
+        "rank": {
+          "code2": {
+            "code2": "CO",
+            "perc_25_75": 0.720916,
+            "perc_eg": 0.731537,
+            "perc_fb": 0.746149,
+            "rank_25_75": 8461,
+            "rank_eg": 8139,
+            "rank_fb": 7696
+          },
+          "genre": [
+            {
+              "cm_tag": 501147,
+              "perc_25_75": 0.650454,
+              "perc_eg": 0.676856,
+              "perc_fb": 0.665912,
+              "rank_25_75": 273804,
+              "rank_eg": 253123,
+              "rank_fb": 261696
+            }
+          ],
+          "overall": {
+            "score_25_75": 0.00000113889,
+            "score_percentile": 0.796738
+          }
+        },
+        "shazam_count": 372,
+        "signed": false,
+        "sp_followers": 197,
+        "sp_followers_to_listeners_ratio": 1.97,
+        "sp_listeners_to_followers_ratio": 0.507614,
+        "sp_monthly_listeners": 100,
+        "sp_popularity": 1,
+        "sp_where_people_listen": "[{\"code2\":\"co\",\"listeners\":30,\"name\":\"Bogotá\"},{\"code2\":\"co\",\"listeners\":18,\"name\":\"Santiago de Cali\"},{\"code2\":\"co\",\"listeners\":16,\"name\":\"Medellín\"},{\"code2\":\"co\",\"listeners\":3,\"name\":\"Bucaramanga\"},{\"code2\":\"cl\",\"listeners\":2,\"name\":\"Santiago\"}]",
+        "spotify_ed_playlist_count": 0,
+        "spotify_ed_playlist_total_reach": 0,
+        "spotify_playlist_count": 22,
+        "spotify_playlist_total_reach": 1340,
+        "stats_ranked": {
+          "airplay_streams": 502880,
+          "shazam_count": 1365210,
+          "sp_followers": 927365,
+          "sp_followers_to_listeners_ratio": 889640,
+          "sp_listeners_to_followers_ratio": 1337428,
+          "sp_monthly_listeners": 1107370,
+          "sp_popularity": 1089754,
+          "spotify_ed_playlist_count": 5725884,
+          "spotify_ed_playlist_total_reach": 6701530,
+          "spotify_playlist_count": 2039724,
+          "spotify_playlist_total_reach": 2614549
+        }
+      }
+    },
+    "general_rate": 4.6,
+    "followers": 0,
+    "event_followers": 0,
+    "stats": {
+      "rating": {
+        "overall": 1.9526856251219205,
+        "talent": 0.25238794935722564,
+        "performance": 0.48012940099588236,
+        "proffesionalism": 3.7132583055733512,
+        "stage_presence": 4.569076484520532,
+        "charisma": 4.315508331689809,
+        "timeliness": 4.776021096801581,
+        "communication": 1.4758946837965081,
+        "respectfulness": 1.8984376596560317,
+        "total_rates": 8290
+      }
+    },
+    "arts": {
+      "music": {
+        "albums": []
+      }
+    }
+  },
+  {
+    "artistType": "musician",
+    "name": "Semblanzas del río Guapi",
+    "username": "semblanzasdelrioguapi",
+    "subtitle": "",
+    "verified_status": 1,
+    "profile_pic": "https://i.scdn.co/image/ab6761610000e5eb20f0707c423313abf1713641",
+    "photo": "",
+    "description": "Semblanzas del río Guapi´s music portrays the enchantment of a place in the South Pacific coast of Colombia where the magic of endless rivers, pristine jungles, mangroves and the fury of the ocean collide. Listening to the all female choir leading the percussion and marimba de chonta ensemble takes you to a mystical territory where ancestry, religious syncretism and survival blend into a unique music that reminds us what life is about. Semblanzas del río Guapi´s music is medicine for the soul. Semblanzas del río Guapi is not a new name for the people immersed in marimba de chonta music, their sound is cult for those who have connected to this thriving music scene. The bambuco, juga, patacoré, currulao, cantos de boga, bunde and pasion rhythms collected in Voy pa allá, Semblanzas del río Guapi´s new record, takes you to a journey to connect with the heart and soul of the Pacific region jungles of Guapi and Limones in Cauca - Colombia, in the sound and strenght of a young band. An ensemble that has received, like no other, the knowledge from the elders and has preserved the original sound of this deep mysterious music to take it to the future. ESP. Maestría. Semblanzas del Río Guapi es pura maestría. Esta agrupación que se creó en el 2009 en honor a su río —arteria principal y columna vertebral del territorio—, es hoy una de las más reconocidas de la región. Sus voces retumban en la selva guapireña, invitan a conocerla, preservarla y comprender las raíces de su tradición.",
+    "is_active": "",
+    "country": "co",
+    "city": "",
+    "since": 0,
+    "home_city": "",
+    "genres": {
+      "music": ["folclor afrocolombiano"]
+    },
+    "spoken_languages": [],
+    "stage_languages": [],
+    "arts_languages": [],
+    "website": "https://fundacionsemblanzas.wordpress.com/?fbclid=IwAR1zzxMDFN7CAPqe92mOJEPClXyI-B4QmDIIqhWjtwKSYWbPYv_ZWTCckwk",
+    "email": "semblanzasdelrioguapi2014@gmail.com",
+    "mobile_phone": "310 6177684",
+    "whatsapp": "",
+    "facebook": "peopleSemblanzas-Del-Rio-Guapi100047337735514",
+    "tiktok": "",
+    "twitch": "",
+    "instagram": "semblanzasdelrioguapi",
+    "spotify": "5z2De8UDjNsituyyJOXh8H",
+    "soundcloud": "",
+    "youtube": "https://www.youtube.com/channel/UC5PNRERxlKhtCKF3i9dg6Gw",
+    "youtube_widget_id": "",
+    "chartmetric": 4378007,
+    "spotify_data": {
+      "followers": 4291,
+      "name": "Semblanzas del Rio Guapi",
+      "popularity": 23
+    },
+    "chartmetric_data": {
+      "name": "Semblanzas del Rio Guapi",
+      "sp_where_people_listen": [
+        {
+          "code2": "co",
+          "listeners": 4043,
+          "name": "Bogotá"
+        },
+        {
+          "code2": "co",
+          "listeners": 1196,
+          "name": "Medellín"
+        },
+        {
+          "code2": "pe",
+          "listeners": 1098,
+          "name": "Lima"
+        },
+        {
+          "code2": "gt",
+          "listeners": 694,
+          "name": "Guatemala City"
+        },
+        {
+          "code2": "co",
+          "listeners": 611,
+          "name": "Santiago de Cali"
+        }
+      ],
+      "stats": {
+        "airplay_streams": 434,
+        "airplay_top_city": [376541],
+        "airplay_top_country": ["DE"],
+        "amazon_ed_playlist_count": 1,
+        "amazon_playlist_count": 1,
+        "deezer_ed_playlist_count": 0,
+        "deezer_ed_playlist_total_reach": 0,
+        "deezer_fans": 47,
+        "deezer_playlist_count": 1,
+        "deezer_playlist_total_reach": 162,
+        "earliest_album_release_date": "2014-12-26",
+        "earliest_album_upc": "195079999543",
+        "latest_album_release_date": "2024-05-31",
+        "latest_album_upc": "674276831455",
+        "rank": {
+          "code2": {
+            "code2": "CO",
+            "perc_25_75": 0.952865,
+            "perc_eg": 0.949006,
+            "perc_fb": 0.963915,
+            "rank_25_75": 1429,
+            "rank_eg": 1546,
+            "rank_fb": 1094
+          },
+          "genre": [
+            {
+              "cm_tag": 501175,
+              "perc_25_75": 0.934203,
+              "perc_eg": 0.930342,
+              "perc_fb": 0.951358,
+              "rank_25_75": 23362,
+              "rank_eg": 24733,
+              "rank_fb": 17271
+            },
+            {
+              "cm_tag": 501675,
+              "perc_25_75": 0.511865,
+              "perc_eg": 0.498036,
+              "perc_fb": 0.599403,
+              "rank_25_75": 3106,
+              "rank_eg": 3194,
+              "rank_fb": 2549
+            },
+            {
+              "cm_tag": 501147,
+              "perc_25_75": 0.948888,
+              "perc_eg": 0.943927,
+              "perc_fb": 0.962444,
+              "rank_25_75": 40037,
+              "rank_eg": 43923,
+              "rank_fb": 29418
+            },
+            {
+              "cm_tag": 503263,
+              "perc_25_75": 0.917716,
+              "perc_eg": 0.912249,
+              "perc_fb": 0.939636,
+              "rank_25_75": 4681,
+              "rank_eg": 4992,
+              "rank_fb": 3434
+            },
+            {
+              "cm_tag": 501215,
+              "perc_25_75": 0.866944,
+              "perc_eg": 0.85688,
+              "perc_fb": 0.902578,
+              "rank_25_75": 9559,
+              "rank_eg": 10282,
+              "rank_fb": 6999
+            },
+            {
+              "cm_tag": 501122,
+              "perc_25_75": 0.955617,
+              "perc_eg": 0.952375,
+              "perc_fb": 0.966848,
+              "rank_25_75": 55423,
+              "rank_eg": 59471,
+              "rank_fb": 41399
+            },
+            {
+              "cm_tag": 501124,
+              "perc_25_75": 0.950425,
+              "perc_eg": 0.947353,
+              "perc_fb": 0.964409,
+              "rank_25_75": 55979,
+              "rank_eg": 59448,
+              "rank_fb": 40188
+            },
+            {
+              "cm_tag": 501146,
+              "perc_25_75": 0.941918,
+              "perc_eg": 0.937258,
+              "perc_fb": 0.958757,
+              "rank_25_75": 65454,
+              "rank_eg": 70706,
+              "rank_fb": 46478
+            },
+            {
+              "cm_tag": 501214,
+              "perc_25_75": 0.922736,
+              "perc_eg": 0.916458,
+              "perc_fb": 0.943089,
+              "rank_25_75": 8553,
+              "rank_eg": 9248,
+              "rank_fb": 6300
+            }
+          ],
+          "overall": {
+            "nml_25_75": 0.0003527670843829014,
+            "perc_25_75": 0.761106,
+            "perc_eg": 0.976693,
+            "perc_fb": 0.983905,
+            "rank_100": 199648,
+            "rank_25_75": 238894,
+            "rank_eg": 257128,
+            "rank_fb": 176935,
+            "score_100": 15.71214683623713,
+            "score_25_75": 0.000184913542,
+            "score_percentile": 0.977194,
+            "score_percentile_100": 0.454913
+          }
+        },
+        "shazam_count": 8351,
+        "signed": false,
+        "sp_followers": 4238,
+        "sp_followers_to_listeners_ratio": 0.173967,
+        "sp_listeners_to_followers_ratio": 5.74823,
+        "sp_monthly_listeners": 24361,
+        "sp_popularity": 23,
+        "sp_where_people_listen": "[{\"code2\":\"co\",\"listeners\":4043,\"name\":\"Bogotá\"},{\"code2\":\"co\",\"listeners\":1196,\"name\":\"Medellín\"},{\"code2\":\"pe\",\"listeners\":1098,\"name\":\"Lima\"},{\"code2\":\"gt\",\"listeners\":694,\"name\":\"Guatemala City\"},{\"code2\":\"co\",\"listeners\":611,\"name\":\"Santiago de Cali\"}]",
+        "spotify_ed_playlist_count": 3,
+        "spotify_ed_playlist_total_reach": 104646,
+        "spotify_playlist_count": 1973,
+        "spotify_playlist_total_reach": 887263,
+        "spotify_popular_playlist_count": 7,
+        "spotify_popular_playlist_total_reach": 110373572,
+        "spotify_popular_playlist_tracks": 782,
+        "stats_ranked": {
+          "airplay_streams": 106430,
+          "amazon_ed_playlist_count": 70367,
+          "amazon_playlist_count": 80072,
+          "deezer_ed_playlist_count": 72316,
+          "deezer_ed_playlist_total_reach": 148868,
+          "deezer_fans": 457137,
+          "deezer_playlist_count": 183218,
+          "deezer_playlist_total_reach": 173174,
+          "shazam_count": 360271,
+          "sp_followers": 191924,
+          "sp_followers_to_listeners_ratio": 1810491,
+          "sp_listeners_to_followers_ratio": 416576,
+          "sp_monthly_listeners": 166320,
+          "sp_popularity": 223581,
+          "spotify_ed_playlist_count": 102548,
+          "spotify_ed_playlist_total_reach": 82016,
+          "spotify_playlist_count": 172028,
+          "spotify_playlist_total_reach": 100275,
+          "tiktok_top_video_comments": 645965,
+          "tiktok_top_video_views": 522012,
+          "tiktok_track_posts": 376667
+        },
+        "tiktok_top_video_comments": 65,
+        "tiktok_top_video_views": 50962,
+        "tiktok_track_posts": 99
+      }
+    },
+    "general_rate": 4.6,
+    "followers": 0,
+    "event_followers": 0,
+    "stats": {
+      "rating": {
+        "overall": 1.9526856251219205,
+        "talent": 0.25238794935722564,
+        "performance": 0.48012940099588236,
+        "proffesionalism": 3.7132583055733512,
+        "stage_presence": 4.569076484520532,
+        "charisma": 4.315508331689809,
+        "timeliness": 4.776021096801581,
+        "communication": 1.4758946837965081,
+        "respectfulness": 1.8984376596560317,
+        "total_rates": 8290
+      }
+    },
+    "arts": {
+      "music": {
+        "albums": []
+      }
+    }
+  },
+  {
+    "artistType": "musician",
+    "name": "Isósceles",
+    "username": "theisoscelesproject",
+    "subtitle": "",
+    "verified_status": 1,
+    "profile_pic": "https://i.scdn.co/image/ab6761610000e5ebfac63a12673c602f7d11d2ca",
+    "photo": "",
+    "description": "Isosceles are a Scottish indie pop band formed in Glasgow, Scotland. The band is composed of Jack Valentine (Guitar & Vocals), William Aikman (Keyboards & Vocals), Andrew Wilson (Bass) and Bobby Duff (Drums). Formed in 2006 for a one-off gig, the band began playing gigs around Glasgow and recording songs which would eventually be played by Vic Galloway on Radio One. This exposure resulted in the Leeds-based independent record label Art Goes Pop offering to release \"Get Your Hands Off / I Go\" in 2007. Alex Kapranos from Franz Ferdinand was at the single launch and asked Isosceles to support them on a tour of the Scottish Highlands including gigs in Inverness, Fort William, Dundee and Portree. At the start of 2008 they began their first tour of England before releasing their second single \"Kitch Bitch\" / \"Watertight\" in April. Further gigs in England were followed by appearances at Glastonbury and T In The Park. In September 2008, the band played at the Venice Biennale of Architecture in Venice. Isosceles continued to play around Glasgow, with the band supporting Correcto, Clinic, The Vaselines and Shonen Knife.",
+    "is_active": "",
+    "country": "gb",
+    "city": "",
+    "since": 0,
+    "home_city": "",
+    "genres": {
+      "music": []
+    },
+    "spoken_languages": [],
+    "stage_languages": [],
+    "arts_languages": [],
+    "website": "",
+    "email": "",
+    "mobile_phone": "",
+    "whatsapp": "",
+    "facebook": "isoscelesbanda",
+    "tiktok": "",
+    "twitch": "",
+    "instagram": "theisoscelesproject",
+    "spotify": "3iLKdtkZe6YIMikZsjCMy7",
+    "soundcloud": "",
+    "youtube": "",
+    "youtube_widget_id": "",
+    "chartmetric": 694478,
+    "spotify_data": {
+      "followers": 61,
+      "name": "ISÓSCELES",
+      "popularity": 0
+    },
+    "chartmetric_data": {
+      "name": "Isosceles",
+      "sp_where_people_listen": null,
+      "stats": {
+        "earliest_album_release_date": "2004-07-25",
+        "earliest_album_upc": "634479017575",
+        "latest_album_release_date": "2019-02-15",
+        "latest_album_upc": "5059033599468",
+        "rank": {
+          "code2": {
+            "code2": "GB",
+            "perc_25_75": 0.320614,
+            "perc_eg": 0.038345,
+            "perc_fb": 0.364347,
+            "rank_25_75": 90662,
+            "rank_eg": 128330,
+            "rank_fb": 84826
+          },
+          "genre": [
+            {
+              "cm_tag": 501121,
+              "perc_25_75": 0.5237,
+              "perc_eg": 0.152966,
+              "perc_fb": 0.590016,
+              "rank_25_75": 1102297,
+              "rank_eg": 1960282,
+              "rank_fb": 948822
+            },
+            {
+              "cm_tag": 503257,
+              "perc_25_75": 0.320607,
+              "perc_eg": 0.035175,
+              "perc_fb": 0.364324,
+              "rank_25_75": 90663,
+              "rank_eg": 128753,
+              "rank_fb": 84829
+            },
+            {
+              "cm_tag": 501120,
+              "perc_25_75": 0.361635,
+              "perc_eg": 0.216339,
+              "perc_fb": 0.427497,
+              "rank_25_75": 1031662,
+              "rank_eg": 1266476,
+              "rank_fb": 925223
+            },
+            {
+              "cm_tag": 503564,
+              "perc_25_75": 0.200938,
+              "perc_eg": 0.129646,
+              "perc_fb": 0.239962,
+              "rank_25_75": 26250,
+              "rank_eg": 28592,
+              "rank_fb": 24968
+            },
+            {
+              "cm_tag": 501233,
+              "perc_25_75": 0.210542,
+              "perc_eg": 0.097003,
+              "perc_fb": 0.260395,
+              "rank_25_75": 216744,
+              "rank_eg": 247916,
+              "rank_fb": 203057
+            },
+            {
+              "cm_tag": 503565,
+              "perc_25_75": 0.233986,
+              "perc_eg": 0.069803,
+              "perc_fb": 0.278938,
+              "rank_25_75": 22255,
+              "rank_eg": 27025,
+              "rank_fb": 20949
+            },
+            {
+              "cm_tag": 501149,
+              "perc_25_75": 0.332392,
+              "perc_eg": 0.178558,
+              "perc_fb": 0.385987,
+              "rank_25_75": 695569,
+              "rank_eg": 855846,
+              "rank_fb": 639730
+            },
+            {
+              "cm_tag": 503316,
+              "perc_25_75": 0.260546,
+              "perc_eg": 0.017029,
+              "perc_fb": 0.307718,
+              "rank_25_75": 93271,
+              "rank_eg": 123987,
+              "rank_fb": 87321
+            },
+            {
+              "cm_tag": 503576,
+              "perc_25_75": 0.263088,
+              "perc_eg": 0.267982,
+              "perc_fb": 0.300606,
+              "rank_25_75": 18974,
+              "rank_eg": 18848,
+              "rank_fb": 18008
+            },
+            {
+              "cm_tag": 501132,
+              "perc_25_75": 0.423977,
+              "perc_eg": 0.11832,
+              "perc_fb": 0.482717,
+              "rank_25_75": 471362,
+              "rank_eg": 721482,
+              "rank_fb": 423295
+            },
+            {
+              "cm_tag": 501234,
+              "perc_25_75": 0.245816,
+              "perc_eg": 0.179176,
+              "perc_fb": 0.29614,
+              "rank_25_75": 179164,
+              "rank_eg": 194995,
+              "rank_fb": 167209
+            }
+          ],
+          "overall": {
+            "score_25_75": 1.42857e-7,
+            "score_percentile": 0.613893
+          }
+        },
+        "shazam_count": 28,
+        "signed": false,
+        "songkick_fans": 261,
+        "spotify_ed_playlist_count": 0,
+        "spotify_ed_playlist_total_reach": 0,
+        "spotify_playlist_count": 9,
+        "spotify_playlist_total_reach": 2046,
+        "stats_ranked": {
+          "shazam_count": 2912135,
+          "songkick_fans": 161804,
+          "spotify_ed_playlist_count": 3390766,
+          "spotify_ed_playlist_total_reach": 5089734,
+          "spotify_playlist_count": 2998615,
+          "spotify_playlist_total_reach": 2342938,
+          "ycs_subscribers": 104880,
+          "ycs_views": 103995
+        },
+        "ycs_subscribers": 6,
+        "ycs_subscribers_rank": 4844821,
+        "ycs_views": 289
+      }
+    },
+    "general_rate": 4.6,
+    "followers": 0,
+    "event_followers": 0,
+    "stats": {
+      "rating": {
+        "overall": 1.9526856251219205,
+        "talent": 0.25238794935722564,
+        "performance": 0.48012940099588236,
+        "proffesionalism": 3.7132583055733512,
+        "stage_presence": 4.569076484520532,
+        "charisma": 4.315508331689809,
+        "timeliness": 4.776021096801581,
+        "communication": 1.4758946837965081,
+        "respectfulness": 1.8984376596560317,
+        "total_rates": 8290
+      }
+    },
+    "arts": {
+      "music": {
+        "albums": []
+      }
+    }
+  },
+  {
+    "artistType": "musician",
+    "name": "Tropicana club",
+    "username": "tropicana_club",
+    "subtitle": "",
+    "verified_status": 1,
+    "profile_pic": "https://i.scdn.co/image/ab6761610000e5ebe774e1acb2d1f5fbcca6c780",
+    "photo": "",
+    "description": "Tropicana Club aka Juan S. González.",
+    "is_active": "",
+    "country": "mx",
+    "city": "",
+    "since": 0,
+    "home_city": "",
+    "genres": {
+      "music": []
+    },
+    "spoken_languages": [],
+    "stage_languages": [],
+    "arts_languages": [],
+    "website": "",
+    "email": "",
+    "mobile_phone": "",
+    "whatsapp": "",
+    "facebook": "es-la.Tropicanahoustonevents",
+    "tiktok": "",
+    "twitch": "",
+    "instagram": "tropicana_club",
+    "spotify": "3yZt4h8ao4zS5aJdo4ZSAn",
+    "soundcloud": "",
+    "youtube": "",
+    "youtube_widget_id": "",
+    "chartmetric": 354480,
+    "spotify_data": {
+      "followers": 1769,
+      "name": "Tropicana Club",
+      "popularity": 18
+    },
+    "chartmetric_data": {
+      "name": "Tropicana Club",
+      "sp_where_people_listen": [
+        {
+          "code2": "mx",
+          "listeners": 707,
+          "name": "Mexico City"
+        },
+        {
+          "code2": "co",
+          "listeners": 413,
+          "name": "Bogotá"
+        },
+        {
+          "code2": "mx",
+          "listeners": 219,
+          "name": "Querétaro City"
+        },
+        {
+          "code2": "mx",
+          "listeners": 218,
+          "name": "Gustavo Adolfo Madero"
+        },
+        {
+          "code2": "mx",
+          "listeners": 214,
+          "name": "Guadalajara"
+        }
+      ],
+      "stats": {
+        "airplay_streams": 30,
+        "airplay_top_city": [2141],
+        "airplay_top_country": ["CO"],
+        "anghami_followers": 1,
+        "anghami_plays": 12,
+        "deezer_ed_playlist_count": 2,
+        "deezer_ed_playlist_total_reach": 11843,
+        "deezer_fans": 71,
+        "deezer_playlist_count": 2,
+        "deezer_playlist_total_reach": 11843,
+        "earliest_album_release_date": "2008-04-25",
+        "earliest_album_upc": "884463102262",
+        "ins_engagement_rate": 4.477600000000001,
+        "ins_followers": 2343,
+        "latest_album_release_date": "2024-07-05",
+        "latest_album_upc": "8447053156483",
+        "pandora_lifetime_streams": 5081,
+        "pandora_listeners_28_day": 24,
+        "rank": {
+          "code2": {
+            "code2": "MX",
+            "perc_25_75": 0.938953,
+            "perc_eg": 0.913538,
+            "perc_fb": 0.962922,
+            "rank_25_75": 7684,
+            "rank_eg": 10883,
+            "rank_fb": 4667
+          },
+          "genre": [
+            {
+              "cm_tag": 501214,
+              "perc_25_75": 0.897289,
+              "perc_eg": 0.862456,
+              "perc_fb": 0.933757,
+              "rank_25_75": 11370,
+              "rank_eg": 15226,
+              "rank_fb": 7333
+            },
+            {
+              "cm_tag": 501147,
+              "perc_25_75": 0.930074,
+              "perc_eg": 0.902611,
+              "perc_fb": 0.956228,
+              "rank_25_75": 54774,
+              "rank_eg": 76286,
+              "rank_fb": 34287
+            },
+            {
+              "cm_tag": 501541,
+              "perc_25_75": 0.675163,
+              "perc_eg": 0.608575,
+              "perc_fb": 0.768136,
+              "rank_25_75": 26889,
+              "rank_eg": 32401,
+              "rank_fb": 19193
+            },
+            {
+              "cm_tag": 503922,
+              "perc_25_75": 0.872176,
+              "perc_eg": 0.832879,
+              "perc_fb": 0.913538,
+              "rank_25_75": 2908,
+              "rank_eg": 3802,
+              "rank_fb": 1967
+            },
+            {
+              "cm_tag": 501122,
+              "perc_25_75": 0.93824,
+              "perc_eg": 0.914001,
+              "perc_fb": 0.96101,
+              "rank_25_75": 77122,
+              "rank_eg": 107391,
+              "rank_fb": 48689
+            },
+            {
+              "cm_tag": 503924,
+              "perc_25_75": 0.892929,
+              "perc_eg": 0.860209,
+              "perc_fb": 0.930347,
+              "rank_25_75": 2644,
+              "rank_eg": 3452,
+              "rank_fb": 1720
+            },
+            {
+              "cm_tag": 501212,
+              "perc_25_75": 0.893334,
+              "perc_eg": 0.856935,
+              "perc_fb": 0.927666,
+              "rank_25_75": 13108,
+              "rank_eg": 17581,
+              "rank_fb": 8889
+            },
+            {
+              "cm_tag": 501604,
+              "perc_25_75": 0.238364,
+              "perc_eg": 0.131876,
+              "perc_fb": 0.401269,
+              "rank_25_75": 1080,
+              "rank_eg": 1231,
+              "rank_fb": 849
+            },
+            {
+              "cm_tag": 501120,
+              "perc_25_75": 0.923432,
+              "perc_eg": 0.892913,
+              "perc_fb": 0.951599,
+              "rank_25_75": 123741,
+              "rank_eg": 173063,
+              "rank_fb": 78221
+            },
+            {
+              "cm_tag": 501635,
+              "perc_25_75": 0.938581,
+              "perc_eg": 0.913009,
+              "perc_fb": 0.962868,
+              "rank_25_75": 7736,
+              "rank_eg": 10957,
+              "rank_fb": 4677
+            }
+          ],
+          "overall": {
+            "nml_25_75": 0.0001892143775458561,
+            "perc_25_75": 0.662542,
+            "perc_eg": 0.95686,
+            "perc_fb": 0.981071,
+            "rank_100": 274013,
+            "rank_25_75": 337458,
+            "rank_eg": 475933,
+            "rank_fb": 208099,
+            "score_100": 8.52773950849737,
+            "score_25_75": 0.000108993474,
+            "score_percentile": 0.969413,
+            "score_percentile_100": 0.251878
+          }
+        },
+        "shazam_count": 1564,
+        "signed": false,
+        "songkick_fans": 184,
+        "soundcloud_followers": 30,
+        "soundcloud_plays": 1413,
+        "sp_followers": 1759,
+        "sp_followers_to_listeners_ratio": 0.200891,
+        "sp_listeners_to_followers_ratio": 4.977828,
+        "sp_monthly_listeners": 8756,
+        "sp_popularity": 18,
+        "sp_where_people_listen": "[{\"code2\":\"mx\",\"listeners\":707,\"name\":\"Mexico City\"},{\"code2\":\"co\",\"listeners\":413,\"name\":\"Bogotá\"},{\"code2\":\"mx\",\"listeners\":219,\"name\":\"Querétaro City\"},{\"code2\":\"mx\",\"listeners\":218,\"name\":\"Gustavo Adolfo Madero\"},{\"code2\":\"mx\",\"listeners\":214,\"name\":\"Guadalajara\"}]",
+        "spotify_ed_playlist_count": 0,
+        "spotify_ed_playlist_total_reach": 0,
+        "spotify_playlist_count": 1272,
+        "spotify_playlist_total_reach": 402784,
+        "spotify_popular_playlist_count": 2,
+        "spotify_popular_playlist_total_reach": 29943063,
+        "spotify_popular_playlist_tracks": 158,
+        "ss_followers": 30,
+        "stats_ranked": {
+          "airplay_streams": 413142,
+          "anghami_followers": 498760,
+          "anghami_plays": 630475,
+          "deezer_ed_playlist_count": 26243,
+          "deezer_ed_playlist_total_reach": 34297,
+          "deezer_fans": 370646,
+          "deezer_playlist_count": 85474,
+          "deezer_playlist_total_reach": 56369,
+          "ins_engagement_rate": 65919,
+          "ins_followers": 133070,
+          "pandora_lifetime_streams": 218035,
+          "pandora_listeners_28_day": 129118,
+          "shazam_count": 791936,
+          "songkick_fans": 185441,
+          "soundcloud_followers": 93343,
+          "soundcloud_plays": 64457,
+          "sp_followers": 326517,
+          "sp_followers_to_listeners_ratio": 1770897,
+          "sp_listeners_to_followers_ratio": 456170,
+          "sp_monthly_listeners": 274835,
+          "sp_popularity": 315254,
+          "spotify_ed_playlist_count": 2055781,
+          "spotify_ed_playlist_total_reach": 6987768,
+          "spotify_playlist_count": 232415,
+          "spotify_playlist_total_reach": 191845,
+          "ss_followers": 84676,
+          "tiktok_top_video_comments": 174855,
+          "tiktok_top_video_views": 153008,
+          "tiktok_track_posts": 163653
+        },
+        "tiktok_top_video_comments": 2246,
+        "tiktok_top_video_views": 2154973,
+        "tiktok_track_posts": 773
+      }
+    },
+    "general_rate": 4.6,
+    "followers": 0,
+    "event_followers": 0,
+    "stats": {
+      "rating": {
+        "overall": 1.9526856251219205,
+        "talent": 0.25238794935722564,
+        "performance": 0.48012940099588236,
+        "proffesionalism": 3.7132583055733512,
+        "stage_presence": 4.569076484520532,
+        "charisma": 4.315508331689809,
+        "timeliness": 4.776021096801581,
+        "communication": 1.4758946837965081,
+        "respectfulness": 1.8984376596560317,
+        "total_rates": 8290
+      }
+    },
+    "arts": {
+      "music": {
+        "albums": []
+      }
+    }
+  },
+  {
+    "artistType": "musician",
+    "name": "Organicways",
+    "username": "organicwayscr",
+    "subtitle": "",
+    "verified_status": 1,
+    "profile_pic": "https://i.scdn.co/image/ab6761610000e5eb805e522cd26d49d07e5a3cb6",
+    "photo": "",
+    "description": "Organicways es una banda de Indie Rock de San José Costa Rica que comenzó solo 3 meses antes de que la pandemia azotara al mundo. Con el deseo de comunicar y crear a través de la música, este grupo de amigos lanzó un sencillo “The old man ” y un EP “What you don’t know”. A lo largo de su aventura han logrado tocar en varios escenarios de Costa Rica, compartiendo escenario con colegas de la escena &#34;Nicotine Rush&#34;, lanzada el 16 de febrero de 2024, constituye el tercer sencillo de nuestro álbum debut &#39;Outside Reality.&#39; (Será lanzado en el 2024) Esta canción es una estimulante fusión de vibraciones del surf rock, armonías espaciales y un ritmo de sintetizador contagioso. ------------------------------------------------- Organicways is an Indie Rock band from San José, Costa Rica, which started just 3 months before the pandemic hit the world. With the desire to communicate and create through music, this group of friends released a single &#34;The Old Man&#34; and an EP &#34;What You Don&#39;t Know.&#34; Throughout their journey, they have managed to perform on various stages in Costa Rica, sharing the stage with many bands from the independent scene... Nicotine Rush,&#34; released on February 16, 2024, serves as the third single from our debut album &#39;Outside Reality.&#39; (which will be relese in 2024) This song is an invigorating fusion of surf rock vibes, spacey harmonies, and infectious synth rhythm. Side projects: Asael Guevara Lead Singer and Solo Artist.",
+    "is_active": "",
+    "country": "cr",
+    "city": "",
+    "since": 0,
+    "home_city": "",
+    "genres": {
+      "music": ["indie tico"]
+    },
+    "spoken_languages": [],
+    "stage_languages": [],
+    "arts_languages": [],
+    "website": "",
+    "email": "",
+    "mobile_phone": "",
+    "whatsapp": "",
+    "facebook": "",
+    "tiktok": "",
+    "twitch": "",
+    "instagram": "organicwayscr",
+    "spotify": "4WDeW2nS95SSKiuKBImE0j",
+    "soundcloud": "",
+    "youtube": "",
+    "youtube_widget_id": "",
+    "chartmetric": 3804282,
+    "spotify_data": {
+      "followers": 379,
+      "name": "Organicways",
+      "popularity": 1
+    },
+    "chartmetric_data": {
+      "name": "Organicways",
+      "sp_where_people_listen": null,
+      "stats": {
+        "deezer_fans": 4,
+        "earliest_album_release_date": "2020-04-08",
+        "earliest_album_upc": "194676149924",
+        "latest_album_release_date": "2024-02-16",
+        "latest_album_upc": "198080686839",
+        "rank": {
+          "code2": {
+            "code2": "CR",
+            "perc_25_75": 0.776158,
+            "perc_eg": 0.7866,
+            "perc_fb": 0.800087,
+            "rank_25_75": 1029,
+            "rank_eg": 981,
+            "rank_fb": 919
+          },
+          "genre": [
+            {
+              "cm_tag": 501214,
+              "perc_25_75": 0.590421,
+              "perc_eg": 0.618994,
+              "perc_fb": 0.602417,
+              "rank_25_75": 45340,
+              "rank_eg": 42177,
+              "rank_fb": 44012
+            },
+            {
+              "cm_tag": 501132,
+              "perc_25_75": 0.713866,
+              "perc_eg": 0.742267,
+              "perc_fb": 0.734779,
+              "rank_25_75": 234145,
+              "rank_eg": 210904,
+              "rank_fb": 217031
+            },
+            {
+              "cm_tag": 501147,
+              "perc_25_75": 0.67372,
+              "perc_eg": 0.686128,
+              "perc_fb": 0.699658,
+              "rank_25_75": 255580,
+              "rank_eg": 245860,
+              "rank_fb": 235262
+            },
+            {
+              "cm_tag": 503269,
+              "perc_25_75": 0.675051,
+              "perc_eg": 0.699008,
+              "perc_fb": 0.691749,
+              "rank_25_75": 16833,
+              "rank_eg": 15592,
+              "rank_fb": 15968
+            },
+            {
+              "cm_tag": 501122,
+              "perc_25_75": 0.662134,
+              "perc_eg": 0.690341,
+              "perc_fb": 0.678371,
+              "rank_25_75": 421909,
+              "rank_eg": 386685,
+              "rank_fb": 401632
+            }
+          ],
+          "overall": {
+            "score_25_75": 0.000001416667,
+            "score_percentile": 0.812059
+          }
+        },
+        "shazam_count": 91,
+        "signed": false,
+        "spotify_ed_playlist_count": 0,
+        "spotify_ed_playlist_total_reach": 0,
+        "spotify_playlist_count": 52,
+        "spotify_playlist_total_reach": 1748,
+        "stats_ranked": {
+          "deezer_fans": 1299706,
+          "shazam_count": 2123379,
+          "spotify_ed_playlist_count": 1748011,
+          "spotify_ed_playlist_total_reach": 4289390,
+          "spotify_playlist_count": 1375307,
+          "spotify_playlist_total_reach": 2441986
+        }
+      }
+    },
+    "general_rate": 4.6,
+    "followers": 0,
+    "event_followers": 0,
+    "stats": {
+      "rating": {
+        "overall": 1.9526856251219205,
+        "talent": 0.25238794935722564,
+        "performance": 0.48012940099588236,
+        "proffesionalism": 3.7132583055733512,
+        "stage_presence": 4.569076484520532,
+        "charisma": 4.315508331689809,
+        "timeliness": 4.776021096801581,
+        "communication": 1.4758946837965081,
+        "respectfulness": 1.8984376596560317,
+        "total_rates": 8290
+      }
+    },
+    "arts": {
+      "music": {
+        "albums": []
+      }
+    }
+  },
+  {
+    "artistType": "musician",
+    "name": "Luz María Cardenal",
+    "username": "luzmariacardenal",
+    "subtitle": "",
+    "verified_status": 1,
+    "profile_pic": "https://i.scdn.co/image/ab6761610000e5eb645529ee2ebde69bb1f92626",
+    "photo": "",
+    "description": "One Woman Band &#43; Livelooping &#43; First Female Chapman Stick Player in Mexico Luz María Cardenal es cineasta, cantautora, multi-instrumentista y es la primera mujer stickista en México. Interpreta en solitario música llena de sensibilidad y fuerza haciendo livelooping con letras que hablan de la naturaleza, el amor y el ser, teniendo en sus canciones segmentos instrumentales con influencias que van desde los soundtracks, el pop, el rock progresivo, folk, hip-hop; y con instrumentos como la flauta transversal, guitarras, chapman-stick, beatbox, piano, silbidosy que en vivo interpreta estilo one-woman band. Una artista mexicana y multidisciplinaria que ha abierto conciertos de la cantante Lila Downs, ha realizado colaboraciones con músicos de Egipto y que continúa creciendo y produciendo música y cine.",
+    "is_active": "",
+    "country": "mx",
+    "city": "",
+    "since": 0,
+    "home_city": "",
+    "genres": {
+      "music": []
+    },
+    "spoken_languages": [],
+    "stage_languages": [],
+    "arts_languages": [],
+    "website": "",
+    "email": "",
+    "mobile_phone": "",
+    "whatsapp": "",
+    "facebook": "",
+    "tiktok": "",
+    "twitch": "",
+    "instagram": "luzmariacardenal",
+    "spotify": "4jgIsFn1RcljG4jTPklNsJ",
+    "soundcloud": "",
+    "youtube": "",
+    "youtube_widget_id": "",
+    "chartmetric": 3476421,
+    "spotify_data": {
+      "followers": 716,
+      "name": "Luz María Cardenal",
+      "popularity": 4
+    },
+    "chartmetric_data": {
+      "name": "Luz María Cardenal",
+      "sp_where_people_listen": [
+        {
+          "code2": "mx",
+          "listeners": 44,
+          "name": "Mexico City"
+        },
+        {
+          "code2": "mx",
+          "listeners": 11,
+          "name": "Gustavo Adolfo Madero"
+        },
+        {
+          "code2": "mx",
+          "listeners": 10,
+          "name": "Cuernavaca"
+        },
+        {
+          "code2": "mx",
+          "listeners": 9,
+          "name": "Iztapalapa"
+        },
+        {
+          "code2": "mx",
+          "listeners": 8,
+          "name": "Azcapotzalco"
+        }
+      ],
+      "stats": {
+        "airplay_streams": 4,
+        "airplay_top_city": [4069],
+        "airplay_top_country": ["MX"],
+        "deezer_fans": 35,
+        "earliest_album_release_date": "2016-06-03",
+        "earliest_album_upc": "190394594459",
+        "latest_album_release_date": "2024-09-20",
+        "latest_album_upc": "5063549747305",
+        "rank": {
+          "code2": {
+            "code2": "MX",
+            "perc_25_75": 0.732557,
+            "perc_eg": 0.730984,
+            "perc_fb": 0.772972,
+            "rank_25_75": 33663,
+            "rank_eg": 33861,
+            "rank_fb": 28576
+          },
+          "genre": [
+            {
+              "cm_tag": 501120,
+              "perc_25_75": 0.655743,
+              "perc_eg": 0.67576,
+              "perc_fb": 0.695161,
+              "rank_25_75": 556354,
+              "rank_eg": 524004,
+              "rank_fb": 492650
+            },
+            {
+              "cm_tag": 501214,
+              "perc_25_75": 0.630024,
+              "perc_eg": 0.651514,
+              "perc_fb": 0.650358,
+              "rank_25_75": 40956,
+              "rank_eg": 38577,
+              "rank_fb": 38705
+            },
+            {
+              "cm_tag": 503277,
+              "perc_25_75": 0.677366,
+              "perc_eg": 0.695447,
+              "perc_fb": 0.717475,
+              "rank_25_75": 5478,
+              "rank_eg": 5171,
+              "rank_fb": 4797
+            },
+            {
+              "cm_tag": 501217,
+              "perc_25_75": 0.694467,
+              "perc_eg": 0.71001,
+              "perc_fb": 0.740474,
+              "rank_25_75": 3440,
+              "rank_eg": 3265,
+              "rank_fb": 2922
+            },
+            {
+              "cm_tag": 501140,
+              "perc_25_75": 0.745331,
+              "perc_eg": 0.767474,
+              "perc_fb": 0.780851,
+              "rank_25_75": 120902,
+              "rank_eg": 110390,
+              "rank_fb": 104039
+            },
+            {
+              "cm_tag": 503922,
+              "perc_25_75": 0.583912,
+              "perc_eg": 0.595297,
+              "perc_fb": 0.623956,
+              "rank_25_75": 9466,
+              "rank_eg": 9207,
+              "rank_fb": 8555
+            },
+            {
+              "cm_tag": 503928,
+              "perc_25_75": 0.690767,
+              "perc_eg": 0.706103,
+              "perc_fb": 0.743349,
+              "rank_25_75": 988,
+              "rank_eg": 939,
+              "rank_fb": 820
+            },
+            {
+              "cm_tag": 501147,
+              "perc_25_75": 0.70598,
+              "perc_eg": 0.716109,
+              "perc_fb": 0.737434,
+              "rank_25_75": 230310,
+              "rank_eg": 222376,
+              "rank_fb": 205672
+            },
+            {
+              "cm_tag": 501126,
+              "perc_25_75": 0.754455,
+              "perc_eg": 0.778018,
+              "perc_fb": 0.787296,
+              "rank_25_75": 94394,
+              "rank_eg": 85336,
+              "rank_fb": 81769
+            },
+            {
+              "cm_tag": 503942,
+              "perc_25_75": 0.658464,
+              "perc_eg": 0.668717,
+              "perc_fb": 0.716108,
+              "rank_25_75": 1499,
+              "rank_eg": 1454,
+              "rank_fb": 1246
+            },
+            {
+              "cm_tag": 501122,
+              "perc_25_75": 0.698067,
+              "perc_eg": 0.719751,
+              "perc_fb": 0.718523,
+              "rank_25_75": 377037,
+              "rank_eg": 349960,
+              "rank_fb": 351493
+            },
+            {
+              "cm_tag": 503924,
+              "perc_25_75": 0.644691,
+              "perc_eg": 0.654005,
+              "perc_fb": 0.671904,
+              "rank_25_75": 8774,
+              "rank_eg": 8544,
+              "rank_fb": 8102
+            },
+            {
+              "cm_tag": 501212,
+              "perc_25_75": 0.590261,
+              "perc_eg": 0.611882,
+              "perc_fb": 0.622746,
+              "rank_25_75": 50352,
+              "rank_eg": 47695,
+              "rank_fb": 46360
+            },
+            {
+              "cm_tag": 501635,
+              "perc_25_75": 0.732063,
+              "perc_eg": 0.733611,
+              "perc_fb": 0.772522,
+              "rank_25_75": 33748,
+              "rank_eg": 33553,
+              "rank_fb": 28652
+            }
+          ],
+          "overall": {
+            "score_25_75": 0.000001974359,
+            "score_percentile": 0.83329
+          }
+        },
+        "shazam_count": 327,
+        "signed": false,
+        "sp_followers": 700,
+        "sp_followers_to_listeners_ratio": 3.867403,
+        "sp_listeners_to_followers_ratio": 0.258571,
+        "sp_monthly_listeners": 181,
+        "sp_popularity": 3,
+        "sp_where_people_listen": "[{\"code2\":\"mx\",\"listeners\":44,\"name\":\"Mexico City\"},{\"code2\":\"mx\",\"listeners\":11,\"name\":\"Gustavo Adolfo Madero\"},{\"code2\":\"mx\",\"listeners\":10,\"name\":\"Cuernavaca\"},{\"code2\":\"mx\",\"listeners\":9,\"name\":\"Iztapalapa\"},{\"code2\":\"mx\",\"listeners\":8,\"name\":\"Azcapotzalco\"}]",
+        "spotify_ed_playlist_count": 0,
+        "spotify_ed_playlist_total_reach": 0,
+        "spotify_playlist_count": 19,
+        "spotify_playlist_total_reach": 1726,
+        "stats_ranked": {
+          "airplay_streams": 829264,
+          "deezer_fans": 525218,
+          "shazam_count": 1426219,
+          "sp_followers": 559190,
+          "sp_followers_to_listeners_ratio": 572661,
+          "sp_listeners_to_followers_ratio": 1654406,
+          "sp_monthly_listeners": 975343,
+          "sp_popularity": 868822,
+          "spotify_ed_playlist_count": 2821286,
+          "spotify_ed_playlist_total_reach": 1878109,
+          "spotify_playlist_count": 2170658,
+          "spotify_playlist_total_reach": 2449806,
+          "tiktok_top_video_comments": 1003391,
+          "tiktok_top_video_views": 941703,
+          "tiktok_track_posts": 763529
+        },
+        "tiktok_top_video_comments": 10,
+        "tiktok_top_video_views": 4574,
+        "tiktok_track_posts": 13
+      }
+    },
+    "general_rate": 4.6,
+    "followers": 0,
+    "event_followers": 0,
+    "stats": {
+      "rating": {
+        "overall": 1.9526856251219205,
+        "talent": 0.25238794935722564,
+        "performance": 0.48012940099588236,
+        "proffesionalism": 3.7132583055733512,
+        "stage_presence": 4.569076484520532,
+        "charisma": 4.315508331689809,
+        "timeliness": 4.776021096801581,
+        "communication": 1.4758946837965081,
+        "respectfulness": 1.8984376596560317,
+        "total_rates": 8290
+      }
+    },
+    "arts": {
+      "music": {
+        "albums": []
+      }
+    }
+  },
+  {
+    "artistType": "musician",
+    "name": "Radio Bemba",
+    "username": "bembamusic",
+    "subtitle": "",
+    "verified_status": 1,
+    "profile_pic": "https://i.scdn.co/image/ab6761610000e5eb02d4fdbd2eb77aec47fbc5f7",
+    "photo": "",
+    "description": "Radio Bemba es un dúo colaborativo que produce ideas y distintos géneros musicales sin límites.",
+    "is_active": "",
+    "country": "us",
+    "city": "",
+    "since": 0,
+    "home_city": "",
+    "genres": {
+      "music": []
+    },
+    "spoken_languages": [],
+    "stage_languages": [],
+    "arts_languages": [],
+    "website": "",
+    "email": "",
+    "mobile_phone": "",
+    "whatsapp": "",
+    "facebook": "",
+    "tiktok": "",
+    "twitch": "",
+    "instagram": "bembamusic",
+    "spotify": "7N3ARR3qYITlCkmDqOT8fC",
+    "soundcloud": "",
+    "youtube": "",
+    "youtube_widget_id": "",
+    "chartmetric": 9497057,
+    "spotify_data": {
+      "followers": 1032,
+      "name": "Radio Bemba",
+      "popularity": 8
+    },
+    "chartmetric_data": {
+      "name": "Radio Bemba",
+      "sp_where_people_listen": [
+        {
+          "code2": "us",
+          "listeners": 308,
+          "name": "San Juan"
+        },
+        {
+          "code2": "us",
+          "listeners": 84,
+          "name": "Bayamón"
+        },
+        {
+          "code2": "co",
+          "listeners": 50,
+          "name": "Bogotá"
+        },
+        {
+          "code2": "us",
+          "listeners": 46,
+          "name": "Guaynabo"
+        },
+        {
+          "code2": "pe",
+          "listeners": 37,
+          "name": "Lima"
+        }
+      ],
+      "stats": {
+        "airplay_streams": 17,
+        "airplay_top_city": [4769],
+        "airplay_top_country": ["PR"],
+        "earliest_album_release_date": "2022-07-21",
+        "earliest_album_upc": "197045188104",
+        "latest_album_release_date": "2024-06-28",
+        "latest_album_upc": "198674582875",
+        "rank": {
+          "code2": {
+            "code2": "US",
+            "perc_25_75": 0.795789,
+            "perc_eg": 0.832393,
+            "perc_fb": 0.759106,
+            "rank_25_75": 173847,
+            "rank_eg": 142685,
+            "rank_fb": 205075
+          },
+          "genre": [
+            {
+              "cm_tag": 501207,
+              "perc_25_75": 0.865175,
+              "perc_eg": 0.894208,
+              "perc_fb": 0.841927,
+              "rank_25_75": 24664,
+              "rank_eg": 19353,
+              "rank_fb": 28917
+            },
+            {
+              "cm_tag": 503534,
+              "perc_25_75": 0.693861,
+              "perc_eg": 0.735003,
+              "perc_fb": 0.653362,
+              "rank_25_75": 5231,
+              "rank_eg": 4528,
+              "rank_fb": 5923
+            },
+            {
+              "cm_tag": 503521,
+              "perc_25_75": 0.582881,
+              "perc_eg": 0.623486,
+              "perc_fb": 0.549535,
+              "rank_25_75": 11608,
+              "rank_eg": 10478,
+              "rank_fb": 12536
+            },
+            {
+              "cm_tag": 501154,
+              "perc_25_75": 0.85024,
+              "perc_eg": 0.879133,
+              "perc_fb": 0.827133,
+              "rank_25_75": 29379,
+              "rank_eg": 23711,
+              "rank_fb": 33912
+            },
+            {
+              "cm_tag": 503499,
+              "perc_25_75": 0.703665,
+              "perc_eg": 0.746296,
+              "perc_fb": 0.657083,
+              "rank_25_75": 5401,
+              "rank_eg": 4624,
+              "rank_fb": 6250
+            },
+            {
+              "cm_tag": 501122,
+              "perc_25_75": 0.834549,
+              "perc_eg": 0.870269,
+              "perc_fb": 0.801283,
+              "rank_25_75": 206606,
+              "rank_eg": 162001,
+              "rank_fb": 248147
+            },
+            {
+              "cm_tag": 501130,
+              "perc_25_75": 0.785527,
+              "perc_eg": 0.81709,
+              "perc_fb": 0.761817,
+              "rank_25_75": 60625,
+              "rank_eg": 51703,
+              "rank_fb": 67327
+            },
+            {
+              "cm_tag": 501147,
+              "perc_25_75": 0.829157,
+              "perc_eg": 0.858651,
+              "perc_fb": 0.80821,
+              "rank_25_75": 133824,
+              "rank_eg": 110721,
+              "rank_fb": 150232
+            },
+            {
+              "cm_tag": 503523,
+              "perc_25_75": 0.840013,
+              "perc_eg": 0.881351,
+              "perc_fb": 0.788069,
+              "rank_25_75": 22099,
+              "rank_eg": 16389,
+              "rank_fb": 29274
+            },
+            {
+              "cm_tag": 503484,
+              "perc_25_75": 0.711727,
+              "perc_eg": 0.759396,
+              "perc_fb": 0.66785,
+              "rank_25_75": 65851,
+              "rank_eg": 54962,
+              "rank_fb": 75874
+            },
+            {
+              "cm_tag": 503256,
+              "perc_25_75": 0.795783,
+              "perc_eg": 0.832377,
+              "perc_fb": 0.759349,
+              "rank_25_75": 173852,
+              "rank_eg": 142699,
+              "rank_fb": 204869
+            },
+            {
+              "cm_tag": 503507,
+              "perc_25_75": 0.715222,
+              "perc_eg": 0.755005,
+              "perc_fb": 0.676677,
+              "rank_25_75": 5519,
+              "rank_eg": 4748,
+              "rank_fb": 6266
+            },
+            {
+              "cm_tag": 503526,
+              "perc_25_75": 0.682823,
+              "perc_eg": 0.726748,
+              "perc_fb": 0.634722,
+              "rank_25_75": 5163,
+              "rank_eg": 4448,
+              "rank_fb": 5946
+            },
+            {
+              "cm_tag": 501150,
+              "perc_25_75": 0.838765,
+              "perc_eg": 0.867251,
+              "perc_fb": 0.83264,
+              "rank_25_75": 52491,
+              "rank_eg": 43217,
+              "rank_fb": 54485
+            },
+            {
+              "cm_tag": 503494,
+              "perc_25_75": 0.604495,
+              "perc_eg": 0.64481,
+              "perc_fb": 0.572365,
+              "rank_25_75": 12371,
+              "rank_eg": 11110,
+              "rank_fb": 13376
+            },
+            {
+              "cm_tag": 503486,
+              "perc_25_75": 0.73499,
+              "perc_eg": 0.780164,
+              "perc_fb": 0.685003,
+              "rank_25_75": 60963,
+              "rank_eg": 50571,
+              "rank_fb": 72462
+            },
+            {
+              "cm_tag": 503255,
+              "perc_25_75": 0.802465,
+              "perc_eg": 0.838745,
+              "perc_fb": 0.767206,
+              "rank_25_75": 183674,
+              "rank_eg": 149940,
+              "rank_fb": 216459
+            },
+            {
+              "cm_tag": 501132,
+              "perc_25_75": 0.887618,
+              "perc_eg": 0.921066,
+              "perc_fb": 0.859142,
+              "rank_25_75": 91963,
+              "rank_eg": 64592,
+              "rank_fb": 115265
+            },
+            {
+              "cm_tag": 501120,
+              "perc_25_75": 0.797691,
+              "perc_eg": 0.839409,
+              "perc_fb": 0.774573,
+              "rank_25_75": 326951,
+              "rank_eg": 259531,
+              "rank_fb": 364313
+            },
+            {
+              "cm_tag": 501143,
+              "perc_25_75": 0.836425,
+              "perc_eg": 0.865534,
+              "perc_fb": 0.824487,
+              "rank_25_75": 43242,
+              "rank_eg": 35547,
+              "rank_fb": 46398
+            },
+            {
+              "cm_tag": 501135,
+              "perc_25_75": 0.848164,
+              "perc_eg": 0.877355,
+              "perc_fb": 0.821931,
+              "rank_25_75": 35156,
+              "rank_eg": 28397,
+              "rank_fb": 41230
+            },
+            {
+              "cm_tag": 503511,
+              "perc_25_75": 0.705161,
+              "perc_eg": 0.751845,
+              "perc_fb": 0.659412,
+              "rank_25_75": 60851,
+              "rank_eg": 51216,
+              "rank_fb": 70293
+            },
+            {
+              "cm_tag": 503496,
+              "perc_25_75": 0.844432,
+              "perc_eg": 0.885589,
+              "perc_fb": 0.794977,
+              "rank_25_75": 23533,
+              "rank_eg": 17307,
+              "rank_fb": 31014
+            },
+            {
+              "cm_tag": 503513,
+              "perc_25_75": 0.725455,
+              "perc_eg": 0.770908,
+              "perc_fb": 0.6732,
+              "rank_25_75": 57630,
+              "rank_eg": 48089,
+              "rank_fb": 68599
+            }
+          ],
+          "overall": {
+            "nml_25_75": 0.00001917055206851844,
+            "perc_25_75": 0.030985,
+            "perc_eg": 0.932496,
+            "perc_fb": 0.898868,
+            "rank_25_75": 969015,
+            "rank_eg": 744729,
+            "rank_fb": 1111789,
+            "score_25_75": 0.00001125,
+            "score_percentile": 0.912732
+          }
+        },
+        "shazam_count": 1123,
+        "signed": false,
+        "sp_followers": 1012,
+        "sp_followers_to_listeners_ratio": 0.61185,
+        "sp_listeners_to_followers_ratio": 1.634387,
+        "sp_monthly_listeners": 1654,
+        "sp_popularity": 9,
+        "sp_where_people_listen": "[{\"code2\":\"us\",\"listeners\":308,\"name\":\"San Juan\"},{\"code2\":\"us\",\"listeners\":84,\"name\":\"Bayamón\"},{\"code2\":\"co\",\"listeners\":50,\"name\":\"Bogotá\"},{\"code2\":\"us\",\"listeners\":46,\"name\":\"Guaynabo\"},{\"code2\":\"pe\",\"listeners\":37,\"name\":\"Lima\"}]",
+        "spotify_ed_playlist_count": 0,
+        "spotify_ed_playlist_total_reach": 0,
+        "spotify_playlist_count": 85,
+        "spotify_playlist_total_reach": 597,
+        "stats_ranked": {
+          "airplay_streams": 517948,
+          "shazam_count": 906761,
+          "sp_followers": 452281,
+          "sp_followers_to_listeners_ratio": 1392004,
+          "sp_listeners_to_followers_ratio": 835064,
+          "sp_monthly_listeners": 518016,
+          "sp_popularity": 552124,
+          "spotify_ed_playlist_count": 1768998,
+          "spotify_ed_playlist_total_reach": 1438206,
+          "spotify_playlist_count": 1078452,
+          "spotify_playlist_total_reach": 3154852,
+          "tiktok_top_video_comments": 711809,
+          "tiktok_top_video_views": 417287,
+          "tiktok_track_posts": 943304
+        },
+        "tiktok_top_video_comments": 46,
+        "tiktok_top_video_views": 112843,
+        "tiktok_track_posts": 6
+      }
+    },
+    "general_rate": 4.6,
+    "followers": 0,
+    "event_followers": 0,
+    "stats": {
+      "rating": {
+        "overall": 1.9526856251219205,
+        "talent": 0.25238794935722564,
+        "performance": 0.48012940099588236,
+        "proffesionalism": 3.7132583055733512,
+        "stage_presence": 4.569076484520532,
+        "charisma": 4.315508331689809,
+        "timeliness": 4.776021096801581,
+        "communication": 1.4758946837965081,
+        "respectfulness": 1.8984376596560317,
+        "total_rates": 8290
+      }
+    },
+    "arts": {
+      "music": {
+        "albums": []
+      }
+    }
+  },
+  {
+    "artistType": "musician",
+    "name": "Johnny Garso",
+    "username": "johnnygarso",
+    "subtitle": "",
+    "verified_status": 1,
+    "profile_pic": "https://i.scdn.co/image/ab6761610000e5eb21dd01e7120b305ea3b455c9",
+    "photo": "",
+    "description": "Johnny Garso estará presentando su nuevo álbum “Espada y Rosa hasta que muera” en lo que será la primera gira del artista zaragozano cantando en directo los temas de su último trabajo en español. Estamos ante un disco de 13 cortes cargado de emociones, distorsión y un toque moderno, que da como resultado un sonido actual con un profundo aroma de nostalgia. En el podremos ver desde su faceta más íntima, con guitarra y voz desnuda, hasta la expresión visceral y reivindicativa de la banda completa. Pero donde Johnny muestra verdaderamente su esencia, pasión, energía y mensaje, es en el escenario, con un directo arrollador que no deja indiferente a nadie. Ante un panorama donde se necesitan nuevos referentes, Johnny Garso está aquí para liderar una escena joven, poderosa y duradera en nuestro país. El Espada y Rosa Tour, es una celebración de lo emocional y lo frenético.",
+    "is_active": "",
+    "country": "es",
+    "city": "",
+    "since": 0,
+    "home_city": "",
+    "genres": {
+      "music": []
+    },
+    "spoken_languages": [],
+    "stage_languages": [],
+    "arts_languages": [],
+    "website": "",
+    "email": "",
+    "mobile_phone": "",
+    "whatsapp": "",
+    "facebook": "",
+    "tiktok": "",
+    "twitch": "",
+    "instagram": "johnnygarso",
+    "spotify": "6zvsUJE9zNUpP3mV3tQsCg",
+    "soundcloud": "",
+    "youtube": "",
+    "youtube_widget_id": "",
+    "chartmetric": 1628258,
+    "spotify_data": {
+      "followers": 3299,
+      "name": "Johnny Garso",
+      "popularity": 25
+    },
+    "chartmetric_data": {
+      "name": "Johnny Garso",
+      "sp_where_people_listen": [
+        {
+          "code2": "es",
+          "listeners": 2113,
+          "name": "Madrid"
+        },
+        {
+          "code2": "es",
+          "listeners": 883,
+          "name": "Barcelona"
+        },
+        {
+          "code2": "es",
+          "listeners": 408,
+          "name": "Zaragoza"
+        },
+        {
+          "code2": "es",
+          "listeners": 308,
+          "name": "Valencia"
+        },
+        {
+          "code2": "es",
+          "listeners": 180,
+          "name": "Bilbao"
+        }
+      ],
+      "stats": {
+        "airplay_streams": 9,
+        "airplay_top_city": [5666],
+        "airplay_top_country": ["ES"],
+        "amazon_ed_playlist_count": 7,
+        "amazon_playlist_count": 7,
+        "deezer_ed_playlist_count": 0,
+        "deezer_ed_playlist_total_reach": 0,
+        "deezer_fans": 15,
+        "deezer_playlist_count": 2,
+        "deezer_playlist_total_reach": 73,
+        "earliest_album_release_date": "2019-04-26",
+        "earliest_album_upc": "5059863595463",
+        "ins_engagement_rate": 7.085900000000001,
+        "ins_followers": 12041,
+        "itunes_ed_playlist_count": 2,
+        "itunes_playlist_count": 3,
+        "latest_album_release_date": "2024-09-06",
+        "latest_album_upc": "3617662414280",
+        "rank": {
+          "code2": {
+            "code2": "ES",
+            "perc_25_75": 0.955145,
+            "perc_eg": 0.942131,
+            "perc_fb": 0.971738,
+            "rank_25_75": 3936,
+            "rank_eg": 5078,
+            "rank_fb": 2480
+          },
+          "genre": [
+            {
+              "cm_tag": 501120,
+              "perc_25_75": 0.944714,
+              "perc_eg": 0.928626,
+              "perc_fb": 0.965534,
+              "rank_25_75": 89405,
+              "rank_eg": 115423,
+              "rank_fb": 55736
+            },
+            {
+              "cm_tag": 501353,
+              "perc_25_75": 0.521173,
+              "perc_eg": 0.456026,
+              "perc_fb": 0.644951,
+              "rank_25_75": 735,
+              "rank_eg": 835,
+              "rank_fb": 545
+            },
+            {
+              "cm_tag": 501149,
+              "perc_25_75": 0.940926,
+              "perc_eg": 0.926689,
+              "perc_fb": 0.961284,
+              "rank_25_75": 61548,
+              "rank_eg": 76381,
+              "rank_fb": 40337
+            },
+            {
+              "cm_tag": 501541,
+              "perc_25_75": 0.749321,
+              "perc_eg": 0.701928,
+              "perc_fb": 0.828131,
+              "rank_25_75": 20761,
+              "rank_eg": 24686,
+              "rank_fb": 14234
+            },
+            {
+              "cm_tag": 501235,
+              "perc_25_75": 0.939075,
+              "perc_eg": 0.92573,
+              "perc_fb": 0.958576,
+              "rank_25_75": 11988,
+              "rank_eg": 14614,
+              "rank_fb": 8151
+            },
+            {
+              "cm_tag": 501122,
+              "perc_25_75": 0.955449,
+              "perc_eg": 0.942429,
+              "perc_fb": 0.972715,
+              "rank_25_75": 55654,
+              "rank_eg": 71919,
+              "rank_fb": 34085
+            },
+            {
+              "cm_tag": 501793,
+              "perc_25_75": 0.480829,
+              "perc_eg": 0.436269,
+              "perc_fb": 0.6,
+              "rank_25_75": 501,
+              "rank_eg": 544,
+              "rank_fb": 386
+            },
+            {
+              "cm_tag": 501233,
+              "perc_25_75": 0.922819,
+              "perc_eg": 0.905904,
+              "perc_fb": 0.947118,
+              "rank_25_75": 21195,
+              "rank_eg": 25840,
+              "rank_fb": 14522
+            }
+          ],
+          "overall": {
+            "nml_25_75": 0.0003560897549251707,
+            "perc_25_75": 0.760796,
+            "perc_eg": 0.971773,
+            "perc_fb": 0.986961,
+            "rank_100": 200286,
+            "rank_25_75": 239204,
+            "rank_eg": 311562,
+            "rank_fb": 143836,
+            "score_100": 15.59705532439545,
+            "score_25_75": 0.000202691228,
+            "score_percentile": 0.978338,
+            "score_percentile_100": 0.453171
+          }
+        },
+        "shazam_count": 1173,
+        "signed": false,
+        "sp_followers": 3266,
+        "sp_followers_to_listeners_ratio": 0.387104,
+        "sp_listeners_to_followers_ratio": 2.583282,
+        "sp_monthly_listeners": 8437,
+        "sp_popularity": 26,
+        "sp_where_people_listen": "[{\"code2\":\"es\",\"listeners\":2113,\"name\":\"Madrid\"},{\"code2\":\"es\",\"listeners\":883,\"name\":\"Barcelona\"},{\"code2\":\"es\",\"listeners\":408,\"name\":\"Zaragoza\"},{\"code2\":\"es\",\"listeners\":308,\"name\":\"Valencia\"},{\"code2\":\"es\",\"listeners\":180,\"name\":\"Bilbao\"}]",
+        "spotify_ed_playlist_count": 0,
+        "spotify_ed_playlist_total_reach": 0,
+        "spotify_playlist_count": 1083,
+        "spotify_playlist_total_reach": 66192,
+        "spotify_popular_playlist_count": 1,
+        "spotify_popular_playlist_total_reach": 1918997,
+        "spotify_popular_playlist_tracks": 167,
+        "stats_ranked": {
+          "airplay_streams": 654196,
+          "amazon_ed_playlist_count": 24549,
+          "amazon_playlist_count": 26712,
+          "deezer_ed_playlist_count": 97814,
+          "deezer_ed_playlist_total_reach": 193842,
+          "deezer_fans": 767546,
+          "deezer_playlist_count": 97098,
+          "deezer_playlist_total_reach": 190132,
+          "ins_engagement_rate": 40420,
+          "ins_followers": 82843,
+          "itunes_ed_playlist_count": 102916,
+          "itunes_playlist_count": 125115,
+          "shazam_count": 891131,
+          "sp_followers": 224896,
+          "sp_followers_to_listeners_ratio": 1563056,
+          "sp_listeners_to_followers_ratio": 664059,
+          "sp_monthly_listeners": 279395,
+          "sp_popularity": 184447,
+          "spotify_ed_playlist_count": 1576580,
+          "spotify_ed_playlist_total_reach": 7715303,
+          "spotify_playlist_count": 258376,
+          "spotify_playlist_total_reach": 577933,
+          "tiktok_top_video_comments": 1505420,
+          "tiktok_top_video_views": 1427259,
+          "ycs_subscribers": 80781,
+          "ycs_views": 74891,
+          "youtube_engagement_rate": 5385
+        },
+        "tiktok_top_video_comments": 0,
+        "tiktok_top_video_views": 347,
+        "ycs_subscribers": 1610,
+        "ycs_subscribers_rank": 1780187,
+        "ycs_views": 583049,
+        "youtube_engagement_rate": 16.1875
+      }
+    },
+    "general_rate": 4.6,
+    "followers": 0,
+    "event_followers": 0,
+    "stats": {
+      "rating": {
+        "overall": 1.9526856251219205,
+        "talent": 0.25238794935722564,
+        "performance": 0.48012940099588236,
+        "proffesionalism": 3.7132583055733512,
+        "stage_presence": 4.569076484520532,
+        "charisma": 4.315508331689809,
+        "timeliness": 4.776021096801581,
+        "communication": 1.4758946837965081,
+        "respectfulness": 1.8984376596560317,
+        "total_rates": 8290
+      }
+    },
+    "arts": {
+      "music": {
+        "albums": []
+      }
+    }
+  },
+  {
+    "artistType": "musician",
+    "name": "Alvaro Ruiz Oficial",
+    "username": "alvaroruizoficial",
+    "subtitle": "",
+    "verified_status": 1,
+    "profile_pic": "https://i.scdn.co/image/ab6761610000e5ebe641b3bb66a9144858f16594",
+    "photo": "",
+    "description": "Fashion forward Puerto Rican urban-alt rapper, Álvaro Díaz, is having the biggest moment of his career. In 2023, he received 10 diamond, platinum &amp; gold certifications for his debut album Felicilandia, sold-out shows all over Latin America &amp; Spain with over 100k fans in attendance and surpassed 650M global streams. He made his debut at the Coca-Cola Music Hall in Puerto Rico with 12k fans in attendance, received nominations from Premio Lo Nuestro, Rolling Stone en Español &amp; Premios Juventud, was featured in Tainy’s album DATA on “Paranormal,” and wrote the songs “Gucci Los Paños” for Karol G &amp; “Panties y Brasieres” for Rauw Alejandro. In 2024, Díaz won a Europe Music Video Award and on May 17th released his sophomore album Sayonara which debuted at #1 in US Latin albums &amp; Top 20 in US General Market on Apple Music, debuted #2 on Spotify’s Top Albums Debut Global Chart, #8 on Billboard’s Latin Rhythms Albums &amp; #14 on Top Latin Albums amassing &#43;310M global streams. The focus track “GATITAS SANDUNGUERAS VOL. 1,” feat. FEID, debuted at #34 on Billboard’s Hot Latin Songs. Currently, Díaz is on the cover of Rolling Stone Español, was nominated for a Premios HEAT. Catch Álvaro Díaz on tour this year in Spain in the summer and Latin America and the US in the fall.",
+    "is_active": "",
+    "country": "pr",
+    "city": "",
+    "since": 0,
+    "home_city": "",
+    "genres": {
+      "music": ["trap boricua", "urbano latino"]
+    },
+    "spoken_languages": [],
+    "stage_languages": [],
+    "arts_languages": [],
+    "website": "",
+    "email": "",
+    "mobile_phone": "",
+    "whatsapp": "",
+    "facebook": "",
+    "tiktok": "",
+    "twitch": "",
+    "instagram": "alvaroruizoficial",
+    "spotify": "5J7rXWjtn5HzUkJ4Jet8Fr",
+    "soundcloud": "",
+    "youtube": "",
+    "youtube_widget_id": "",
+    "chartmetric": 195418,
+    "spotify_data": {
+      "followers": 955581,
+      "name": "Alvaro Diaz",
+      "popularity": 78
+    },
+    "chartmetric_data": {
+      "name": "Alvaro Diaz",
+      "sp_where_people_listen": [
+        {
+          "code2": "co",
+          "listeners": 536830,
+          "name": "Bogotá"
+        },
+        {
+          "code2": "mx",
+          "listeners": 532516,
+          "name": "Mexico City"
+        },
+        {
+          "code2": "cl",
+          "listeners": 420050,
+          "name": "Santiago"
+        },
+        {
+          "code2": "pe",
+          "listeners": 355431,
+          "name": "Lima"
+        },
+        {
+          "code2": "mx",
+          "listeners": 245077,
+          "name": "Gustavo Adolfo Madero"
+        }
+      ],
+      "stats": {
+        "airplay_streams": 30407,
+        "airplay_top_city": [4769],
+        "airplay_top_country": ["PR"],
+        "amazon_ed_playlist_count": 100,
+        "amazon_playlist_count": 100,
+        "anghami_followers": 471,
+        "anghami_plays": 39889,
+        "bs_followers": 8077,
+        "deezer_ed_playlist_count": 13,
+        "deezer_ed_playlist_total_reach": 7489516,
+        "deezer_fans": 22292,
+        "deezer_playlist_count": 81,
+        "deezer_playlist_total_reach": 8105546,
+        "earliest_album_release_date": "2014-10-27",
+        "earliest_album_upc": "5055834178253",
+        "facebook_followers": 177210,
+        "fs_likes": 177210,
+        "fs_talks": 2347,
+        "genius_pageviews": 565226,
+        "ins_engagement_rate": 15.3865,
+        "ins_followers": 941002,
+        "itunes_ed_playlist_count": 103,
+        "itunes_playlist_count": 199,
+        "latest_album_release_date": "2024-10-16",
+        "latest_album_upc": "602475387916",
+        "melon_artist_fans": 11,
+        "melon_likes": 8,
+        "pandora_lifetime_stations_added": 37,
+        "pandora_lifetime_streams": 1346930,
+        "pandora_listeners_28_day": 1860,
+        "pandora_stations_added": 1,
+        "rank": {
+          "code2": {
+            "code2": "PR",
+            "perc_25_75": 0.964562,
+            "perc_eg": 0.965851,
+            "perc_fb": 0.952964,
+            "rank_25_75": 55,
+            "rank_eg": 53,
+            "rank_fb": 73
+          },
+          "genre": [
+            {
+              "cm_tag": 501208,
+              "perc_25_75": 0.978984,
+              "perc_eg": 0.981176,
+              "perc_fb": 0.966993,
+              "rank_25_75": 163,
+              "rank_eg": 146,
+              "rank_fb": 256
+            },
+            {
+              "cm_tag": 501147,
+              "perc_25_75": 0.999524,
+              "perc_eg": 0.999585,
+              "perc_fb": 0.99896,
+              "rank_25_75": 373,
+              "rank_eg": 325,
+              "rank_fb": 815
+            },
+            {
+              "cm_tag": 501154,
+              "perc_25_75": 0.999536,
+              "perc_eg": 0.999562,
+              "perc_fb": 0.999246,
+              "rank_25_75": 91,
+              "rank_eg": 86,
+              "rank_fb": 148
+            },
+            {
+              "cm_tag": 501146,
+              "perc_25_75": 0.999549,
+              "perc_eg": 0.999585,
+              "perc_fb": 0.999161,
+              "rank_25_75": 509,
+              "rank_eg": 468,
+              "rank_fb": 946
+            },
+            {
+              "cm_tag": 501432,
+              "perc_25_75": 0.956699,
+              "perc_eg": 0.95915,
+              "perc_fb": 0.937908,
+              "rank_25_75": 106,
+              "rank_eg": 100,
+              "rank_fb": 152
+            },
+            {
+              "cm_tag": 501434,
+              "perc_25_75": 0.947848,
+              "perc_eg": 0.951392,
+              "perc_fb": 0.92557,
+              "rank_25_75": 103,
+              "rank_eg": 96,
+              "rank_fb": 147
+            },
+            {
+              "cm_tag": 501599,
+              "perc_25_75": 0.992192,
+              "perc_eg": 0.99498,
+              "perc_fb": 0.986615,
+              "rank_25_75": 14,
+              "rank_eg": 9,
+              "rank_fb": 24
+            },
+            {
+              "cm_tag": 501164,
+              "perc_25_75": 0.984112,
+              "perc_eg": 0.984989,
+              "perc_fb": 0.977191,
+              "rank_25_75": 163,
+              "rank_eg": 154,
+              "rank_fb": 234
+            },
+            {
+              "cm_tag": 501213,
+              "perc_25_75": 0.998855,
+              "perc_eg": 0.999,
+              "perc_fb": 0.99798,
+              "rank_25_75": 174,
+              "rank_eg": 152,
+              "rank_fb": 307
+            },
+            {
+              "cm_tag": 503431,
+              "perc_25_75": 0.989132,
+              "perc_eg": 0.990135,
+              "perc_fb": 0.983782,
+              "rank_25_75": 65,
+              "rank_eg": 59,
+              "rank_fb": 97
+            },
+            {
+              "cm_tag": 503456,
+              "perc_25_75": 0.981818,
+              "perc_eg": 0.983196,
+              "perc_fb": 0.973003,
+              "rank_25_75": 66,
+              "rank_eg": 61,
+              "rank_fb": 98
+            },
+            {
+              "cm_tag": 501121,
+              "perc_25_75": 0.999733,
+              "perc_eg": 0.999765,
+              "perc_fb": 0.999466,
+              "rank_25_75": 618,
+              "rank_eg": 544,
+              "rank_fb": 1236
+            },
+            {
+              "cm_tag": 501827,
+              "perc_25_75": 0.891144,
+              "perc_eg": 0.891144,
+              "perc_fb": 0.874539,
+              "rank_25_75": 59,
+              "rank_eg": 59,
+              "rank_fb": 68
+            }
+          ],
+          "overall": {
+            "nml_25_75": 0.05919094278699147,
+            "perc_25_75": 0.998399,
+            "perc_eg": 0.999875,
+            "perc_fb": 0.99968,
+            "rank_100": 1550,
+            "rank_25_75": 1601,
+            "rank_eg": 1383,
+            "rank_fb": 3532,
+            "score_100": 90.32911689687106,
+            "score_25_75": 0.033692305618,
+            "score_percentile": 0.999855,
+            "score_percentile_100": 0.995768
+          }
+        },
+        "shazam_count": 3265935,
+        "signed": true,
+        "siriusxm_streams": 3794,
+        "songkick_fans": 120712,
+        "soundcloud_followers": 59132,
+        "soundcloud_plays": 12042485,
+        "sp_followers": 929763,
+        "sp_followers_to_listeners_ratio": 0.09517,
+        "sp_listeners_to_followers_ratio": 10.507507,
+        "sp_monthly_listeners": 9769491,
+        "sp_popularity": 77,
+        "sp_where_people_listen": "[{\"code2\":\"co\",\"listeners\":536830,\"name\":\"Bogotá\"},{\"code2\":\"mx\",\"listeners\":532516,\"name\":\"Mexico City\"},{\"code2\":\"cl\",\"listeners\":420050,\"name\":\"Santiago\"},{\"code2\":\"pe\",\"listeners\":355431,\"name\":\"Lima\"},{\"code2\":\"mx\",\"listeners\":245077,\"name\":\"Gustavo Adolfo Madero\"}]",
+        "spotify_ed_playlist_count": 113,
+        "spotify_ed_playlist_total_reach": 25880630,
+        "spotify_playlist_count": 148371,
+        "spotify_playlist_total_reach": 77017518,
+        "spotify_popular_playlist_count": 568,
+        "spotify_popular_playlist_total_reach": 9831332441,
+        "spotify_popular_playlist_tracks": 78129,
+        "ss_followers": 59132,
+        "stats_ranked": {
+          "airplay_streams": 4836,
+          "amazon_ed_playlist_count": 1310,
+          "amazon_playlist_count": 1374,
+          "anghami_followers": 38655,
+          "anghami_plays": 16858,
+          "bs_followers": 24094,
+          "deezer_ed_playlist_count": 2467,
+          "deezer_ed_playlist_total_reach": 327,
+          "deezer_fans": 11861,
+          "deezer_playlist_count": 2611,
+          "deezer_playlist_total_reach": 519,
+          "facebook_followers": 18249,
+          "fs_likes": 18008,
+          "fs_talks": 7365,
+          "genius_pageviews": 3886,
+          "ins_engagement_rate": 12275,
+          "ins_followers": 8363,
+          "itunes_ed_playlist_count": 1471,
+          "itunes_playlist_count": 1881,
+          "melon_artist_fans": 9152,
+          "melon_likes": 8616,
+          "pandora_lifetime_stations_added": 94536,
+          "pandora_lifetime_streams": 33799,
+          "pandora_listeners_28_day": 33446,
+          "pandora_stations_added": 40269,
+          "shazam_count": 5258,
+          "siriusxm_streams": 2206,
+          "songkick_fans": 3563,
+          "soundcloud_followers": 2280,
+          "soundcloud_plays": 3102,
+          "sp_followers": 3987,
+          "sp_followers_to_listeners_ratio": 1950193,
+          "sp_listeners_to_followers_ratio": 276922,
+          "sp_monthly_listeners": 1028,
+          "sp_popularity": 567,
+          "spotify_ed_playlist_count": 1733,
+          "spotify_ed_playlist_total_reach": 491,
+          "spotify_playlist_count": 2386,
+          "spotify_playlist_total_reach": 1131,
+          "ss_followers": 2647,
+          "tiktok_engagement_rate": 6932,
+          "tiktok_followers": 6498,
+          "tiktok_likes": 6208,
+          "tiktok_top_video_comments": 1399,
+          "tiktok_top_video_views": 1184,
+          "tiktok_track_posts": 1161,
+          "ts_followers": 2453,
+          "twitch_followers": 2319,
+          "ws_views": 18864,
+          "ycs_subscribers": 8365,
+          "ycs_views": 5428,
+          "youtube_ed_playlist_count": 11407,
+          "youtube_ed_playlist_total_reach": 53016,
+          "youtube_engagement_rate": 19587,
+          "youtube_playlist_count": 1721,
+          "youtube_playlist_total_reach": 9762
+        },
+        "tiktok_engagement_rate": 24.5789,
+        "tiktok_followers": 513600,
+        "tiktok_likes": 7800000,
+        "tiktok_top_video_comments": 3243655,
+        "tiktok_top_video_views": 3510064850,
+        "tiktok_track_posts": 2357863,
+        "ts_followers": 347093,
+        "twitch_followers": 3904,
+        "ws_views": 350,
+        "ycs_subscribers": 523000,
+        "ycs_subscribers_rank": 160993,
+        "ycs_views": 377338923,
+        "youtube_ed_playlist_count": 0,
+        "youtube_ed_playlist_total_reach": 0,
+        "youtube_engagement_rate": 2.8619,
+        "youtube_playlist_count": 66,
+        "youtube_playlist_total_reach": 52438463
+      }
+    },
+    "general_rate": 4.6,
+    "followers": 0,
+    "event_followers": 0,
+    "stats": {
+      "rating": {
+        "overall": 1.9526856251219205,
+        "talent": 0.25238794935722564,
+        "performance": 0.48012940099588236,
+        "proffesionalism": 3.7132583055733512,
+        "stage_presence": 4.569076484520532,
+        "charisma": 4.315508331689809,
+        "timeliness": 4.776021096801581,
+        "communication": 1.4758946837965081,
+        "respectfulness": 1.8984376596560317,
+        "total_rates": 8290
+      }
+    },
+    "arts": {
+      "music": {
+        "albums": []
+      }
+    }
+  },
+  {
+    "artistType": "musician",
+    "name": "Lαɱααɾ",
+    "username": "soy_lamaar",
+    "subtitle": "",
+    "verified_status": 1,
+    "profile_pic": "https://i.scdn.co/image/ab6761610000e5ebe2cea8d8422476a1aaad9865",
+    "photo": "",
+    "description": "Lamaar is a singer and songwriter with Italian roots living in Andalusia. Her music mixes her soulful and bluesy voice with her intense love for latin, traditional and folk music, from flamenco to balkan music, from latino-American music to blues and soul. Lamaar started singing as soon as she was able to talk, but she founded her first rock band with her brother , the guitarist Marco Picaro, at the age of 15. In 2013 the two siblings founded the Rock Blues band Ramrod with which they started writing original music and touring Italy and Europe. Lamaar is the front-woman and songwriter of Ramrod and she has currently released two albums : &#34;First Fall&#34; and &#34;Jet Black&#34;. In 2020 Lamaar feels that it&#39;s time to share her inner and hidden universe with the rest of the world, that&#39;s when she decides to start her solo project. Lamaar simply gives voice to her soul, without filters and limitations, mixing the musical genres that formed her.",
+    "is_active": "",
+    "country": "es",
+    "city": "",
+    "since": 0,
+    "home_city": "",
+    "genres": {
+      "music": []
+    },
+    "spoken_languages": [],
+    "stage_languages": [],
+    "arts_languages": [],
+    "website": "",
+    "email": "",
+    "mobile_phone": "",
+    "whatsapp": "",
+    "facebook": "",
+    "tiktok": "",
+    "twitch": "",
+    "instagram": "soy_lamaar",
+    "spotify": "1kXmtIrPzrL5ymoaPmoEQs",
+    "soundcloud": "",
+    "youtube": "",
+    "youtube_widget_id": "",
+    "chartmetric": 4203686,
+    "spotify_data": {
+      "followers": 1526,
+      "name": "Lamaar",
+      "popularity": 8
+    },
+    "chartmetric_data": {
+      "name": "Lamaar",
+      "sp_where_people_listen": [
+        {
+          "code2": "es",
+          "listeners": 78,
+          "name": "Madrid"
+        },
+        {
+          "code2": "es",
+          "listeners": 58,
+          "name": "Barcelona"
+        },
+        {
+          "code2": "es",
+          "listeners": 49,
+          "name": "Granada"
+        },
+        {
+          "code2": "es",
+          "listeners": 31,
+          "name": "Málaga"
+        },
+        {
+          "code2": "co",
+          "listeners": 23,
+          "name": "Bogotá"
+        }
+      ],
+      "stats": {
+        "airplay_streams": 1,
+        "airplay_top_city": [7772],
+        "airplay_top_country": ["US"],
+        "deezer_fans": 6,
+        "earliest_album_release_date": "2020-05-21",
+        "earliest_album_upc": "195079556463",
+        "latest_album_release_date": "2024-10-04",
+        "latest_album_upc": "3617664399776",
+        "rank": {
+          "code2": {
+            "code2": "ES",
+            "perc_25_75": 0.830027,
+            "perc_eg": 0.860443,
+            "perc_fb": 0.812043,
+            "rank_25_75": 14915,
+            "rank_eg": 12246,
+            "rank_fb": 16493
+          },
+          "genre": [
+            {
+              "cm_tag": 501234,
+              "perc_25_75": 0.776625,
+              "perc_eg": 0.81544,
+              "perc_fb": 0.742671,
+              "rank_25_75": 53169,
+              "rank_eg": 43930,
+              "rank_fb": 61251
+            },
+            {
+              "cm_tag": 501213,
+              "perc_25_75": 0.80425,
+              "perc_eg": 0.831852,
+              "perc_fb": 0.79,
+              "rank_25_75": 29892,
+              "rank_eg": 25677,
+              "rank_fb": 32068
+            },
+            {
+              "cm_tag": 501237,
+              "perc_25_75": 0.698805,
+              "perc_eg": 0.738629,
+              "perc_fb": 0.673984,
+              "rank_25_75": 11443,
+              "rank_eg": 9930,
+              "rank_fb": 12386
+            },
+            {
+              "cm_tag": 501147,
+              "perc_25_75": 0.827171,
+              "perc_eg": 0.853241,
+              "perc_fb": 0.817711,
+              "rank_25_75": 135661,
+              "rank_eg": 115197,
+              "rank_fb": 143086
+            },
+            {
+              "cm_tag": 501149,
+              "perc_25_75": 0.803758,
+              "perc_eg": 0.837937,
+              "perc_fb": 0.784611,
+              "rank_25_75": 204468,
+              "rank_eg": 168857,
+              "rank_fb": 224418
+            },
+            {
+              "cm_tag": 501207,
+              "perc_25_75": 0.861931,
+              "perc_eg": 0.88717,
+              "perc_fb": 0.851256,
+              "rank_25_75": 25427,
+              "rank_eg": 20779,
+              "rank_fb": 27393
+            },
+            {
+              "cm_tag": 501154,
+              "perc_25_75": 0.847073,
+              "perc_eg": 0.872339,
+              "perc_fb": 0.836157,
+              "rank_25_75": 30191,
+              "rank_eg": 25203,
+              "rank_fb": 32346
+            },
+            {
+              "cm_tag": 501130,
+              "perc_25_75": 0.783022,
+              "perc_eg": 0.811058,
+              "perc_fb": 0.772733,
+              "rank_25_75": 61642,
+              "rank_eg": 53677,
+              "rank_fb": 64565
+            },
+            {
+              "cm_tag": 501121,
+              "perc_25_75": 0.883216,
+              "perc_eg": 0.904318,
+              "perc_fb": 0.873438,
+              "rank_25_75": 272527,
+              "rank_eg": 223282,
+              "rank_fb": 295344
+            },
+            {
+              "cm_tag": 501143,
+              "perc_25_75": 0.834233,
+              "perc_eg": 0.859439,
+              "perc_fb": 0.834207,
+              "rank_25_75": 44240,
+              "rank_eg": 37513,
+              "rank_fb": 44247
+            },
+            {
+              "cm_tag": 501122,
+              "perc_25_75": 0.828463,
+              "perc_eg": 0.859233,
+              "perc_fb": 0.812191,
+              "rank_25_75": 215157,
+              "rank_eg": 176562,
+              "rank_fb": 235567
+            },
+            {
+              "cm_tag": 501128,
+              "perc_25_75": 0.889797,
+              "perc_eg": 0.917957,
+              "perc_fb": 0.882398,
+              "rank_25_75": 9502,
+              "rank_eg": 7074,
+              "rank_fb": 10140
+            },
+            {
+              "cm_tag": 501135,
+              "perc_25_75": 0.844225,
+              "perc_eg": 0.869725,
+              "perc_fb": 0.831297,
+              "rank_25_75": 36281,
+              "rank_eg": 30342,
+              "rank_fb": 39292
+            },
+            {
+              "cm_tag": 501150,
+              "perc_25_75": 0.836726,
+              "perc_eg": 0.861318,
+              "perc_fb": 0.842116,
+              "rank_25_75": 53552,
+              "rank_eg": 45486,
+              "rank_fb": 51784
+            },
+            {
+              "cm_tag": 503327,
+              "perc_25_75": 0.728644,
+              "perc_eg": 0.771961,
+              "perc_fb": 0.704353,
+              "rank_25_75": 7630,
+              "rank_eg": 6412,
+              "rank_fb": 8313
+            },
+            {
+              "cm_tag": 501235,
+              "perc_25_75": 0.77901,
+              "perc_eg": 0.820974,
+              "perc_fb": 0.750497,
+              "rank_25_75": 43551,
+              "rank_eg": 35281,
+              "rank_fb": 49170
+            },
+            {
+              "cm_tag": 503319,
+              "perc_25_75": 0.714705,
+              "perc_eg": 0.753019,
+              "perc_fb": 0.687425,
+              "rank_25_75": 7394,
+              "rank_eg": 6401,
+              "rank_fb": 8101
+            },
+            {
+              "cm_tag": 503313,
+              "perc_25_75": 0.867365,
+              "perc_eg": 0.897705,
+              "perc_fb": 0.851996,
+              "rank_25_75": 1329,
+              "rank_eg": 1025,
+              "rank_fb": 1483
+            }
+          ],
+          "overall": {
+            "nml_25_75": 0.00001594259095038731,
+            "perc_25_75": 0.000251,
+            "perc_eg": 0.927733,
+            "perc_fb": 0.904655,
+            "rank_25_75": 999749,
+            "rank_eg": 800679,
+            "rank_fb": 1056459,
+            "score_25_75": 0.000011227565,
+            "score_percentile": 0.909932
+          }
+        },
+        "shazam_count": 502,
+        "signed": false,
+        "songkick_fans": 77,
+        "sp_followers": 1520,
+        "sp_followers_to_listeners_ratio": 1.381818,
+        "sp_listeners_to_followers_ratio": 0.723684,
+        "sp_monthly_listeners": 1100,
+        "sp_popularity": 8,
+        "sp_where_people_listen": "[{\"code2\":\"es\",\"listeners\":78,\"name\":\"Madrid\"},{\"code2\":\"es\",\"listeners\":58,\"name\":\"Barcelona\"},{\"code2\":\"es\",\"listeners\":49,\"name\":\"Granada\"},{\"code2\":\"es\",\"listeners\":31,\"name\":\"Málaga\"},{\"code2\":\"co\",\"listeners\":23,\"name\":\"Bogotá\"}]",
+        "spotify_ed_playlist_count": 0,
+        "spotify_ed_playlist_total_reach": 0,
+        "spotify_playlist_count": 135,
+        "spotify_playlist_total_reach": 16101,
+        "stats_ranked": {
+          "airplay_streams": 1247274,
+          "deezer_fans": 1117986,
+          "shazam_count": 1234515,
+          "songkick_fans": 257231,
+          "sp_followers": 321144,
+          "sp_followers_to_listeners_ratio": 691066,
+          "sp_listeners_to_followers_ratio": 880890,
+          "sp_monthly_listeners": 478863,
+          "sp_popularity": 490963,
+          "spotify_ed_playlist_count": 884959,
+          "spotify_ed_playlist_total_reach": 5972730,
+          "spotify_playlist_count": 856650,
+          "spotify_playlist_total_reach": 1265813,
+          "tiktok_top_video_comments": 1104764,
+          "tiktok_top_video_views": 1174643,
+          "tiktok_track_posts": 967957
+        },
+        "tiktok_top_video_comments": 6,
+        "tiktok_top_video_views": 1399,
+        "tiktok_track_posts": 6
+      }
+    },
+    "general_rate": 4.6,
+    "followers": 0,
+    "event_followers": 0,
+    "stats": {
+      "rating": {
+        "overall": 1.9526856251219205,
+        "talent": 0.25238794935722564,
+        "performance": 0.48012940099588236,
+        "proffesionalism": 3.7132583055733512,
+        "stage_presence": 4.569076484520532,
+        "charisma": 4.315508331689809,
+        "timeliness": 4.776021096801581,
+        "communication": 1.4758946837965081,
+        "respectfulness": 1.8984376596560317,
+        "total_rates": 8290
+      }
+    },
+    "arts": {
+      "music": {
+        "albums": []
+      }
+    }
+  }
+]

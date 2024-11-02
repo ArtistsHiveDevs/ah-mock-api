@@ -1,13 +1,16 @@
 var express = require("express");
 const mongoose = require("mongoose");
 var helpers = require("../../../helpers/index");
-var RoutesConstants = require("./constants/index");
+var routesConstants = require("./constants/index");
 const Artist = require("../../../models/domain/Artist.schema");
 const User = require("../../../models/appbase/User");
 const ErrorCodes = require("../../../constants/errors");
 const {
   createPaginatedDataResponse,
 } = require("../../../helpers/apiHelperFunctions");
+const Country = require("../../../models/parametrics/geo/Country.schema");
+const createCRUDActions = require("../../../helpers/crud-actions");
+const apiHelperFunctions = require("../../../helpers/apiHelperFunctions");
 
 var artistRouter = express.Router({ mergeParams: true });
 
@@ -185,10 +188,10 @@ function filterResultsByQuery(req, result) {
 }
 
 module.exports = [
-  artistRouter.get(RoutesConstants.artistsList, async (req, res) => {
+  artistRouter.get(routesConstants.artistsList, async (req, res) => {
     // try {
     //   let result = filterResultsByQuery(req, helpers.getEntityData("Artist"));
-    //   // result = helpers.hideProperties(result, RoutesConstants.public_fields);
+    //   // result = helpers.hideProperties(result, routesConstants.public_fields);
     //   return res.json(result);
     // } catch (error) {
     //   console.log(error);
@@ -202,7 +205,7 @@ module.exports = [
     // }
     let { page = 1, limit = 1000, fields } = req.query;
 
-    const modelFields = RoutesConstants.public_fields.join(",");
+    const modelFields = routesConstants.public_fields.join(",");
 
     const projection = (modelFields || fields || "")
       .split(",")
@@ -233,9 +236,11 @@ module.exports = [
   }),
 
   artistRouter.get(
-    RoutesConstants.findArtistById,
+    routesConstants.findArtistById,
+    helpers.validateIfUserExists,
     // helpers.validateAuthenticatedUser,
     async (req, res) => {
+      lang = req.lang;
       // const { artistId } = req.params;
       // const searchArtist = helpers.searchResult(
       //   helpers.getEntityData("Artist"),
@@ -278,17 +283,98 @@ module.exports = [
             ],
           };
         }
-        const artistInfo = await Artist.findOne(query);
 
-        if (!artistInfo) {
-          return res.status(404).json({ message: "Artist not found" });
+        const model = Artist;
+        const modelName = model.name;
+
+        // Obtener campos de proyección de la configuración
+        const projectionFields = routesConstants?.parametric_public_fields?.[
+          modelName
+        ]?.summary ??
+          routesConstants?.authenticated_fields ?? ["name"];
+
+        const modelFields = model.schema.paths.i18n
+          ? [...projectionFields, `i18n.${lang}`]
+          : projectionFields;
+
+        // console.log(" ========================  ARTIST");
+        // console.log(projectionFields);
+        // console.log(modelFields);
+
+        // Identificar campos que necesitan populate
+        const populateFields = modelFields
+          .filter((field) => {
+            const fieldType = model.schema.paths[field];
+            return (
+              fieldType &&
+              (fieldType.instance.toLowerCase() === "objectid" ||
+                (fieldType.instance.toLowerCase() === "array" &&
+                  fieldType.caster &&
+                  fieldType.caster.instance.toLowerCase() === "objectid"))
+            );
+          })
+          .map((field) => {
+            const refModelName =
+              model.schema.paths[field].options.ref ||
+              model.schema.paths[field].caster.options.ref;
+
+            // Obtener el modelo de referencia dinámicamente
+            const refModel = mongoose.model(refModelName);
+            const hasI18n = refModel.schema.paths.i18n;
+
+            const refModelFields = hasI18n
+              ? [
+                  `i18n.${lang}`,
+                  ...(routesConstants?.parametric_public_fields?.[refModelName]
+                    ?.summary ??
+                    routesConstants?.public_fields ?? ["name"]),
+                ]
+              : routesConstants?.parametric_public_fields?.[refModelName]
+                  ?.summary ??
+                routesConstants?.public_fields ?? ["name"];
+
+            return {
+              path: field,
+              select: refModelFields.join(" "),
+            };
+          });
+
+        // console.log("POPULATE: ", populateFields);
+
+        // console.log(query);
+
+        // Construir la consulta con proyección y populate
+        let queryResult = model.findOne(query); //.select(projection);
+
+        // console.log(modelName, " Populate ", populateFields);
+        // Aplicar `populate` a los campos correspondientes
+        if (populateFields.length > 0) {
+          populateFields.forEach((populateOption) => {
+            queryResult = queryResult.populate(populateOption);
+          });
         }
+
+        // Ejecutar la consulta
+        let artistInfo = await queryResult.exec();
+
+        console.log(artistInfo);
+
+        // Manejar caso en el que la entidad no sea encontrada
+        if (!artistInfo) {
+          throw new Error(`${modelName} not found`);
+        }
+
+        // Traducir los resultados utilizando translateDBResults
+        artistInfo = apiHelperFunctions.translateDBResults({
+          results: [artistInfo],
+          lang,
+        })[0]; // Convertir el array de resultados en un solo objeto
 
         // Definir los campos visibles según el rol del usuario
         // let visibleAttributes = !userId
-        //   ? RoutesConstants.public_fields
-        //   : RoutesConstants.authenticated_fields; // Atributos públicos por defecto
-        let visibleAttributes = RoutesConstants.authenticated_fields;
+        //   ? routesConstants.public_fields
+        //   : routesConstants.authenticated_fields; // Atributos públicos por defecto
+        let visibleAttributes = routesConstants.authenticated_fields;
 
         const currentUser = await User.findById(userId);
 
@@ -338,6 +424,13 @@ module.exports = [
             visibleAttributes = [...visibleAttributes, "photo", "description"];
           }
         }
+
+        //  ====================================    Country and city ===========================
+        if (!!artistInfo["country"]) {
+          // TODO, no debería retornar la capital
+          artistInfo.city = artistInfo["city"] || artistInfo["country"].capital;
+        }
+
         if (!currentUserIsOwner) {
           let reducedArtistData = visibleAttributes.reduce((acc, field) => {
             acc[field] = artistInfo[field];
@@ -357,7 +450,7 @@ module.exports = [
 
   // Crear Artista
   artistRouter.post(
-    RoutesConstants.create,
+    routesConstants.create,
     helpers.validateAuthenticatedUser,
     async (req, res) => {
       try {
@@ -435,7 +528,7 @@ module.exports = [
   ),
 
   artistRouter.put(
-    RoutesConstants.updateById,
+    routesConstants.updateById,
     helpers.validateAuthenticatedUser,
     async (req, res) => {
       const { id: searchValue } = req.params;
@@ -584,7 +677,7 @@ module.exports = [
     }
   ),
 
-  artistRouter.delete(RoutesConstants.deleteById, async (req, res) => {
+  artistRouter.delete(routesConstants.deleteById, async (req, res) => {
     //   const items = helpers.getEntityData("Artist");
     //   return res
     //     .status(200)

@@ -45,6 +45,7 @@ function createCRUDRoutes({ model, options = {} }) {
           id: req.params.artistId,
           userId: req.userId,
           lang: req.lang,
+          idFields: ["alpha2", "alpha3"],
         });
         res.json(response);
       } catch (err) {
