@@ -113,7 +113,9 @@ async function seed({
           if (!isArray) {
             mockValues = mockValues[0];
           }
-          instanceData[relationship.relationshipName] = mockValues;
+          instanceData[
+            relationship.newRelationshipName || relationship.relationshipName
+          ] = mockValues;
         });
 
         // Por si se quiere evitar el registro en la DB

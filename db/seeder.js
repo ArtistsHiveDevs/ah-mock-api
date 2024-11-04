@@ -176,8 +176,8 @@ async function seedAppBaseModels() {
 // ******************************************
 async function dropDomainModels() {
   await dropMultipleCollections([
-    "artists",
-    // "places",
+    // "artists",
+    "places",
     // "events",
   ]);
 }
@@ -186,94 +186,20 @@ async function seedDomainModels(domainSuffix) {
   let stop = false;
   const models = [
     // ===================================================== ARTISTS
-    {
-      model: Artist,
-      userId,
-      forbiddenKeys: ["id"],
-      suffix: `${domainSuffix || ""}`,
-      printEachNumberElements: 3,
-      relationships: [
-        { relationshipName: "country", ref: Country, refField: "alpha2" },
-      ],
-      extraInfoFunction: (data) => {
-        const fs = require("fs");
-        // console.log("> agregando albums: ", data.length);
-        const spotifyConfigJSON = JSON.parse(
-          fs.readFileSync(`${scrapped_data_path}/config/spotify_bands.json`)
-        );
-        // const fs = require("fs");
-        // // console.log("> agregando albums: ", data.length);
-        // const artistsSpotifyInfo = JSON.parse(
-        //   fs.readFileSync(
-        //     `./assets/mocks/domain/artists/output_20_08_2024.json`
-        //   )
-        // );
-        const albumTracksInfo = JSON.parse(
-          fs.readFileSync(
-            `./assets/mocks/domain/artists/tracksByAlbumList_04_09_2024.json`
-          )
-        );
-        // let print = false;
-        data.forEach((artist) => {
-          artist.country_alpha2 = artist["country"];
-
-          artist.arts = {};
-          //   if (print) {
-          //     console.log(artist.spotify);
-          //     print = false;
-          //   }
-          const spotifyConfigInfoId = spotifyConfigJSON.find(
-            (artistConfigInfo) =>
-              `${artist.spotify}` == `${artistConfigInfo.spotify}`
-          );
-          if (spotifyConfigInfoId) {
-            const artistInfo = JSON.parse(
-              fs.readFileSync(
-                `${scrapped_data_path}/spotify/bands/artist_extra/${spotifyConfigInfoId.downloaded}_${spotifyConfigInfoId.spotify}.json`
-              )
-            );
-            if (artistInfo) {
-              if (artistInfo?.albums?.total > 0) {
-                artist.arts["music"] = {
-                  albums: artistInfo?.albums?.items.map((album) => {
-                    const albumWithTracksID = Object.keys(albumTracksInfo).find(
-                      (albumId) => `${album.id}` == `${albumId}`
-                    );
-                    return {
-                      images: album.images,
-                      name: album.name,
-                      release_date: album.release_date,
-                      release_date_precision: album.release_date_precision,
-                      spotify: {
-                        id: album.id,
-                        url: album.external_urls.spotify,
-                      },
-                      total_tracks: album.total_tracks,
-                      tracks: albumWithTracksID
-                        ? albumTracksInfo[albumWithTracksID].items
-                        : [],
-                    };
-                  }),
-                };
-              }
-            }
-          }
-        });
-      },
-    },
-    // ===================================================== PLACES
     // {
-    //   model: Place,
+    //   model: Artist,
     //   userId,
     //   forbiddenKeys: ["id"],
     //   suffix: `${domainSuffix || ""}`,
-    //   printEachNumberElements: 2,
-    //   //   sleepTimeBetweenInstances: 200,
+    //   printEachNumberElements: 3,
+    //   relationships: [
+    //     { relationshipName: "country", ref: Country, refField: "alpha2" },
+    //   ],
     //   extraInfoFunction: (data) => {
     //     const fs = require("fs");
     //     // console.log("> agregando albums: ", data.length);
-    //     const mockInfo = JSON.parse(
-    //       fs.readFileSync(`./assets/mocks/domain/places/placesList-mock.json`)
+    //     const spotifyConfigJSON = JSON.parse(
+    //       fs.readFileSync(`${scrapped_data_path}/config/spotify_bands.json`)
     //     );
     //     // const fs = require("fs");
     //     // // console.log("> agregando albums: ", data.length);
@@ -282,17 +208,99 @@ async function seedDomainModels(domainSuffix) {
     //     //     `./assets/mocks/domain/artists/output_20_08_2024.json`
     //     //   )
     //     // );
-    //     data.forEach((place) => {
-    //       const mockElement = mockInfo.find(
-    //         (mockPlace) => mockPlace.instagram === place.instagram
+    //     const albumTracksInfo = JSON.parse(
+    //       fs.readFileSync(
+    //         `./assets/mocks/domain/artists/tracksByAlbumList_04_09_2024.json`
+    //       )
+    //     );
+    //     // let print = false;
+    //     data.forEach((artist) => {
+    //       artist.country_alpha2 = artist["country"];
+
+    //       artist.arts = {};
+    //       //   if (print) {
+    //       //     console.log(artist.spotify);
+    //       //     print = false;
+    //       //   }
+    //       const spotifyConfigInfoId = spotifyConfigJSON.find(
+    //         (artistConfigInfo) =>
+    //           `${artist.spotify}` == `${artistConfigInfo.spotify}`
     //       );
-    //       if (mockElement) {
-    //         place.profile_pic = mockElement.profile_pic;
-    //         place.image_gallery = mockElement.image_gallery;
+    //       if (spotifyConfigInfoId) {
+    //         const artistInfo = JSON.parse(
+    //           fs.readFileSync(
+    //             `${scrapped_data_path}/spotify/bands/artist_extra/${spotifyConfigInfoId.downloaded}_${spotifyConfigInfoId.spotify}.json`
+    //           )
+    //         );
+    //         if (artistInfo) {
+    //           if (artistInfo?.albums?.total > 0) {
+    //             artist.arts["music"] = {
+    //               albums: artistInfo?.albums?.items.map((album) => {
+    //                 const albumWithTracksID = Object.keys(albumTracksInfo).find(
+    //                   (albumId) => `${album.id}` == `${albumId}`
+    //                 );
+    //                 return {
+    //                   images: album.images,
+    //                   name: album.name,
+    //                   release_date: album.release_date,
+    //                   release_date_precision: album.release_date_precision,
+    //                   spotify: {
+    //                     id: album.id,
+    //                     url: album.external_urls.spotify,
+    //                   },
+    //                   total_tracks: album.total_tracks,
+    //                   tracks: albumWithTracksID
+    //                     ? albumTracksInfo[albumWithTracksID].items
+    //                     : [],
+    //                 };
+    //               }),
+    //             };
+    //           }
+    //         }
     //       }
     //     });
     //   },
     // },
+    // ===================================================== PLACES
+    {
+      model: Place,
+      userId,
+      forbiddenKeys: ["id"],
+      suffix: `${domainSuffix || ""}`,
+      printEachNumberElements: 2,
+      //   sleepTimeBetweenInstances: 200,
+      relationships: [
+        {
+          relationshipName: "country_alpha2",
+          newRelationshipName: "country",
+          ref: Country,
+          refField: "alpha2",
+        },
+      ],
+      extraInfoFunction: (data) => {
+        const fs = require("fs");
+        // console.log("> agregando albums: ", data.length);
+        const mockInfo = JSON.parse(
+          fs.readFileSync(`./assets/mocks/domain/places/placesList-mock.json`)
+        );
+        // const fs = require("fs");
+        // // console.log("> agregando albums: ", data.length);
+        // const artistsSpotifyInfo = JSON.parse(
+        //   fs.readFileSync(
+        //     `./assets/mocks/domain/artists/output_20_08_2024.json`
+        //   )
+        // );
+        data.forEach((place) => {
+          const mockElement = mockInfo.find(
+            (mockPlace) => mockPlace.instagram === place.instagram
+          );
+          if (mockElement) {
+            place.profile_pic = mockElement.profile_pic;
+            place.image_gallery = mockElement.image_gallery;
+          }
+        });
+      },
+    },
     // ===================================================== EVENT
     // {
     //   model: Event,

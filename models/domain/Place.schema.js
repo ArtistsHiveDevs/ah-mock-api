@@ -1,9 +1,12 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const imageSchema = new mongoose.Schema({
-  src: { type: String, required: true },
-});
+const imageSchema = new mongoose.Schema(
+  {
+    src: { type: String, required: true },
+  },
+  { _id: false }
+);
 
 const PlaceRatingSchema = new Schema(
   {
@@ -41,7 +44,8 @@ const PlaceSchema = new Schema({
   name: { type: String },
   place_type: { type: String },
   music_genre: { type: String },
-  country: { type: String },
+  country: { type: Schema.Types.ObjectId, ref: "Country" },
+  country_alpha2: { type: String },
   state: { type: String },
   city: { type: String },
   address: { type: String },
