@@ -471,14 +471,27 @@ function createCRUDActions({ model, options = {} }) {
           ownerRoles.entityRoleMap.push(entityInfo);
           entityInfo.roles.push("OWNER");
 
-          ownerUser.save();
+          // Extrae solo los datos modificados
+          const updatedData = {
+            roles: ownerUser.roles,
+          };
+
+          // Realiza el update con `findByIdAndUpdate`
+          const ownerUserToUpdate = await User.findByIdAndUpdate(
+            userId,
+            updatedData,
+            {
+              new: true, // Para obtener el documento actualizado como resultado
+              runValidators: true, // Para que se apliquen las validaciones del esquema
+            }
+          );
         }
       }
+      return apiHelperFunctions.createPaginatedDataResponse(newEntity);
     } catch (error) {
       console.log("ERROR: ", modelName, ", UserId: ", userId, ", body: ", body);
+      throw error;
     }
-
-    return apiHelperFunctions.createPaginatedDataResponse(newEntity);
   }
 
   // Función para actualizar una entidad
