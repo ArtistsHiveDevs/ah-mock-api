@@ -303,13 +303,15 @@ async function seedDomainModels(domainSuffix) {
               // Guardar el documento actualizado
               await artistDB.save();
 
-              console.log(
-                artistDB.username,
-                ":    Rel:  ",
-                artistDB.arts.music.related_artists
-              );
+              // console.log(
+              //   artistDB.username,
+              //   ":    Rel:  ",
+              //   artistDB.arts.music.related_artists
+              // );
             }
           }
+
+          console.log("Se terminó de registrar los artistas relacionados");
         } catch (error) {
           console.error(error);
         }

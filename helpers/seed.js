@@ -96,17 +96,21 @@ async function seed({
           if (!isArray) {
             mockValues = [mockValue];
           }
-          mockValues = mockValues.map((value) => {
-            const relObjectData = relationshipData
-              .find((entity) => entity.name === relationship.ref.modelName)
-              .data.find((element) => element[relationship.refField] === value);
-            if (!relObjectData) {
-              console.log(
-                `no se encontró "${relationship.ref.modelName}": ${value} en el ${modelName} ${instanceData["name"]}`
-              );
-            }
-            return relObjectData?._id;
-          });
+          mockValues = mockValues
+            .filter((value) => !!value)
+            .map((value) => {
+              const relObjectData = relationshipData
+                .find((entity) => entity.name === relationship.ref.modelName)
+                .data.find(
+                  (element) => element[relationship.refField] === value
+                );
+              if (!relObjectData) {
+                console.log(
+                  `no se encontró "${relationship.ref.modelName}": ${value} en el ${modelName} ${instanceData["name"]}`
+                );
+              }
+              return relObjectData?._id;
+            });
 
           // if (modelName === "Country" && index === 4) {
           //   console.log(instanceData["name"], mockValues);

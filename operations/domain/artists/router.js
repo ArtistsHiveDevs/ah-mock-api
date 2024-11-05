@@ -445,6 +445,10 @@ module.exports = [
           // TODO, no debería retornar la capital
           artistInfo.city = artistInfo["city"] || artistInfo["country"].capital;
         }
+        if (!!artistInfo.arts?.music?.related_artists) {
+          // TODO, no debería retornar la capital
+          helpers.shuffle(artistInfo.arts?.music?.related_artists);
+        }
 
         if (!currentUserIsOwner) {
           let reducedArtistData = visibleAttributes.reduce((acc, field) => {
