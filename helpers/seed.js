@@ -11,6 +11,7 @@ async function seed({
   sleepTimeBetweenInstances = 100,
   relationships = [],
   extraInfoFunction = undefined,
+  afterSeedFunction = undefined,
 }) {
   const modelActions = createCRUDActions({ model });
   const modelName = model.modelName;
@@ -157,6 +158,11 @@ async function seed({
         errors.push(`${currentElement.id} ${currentElement.name}`);
         throw err;
       }
+    }
+
+    if (afterSeedFunction) {
+      console.log("\n ----  After seed function  -------");
+      await afterSeedFunction(data);
     }
 
     console.log(
