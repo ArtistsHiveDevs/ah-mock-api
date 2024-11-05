@@ -302,42 +302,57 @@ module.exports = [
         // console.log(modelFields);
 
         // Identificar campos que necesitan populate
-        const populateFields = modelFields
-          .filter((field) => {
-            const fieldType = model.schema.paths[field];
-            return (
-              fieldType &&
-              (fieldType.instance.toLowerCase() === "objectid" ||
-                (fieldType.instance.toLowerCase() === "array" &&
-                  fieldType.caster &&
-                  fieldType.caster.instance.toLowerCase() === "objectid"))
-            );
-          })
-          .map((field) => {
-            const refModelName =
-              model.schema.paths[field].options.ref ||
-              model.schema.paths[field].caster.options.ref;
+        const customPopulateFields = [
+          {
+            path: "arts.music.related_artists",
+            select: routesConstants.public_fields.join(" "),
+            populate: {
+              path: "country",
+              select: routesConstants.parametric_public_fields.Country.summary,
+            },
+          },
+        ];
 
-            // Obtener el modelo de referencia dinámicamente
-            const refModel = mongoose.model(refModelName);
-            const hasI18n = refModel.schema.paths.i18n;
+        const populateFields = [
+          ...modelFields
+            .filter((field) => {
+              const fieldType = model.schema.paths[field];
+              return (
+                fieldType &&
+                (fieldType.instance.toLowerCase() === "objectid" ||
+                  (fieldType.instance.toLowerCase() === "array" &&
+                    fieldType.caster &&
+                    fieldType.caster.instance.toLowerCase() === "objectid"))
+              );
+            })
+            .map((field) => {
+              const refModelName =
+                model.schema.paths[field].options.ref ||
+                model.schema.paths[field].caster.options.ref;
 
-            const refModelFields = hasI18n
-              ? [
-                  `i18n.${lang}`,
-                  ...(routesConstants?.parametric_public_fields?.[refModelName]
+              // Obtener el modelo de referencia dinámicamente
+              const refModel = mongoose.model(refModelName);
+              const hasI18n = refModel.schema.paths.i18n;
+
+              const refModelFields = hasI18n
+                ? [
+                    `i18n.${lang}`,
+                    ...(routesConstants?.parametric_public_fields?.[
+                      refModelName
+                    ]?.summary ??
+                      routesConstants?.public_fields ?? ["name"]),
+                  ]
+                : routesConstants?.parametric_public_fields?.[refModelName]
                     ?.summary ??
-                    routesConstants?.public_fields ?? ["name"]),
-                ]
-              : routesConstants?.parametric_public_fields?.[refModelName]
-                  ?.summary ??
-                routesConstants?.public_fields ?? ["name"];
+                  routesConstants?.public_fields ?? ["name"];
 
-            return {
-              path: field,
-              select: refModelFields.join(" "),
-            };
-          });
+              return {
+                path: field,
+                select: refModelFields.join(" "),
+              };
+            }),
+          ...customPopulateFields,
+        ];
 
         // console.log("POPULATE: ", populateFields);
 

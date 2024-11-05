@@ -41,6 +41,7 @@ const SpotifySchema = new mongoose.Schema(
 
 const AlbumSchema = new mongoose.Schema(
   {
+    album_type: { type: String },
     name: { type: String, required: true },
     images: [{ type: mongoose.Schema.Types.Mixed }], // Mixed permite que el objeto tenga propiedades variables
     release_date: { type: String },
@@ -48,9 +49,22 @@ const AlbumSchema = new mongoose.Schema(
     spotify: SpotifySchema,
     total_tracks: { type: Number },
     tracks: [TrackSchema],
+    type: { type: String },
   },
   { _id: false }
 );
+
+const TopTrackSchema = new mongoose.Schema({
+  album: { type: AlbumSchema, required: true },
+  artists: [ArtistInTrackSchema],
+  disc_number: { type: Number, required: true },
+  duration_ms: { type: Number, required: true },
+  id: { type: String, required: true },
+  name: { type: String, required: true },
+  popularity: { type: Number, required: true },
+  track_number: { type: Number, required: true },
+  type: { type: String, required: true },
+});
 
 const ArtistSchema = new mongoose.Schema(
   {
@@ -62,7 +76,7 @@ const ArtistSchema = new mongoose.Schema(
     profile_pic: { type: String },
     photo: { type: String },
     description: { type: String },
-    since: { type: Number },
+    since: { type: Date, default: null },
     home_city: { type: String },
     country_alpha2: { type: String },
     country: { type: Schema.Types.ObjectId, ref: "Country" },
@@ -136,6 +150,8 @@ const ArtistSchema = new mongoose.Schema(
     arts: {
       music: {
         albums: [AlbumSchema],
+        top_tracks: [TopTrackSchema],
+        related_artists: [{ type: Schema.Types.ObjectId, ref: "Artist" }],
       },
     },
 
