@@ -377,6 +377,7 @@ async function seedDomainModels(domainSuffix) {
     {
       model: Event,
       userId,
+      // saveRecord: false,
       forbiddenKeys: [
         "id",
         "main_artist_id",
@@ -392,16 +393,39 @@ async function seedDomainModels(domainSuffix) {
       ],
       //   sleepTimeBetweenInstances: 200,
       extraInfoFunction: (data) => {
-        // data = [...data[0], data[1], data[2]];
+        const fs = require("fs");
+        // console.log("> agregando albums: ", data.length);
+        const ah_ids = JSON.parse(
+          fs.readFileSync(`./assets/mocks/domain/ah_ids.json`)
+        );
+
+        const totalArtists = ah_ids["artists"].length;
+        const totalPlaces = ah_ids["places"].length;
+
+        const cantidadArtistasMaxEnEvento = 6;
+
         data = data.map((event) => {
           // const random = Math.floor(Math.random() * 63);
           // const randomPlace = await Place.findOne().skip(random);
-          event.place = "lapascasia";
-          event.artists = ["espiral7", "puertocandelaria", "monsieurperine"];
+          // event.description = `[Evento ficticio de prueba] ${event.description}`;
+          // event.name = `[Prueba] ${event.name}`;
+          event.place =
+            ah_ids["places"][Math.floor(Math.random() * totalPlaces)] ||
+            "lapascasia";
+          event.artists = Array(
+            Math.floor(Math.random() * cantidadArtistasMaxEnEvento) + 1
+          )
+            .fill(null) // Llenar el array con valores temporales
+            .map(
+              () => ah_ids["artists"][Math.floor(Math.random() * totalArtists)]
+            );
           // console.log("+++++", event);
           return event;
         });
-        console.log("% % % ", data);
+        // console.log(
+        //   "% % % ",
+        //   data.map((d) => d.timetable__initial_date).sort()
+        // );
       },
     },
   ];

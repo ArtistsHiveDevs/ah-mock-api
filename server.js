@@ -42,6 +42,7 @@ const Continent = require("./models/parametrics/geo/Continent.schema");
 const Country = require("./models/parametrics/geo/Country.schema");
 const Language = require("./models/parametrics/geo/Language.schema");
 const Allergy = require("./models/parametrics/geo/demographics/Allergies.schema");
+const routesConstants = require("./operations/domain/artists/constants/routes.constants");
 
 var app = express();
 var port = process.env.PORT || 3000;
@@ -161,7 +162,32 @@ var routes = [
       options: { listEntities: { limit: 0 } },
     }),
   },
-  { path: "/events", route: createCRUDRoutes({ model: Event }) },
+  {
+    path: "/events",
+    route: createCRUDRoutes({
+      model: Event,
+      options: {
+        public_fields: [
+          ...routesConstants.public_fields,
+          "timetable__initial_date",
+          "timetable__end_date",
+          "timetable__openning_doors",
+          "timetable__guest_time",
+          "timetable__main_artist_time",
+        ],
+        customPopulateFields: [
+          {
+            path: "place",
+            select: routesConstants.public_fields.join(" "),
+            populate: {
+              path: "country",
+              select: routesConstants.parametric_public_fields.Country.summary,
+            },
+          },
+        ],
+      },
+    }),
+  },
   {
     path: "/langs",
     route: createCRUDRoutes({

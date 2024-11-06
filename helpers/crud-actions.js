@@ -29,11 +29,11 @@ function createCRUDActions({ model, options = {} }) {
       : options?.listEntities?.limit,
     fields,
     lang = "en",
+    public_fields,
   }) {
     // Obtener campos de proyección de la configuración
-    const projectionFields = routesConstants?.parametric_public_fields?.[
-      modelName
-    ]?.summary ??
+    const projectionFields = public_fields ??
+      routesConstants?.parametric_public_fields?.[modelName]?.summary ??
       routesConstants?.public_fields ?? ["name"];
 
     // Crear proyección para select()
@@ -67,11 +67,13 @@ function createCRUDActions({ model, options = {} }) {
         const refModelFields = model.schema.paths.i18n
           ? [
               `i18n.${lang}`,
-              ...(routesConstants?.parametric_public_fields?.[refModel]
-                ?.summary ??
+              ...(public_fields ??
+                routesConstants?.parametric_public_fields?.[refModel]
+                  ?.summary ??
                 routesConstants?.public_fields ?? ["name"]),
             ]
-          : routesConstants?.parametric_public_fields?.[refModel]?.summary ??
+          : public_fields ??
+            routesConstants?.parametric_public_fields?.[refModel]?.summary ??
             routesConstants?.public_fields ?? ["name"];
 
         return {
@@ -249,6 +251,7 @@ function createCRUDActions({ model, options = {} }) {
     lang = "en",
     idFields = [],
     specific_projection = undefined,
+    public_fields,
   }) {
     if (!id) {
       throw new Error("Must search an id, username or name");
@@ -299,42 +302,48 @@ function createCRUDActions({ model, options = {} }) {
       }, {});
 
     // Identificar campos que necesitan populate
-    const populateFields = modelFields
-      .filter((field) => {
-        const fieldType = model.schema.paths[field];
-        return (
-          fieldType &&
-          (fieldType.instance.toLowerCase() === "objectid" ||
-            (fieldType.instance.toLowerCase() === "array" &&
-              fieldType.caster &&
-              fieldType.caster.instance.toLowerCase() === "objectid"))
-        );
-      })
-      .map((field) => {
-        const refModelName =
-          model.schema.paths[field].options.ref ||
-          model.schema.paths[field].caster.options.ref;
 
-        // Obtener el modelo de referencia dinámicamente
-        const refModel = mongoose.model(refModelName);
-        const hasI18n = refModel.schema.paths.i18n;
+    const populateFields = [
+      ...modelFields
+        .filter((field) => {
+          const fieldType = model.schema.paths[field];
+          return (
+            fieldType &&
+            (fieldType.instance.toLowerCase() === "objectid" ||
+              (fieldType.instance.toLowerCase() === "array" &&
+                fieldType.caster &&
+                fieldType.caster.instance.toLowerCase() === "objectid"))
+          );
+        })
+        .map((field) => {
+          const refModelName =
+            model.schema.paths[field].options.ref ||
+            model.schema.paths[field].caster.options.ref;
 
-        const refModelFields = hasI18n
-          ? [
-              `i18n.${lang}`,
-              ...(routesConstants?.parametric_public_fields?.[refModelName]
+          // Obtener el modelo de referencia dinámicamente
+          const refModel = mongoose.model(refModelName);
+          const hasI18n = refModel.schema.paths.i18n;
+
+          const refModelFields = hasI18n
+            ? [
+                `i18n.${lang}`,
+                ...(public_fields ??
+                  routesConstants?.parametric_public_fields?.[refModelName]
+                    ?.summary ??
+                  routesConstants?.public_fields ?? ["name"]),
+              ]
+            : public_fields ??
+              routesConstants?.parametric_public_fields?.[refModelName]
                 ?.summary ??
-                routesConstants?.public_fields ?? ["name"]),
-            ]
-          : routesConstants?.parametric_public_fields?.[refModelName]
-              ?.summary ??
-            routesConstants?.public_fields ?? ["name"];
+              routesConstants?.public_fields ?? ["name"];
 
-        return {
-          path: field,
-          select: refModelFields.join(" "),
-        };
-      });
+          return {
+            path: field,
+            select: refModelFields.join(" "),
+          };
+        }),
+      ...(options.customPopulateFields || []),
+    ];
 
     // Construir la consulta con proyección y populate
     let queryResult = model.findOne(query); //.select(projection);

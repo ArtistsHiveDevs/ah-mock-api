@@ -23,9 +23,10 @@ function createCRUDRoutes({ model, options = {} }) {
       try {
         const response = await modelActions.listEntities({
           page: req.query.page,
-          limit: req.query.limit,
+          limit: req.query.limit || 100,
           fields: req.query.fields,
           lang: req.lang,
+          public_fields: options.public_fields,
         });
 
         res.json(response);

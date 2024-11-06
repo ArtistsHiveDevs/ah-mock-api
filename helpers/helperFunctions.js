@@ -379,15 +379,33 @@ module.exports = {
     } else if (entityName === "Currency") {
       response = [...currencies];
     } else if (entityName === "Event") {
-      response = [...events];
-
-      const one_day = 1000 * 60 * 60 * 24;
-      const firstEventDate = new Date("2022-12-06");
-      const today = new Date();
-      const DAYS_DIFERENCE =
-        Math.round((today - firstEventDate) / one_day) - 50;
+      // De base hay 3
+      const numeroDeReplicas = 1000;
+      response = [...this.replicateArrayElements(events, numeroDeReplicas)];
+      this.shuffle(response);
 
       const fechas = ["timetable__initial_date", "timetable__end_date"];
+
+      const archivos = [
+        "33",
+        "bf",
+        "cb",
+        "e7",
+        "gu",
+        "jpv",
+        "latp",
+        "ll",
+        "lm",
+        "lp",
+        "mb",
+        "me",
+        "mp",
+        "pc",
+        "pl",
+        "pp",
+        "rr",
+        "sm",
+      ];
 
       const EVENT_CONFIRMATION_STATUS = {
         DRAFT: "DRAFT",
@@ -399,24 +417,45 @@ module.exports = {
         CANCELLED: "CANCELLED",
       };
 
-      response.forEach((event) => {
-        fechas.forEach((fecha) => {
-          const eventOriginalDate = new Date(event[fecha]);
+      response.forEach((event, index) => {
+        // Datos básicos
+        event.name = `[Prueba] ${event.name} - ${index}`;
+        event.description = `[Prueba - ${index}] ${event.description}`;
+        const fotoRandom = Math.floor(Math.random() * archivos.length);
+        event.profile_pic = `s3://public/cover_${archivos[fotoRandom]}.jpg`;
 
-          const eventUpdatedDate = new Date(eventOriginalDate);
-          eventUpdatedDate.setDate(
-            eventOriginalDate.getDate() + DAYS_DIFERENCE
-          );
+        // Actualización de la fecha
+        // Intervalo de diferencia de 30 días * número de meses
+        const interval_range = 30 * 6;
+        const today = new Date();
+
+        const randomDate = new Date(
+          today.getTime() +
+            (Math.random() * 2 * interval_range - interval_range) *
+              24 *
+              60 *
+              60 *
+              1000
+        );
+
+        fechas.forEach((fecha) => {
+          // const eventOriginalDate = new Date(event[fecha]);
+
+          // const eventUpdatedDate = new Date(eventOriginalDate);
+          // eventUpdatedDate.setDate(
+          //   eventOriginalDate.getDate() + DAYS_DIFERENCE
+          // );
+          const eventUpdatedDate = randomDate;
           const year = eventUpdatedDate.getFullYear();
           const month = String(eventUpdatedDate.getMonth() + 1).padStart(
             2,
             "0"
           );
           const day = String(eventUpdatedDate.getDate()).padStart(2, "0");
-
           event[fecha] = `${year}-${month}-${day}`;
         });
 
+        // Estado de confirmación
         event["confirmation_status"] = Object.keys(EVENT_CONFIRMATION_STATUS)[
           Math.floor(
             Math.random() * Object.keys(EVENT_CONFIRMATION_STATUS).length
@@ -462,6 +501,13 @@ module.exports = {
         array[currentIndex],
       ];
     }
+  },
+  replicateArrayElements(arr, times) {
+    return arr.flatMap((item) =>
+      Array(times)
+        .fill(null)
+        .map(() => ({ ...item }))
+    );
   },
   hideProperties(arrayObjects, properties) {
     return arrayObjects.map((element) =>
