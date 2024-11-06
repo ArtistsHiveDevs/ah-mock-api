@@ -35,7 +35,9 @@ module.exports = {
       return StringAccentsMap[a] || a;
     });
   },
-
+  normalizeString: function (str) {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Eliminar diacríticos
+  },
   searchResult: function (baseObject, search, property) {
     return baseObject?.find((objElement) => {
       if (!!property) {
@@ -307,7 +309,10 @@ module.exports = {
     const fs = require("fs");
 
     const artists = JSON.parse(
-      fs.readFileSync(`./assets/mocks/domain/artists/artistsList.json`)
+      fs.readFileSync(
+        `C:/Users/fnp/Documents/Proyectos/QuarenDevs/2024/tsProcessor/data/drive/artists_drive_db_output.json`
+      )
+      // fs.readFileSync(`./assets/mocks/domain/artists/artistsList.json`)
     );
     const albums = JSON.parse(
       fs.readFileSync(`./assets/mocks/domain/artists/albumsList.json`)

@@ -12,6 +12,7 @@ async function seed({
   relationships = [],
   extraInfoFunction = undefined,
   afterSeedFunction = undefined,
+  saveRecord = true,
 }) {
   const modelActions = createCRUDActions({ model });
   const modelName = model.modelName;
@@ -124,7 +125,7 @@ async function seed({
         });
 
         // Por si se quiere evitar el registro en la DB
-        if (true) {
+        if (saveRecord) {
           const re = await modelActions.createEntity({
             userId: finalUserId,
             body: instanceData,

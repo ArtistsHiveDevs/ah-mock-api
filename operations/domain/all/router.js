@@ -3,11 +3,120 @@ var helpers = require("../../../helpers/index");
 var RoutesConstants = require("./constants/index");
 const mongoose = require("mongoose");
 const EntityDirectory = require("../../../models/appbase/EntityDirectory");
+const {
+  createPaginatedDataResponse,
+} = require("../../../helpers/apiHelperFunctions");
 
 const convertKmToDegrees = (km) => {
   const earthRadiusKm = 6371;
   return km / earthRadiusKm;
 };
+
+async function searchEntitiesDB(queryRQ) {
+  const {
+    q: query = "",
+    l = "",
+    maxDistance = 15,
+    page = 1,
+    limit = 10,
+  } = queryRQ;
+  try {
+    const skip = (page - 1) * limit;
+
+    // Normalizar la cadena de búsqueda (quitar acentos, diéresis, etc.)
+    // const normalizedQuery = helpers.removeStringAccents(query.toLowerCase());
+    const normalizedQuery = query.toLowerCase().trim();
+
+    const orMatch = [
+      { name: { $regex: normalizedQuery, $options: "i" } },
+      { username: { $regex: normalizedQuery, $options: "i" } },
+      { search_cache: { $regex: normalizedQuery, $options: "i" } },
+    ];
+
+    // Búsqueda y agrupación por entityType para obtener resultados
+    const results = await EntityDirectory.aggregate([
+      {
+        $match: {
+          $or: orMatch,
+        },
+      },
+      {
+        $group: {
+          _id: "$entityType",
+          entities: { $push: "$$ROOT" }, // Agregar los documentos completos
+        },
+      },
+      {
+        $project: {
+          entityType: "$_id",
+          entities: {
+            $slice: [
+              {
+                $sortArray: {
+                  // Ordenar las entidades antes de aplicar el límite
+                  input: "$entities",
+                  sortBy: {
+                    verified_status: 1, // Orden por verified_status
+                    profile_pic: 1,
+                    lastActivity: -1, // Orden por lastActivity (descendente)
+                  },
+                },
+              },
+              limit, // Limitar a los primeros 'limit' elementos después de ordenar
+            ],
+          }, // Limitar a los primeros 'limit' elementos
+          _id: 0,
+        },
+      },
+      {
+        $sort: { entityType: 1 }, // Ordenar por entityType si es necesario
+      },
+    ]);
+
+    // Contar el número total de documentos por entityType
+    const countResults = await EntityDirectory.aggregate([
+      {
+        $match: {
+          $or: orMatch,
+        },
+      },
+      {
+        $group: {
+          _id: "$entityType",
+          count: { $sum: 1 }, // Contar el número de documentos por entityType
+        },
+      },
+    ]);
+
+    // Crear un objeto de conteo para fácil acceso
+    const countMap = countResults.reduce((acc, item) => {
+      acc[`total_${item._id.toLowerCase()}s`] = item.count; // Mapa de conteo
+      return acc;
+    }, {});
+
+    const resultData = results.reduce((acc, item) => {
+      acc[`${item.entityType.toLowerCase()}s`] = item.entities;
+      return acc;
+    }, {});
+    // Estructurar la respuesta
+    const response = {
+      ...resultData,
+      pagination: countMap,
+      // pagination: countMap,
+      // {
+      //   // currentPage: page,
+      //   // totalPages: totalPages,
+      //   countMap,
+      //   // totalItems: totalCount, // Total de elementos en la base de datos
+      // },
+    };
+
+    return response;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Error al realizar la búsqueda de entidades");
+  }
+}
 
 const searchEntities = async ({
   q = "",
@@ -127,7 +236,7 @@ const searchEntities = async ({
   //   totalPages,
   // };
 
-  // return response;
+  return response;
 };
 
 var router = express.Router({ mergeParams: true });
@@ -339,8 +448,16 @@ module.exports = [
       // } catch (err) {
       //   res.status(500).json({ message: err.message });
       // }
-      searchEntities(req.query);
-      return res.json(filterResultsByQuery(req));
+
+      const results = await searchEntitiesDB({
+        ...req.query,
+        page: 1,
+        limit: 200,
+      });
+      console.log(results);
+      return res.json(createPaginatedDataResponse(results));
+      const result = searchEntities(req.query);
+      return res.json(createPaginatedDataResponse(result));
     } catch (error) {
       console.log(error);
       return res.status(500).json([]);

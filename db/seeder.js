@@ -11,32 +11,43 @@ const Continent = require("../models/parametrics/geo/Continent.schema");
 const Country = require("../models/parametrics/geo/Country.schema");
 const Language = require("../models/parametrics/geo/Language.schema");
 const Allergy = require("../models/parametrics/geo/demographics/Allergies.schema");
+const EntityDirectory = require("../models/appbase/EntityDirectory");
 helpers.sleep(1000);
 
 console.log("Seeder\n");
 
 let userId;
 let scrapped_data_path = "./assets/mocks/scrapped";
+let seedConfig = {};
 
 async function seedData() {
-  let seedConfig = {
+  seedConfig = {
     Parametrics: {
       seed: false,
       preUserIds: true,
       seedFunction: seedParametricsModels,
       dropFunction: dropParametricsModels,
+      models: [
+        "allergies",
+        "countries",
+        "languages",
+        "continents",
+        "currencies",
+      ],
     },
     app_base: {
       seed: false,
       preUserIds: true,
       seedFunction: seedAppBaseModels,
       dropFunction: dropAppBaseModels,
+      models: ["entitydirectories", "users"],
     },
     domain: {
       seed: false,
       preUserIds: false,
       seedFunction: seedDomainModels,
       dropFunction: dropDomainModels,
+      models: ["artists", "places", "events"],
     },
   };
 
@@ -100,64 +111,64 @@ async function seedData() {
 
 // ******************************************
 async function dropParametricsModels() {
-  await dropMultipleCollections([
-    // "allergies",
-    // "countries",
-    // "languages",
-    // "continents",
-    // "currencies",
-  ]);
+  await dropMultipleCollections(seedConfig.Parametrics.models);
 }
 
 async function seedParametricsModels() {
   const models = [
     // ===================================================== USERS
-    // {
-    //   model: Allergy,
-    //   forbiddenKeys: [],
-    //   defaultValues: [],
-    // },
-    // {
-    //   model: Currency,
-    //   forbiddenKeys: [],
-    //   defaultValues: [],
-    // },
-    // {
-    //   model: Continent,
-    //   forbiddenKeys: [],
-    //   defaultValues: [],
-    // },
-    // {
-    //   model: Language,
-    //   forbiddenKeys: [],
-    //   defaultValues: [],
-    // },
-    // {
-    //   model: Country,
-    //   forbiddenKeys: [],
-    //   defaultValues: [],
-    //   relationships: [
-    //     { relationshipName: "continent", ref: Continent, refField: "key" },
-    //     {
-    //       relationshipName: "currency",
-    //       ref: Currency,
-    //       refField: "ISO_4217_key",
-    //     },
-    //     {
-    //       relationshipName: "languages",
-    //       ref: Language,
-    //       refField: "key",
-    //     },
-    //   ],
-    // },
+    {
+      model: Allergy,
+      forbiddenKeys: [],
+      defaultValues: [],
+    },
+    {
+      model: Currency,
+      forbiddenKeys: [],
+      defaultValues: [],
+    },
+    {
+      model: Continent,
+      forbiddenKeys: [],
+      defaultValues: [],
+    },
+    {
+      model: Language,
+      forbiddenKeys: [],
+      defaultValues: [],
+    },
+    {
+      model: Country,
+      forbiddenKeys: [],
+      defaultValues: [],
+      relationships: [
+        { relationshipName: "continent", ref: Continent, refField: "key" },
+        {
+          relationshipName: "currency",
+          ref: Currency,
+          refField: "ISO_4217_key",
+        },
+        {
+          relationshipName: "languages",
+          ref: Language,
+          refField: "key",
+        },
+      ],
+    },
   ];
 
-  await seedModels(models);
+  await seedModels(
+    models.filter((modelConfig) =>
+      seedConfig.Parametrics.models.find(
+        (modelName) => modelConfig.model.collection.name === modelName
+      )
+    )
+  );
 }
 
 // ******************************************
 async function dropAppBaseModels() {
-  await dropMultipleCollections(["entitydirectories", "users"]);
+  await dropMultipleCollections(seedConfig.domain.models);
 }
 
 async function seedAppBaseModels() {
@@ -170,16 +181,18 @@ async function seedAppBaseModels() {
     },
   ];
 
-  await seedModels(models);
+  await seedModels(
+    models.filter((modelConfig) =>
+      seedConfig.app_base.models.find(
+        (modelName) => modelConfig.model.collection.name === modelName
+      )
+    )
+  );
 }
 
 // ******************************************
 async function dropDomainModels() {
-  await dropMultipleCollections([
-    "artists",
-    // "places",
-    // "events",
-  ]);
+  await dropMultipleCollections(seedConfig.domain.models);
 }
 
 async function seedDomainModels(domainSuffix) {
@@ -188,6 +201,7 @@ async function seedDomainModels(domainSuffix) {
     // ===================================================== ARTISTS
     {
       model: Artist,
+      saveRecord: true,
       userId,
       forbiddenKeys: ["id"],
       suffix: `${domainSuffix || ""}`,
@@ -268,40 +282,42 @@ async function seedDomainModels(domainSuffix) {
         });
       },
       afterSeedFunction: async (data) => {
-        try {
-          for (const artistMock of data) {
+        for (const artistMock of data) {
+          try {
             if (artistMock.spotify) {
               // Busca o crea el documento del artista en la base de datos
               const artistDB = await Artist.findOneAndUpdate(
                 { spotify: artistMock.spotify }, // Suponiendo que el ID de Spotify está aquí
                 {},
-                { new: true, upsert: true } // Upsert para crear si no existe
+                { new: true, upsert: false } // Upsert para crear si no existe
               );
 
               if (!artistDB) continue; // Si el artista no existe, pasa al siguiente
 
-              // Buscar cada artista relacionado en la base de datos usando los IDs de Spotify
-              const relatedArtistIds = await Promise.all(
-                artistMock.arts.music.related_artist_spotify.map(
-                  async (spotifyId) => {
-                    const relatedArtist = await Artist.findOne({
-                      spotify: spotifyId,
-                    });
-                    return relatedArtist ? relatedArtist._id : null;
-                  }
-                )
-              );
+              if (artistMock.arts?.music?.related_artist_spotify) {
+                // Buscar cada artista relacionado en la base de datos usando los IDs de Spotify
+                const relatedArtistIds = await Promise.all(
+                  artistMock.arts.music.related_artist_spotify.map(
+                    async (spotifyId) => {
+                      const relatedArtist = await Artist.findOne({
+                        spotify: spotifyId,
+                      });
+                      return relatedArtist ? relatedArtist._id : null;
+                    }
+                  )
+                );
 
-              // Filtrar cualquier resultado nulo en caso de que un ID de Spotify no haya sido encontrado
-              const validRelatedArtistIds = relatedArtistIds.filter(
-                (id) => id !== null
-              );
+                // Filtrar cualquier resultado nulo en caso de que un ID de Spotify no haya sido encontrado
+                const validRelatedArtistIds = relatedArtistIds.filter(
+                  (id) => id !== null
+                );
 
-              // Asignar los IDs de MongoDB encontrados a la lista en el campo correspondiente
-              artistDB.arts.music.related_artists = validRelatedArtistIds;
+                // Asignar los IDs de MongoDB encontrados a la lista en el campo correspondiente
+                artistDB.arts.music.related_artists = validRelatedArtistIds;
 
-              // Guardar el documento actualizado
-              await artistDB.save();
+                // Guardar el documento actualizado
+                await artistDB.save();
+              }
 
               // console.log(
               //   artistDB.username,
@@ -309,87 +325,94 @@ async function seedDomainModels(domainSuffix) {
               //   artistDB.arts.music.related_artists
               // );
             }
+          } catch (error) {
+            console.error(error);
           }
-
-          console.log("Se terminó de registrar los artistas relacionados");
-        } catch (error) {
-          console.error(error);
         }
+
+        console.log("Se terminó de registrar los artistas relacionados");
       },
     },
     // ===================================================== PLACES
-    // {
-    //   model: Place,
-    //   userId,
-    //   forbiddenKeys: ["id"],
-    //   suffix: `${domainSuffix || ""}`,
-    //   printEachNumberElements: 2,
-    //   //   sleepTimeBetweenInstances: 200,
-    //   relationships: [
-    //     {
-    //       relationshipName: "country_alpha2",
-    //       newRelationshipName: "country",
-    //       ref: Country,
-    //       refField: "alpha2",
-    //     },
-    //   ],
-    //   extraInfoFunction: (data) => {
-    //     const fs = require("fs");
-    //     // console.log("> agregando albums: ", data.length);
-    //     const mockInfo = JSON.parse(
-    //       fs.readFileSync(`./assets/mocks/domain/places/placesList-mock.json`)
-    //     );
-    //     // const fs = require("fs");
-    //     // // console.log("> agregando albums: ", data.length);
-    //     // const artistsSpotifyInfo = JSON.parse(
-    //     //   fs.readFileSync(
-    //     //     `./assets/mocks/domain/artists/output_20_08_2024.json`
-    //     //   )
-    //     // );
-    //     data.forEach((place) => {
-    //       const mockElement = mockInfo.find(
-    //         (mockPlace) => mockPlace.instagram === place.instagram
-    //       );
-    //       if (mockElement) {
-    //         place.profile_pic = mockElement.profile_pic;
-    //         place.image_gallery = mockElement.image_gallery;
-    //       }
-    //     });
-    //   },
-    // },
+    {
+      model: Place,
+      userId,
+      forbiddenKeys: ["id"],
+      suffix: `${domainSuffix || ""}`,
+      printEachNumberElements: 2,
+      //   sleepTimeBetweenInstances: 200,
+      relationships: [
+        {
+          relationshipName: "country_alpha2",
+          newRelationshipName: "country",
+          ref: Country,
+          refField: "alpha2",
+        },
+      ],
+      extraInfoFunction: (data) => {
+        const fs = require("fs");
+        // console.log("> agregando albums: ", data.length);
+        const mockInfo = JSON.parse(
+          fs.readFileSync(`./assets/mocks/domain/places/placesList-mock.json`)
+        );
+        // const fs = require("fs");
+        // // console.log("> agregando albums: ", data.length);
+        // const artistsSpotifyInfo = JSON.parse(
+        //   fs.readFileSync(
+        //     `./assets/mocks/domain/artists/output_20_08_2024.json`
+        //   )
+        // );
+        data.forEach((place) => {
+          const mockElement = mockInfo.find(
+            (mockPlace) => mockPlace.instagram === place.instagram
+          );
+          if (mockElement) {
+            place.profile_pic = mockElement.profile_pic;
+            place.image_gallery = mockElement.image_gallery;
+          }
+        });
+      },
+    },
     // ===================================================== EVENT
-    // {
-    //   model: Event,
-    //   userId,
-    //   forbiddenKeys: [
-    //     "id",
-    //     "main_artist_id",
-    //     "guest_artist_id",
-    //     "place_id",
-    //     "confirmation_status",
-    //   ],
-    //   suffix: `${domainSuffix || ""}`,
-    //   printEachNumberElements: 15,
-    //   relationships: [
-    //     { relationshipName: "place", ref: Place, refField: "username" },
-    //     { relationshipName: "artists", ref: Artist, refField: "username" },
-    //   ],
-    //   //   sleepTimeBetweenInstances: 200,
-    //   extraInfoFunction: (data) => {
-    //     // data = [...data[0], data[1], data[2]];
-    //     data = data.map((event) => {
-    //       // const random = Math.floor(Math.random() * 63);
-    //       // const randomPlace = await Place.findOne().skip(random);
-    //       event.place = "lapascasia";
-    //       event.artists = ["espiral7", "puertocandelaria", "monsieurperine"];
-    //       // console.log("+++++", event);
-    //       return event;
-    //     });
-    //     console.log("% % % ", data);
-    //   },
-    // },
+    {
+      model: Event,
+      userId,
+      forbiddenKeys: [
+        "id",
+        "main_artist_id",
+        "guest_artist_id",
+        "place_id",
+        "confirmation_status",
+      ],
+      suffix: `${domainSuffix || ""}`,
+      printEachNumberElements: 15,
+      relationships: [
+        { relationshipName: "place", ref: Place, refField: "username" },
+        { relationshipName: "artists", ref: Artist, refField: "username" },
+      ],
+      //   sleepTimeBetweenInstances: 200,
+      extraInfoFunction: (data) => {
+        // data = [...data[0], data[1], data[2]];
+        data = data.map((event) => {
+          // const random = Math.floor(Math.random() * 63);
+          // const randomPlace = await Place.findOne().skip(random);
+          event.place = "lapascasia";
+          event.artists = ["espiral7", "puertocandelaria", "monsieurperine"];
+          // console.log("+++++", event);
+          return event;
+        });
+        console.log("% % % ", data);
+      },
+    },
   ];
-  await seedModels(models);
+
+  await seedModels(
+    models.filter((modelConfig) =>
+      seedConfig.domain.models.find(
+        (modelName) => modelConfig.model.collection.name === modelName
+      )
+    )
+  );
 }
 
 async function dropMultipleCollections(collectionsToDelete) {
@@ -402,7 +425,25 @@ async function dropMultipleCollections(collectionsToDelete) {
         .listCollections({ name: collection })
         .hasNext();
       if (collectionExists) {
+        // Se eliminan del directorio de entidades e instancias
+        const modelName = mongoose.connection
+          .modelNames()
+          .find((name) => mongoose.model(name).collection.name === collection);
+
+        EntityDirectory.deleteMany({ entityType: modelName })
+          .then((result) => {
+            console.log(
+              `${result.deletedCount} registros eliminados. Entity Directory: `,
+              modelName
+            );
+          })
+          .catch((error) => {
+            console.error("Error al eliminar registros:", error);
+          });
+
+        // Se elimina la colección
         await db.dropCollection(collection);
+
         console.log(`Colección "${collection}" eliminada.`);
       } else {
         console.log(`Colección "${collection}" no encontrada.`);

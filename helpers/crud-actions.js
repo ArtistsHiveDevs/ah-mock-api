@@ -462,9 +462,64 @@ function createCRUDActions({ model, options = {} }) {
             roles: ["OWNER"],
           };
           if (modelRequiresEntityIndex(modelName)) {
+            const entityLocation = newEntity.location?.split(",");
+            const latitude =
+              entityLocation &&
+              entityLocation.length &&
+              !isNaN(Number(entityLocation[0]))
+                ? Number(entityLocation[0])
+                : null;
+
+            const longitude =
+              entityLocation &&
+              entityLocation.length &&
+              !isNaN(Number(entityLocation[1]))
+                ? Number(entityLocation[1])
+                : null;
+
+            let locationPrecision = undefined;
+            if (entityLocation && entityLocation.length) {
+              locationPrecision = "POINT";
+            } else if (newEntity.city) {
+              locationPrecision = "CITY";
+            } else if (newEntity.state) {
+              locationPrecision = "STATE";
+            } else if (newEntity.country_alpha2) {
+              locationPrecision = "COUNTRY";
+            }
+
+            const location = {
+              country_name: info.country_name,
+              country_alpha2: newEntity.country_alpha2,
+              country_alpha3: undefined,
+              state: newEntity.state,
+              city: newEntity.city,
+              address: newEntity.address,
+              latitude,
+              longitude,
+              locationPrecision,
+            };
+
+            const search_cache =
+              [
+                ...new Set(
+                  [
+                    entityInfo.name,
+                    entityInfo.username,
+                    entityInfo.subtitle,
+                    location.country_name,
+                    location.state,
+                    location.city,
+                  ].filter((v) => v !== undefined)
+                ),
+              ].join(" ") || "";
+
             const entityDirectory = new EntityDirectory({
               ...entityInfo,
               entityType: modelName,
+              search_cache: helpers.removeStringAccents(search_cache),
+              location: [location],
+              // main_date: [location],
             });
             await entityDirectory.save();
           }
