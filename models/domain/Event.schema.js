@@ -13,6 +13,7 @@ const EventSchema = new Schema(
     name: { type: String },
     subtitle: { type: String },
     profile_pic: { type: String },
+    description: { type: String },
     // main_artist_id: { type: Schema.Types.ObjectId, ref: "Artist" },
     // main_artist: { type: Schema.Types.ObjectId, ref: "Artist" },
     // guest_artist_id: { type: Schema.Types.ObjectId, ref: "Artist" },
@@ -25,7 +26,6 @@ const EventSchema = new Schema(
     timetable__main_artist_time: { type: String },
     promoter: { type: String },
     national_code: { type: String },
-    description: { type: String },
     tickets_website: { type: String },
     genres: {
       type: Map,
