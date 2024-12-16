@@ -47,7 +47,10 @@ async function seedData() {
       preUserIds: false,
       seedFunction: seedDomainModels,
       dropFunction: dropDomainModels,
-      models: ["artists", "places", "events"],
+      models: [
+        "artists",
+        // "places", "events"
+      ],
     },
   };
 
@@ -192,7 +195,7 @@ async function seedAppBaseModels() {
 
 // ******************************************
 async function dropDomainModels() {
-  await dropMultipleCollections(seedConfig.domain.models);
+  // await dropMultipleCollections(seedConfig.domain.models);
 }
 
 async function seedDomainModels(domainSuffix) {
@@ -209,7 +212,7 @@ async function seedDomainModels(domainSuffix) {
       relationships: [
         { relationshipName: "country", ref: Country, refField: "alpha2" },
       ],
-      extraInfoFunction: (data) => {
+      extraInfoFunction2: (data) => {
         const fs = require("fs");
         // console.log("> agregando albums: ", data.length);
         const spotifyConfigJSON = JSON.parse(

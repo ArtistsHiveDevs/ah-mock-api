@@ -174,6 +174,53 @@ var routes = [
           "timetable__openning_doors",
           "timetable__guest_time",
           "timetable__main_artist_time",
+          "artists",
+          "place",
+          "confirmation_status",
+        ],
+        authenticated_fields: [
+          ...routesConstants.public_fields,
+          "timetable__initial_date",
+          "timetable__end_date",
+          "timetable__openning_doors",
+          "timetable__guest_time",
+          "timetable__main_artist_time",
+          "artists",
+          "place",
+          "confirmation_status",
+          "id",
+          // "name",
+          // // "subtitle",
+          // // "main_artist_id",
+          // // "guest_artist_id",
+          // // "place_id",
+          // "timetable__initial_date",
+          // "timetable__end_date",
+          // "timetable__openning_doors",
+          // "timetable__guest_time",
+          // "timetable__main_artist_time",
+          // "promoter",
+          // // "national_code",
+          // "profile_pic",
+          // "verified_status",
+          // // "tickets_website",
+          // // "description",
+          // // "website",
+          // // "email",
+          // // "mobile_phone",
+          // // "whatsapp",
+          // // "facebook",
+          // // "twitter",
+          // // "instagram",
+          // // "spotify",
+          // // "youtube",
+          // // "additional_info",
+          // // "dress_code",
+          // // "discounts",
+          // "confirmation_status",
+          // "place",
+          // // "main_artist",
+          // // "genres"
         ],
         customPopulateFields: [
           {
@@ -185,6 +232,20 @@ var routes = [
             },
           },
         ],
+        postScriptFunction: (results) => {
+          results.forEach((result) => {
+            if (!result.name) {
+              result.name = `${result.artists[0]?.name} - ${result.place?.name}`;
+            }
+            if (!result.profile_pic) {
+              result.profile_pic =
+                result.artists[0]?.profile_pic || result.place?.profile_pic;
+            }
+            if (!result.description) {
+              result.description = `${result.artists[0]?.name} - ${result.place?.name}`;
+            }
+          });
+        },
       },
     }),
   },

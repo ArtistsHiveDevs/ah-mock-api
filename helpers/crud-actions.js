@@ -13,7 +13,7 @@ function modelRequiresAuth(modelName) {
     "Currency",
     "Language",
     "User",
-    'Event'
+    "Event",
   ].includes(modelName);
 }
 function modelRequiresEntityIndex(modelName) {
@@ -31,87 +31,99 @@ function createCRUDActions({ model, options = {} }) {
     fields,
     lang = "en",
     public_fields,
+    postScriptFunction,
   }) {
-    // Obtener campos de proyección de la configuración
-    const projectionFields = public_fields ??
-      routesConstants?.parametric_public_fields?.[modelName]?.summary ??
-      routesConstants?.public_fields ?? ["name"];
+    try {
+      // Obtener campos de proyección de la configuración
+      const projectionFields = public_fields ??
+        routesConstants?.parametric_public_fields?.[modelName]?.summary ??
+        routesConstants?.public_fields ?? ["name"];
 
-    // Crear proyección para select()
-    const modelFields = model.schema.paths.i18n
-      ? [...projectionFields, `i18n.${lang}`]
-      : projectionFields;
+      // Crear proyección para select()
+      const modelFields = model.schema.paths.i18n
+        ? [...projectionFields, `i18n.${lang}`]
+        : projectionFields;
 
-    const projection = (modelFields || fields || "")
-      .filter(Boolean) // Filtrar cualquier campo vacío o undefined
-      .reduce((acc, field) => {
-        acc[field] = 1;
-        return acc;
-      }, {});
+      const projection = (modelFields || fields || "")
+        .filter(Boolean) // Filtrar cualquier campo vacío o undefined
+        .reduce((acc, field) => {
+          acc[field] = 1;
+          return acc;
+        }, {});
 
-    // Identificar campos que necesitan populate
-    const populateFields = modelFields
-      .filter((field) => {
-        const fieldType = model.schema.paths[field];
-        return (
-          fieldType &&
-          (fieldType.instance.toLowerCase() === "objectid" ||
-            (fieldType.instance.toLowerCase() === "array" &&
-              fieldType.caster &&
-              fieldType.caster.instance.toLowerCase() === "objectid"))
-        );
-      })
-      .map((field) => {
-        const refModel =
-          model.schema.paths[field].options.ref ||
-          model.schema.paths[field].caster.options.ref;
-        const refModelFields = model.schema.paths.i18n
-          ? [
-              `i18n.${lang}`,
-              ...(public_fields ??
+      // Identificar campos que necesitan populate
+      const populateFields = [
+        ...modelFields
+          .filter((field) => {
+            const fieldType = model.schema.paths[field];
+            return (
+              fieldType &&
+              (fieldType.instance.toLowerCase() === "objectid" ||
+                (fieldType.instance.toLowerCase() === "array" &&
+                  fieldType.caster &&
+                  fieldType.caster.instance.toLowerCase() === "objectid"))
+            );
+          })
+          .map((field) => {
+            const refModel =
+              model.schema.paths[field].options.ref ||
+              model.schema.paths[field].caster.options.ref;
+            const refModelFields = model.schema.paths.i18n
+              ? [
+                  `i18n.${lang}`,
+                  ...(public_fields ??
+                    routesConstants?.parametric_public_fields?.[refModel]
+                      ?.summary ??
+                    routesConstants?.public_fields ?? ["name"]),
+                ]
+              : public_fields ??
                 routesConstants?.parametric_public_fields?.[refModel]
                   ?.summary ??
-                routesConstants?.public_fields ?? ["name"]),
-            ]
-          : public_fields ??
-            routesConstants?.parametric_public_fields?.[refModel]?.summary ??
-            routesConstants?.public_fields ?? ["name"];
+                routesConstants?.public_fields ?? ["name"];
 
-        return {
-          path: field,
-          select: refModelFields.join(" "),
-        };
-      });
+            return {
+              path: field,
+              select: refModelFields.join(" "),
+            };
+          }),
+        ...(options.customPopulateFields || []),
+      ];
 
-    
-    // Consulta a la base de datos con select y populate
-    let query = model
-      .find({})
-      .select(projection)
-      .skip((page - 1) * limit)
-      .limit(Number(limit));
+      // Consulta a la base de datos con select y populate
+      let query = model
+        .find({})
+        .select(projection)
+        .skip((page - 1) * limit)
+        .limit(Number(limit));
 
-    if (populateFields.length > 0) {
-      populateFields.forEach((populateOption) => {
-        query = query.populate(populateOption);
-      });
+      if (populateFields.length > 0) {
+        populateFields.forEach((populateOption) => {
+          query = query.populate(populateOption);
+        });
+      }
+
+      let results = await query.exec();
+
+      // Traducir los resultados utilizando translateDBResults
+      results = apiHelperFunctions.translateDBResults({ results, lang });
+
+      if (options?.randomizeGetAll) {
+        helpers.shuffle(results);
+      }
+
+      if (postScriptFunction && typeof postScriptFunction === "function") {
+        postScriptFunction(results);
+      }
+
+      // Crear la respuesta paginada
+      return apiHelperFunctions.createPaginatedDataResponse(
+        results,
+        page,
+        Math.ceil(results.length / limit)
+      );
+    } catch (error) {
+      console.error(error);
     }
-
-    let results = await query.exec();
-
-    // Traducir los resultados utilizando translateDBResults
-    results = apiHelperFunctions.translateDBResults({ results, lang });
-
-    if (options?.randomizeGetAll) {
-      helpers.shuffle(results);
-    }
-
-    // Crear la respuesta paginada
-    return apiHelperFunctions.createPaginatedDataResponse(
-      results,
-      page,
-      Math.ceil(results.length / limit)
-    );
   }
 
   // Función para buscar entidad por ID
@@ -254,6 +266,7 @@ function createCRUDActions({ model, options = {} }) {
     idFields = [],
     specific_projection = undefined,
     public_fields,
+    postScriptFunction,
   }) {
     if (!id) {
       throw new Error("Must search an id, username or name");
@@ -406,6 +419,12 @@ function createCRUDActions({ model, options = {} }) {
         }
         return acc;
       }, {});
+    }
+
+    if (postScriptFunction && typeof postScriptFunction === "function") {
+      const results = [entityInfo];
+      postScriptFunction(results);
+      entityInfo = results[0];
     }
 
     // console.log(JSON.stringify(entityInfo, null, 4));

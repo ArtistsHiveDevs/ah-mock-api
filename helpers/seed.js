@@ -126,10 +126,22 @@ async function seed({
 
         // Por si se quiere evitar el registro en la DB
         if (saveRecord) {
-          const re = await modelActions.createEntity({
-            userId: finalUserId,
-            body: instanceData,
-          });
+          try {
+            const buscado = await modelActions.findEntityById({
+              id: instanceData["username"],
+            });
+
+            const re = await modelActions.updateEntity({
+              id: instanceData["username"],
+              userId: finalUserId,
+              body: instanceData,
+            });
+          } catch (error) {
+            const re = await modelActions.createEntity({
+              userId: finalUserId,
+              body: instanceData,
+            });
+          }
 
           // Si se desea realizar una pausa entre las operaciones, puedes usar `sleep`
           if ((index + 1) % printEachNumberElements === 0) {
