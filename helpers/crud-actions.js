@@ -13,6 +13,7 @@ function modelRequiresAuth(modelName) {
     "Currency",
     "Language",
     "User",
+    'Event'
   ].includes(modelName);
 }
 function modelRequiresEntityIndex(modelName) {
@@ -82,6 +83,7 @@ function createCRUDActions({ model, options = {} }) {
         };
       });
 
+    
     // Consulta a la base de datos con select y populate
     let query = model
       .find({})
@@ -553,7 +555,7 @@ function createCRUDActions({ model, options = {} }) {
       }
       return apiHelperFunctions.createPaginatedDataResponse(newEntity);
     } catch (error) {
-      console.log("ERROR: ", modelName, ", UserId: ", userId, ", body: ", body);
+      // console.log("ERROR: ", modelName, ", UserId: ", userId, ", body: ", 'message ', error );
       throw error;
     }
   }
