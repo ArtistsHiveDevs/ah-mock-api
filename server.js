@@ -43,6 +43,7 @@ const Country = require("./models/parametrics/geo/Country.schema");
 const Language = require("./models/parametrics/geo/Language.schema");
 const Allergy = require("./models/parametrics/geo/demographics/Allergies.schema");
 const routesConstants = require("./operations/domain/artists/constants/routes.constants");
+const helperFunctions = require("./helpers/helperFunctions");
 
 var app = express();
 var port = process.env.PORT || 3000;
@@ -244,6 +245,11 @@ var routes = [
             if (!result.description) {
               result.description = `${result.artists[0]?.name} - ${result.place?.name}`;
             }
+
+            result.timetable__initial_date = helperFunctions.addMonthsToDate(
+              result.timetable__initial_date,
+              5
+            );
           });
         },
       },
@@ -317,6 +323,11 @@ var routes = [
               if (!event.description) {
                 event.description = event.name;
               }
+
+              event.timetable__initial_date = helperFunctions.addMonthsToDate(
+                event.timetable__initial_date,
+                5
+              );
             });
           });
         },

@@ -11,6 +11,7 @@ const {
 const Country = require("../../../models/parametrics/geo/Country.schema");
 const createCRUDActions = require("../../../helpers/crud-actions");
 const apiHelperFunctions = require("../../../helpers/apiHelperFunctions");
+const helperFunctions = require("../../../helpers/helperFunctions");
 
 var artistRouter = express.Router({ mergeParams: true });
 
@@ -436,6 +437,11 @@ module.exports = [
           if (!event.description) {
             event.description = event.name;
           }
+
+          event.timetable__initial_date = helperFunctions.addMonthsToDate(
+            event.timetable__initial_date,
+            5
+          );
         });
 
         // Definir los campos visibles según el rol del usuario

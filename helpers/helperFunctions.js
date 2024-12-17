@@ -547,4 +547,27 @@ module.exports = {
     }
     return updateFields;
   },
+  addMonthsToDate(dateString, monthsToAdd) {
+    // Convertir la fecha de string a objeto Date
+    const date = new Date(dateString);
+
+    // Obtener el año y el mes actuales
+    let year = date.getFullYear();
+    let month = date.getMonth(); // Los meses están indexados desde 0 (0 = enero)
+
+    // Sumar los meses
+    month += monthsToAdd;
+
+    // Ajustar el año en caso de desbordamiento de meses
+    year += Math.floor(month / 12);
+    month = month % 12;
+
+    // Ajustar la fecha final (mantener el día del mes si es posible)
+    const resultDate = new Date(year, month, date.getDate());
+
+    // Formatear la fecha a "YYYY-MM-DD"
+    const formattedDate = resultDate.toISOString().split("T")[0];
+
+    return formattedDate;
+  },
 };
