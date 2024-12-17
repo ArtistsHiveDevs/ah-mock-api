@@ -311,6 +311,40 @@ module.exports = [
               select: routesConstants.parametric_public_fields.Country.summary,
             },
           },
+          {
+            path: "events",
+            select: [
+              ...routesConstants.public_fields,
+              "timetable__initial_date",
+              "timetable__end_date",
+              "timetable__openning_doors",
+              "timetable__guest_time",
+              "timetable__main_artist_time",
+              "artists",
+              "place",
+              "confirmation_status",
+            ].join(" "),
+            populate: [
+              {
+                path: "artists",
+                select: routesConstants.public_fields,
+                populate: {
+                  path: "country",
+                  select:
+                    routesConstants.parametric_public_fields.Country.summary,
+                },
+              },
+              {
+                path: "place",
+                select: routesConstants.public_fields,
+                populate: {
+                  path: "country",
+                  select:
+                    routesConstants.parametric_public_fields.Country.summary,
+                },
+              },
+            ],
+          },
         ];
 
         const populateFields = [
@@ -351,6 +385,8 @@ module.exports = [
                 select: refModelFields.join(" "),
               };
             }),
+
+          "events",
           ...customPopulateFields,
         ];
 
@@ -372,7 +408,7 @@ module.exports = [
         // Ejecutar la consulta
         let artistInfo = await queryResult.exec();
 
-        console.log(artistInfo);
+        // console.log(artistInfo);
 
         // Manejar caso en el que la entidad no sea encontrada
         if (!artistInfo) {
@@ -384,6 +420,23 @@ module.exports = [
           results: [artistInfo],
           lang,
         })[0]; // Convertir el array de resultados en un solo objeto
+
+        artistInfo.events.forEach((event) => {
+          if (!event.name) {
+            const names = (event.artists || [])
+              .slice(0, 3)
+              .map((artist) => artist.name)
+              .join(", ");
+            event.name = `${names} - ${event.place?.name}`;
+          }
+          if (!event.profile_pic) {
+            event.profile_pic =
+              event.artists[0]?.profile_pic || event.place?.profile_pic;
+          }
+          if (!event.description) {
+            event.description = event.name;
+          }
+        });
 
         // Definir los campos visibles según el rol del usuario
         // let visibleAttributes = !userId

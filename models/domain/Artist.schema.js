@@ -167,6 +167,17 @@ const ArtistSchema = new mongoose.Schema(
   }
 );
 
+// Configura el virtual para la relación inversa
+ArtistSchema.virtual("events", {
+  ref: "Event", // Nombre del modelo relacionado
+  localField: "_id", // Campo en Artist
+  foreignField: "artists", // Campo en Event que referencia a Artist
+});
+
+// Incluye los virtuals en los resultados JSON
+ArtistSchema.set("toObject", { virtuals: true });
+ArtistSchema.set("toJSON", { virtuals: true });
+
 const Artist = mongoose.model("Artist", ArtistSchema);
 
 module.exports = Artist;

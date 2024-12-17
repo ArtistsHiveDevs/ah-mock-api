@@ -357,6 +357,7 @@ function createCRUDActions({ model, options = {} }) {
             select: refModelFields.join(" "),
           };
         }),
+      ...(["Place", "Artist"].includes(modelName) ? ["events"] : []),
       ...(options.customPopulateFields || []),
     ];
 

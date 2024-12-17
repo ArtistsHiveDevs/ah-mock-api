@@ -126,12 +126,12 @@ const searchEntities = async ({
   limit = 10,
 } = {}) => {
   // Aquí estarías usando los valores de los parámetros
-  console.log("......................................................");
-  console.log("q:", q);
-  console.log("l:", l);
-  console.log("maxDistance:", maxDistance);
-  console.log("page:", page);
-  console.log("limit:", limit);
+  // console.log("......................................................");
+  // console.log("q:", q);
+  // console.log("l:", l);
+  // console.log("maxDistance:", maxDistance);
+  // console.log("page:", page);
+  // console.log("limit:", limit);
 
   // Resto de la lógica de tu función
   let searchQuery = {};
@@ -454,7 +454,7 @@ module.exports = [
         page: 1,
         limit: 200,
       });
-      console.log(results);
+      // console.log(results);
       return res.json(createPaginatedDataResponse(results));
       const result = searchEntities(req.query);
       return res.json(createPaginatedDataResponse(result));

@@ -64,7 +64,6 @@ const PlaceSchema = new Schema({
   verified_status: { type: Number, default: 0 },
   image_gallery: [imageSchema],
 
-  //   events: [EventSchema],
   genres: {
     type: Map,
     of: [String],
@@ -83,6 +82,16 @@ const PlaceSchema = new Schema({
     },
   ],
 });
+
+PlaceSchema.virtual("events", {
+  ref: "Event", // Nombre del modelo al que hace referencia
+  localField: "_id", // Campo en Place
+  foreignField: "place", // Campo en Event que referencia a Place
+});
+
+// Incluye los virtuals en los resultados de JSON
+PlaceSchema.set("toObject", { virtuals: true });
+PlaceSchema.set("toJSON", { virtuals: true });
 
 const Place = mongoose.model("Place", PlaceSchema);
 

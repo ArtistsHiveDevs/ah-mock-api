@@ -262,7 +262,65 @@ var routes = [
     path: "/places",
     route: createCRUDRoutes({
       model: Place,
-      options: { randomizeGetAll: true },
+      options: {
+        randomizeGetAll: true,
+        customPopulateFields: [
+          {
+            path: "events",
+            select: [
+              ...routesConstants.public_fields,
+              "timetable__initial_date",
+              "timetable__end_date",
+              "timetable__openning_doors",
+              "timetable__guest_time",
+              "timetable__main_artist_time",
+              "artists",
+              "place",
+              "confirmation_status",
+            ].join(" "),
+            populate: [
+              {
+                path: "artists",
+                select: routesConstants.public_fields,
+                populate: {
+                  path: "country",
+                  select:
+                    routesConstants.parametric_public_fields.Country.summary,
+                },
+              },
+              {
+                path: "place",
+                select: routesConstants.public_fields,
+                populate: {
+                  path: "country",
+                  select:
+                    routesConstants.parametric_public_fields.Country.summary,
+                },
+              },
+            ],
+          },
+        ],
+        postScriptFunction: (results) => {
+          results.forEach((place) => {
+            (place.events || []).forEach((event) => {
+              if (!event.name) {
+                const names = (event.artists || [])
+                  .slice(0, 3)
+                  .map((artist) => artist.name)
+                  .join(", ");
+                event.name = `${names} - ${event.place?.name}`;
+              }
+              if (!event.profile_pic) {
+                event.profile_pic =
+                  event.artists[0]?.profile_pic || event.place?.profile_pic;
+              }
+              if (!event.description) {
+                event.description = event.name;
+              }
+            });
+          });
+        },
+      },
     }),
   },
   { path: "/rehearsal_rooms", route: rehearsalRoomsRouter },

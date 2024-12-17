@@ -53,7 +53,7 @@ function fillResultWithFields(fields, result) {
 
 function filterResultsByQuery(req, result) {
   try {
-    console.log("FILTRANDO ????", req.userId);
+    // console.log("FILTRANDO ????", req.userId);
     const isArray = Array.isArray(result);
     if (!isArray) {
       result = [result];

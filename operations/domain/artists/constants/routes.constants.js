@@ -85,6 +85,7 @@ module.exports = {
     "city",
     "address",
     "location",
+    "events",
   ],
   parametric_public_fields: {
     Allergy: {

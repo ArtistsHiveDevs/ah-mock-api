@@ -71,11 +71,11 @@ module.exports = {
               searchValue = this.removeStringAccents(
                 searchValue.toLowerCase().trim()
               );
-              console.log(
-                "TYPEE!!!!!  ",
-                typeof objectPropertyValue,
-                JSON.stringify(objectPropertyValue, null, 2)
-              );
+              // console.log(
+              //   "TYPEE!!!!!  ",
+              //   typeof objectPropertyValue,
+              //   JSON.stringify(objectPropertyValue, null, 2)
+              // );
               objectPropertyValue = !!objectPropertyValue
                 ? this.removeStringAccents(
                     objectPropertyValue.toLowerCase().trim()
