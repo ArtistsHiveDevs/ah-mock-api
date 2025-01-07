@@ -49,6 +49,7 @@ const EventSchema = new Schema(
     instagram: { type: String },
     spotify: { type: String },
     youtube: { type: String },
+    price: { type: Number },
   },
   {
     timestamps: true, // Agrega createdAt y updatedAt automáticamente

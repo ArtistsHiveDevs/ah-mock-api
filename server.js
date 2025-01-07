@@ -235,20 +235,33 @@ var routes = [
         ],
         postScriptFunction: (results) => {
           results.forEach((result) => {
+            const artistName = result.artists?.[0]?.name || null;
+            const placeName = result.place?.name || null;
+
+            const automaticName = [artistName, placeName]
+              .filter(Boolean)
+              .join(" - ");
+
             if (!result.name) {
-              result.name = `${result.artists[0]?.name} - ${result.place?.name}`;
+              result.name = automaticName;
             }
             if (!result.profile_pic) {
               result.profile_pic =
                 result.artists[0]?.profile_pic || result.place?.profile_pic;
             }
             if (!result.description) {
-              result.description = `${result.artists[0]?.name} - ${result.place?.name}`;
+              result.description = automaticName;
             }
 
             result.timetable__initial_date = helperFunctions.addMonthsToDate(
               result.timetable__initial_date,
               5
+            );
+            result.timetable__openning_doors = Number(
+              result.timetable__openning_doors?.replace(":", "") || 0
+            );
+            result.timetable__main_artist_time = Number(
+              result.timetable__main_artist_time?.replace(":", "") || 0
             );
           });
         },
