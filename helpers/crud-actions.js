@@ -89,9 +89,11 @@ function createCRUDActions({ model, options = {} }) {
         ...(options.customPopulateFields || []),
       ];
 
+      let filters = {};
+
       // Consulta a la base de datos con select y populate
       let query = model
-        .find({})
+        .find({ ...filters })
         .select(projection)
         .skip((page - 1) * limit)
         .limit(Number(limit));

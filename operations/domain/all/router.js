@@ -19,6 +19,7 @@ async function searchEntitiesDB(queryRQ) {
     maxDistance = 15,
     page = 1,
     limit = 10,
+    et,
   } = queryRQ;
   try {
     const skip = (page - 1) * limit;
@@ -33,12 +34,16 @@ async function searchEntitiesDB(queryRQ) {
       { search_cache: { $regex: normalizedQuery, $options: "i" } },
     ];
 
+    // Condición para el parámetro et
+    const matchCondition = {
+      $or: orMatch,
+      ...(et && { entityType: et }), // Agregar filtro por entityType si et está presente
+    };
+
     // Búsqueda y agrupación por entityType para obtener resultados
     const results = await EntityDirectory.aggregate([
       {
-        $match: {
-          $or: orMatch,
-        },
+        $match: matchCondition,
       },
       {
         $group: {
@@ -76,9 +81,7 @@ async function searchEntitiesDB(queryRQ) {
     // Contar el número total de documentos por entityType
     const countResults = await EntityDirectory.aggregate([
       {
-        $match: {
-          $or: orMatch,
-        },
+        $match: matchCondition,
       },
       {
         $group: {
