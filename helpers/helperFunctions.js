@@ -309,11 +309,11 @@ module.exports = {
     const fs = require("fs");
 
     const artists = JSON.parse(
-      fs.readFileSync(
-        // `C:/Users/fnp/Documents/Proyectos/QuarenDevs/2024/tsProcessor/data/drive/artists_drive_db_output.json`
-        `C:/Users/fnp/Documents/Proyectos/QuarenDevs/2024/tsProcessor/data/drive/new_artists_drive_consolidado_completo.json`
-      )
-      // fs.readFileSync(`./assets/mocks/domain/artists/artistsList.json`)
+      // fs.readFileSync(
+      // `C:/Users/fnp/Documents/Proyectos/QuarenDevs/2024/tsProcessor/data/drive/artists_drive_db_output.json`
+      //   `C:/Users/fnp/Documents/Proyectos/QuarenDevs/2024/tsProcessor/data/drive/new_artists_drive_consolidado_completo.json`
+      // )
+      fs.readFileSync(`./assets/mocks/domain/artists/artistsList.json`)
     );
     const albums = JSON.parse(
       fs.readFileSync(`./assets/mocks/domain/artists/albumsList.json`)
