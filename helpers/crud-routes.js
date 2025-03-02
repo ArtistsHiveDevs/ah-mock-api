@@ -10,11 +10,11 @@ const EntityDirectory = require("../models/appbase/EntityDirectory");
 const createCRUDActions = require("./crud-actions");
 
 // Función genérica para crear rutas CRUD
-function createCRUDRoutes({ model, options = {} }) {
+function createCRUDRoutes({ modelName, schema, options = {} }) {
   try {
     const router = express.Router();
 
-    const modelActions = createCRUDActions({ model, options });
+    console.log("****   2 ", modelName);
 
     // GET list route
     router.get(
@@ -22,9 +22,15 @@ function createCRUDRoutes({ model, options = {} }) {
       helpers.validateIfUserExists,
       async (req, res) => {
         try {
+          const modelActions = await createCRUDActions({
+            modelName,
+            schema,
+            options,
+            req,
+          });
           const response = await modelActions.listEntities({
             page: req.query.page,
-            limit: req.query.limit || 100,
+            limit: 3000 || req.query.limit || 100,
             fields: req.query.fields,
             lang: req.lang,
             public_fields: options.public_fields,
@@ -96,7 +102,7 @@ function createCRUDRoutes({ model, options = {} }) {
       }
     );
 
-    return router;
+    return Promise.resolve(router);
   } catch (error) {
     console.log(error);
   }

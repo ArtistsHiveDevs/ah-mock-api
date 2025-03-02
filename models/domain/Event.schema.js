@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 // Definir el esquema para EventTemplate
-const EventSchema = new Schema(
+const schema = new Schema(
   {
     verified_status: {
       type: Number,
@@ -56,6 +56,4 @@ const EventSchema = new Schema(
   }
 );
 
-const Event = mongoose.model("Event", EventSchema);
-
-module.exports = Event;
+module.exports = { schema };

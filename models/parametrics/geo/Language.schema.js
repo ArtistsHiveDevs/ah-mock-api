@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const languageSchema = new mongoose.Schema(
+const schema = new mongoose.Schema(
   {
     key: { type: String, required: true, unique: true },
     main_flag_2: { type: String },
@@ -22,6 +22,4 @@ const languageSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Language = mongoose.model("Language", languageSchema);
-
-module.exports = Language;
+module.exports = { schema };

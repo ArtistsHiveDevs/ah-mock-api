@@ -16,7 +16,7 @@ const LocationSchema = new Schema(
   { _id: false }
 );
 // Definir el esquema para EventTemplate
-const EntitySummarySchema = new Schema(
+const schema = new Schema(
   {
     entityType: String,
     id: {
@@ -43,6 +43,4 @@ const EntitySummarySchema = new Schema(
   }
 );
 
-const EntityDirectory = mongoose.model("EntityDirectory", EntitySummarySchema);
-
-module.exports = EntityDirectory;
+module.exports = { schema };

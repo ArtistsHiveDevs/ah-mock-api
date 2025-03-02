@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
+const { connections } = require("../../db/db_g");
+
 const ArtistInTrackSchema = new mongoose.Schema({
   // external_urls: {
   //     spotify: { type: String, required: true }
@@ -178,6 +180,13 @@ ArtistSchema.virtual("events", {
 ArtistSchema.set("toObject", { virtuals: true });
 ArtistSchema.set("toJSON", { virtuals: true });
 
-const Artist = mongoose.model("Artist", ArtistSchema);
+// const Artist = mongoose.model("Artist", ArtistSchema);
 
-module.exports = Artist;
+// module.exports = Artist;
+const getModel = (env) => {
+  if (!connections[env])
+    throw new Error(`No hay conexión establecida para ${env}`);
+  return connections[env].model("Artist", ArtistSchema);
+};
+
+module.exports = { getModel, ArtistSchema };

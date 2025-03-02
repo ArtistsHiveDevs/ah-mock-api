@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
+const { connections } = require("../../../db/db_g");
 
-const continentSchema = new mongoose.Schema({
+const schema = new mongoose.Schema({
   key: {
     type: String,
     required: true,
@@ -20,6 +21,4 @@ const continentSchema = new mongoose.Schema({
   },
 });
 
-const Continent = mongoose.model("Continent", continentSchema);
-
-module.exports = Continent;
+module.exports = { schema };

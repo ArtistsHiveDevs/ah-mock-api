@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const currencySchema = new mongoose.Schema({
+const schema = new mongoose.Schema({
   ISO_4217_key: {
     type: String,
     required: true,
@@ -63,6 +63,4 @@ const currencySchema = new mongoose.Schema({
   },
 });
 
-const Currency = mongoose.model("Currency", currencySchema);
-
-module.exports = Currency;
+module.exports = { schema };

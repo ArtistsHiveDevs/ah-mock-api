@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const countrySchema = new Schema({
+const schema = new Schema({
   name: { type: String, required: true },
   native: { type: String, required: true },
   phone: { type: [Number], required: true },
@@ -29,6 +29,4 @@ const countrySchema = new Schema({
   official_languages: [{ type: String }],
 });
 
-const Country = mongoose.model("Country", countrySchema);
-
-module.exports = Country;
+module.exports = { schema };

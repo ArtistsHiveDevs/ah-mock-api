@@ -5,6 +5,8 @@ const apiHelperFunctions = require("./apiHelperFunctions");
 const helpers = require("./helperFunctions");
 const routesConstants = require("../operations/domain/artists/constants/routes.constants");
 
+const { connections, connectToDatabase } = require("../db/db_g");
+
 function modelRequiresAuth(modelName) {
   return ![
     "Allergy",
@@ -20,8 +22,19 @@ function modelRequiresEntityIndex(modelName) {
   return ["Artist", "Place", "User"].includes(modelName);
 }
 
-function createCRUDActions({ model, options = {} }) {
-  const modelName = model.modelName;
+const getModel = (env, modelName, schema) => {
+  if (!connections[env])
+    throw new Error(`No hay conexión establecida para ${env}`);
+  return connections[env].model(modelName, schema);
+};
+
+async function createCRUDActions({ modelName, schema, options = {}, req }) {
+  console.log(modelName, !!schema, options);
+  const connection = await connectToDatabase(req); // Obtiene la conexión según el entorno
+  console.log("Conectando: desde Router: ", connection.environment);
+  const model = getModel(connection.environment, modelName, schema);
+  console.log("MODEL?? ", !!model);
+
   // Función para listar entidades
   async function listEntities({
     page = 1,
@@ -89,7 +102,24 @@ function createCRUDActions({ model, options = {} }) {
         ...(options.customPopulateFields || []),
       ];
 
+      // Obtén el año actual
+      const currentYear = new Date().getFullYear();
+
+      // Define el rango de fechas
+      const startOfYear = new Date(currentYear, 0, 1); // 1 de enero, 00:00:00
+      const startOfNextYear = new Date(currentYear + 1, 0, 1); // 1 de enero del próximo año, 00:00:00
+
       let filters = {};
+      if (modelName === "Event") {
+        filters = {
+          createdAt: {
+            $gte: startOfYear,
+            $lt: startOfNextYear,
+          },
+        };
+      }
+
+      console.log("FLTROS", JSON.stringify(filters));
 
       // Consulta a la base de datos con select y populate
       let query = model
@@ -449,7 +479,7 @@ function createCRUDActions({ model, options = {} }) {
     try {
       if (modelRequiresAuth(modelName) && !userId) {
         throw new Error(
-          "Unauthorized operation. To execute this operation you require a valid session. Model: " +
+          "Unauthorized operation. To execute this operation you require a valid session in app server. Model: " +
             modelName
         );
       }

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 // Define el esquema para la alergia
-const allergySchema = new Schema({
+const schema = new Schema({
   name: {
     type: String,
     required: true,
@@ -39,7 +39,4 @@ const allergySchema = new Schema({
   },
 });
 
-// Crea el modelo a partir del esquema
-const Allergy = mongoose.model("Allergy", allergySchema);
-
-module.exports = Allergy;
+module.exports = { schema };

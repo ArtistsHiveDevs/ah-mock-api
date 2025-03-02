@@ -13,6 +13,11 @@ const createCRUDActions = require("../../../helpers/crud-actions");
 const apiHelperFunctions = require("../../../helpers/apiHelperFunctions");
 const helperFunctions = require("../../../helpers/helperFunctions");
 
+const { connectToDatabase } = require("../../../db/db_g");
+const {
+  getModel: getArtistModel,
+} = require("../../../models/domain/Artist.schema");
+
 var artistRouter = express.Router({ mergeParams: true });
 
 function fillRelationships(element, relationships = []) {
@@ -204,7 +209,7 @@ module.exports = [
     // } catch (err) {
     //   res.status(500).send(err);
     // }
-    let { page = 1, limit = 1000, fields } = req.query;
+    let { page = 1, limit = 5, fields } = req.query;
 
     const modelFields = routesConstants.public_fields.join(",");
 
@@ -216,13 +221,17 @@ module.exports = [
       }, {});
 
     try {
-      const artists = await Artist.find({}).select(projection);
-      // .skip((page - 1) * limit)
-      // .limit(Number(limit));
+      const connection = await connectToDatabase(req); // Obtiene la conexión según el entorno
+      console.log("NV desde Router: ", connection.name);
+      const Artist = getArtistModel(connection.name);
+      const artists = await Artist.find({})
+        .select(projection)
+        .skip((page - 1) * limit)
+        .limit(Number(limit));
 
       helpers.shuffle(artists);
 
-      limit = 100;
+      // limit = 50;
 
       res.json(
         createPaginatedDataResponse(

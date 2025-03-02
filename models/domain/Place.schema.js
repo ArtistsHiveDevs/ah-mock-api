@@ -39,7 +39,7 @@ const SocialNetworkStatsSchema = new Schema(
   { _id: false }
 );
 
-const PlaceSchema = new Schema({
+const schema = new Schema({
   username: { type: String },
   name: { type: String },
   place_type: { type: String },
@@ -83,16 +83,14 @@ const PlaceSchema = new Schema({
   ],
 });
 
-PlaceSchema.virtual("events", {
+schema.virtual("events", {
   ref: "Event", // Nombre del modelo al que hace referencia
   localField: "_id", // Campo en Place
   foreignField: "place", // Campo en Event que referencia a Place
 });
 
 // Incluye los virtuals en los resultados de JSON
-PlaceSchema.set("toObject", { virtuals: true });
-PlaceSchema.set("toJSON", { virtuals: true });
+schema.set("toObject", { virtuals: true });
+schema.set("toJSON", { virtuals: true });
 
-const Place = mongoose.model("Place", PlaceSchema);
-
-module.exports = Place;
+module.exports = { schema };

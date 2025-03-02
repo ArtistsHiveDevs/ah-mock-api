@@ -136,231 +136,269 @@ app.post("/api/generate-key", async (req, res) => {
   }
 });
 
-var routes = [
-  { path: "/search", route: allRouter },
-  { path: "/academies", route: academyRouter },
-  {
-    path: "/allergies",
-    route: createCRUDRoutes({
-      model: Allergy,
-      options: { listEntities: { limit: 0 } },
-    }),
-  },
-  { path: "/artists", route: artistRouter },
-  { path: "/cities", route: citiesRouter },
-  {
-    path: "/countries",
-    route: createCRUDRoutes({
-      model: Country,
-      options: { listEntities: { limit: 0 } },
-    }),
-  },
-  { path: "/continents", route: createCRUDRoutes({ model: Continent }) },
-  {
-    path: "/currencies",
-    route: createCRUDRoutes({
-      model: Currency,
-      options: { listEntities: { limit: 0 } },
-    }),
-  },
-  {
-    path: "/events",
-    route: createCRUDRoutes({
-      model: Event,
-      options: {
-        public_fields: [
-          ...routesConstants.public_fields,
-          "timetable__initial_date",
-          "timetable__end_date",
-          "timetable__openning_doors",
-          "timetable__guest_time",
-          "timetable__main_artist_time",
-          "artists",
-          "place",
-          "confirmation_status",
-        ],
-        authenticated_fields: [
-          ...routesConstants.public_fields,
-          "timetable__initial_date",
-          "timetable__end_date",
-          "timetable__openning_doors",
-          "timetable__guest_time",
-          "timetable__main_artist_time",
-          "artists",
-          "place",
-          "confirmation_status",
-          "id",
-          // "name",
-          // // "subtitle",
-          // // "main_artist_id",
-          // // "guest_artist_id",
-          // // "place_id",
-          // "timetable__initial_date",
-          // "timetable__end_date",
-          // "timetable__openning_doors",
-          // "timetable__guest_time",
-          // "timetable__main_artist_time",
-          // "promoter",
-          // // "national_code",
-          // "profile_pic",
-          // "verified_status",
-          // // "tickets_website",
-          // // "description",
-          // // "website",
-          // // "email",
-          // // "mobile_phone",
-          // // "whatsapp",
-          // // "facebook",
-          // // "twitter",
-          // // "instagram",
-          // // "spotify",
-          // // "youtube",
-          // // "additional_info",
-          // // "dress_code",
-          // // "discounts",
-          // "confirmation_status",
-          // "place",
-          // // "main_artist",
-          // // "genres"
-        ],
-        customPopulateFields: [
-          {
-            path: "place",
-            select: routesConstants.public_fields.join(" "),
-            populate: {
-              path: "country",
-              select: routesConstants.parametric_public_fields.Country.summary,
+function loadRoutes() {
+  return [
+    { path: "/search", route: allRouter },
+    { path: "/academies", route: academyRouter },
+    {
+      path: "/allergies",
+      route: createCRUDRoutes({
+        modelName: "Allergy",
+        schema: Allergy.schema,
+        options: { listEntities: { limit: 0 } },
+      }),
+    },
+    { path: "/artists", route: artistRouter },
+    { path: "/cities", route: citiesRouter },
+    {
+      path: "/countries",
+      route: createCRUDRoutes({
+        modelName: "Country",
+        schema: Country.schema,
+        options: { listEntities: { limit: 0 } },
+      }),
+    },
+    {
+      path: "/continents",
+      route: createCRUDRoutes({
+        modelName: "Continent",
+        schema: Continent.schema,
+      }),
+    },
+    {
+      path: "/currencies",
+      route: createCRUDRoutes({
+        modelName: "Currency",
+        schema: Currency.schema,
+        options: { listEntities: { limit: 0 } },
+      }),
+    },
+    {
+      path: "/events",
+      route: createCRUDRoutes({
+        modelName: "Event",
+        schema: Event.schema,
+        options: {
+          public_fields: [
+            ...routesConstants.public_fields,
+            "timetable__initial_date",
+            "timetable__end_date",
+            "timetable__openning_doors",
+            "timetable__guest_time",
+            "timetable__main_artist_time",
+            "artists",
+            "place",
+            "confirmation_status",
+          ],
+          authenticated_fields: [
+            ...routesConstants.public_fields,
+            "timetable__initial_date",
+            "timetable__end_date",
+            "timetable__openning_doors",
+            "timetable__guest_time",
+            "timetable__main_artist_time",
+            "artists",
+            "place",
+            "confirmation_status",
+            "id",
+            // "name",
+            // // "subtitle",
+            // // "main_artist_id",
+            // // "guest_artist_id",
+            // // "place_id",
+            // "timetable__initial_date",
+            // "timetable__end_date",
+            // "timetable__openning_doors",
+            // "timetable__guest_time",
+            // "timetable__main_artist_time",
+            // "promoter",
+            // // "national_code",
+            // "profile_pic",
+            // "verified_status",
+            // // "tickets_website",
+            // // "description",
+            // // "website",
+            // // "email",
+            // // "mobile_phone",
+            // // "whatsapp",
+            // // "facebook",
+            // // "twitter",
+            // // "instagram",
+            // // "spotify",
+            // // "youtube",
+            // // "additional_info",
+            // // "dress_code",
+            // // "discounts",
+            // "confirmation_status",
+            // "place",
+            // // "main_artist",
+            // // "genres"
+          ],
+          customPopulateFields: [
+            {
+              path: "place",
+              select: routesConstants.public_fields.join(" "),
+              populate: {
+                path: "country",
+                select:
+                  routesConstants.parametric_public_fields.Country.summary,
+              },
             },
-          },
-        ],
-        postScriptFunction: (results) => {
-          results.forEach((result) => {
-            const artistName = result.artists?.[0]?.name || null;
-            const placeName = result.place?.name || null;
+          ],
+          postScriptFunction: (results) => {
+            results.forEach((result) => {
+              const artistName = result.artists?.[0]?.name || null;
+              const placeName = result.place?.name || null;
 
-            const automaticName = [artistName, placeName]
-              .filter(Boolean)
-              .join(" - ");
+              const automaticName = [artistName, placeName]
+                .filter(Boolean)
+                .join(" - ");
 
-            if (!result.name) {
-              result.name = automaticName;
-            }
-            if (!result.profile_pic) {
-              result.profile_pic =
-                result.artists[0]?.profile_pic || result.place?.profile_pic;
-            }
-            if (!result.description) {
-              result.description = automaticName;
-            }
-
-            result.timetable__initial_date = helperFunctions.addMonthsToDate(
-              result.timetable__initial_date,
-              5
-            );
-            result.timetable__openning_doors = Number(
-              result.timetable__openning_doors?.replace(":", "") || 0
-            );
-            result.timetable__main_artist_time = Number(
-              result.timetable__main_artist_time?.replace(":", "") || 0
-            );
-          });
-        },
-      },
-    }),
-  },
-  {
-    path: "/langs",
-    route: createCRUDRoutes({
-      model: Language,
-      options: { listEntities: { limit: 0 } },
-    }),
-  },
-  // { path: "/instruments", route: createCRUDRoutes({model:Instrument, "Instrument") },
-  // { path: "/places", route: placesRoutetrue
-  {
-    path: "/places",
-    route: createCRUDRoutes({
-      model: Place,
-      options: {
-        randomizeGetAll: true,
-        customPopulateFields: [
-          {
-            path: "events",
-            select: [
-              ...routesConstants.public_fields,
-              "timetable__initial_date",
-              "timetable__end_date",
-              "timetable__openning_doors",
-              "timetable__guest_time",
-              "timetable__main_artist_time",
-              "artists",
-              "place",
-              "confirmation_status",
-            ].join(" "),
-            populate: [
-              {
-                path: "artists",
-                select: routesConstants.public_fields,
-                populate: {
-                  path: "country",
-                  select:
-                    routesConstants.parametric_public_fields.Country.summary,
-                },
-              },
-              {
-                path: "place",
-                select: routesConstants.public_fields,
-                populate: {
-                  path: "country",
-                  select:
-                    routesConstants.parametric_public_fields.Country.summary,
-                },
-              },
-            ],
-          },
-        ],
-        postScriptFunction: (results) => {
-          results.forEach((place) => {
-            (place.events || []).forEach((event) => {
-              if (!event.name) {
-                const names = (event.artists || [])
-                  .slice(0, 3)
-                  .map((artist) => artist.name)
-                  .join(", ");
-                event.name = `${names} - ${event.place?.name}`;
+              if (!result.name) {
+                result.name = automaticName;
               }
-              if (!event.profile_pic) {
-                event.profile_pic =
-                  event.artists[0]?.profile_pic || event.place?.profile_pic;
+              if (!result.profile_pic) {
+                result.profile_pic =
+                  result.artists[0]?.profile_pic || result.place?.profile_pic;
               }
-              if (!event.description) {
-                event.description = event.name;
+              if (!result.description) {
+                result.description = automaticName;
               }
 
-              event.timetable__initial_date = helperFunctions.addMonthsToDate(
-                event.timetable__initial_date,
+              result.timetable__initial_date = helperFunctions.addMonthsToDate(
+                result.timetable__initial_date,
                 5
               );
+              result.timetable__openning_doors = Number(
+                result.timetable__openning_doors?.replace(":", "") || 0
+              );
+              result.timetable__main_artist_time = Number(
+                result.timetable__main_artist_time?.replace(":", "") || 0
+              );
             });
-          });
+          },
         },
-      },
-    }),
-  },
-  { path: "/rehearsal_rooms", route: rehearsalRoomsRouter },
-  { path: "/industryOffer", route: industryOfferRouter },
-  { path: "/riders", route: ridersRouter },
-  { path: "/users", route: usersRouter },
-  { path: "/tours_outlines", route: toursOutlinesRouter },
-  { path: "/error", route: errorsRouter },
-  { path: "/terms", route: termsAndConditionsRouter },
-  { path: "/privacy", route: privacyRouter },
-  { path: "/faq", route: faqRouter },
-];
+      }),
+    },
+    {
+      path: "/langs",
+      route: createCRUDRoutes({
+        modelName: "Language",
+        schema: Language.schema,
+        options: { listEntities: { limit: 0 } },
+      }),
+    },
+    // { path: "/instruments", route: createCRUDRoutes({model:Instrument, "Instrument") },
+    // { path: "/places", route: placesRoutetrue
+    {
+      path: "/places",
+      route: createCRUDRoutes({
+        modelName: "Place",
+        schema: Place.schema,
+        options: {
+          randomizeGetAll: true,
+          customPopulateFields: [
+            {
+              path: "events",
+              select: [
+                ...routesConstants.public_fields,
+                "timetable__initial_date",
+                "timetable__end_date",
+                "timetable__openning_doors",
+                "timetable__guest_time",
+                "timetable__main_artist_time",
+                "artists",
+                "place",
+                "confirmation_status",
+              ].join(" "),
+              populate: [
+                {
+                  path: "artists",
+                  select: routesConstants.public_fields,
+                  populate: {
+                    path: "country",
+                    select:
+                      routesConstants.parametric_public_fields.Country.summary,
+                  },
+                },
+                {
+                  path: "place",
+                  select: routesConstants.public_fields,
+                  populate: {
+                    path: "country",
+                    select:
+                      routesConstants.parametric_public_fields.Country.summary,
+                  },
+                },
+              ],
+            },
+          ],
+          postScriptFunction: (results) => {
+            results.forEach((place) => {
+              (place.events || []).forEach((event) => {
+                if (!event.name) {
+                  const names = (event.artists || [])
+                    .slice(0, 3)
+                    .map((artist) => artist.name)
+                    .join(", ");
+                  event.name = `${names} - ${event.place?.name}`;
+                }
+                if (!event.profile_pic) {
+                  event.profile_pic =
+                    event.artists[0]?.profile_pic || event.place?.profile_pic;
+                }
+                if (!event.description) {
+                  event.description = event.name;
+                }
+
+                event.timetable__initial_date = helperFunctions.addMonthsToDate(
+                  event.timetable__initial_date,
+                  5
+                );
+              });
+            });
+          },
+        },
+      }),
+    },
+    { path: "/rehearsal_rooms", route: rehearsalRoomsRouter },
+    { path: "/industryOffer", route: industryOfferRouter },
+    { path: "/riders", route: ridersRouter },
+    { path: "/users", route: usersRouter },
+    { path: "/tours_outlines", route: toursOutlinesRouter },
+    { path: "/error", route: errorsRouter },
+    { path: "/terms", route: termsAndConditionsRouter },
+    { path: "/privacy", route: privacyRouter },
+    { path: "/faq", route: faqRouter },
+  ];
+}
 
 // Todos los paths debe pedir API KEY
 
-routes.forEach((route) => app.use(route.path, route.route));
+// (async () => {
+//   const routes = await loadRoutes(); // Esperar a que se resuelvan las rutas asíncronas
+
+//   routes.forEach(({ path, route }) => {
+//     if (!route) {
+//       console.error(`Error: La ruta en ${path} no es un middleware válido.`);
+//       return;
+//     }
+//     app.use(path, route);
+//   });
+// })();
+
+Promise.all(
+  loadRoutes().map(async (r) => ({ path: r.path, route: await r.route }))
+)
+  .then((resolvedRoutes) => {
+    resolvedRoutes.forEach(({ path, route }) => {
+      app.use(path, route);
+    });
+    console.log("Todas las rutas han sido registradas correctamente.");
+  })
+  .catch((err) => {
+    console.error("Error al inicializar rutas:", err);
+  });
 
 app.get("/me", validateApiKey, (req, res) => {
   if (!req.user) {
@@ -409,7 +447,7 @@ rutasRouter.forEach(function (pathRoute) {
   });
 });
 
-console.log("Routes:");
-listPathRoutes.forEach((pathRoute, index) => {
-  console.log(index + 1, ") - ", pathRoute);
-});
+// console.log("Routes:");
+// listPathRoutes.forEach((pathRoute, index) => {
+//   console.log(index + 1, ") - ", pathRoute);
+// });
