@@ -2,8 +2,10 @@ var express = require("express");
 const mongoose = require("mongoose");
 var helpers = require("../../../helpers/index");
 var routesConstants = require("./constants/index");
-const Artist = require("../../../models/domain/Artist.schema");
-const User = require("../../../models/appbase/User");
+const {
+  schema: artistSchema,
+} = require("../../../models/domain/Artist.schema");
+const { User, schema: userSchema } = require("../../../models/appbase/User");
 const ErrorCodes = require("../../../constants/errors");
 const {
   createPaginatedDataResponse,
@@ -13,10 +15,7 @@ const createCRUDActions = require("../../../helpers/crud-actions");
 const apiHelperFunctions = require("../../../helpers/apiHelperFunctions");
 const helperFunctions = require("../../../helpers/helperFunctions");
 
-const { connectToDatabase } = require("../../../db/db_g");
-const {
-  getModel: getArtistModel,
-} = require("../../../models/domain/Artist.schema");
+const { connections, getModel } = require("../../../db/db_g");
 
 var artistRouter = express.Router({ mergeParams: true });
 
@@ -194,59 +193,54 @@ function filterResultsByQuery(req, result) {
 }
 
 module.exports = [
-  artistRouter.get(routesConstants.artistsList, async (req, res) => {
-    // try {
-    //   let result = filterResultsByQuery(req, helpers.getEntityData("Artist"));
-    //   // result = helpers.hideProperties(result, routesConstants.public_fields);
-    //   return res.json(result);
-    // } catch (error) {
-    //   console.log(error);
-    //   return res.status(500).json([]);
-    // }
-    // try {
-    //   const artists = await Artist.find();
-    //   res.status(200).send(artists);
-    // } catch (err) {
-    //   res.status(500).send(err);
-    // }
-    let { page = 1, limit = 5, fields } = req.query;
+  artistRouter.get(
+    routesConstants.artistsList,
+    helpers.validateEnvironment,
+    async (req, res) => {
+      let { page = 1, limit = 50, fields } = req.query;
 
-    const modelFields = routesConstants.public_fields.join(",");
+      const modelFields = routesConstants.public_fields.join(",");
 
-    const projection = (modelFields || fields || "")
-      .split(",")
-      .reduce((acc, field) => {
-        acc[field] = 1;
-        return acc;
-      }, {});
+      const projection = (modelFields || fields || "")
+        .split(",")
+        .reduce((acc, field) => {
+          acc[field] = 1;
+          return acc;
+        }, {});
 
-    try {
-      const connection = await connectToDatabase(req); // Obtiene la conexión según el entorno
-      console.log("NV desde Router: ", connection.name);
-      const Artist = getArtistModel(connection.name);
-      const artists = await Artist.find({})
-        .select(projection)
-        .skip((page - 1) * limit)
-        .limit(Number(limit));
+      try {
+        const Artist = getModel(req.serverEnvironment, "Artist", artistSchema);
+        // const artists = await Artist.find({})
+        //   .select(projection)
+        //   .skip((page - 1) * limit)
+        //   .limit(Number(limit));
 
-      helpers.shuffle(artists);
+        // helpers.shuffle(artists);
 
-      // limit = 50;
+        // // Se limita el resultado a 50
+        // limit = 50;
 
-      res.json(
-        createPaginatedDataResponse(
-          artists.slice(0, limit),
-          page,
-          Math.ceil(artists.length / limit)
-        )
-      );
-    } catch (err) {
-      res.status(500).json({ message: err.message });
+        const artists = await Artist.aggregate([
+          { $sample: { size: Number(limit) } }, // Selecciona aleatoriamente `limit` documentos
+          { $project: projection }, // Aplica proyección
+        ]);
+
+        res.json(
+          createPaginatedDataResponse(
+            artists.slice(0, limit),
+            page,
+            Math.ceil(artists.length / limit)
+          )
+        );
+      } catch (err) {
+        res.status(500).json({ message: err.message });
+      }
     }
-  }),
+  ),
 
   artistRouter.get(
     routesConstants.findArtistById,
+    helpers.validateEnvironment,
     helpers.validateIfUserExists,
     // helpers.validateAuthenticatedUser,
     async (req, res) => {
@@ -294,6 +288,7 @@ module.exports = [
           };
         }
 
+        const Artist = getModel(req.serverEnvironment, "Artist", artistSchema);
         const model = Artist;
         const modelName = model.name;
 
@@ -375,7 +370,8 @@ module.exports = [
                 model.schema.paths[field].caster.options.ref;
 
               // Obtener el modelo de referencia dinámicamente
-              const refModel = mongoose.model(refModelName);
+              const refModel =
+                connections[req.serverEnvironment].model(refModelName);
               const hasI18n = refModel.schema.paths.i18n;
 
               const refModelFields = hasI18n
@@ -459,7 +455,8 @@ module.exports = [
         //   : routesConstants.authenticated_fields; // Atributos públicos por defecto
         let visibleAttributes = routesConstants.authenticated_fields;
 
-        const currentUser = await User.findById(userId);
+        const UserModel = getModel(req.serverEnvironment, "User", userSchema);
+        const currentUser = await UserModel.findById(userId);
 
         const roleAsArtist = currentUser?.roles.find(
           (role) =>
@@ -538,6 +535,7 @@ module.exports = [
   // Crear Artista
   artistRouter.post(
     routesConstants.create,
+    helpers.validateEnvironment,
     helpers.validateAuthenticatedUser,
     async (req, res) => {
       try {
@@ -550,10 +548,12 @@ module.exports = [
           },
         ];
 
+        const Artist = getModel(req.serverEnvironment, "Artist", artistSchema);
         const newArtist = new Artist(info);
         await newArtist.save();
 
-        const ownerUser = await User.findById(req.userId);
+        const UserModel = getModel(req.serverEnvironment, "User", userSchema);
+        const ownerUser = await UserModel.findById(req.userId);
         let ownerRoles = (ownerUser.roles || []).find(
           (role) => role.entityName === "Artist"
         );
@@ -616,6 +616,7 @@ module.exports = [
 
   artistRouter.put(
     routesConstants.updateById,
+    helpers.validateEnvironment,
     helpers.validateAuthenticatedUser,
     async (req, res) => {
       const { id: searchValue } = req.params;
@@ -639,6 +640,7 @@ module.exports = [
         //     ],
         //   };
         // }
+        // const Artist = getModel(req.serverEnvironment, "Artist", artistSchema);
         // const artist = await Artist.findOneAndUpdate(
         //   query,
         //   req.body,
@@ -652,6 +654,7 @@ module.exports = [
         // res.json(artist);
 
         // Primero, intentamos encontrar el documento basado en el searchValue
+        const Artist = getModel(req.serverEnvironment, "Artist", artistSchema);
         const artist = await Artist.findOne({
           $or: [
             mongoose.Types.ObjectId.isValid(searchValue)
@@ -679,6 +682,11 @@ module.exports = [
 
           if (hasRole) {
             // Si el userId coincide con OWNER o ADMIN, hacemos la actualización
+            const Artist = getModel(
+              req.serverEnvironment,
+              "Artist",
+              artistSchema
+            );
             const updatedArtist = await Artist.findOneAndUpdate(
               {
                 _id: artist._id,
@@ -722,7 +730,12 @@ module.exports = [
                   });
 
                   // Realizar la consulta de actualización solo para los campos presentes
-                  const roleMapUpdateResult = await User.findOneAndUpdate(
+                  const UserModel = getModel(
+                    req.serverEnvironment,
+                    "User",
+                    userSchema
+                  );
+                  const roleMapUpdateResult = await UserModel.findOneAndUpdate(
                     {
                       _id: new mongoose.Types.ObjectId(userId),
                       "roles.entityName": entityName,
@@ -764,33 +777,38 @@ module.exports = [
     }
   ),
 
-  artistRouter.delete(routesConstants.deleteById, async (req, res) => {
-    //   const items = helpers.getEntityData("Artist");
-    //   return res
-    //     .status(200)
-    //     .json(items[Math.round(Math.random() * items.length)]);
-    const { identifier } = req.params;
+  artistRouter.delete(
+    routesConstants.deleteById,
+    helpers.validateEnvironment,
+    async (req, res) => {
+      //   const items = helpers.getEntityData("Artist");
+      //   return res
+      //     .status(200)
+      //     .json(items[Math.round(Math.random() * items.length)]);
+      const { identifier } = req.params;
 
-    try {
-      const artist = await Artist.findOneAndDelete(
-        {
-          $or: [
-            { id: identifier },
-            { shortId: identifier },
-            { username: identifier },
-          ],
-        },
-        req.body,
-        { new: true } // Retorna el documento actualizado
-      );
+      try {
+        const Artist = getModel(req.serverEnvironment, "Artist", artistSchema);
+        const artist = await Artist.findOneAndDelete(
+          {
+            $or: [
+              { id: identifier },
+              { shortId: identifier },
+              { username: identifier },
+            ],
+          },
+          req.body,
+          { new: true } // Retorna el documento actualizado
+        );
 
-      if (!artist) {
-        return res.status(404).json({ message: "Artist not found" });
+        if (!artist) {
+          return res.status(404).json({ message: "Artist not found" });
+        }
+
+        res.json(createPaginatedDataResponse(artist));
+      } catch (err) {
+        res.status(500).json({ message: err.message });
       }
-
-      res.json(createPaginatedDataResponse(artist));
-    } catch (err) {
-      res.status(500).json({ message: err.message });
     }
-  }),
+  ),
 ];

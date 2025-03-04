@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken");
 const ErrorCodes = require("../constants/errors");
-const mongoose = require("mongoose");
-const User = require("../models/appbase/User");
+const { schema: userSchema } = require("../models/appbase/User");
 const { getAvailableTranslation } = require("./lang");
+const { connectToDatabase, getModel, decryptEnv } = require("../db/db_g");
 // const Artist = require("../models/domain/Artist");
 
 const SECRET_KEY = "your_secret_key"; // Debes usar una clave secreta segura en producción
@@ -20,8 +20,8 @@ async function validateApiKey(req, res, next) {
 
   try {
     const decoded = jwt.verify(token, SECRET_KEY);
-
-    const user = await User.findById(decoded.id);
+    const UserModel = getModel(req.serverEnvironment, "User", userSchema);
+    const user = await UserModel.findById(decoded.id);
 
     if (!user) {
       return res
@@ -64,7 +64,8 @@ async function validateAuthenticatedUser(req, res, next) {
     }
 
     req.userId = decoded.id; // Guarda el ID del usuario en la solicitud
-    const user = await User.findById(decoded.id);
+    const UserModel = getModel(req.serverEnvironment, "User", userSchema);
+    const user = await UserModel.findById(decoded.id);
 
     if (user) {
       req.user = user;
@@ -75,10 +76,30 @@ async function validateAuthenticatedUser(req, res, next) {
   });
 }
 
+async function validateEnvironment(req, res, next) {
+  let encryptedEnv = req?.headers["x-env"];
+  let env = !!encryptedEnv && decryptEnv(encryptedEnv); // Descifra el entorno
+  req.serverEnvironment = env;
+  if (!env) {
+    return res.status(400).send({
+      message: "Headers are not complete.",
+      errorCode: ErrorCodes.CONNECTION_REQUEST_FAILED,
+    });
+  }
+
+  const connection = await connectToDatabase(req);
+
+  if (!req.serverEnvironment) {
+    return next(new Error("No se encuentra el ambiente: ", env));
+  }
+  if (next) {
+    next();
+  }
+}
+
 // Middleware para validar API key y autenticar usuario
 async function validateIfUserExists(req, res, next) {
   const token = req.headers["x-api-key"];
-
   if (!token) {
     return res.status(403).send({ message: "No API key provided." });
   }
@@ -104,7 +125,9 @@ async function validateIfUserExists(req, res, next) {
     }
 
     req.userId = decoded?.id; // Guarda el ID del usuario en la solicitud
-    const user = await User.findById(decoded?.id);
+
+    const UserModel = getModel(req.serverEnvironment, "User", userSchema);
+    const user = await UserModel.findById(decoded?.id);
 
     if (user) {
       req.user = user;
@@ -160,4 +183,5 @@ module.exports = {
   validateAuthenticatedUser,
   // validateOwnerRole,
   validateIfUserExists,
+  validateEnvironment,
 };

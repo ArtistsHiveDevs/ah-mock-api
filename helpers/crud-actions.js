@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
-const User = require("../models/appbase/User");
+const { User, schema: userSchema } = require("../models/appbase/User");
 const EntityDirectory = require("../models/appbase/EntityDirectory");
 const apiHelperFunctions = require("./apiHelperFunctions");
 const helpers = require("./helperFunctions");
 const routesConstants = require("../operations/domain/artists/constants/routes.constants");
 
-const { connections, connectToDatabase } = require("../db/db_g");
+const { connections, connectToDatabase, getModel } = require("../db/db_g");
 
 function modelRequiresAuth(modelName) {
   return ![
@@ -22,18 +22,12 @@ function modelRequiresEntityIndex(modelName) {
   return ["Artist", "Place", "User"].includes(modelName);
 }
 
-const getModel = (env, modelName, schema) => {
-  if (!connections[env])
-    throw new Error(`No hay conexión establecida para ${env}`);
-  return connections[env].model(modelName, schema);
-};
-
 async function createCRUDActions({ modelName, schema, options = {}, req }) {
-  console.log(modelName, !!schema, options);
+  // console.log(modelName, !!schema, options);
   const connection = await connectToDatabase(req); // Obtiene la conexión según el entorno
-  console.log("Conectando: desde Router: ", connection.environment);
+
+  const UserModel = getModel(connection.environment, "User", userSchema);
   const model = getModel(connection.environment, modelName, schema);
-  console.log("MODEL?? ", !!model);
 
   // Función para listar entidades
   async function listEntities({
@@ -122,6 +116,51 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       console.log("FLTROS", JSON.stringify(filters));
 
       // Consulta a la base de datos con select y populate
+
+      // Verificar si populateFields es válido antes de mapear
+      // let lookupStages = populateFields
+      //   .filter((field) => field?.path && field?.select)
+      //   .map((populateOption) => {
+      //     const refModel =
+      //       model.schema.paths[populateOption.path]?.options?.ref;
+
+      //     if (!refModel) {
+      //       console.warn(
+      //         `⚠️ Advertencia: No se encontró la referencia para el campo "${populateOption.path}"`
+      //       );
+      //       return null; // Evita agregar lookups inválidos
+      //     }
+
+      //     return {
+      //       $lookup: {
+      //         from: refModel.toLowerCase(), // Asegurar que sea una string válida
+      //         localField: populateOption.path,
+      //         foreignField: "_id",
+      //         as: populateOption.path,
+      //       },
+      //     };
+      //   })
+      //   .filter(Boolean); // Elimina los elementos `null`
+
+      // let unwindStages = populateFields
+      //   .filter((field) => field?.path)
+      //   .map((populateOption) => ({
+      //     $unwind: {
+      //       path: `$${populateOption.path}`,
+      //       preserveNullAndEmptyArrays: true,
+      //     },
+      //   }));
+
+      // Construcción de la pipeline de agregación
+      // let pipeline = [
+      //   { $sample: { size: Number(limit) } }, // Selecciona aleatoriamente `limit` documentos
+      //   { $project: projection }, // Aplica proyección
+      //   ...lookupStages, // Agrega los `lookup` generados dinámicamente
+      //   ...unwindStages, // Desanida los resultados si es necesario
+      // ];
+
+      // let results = await model.aggregate(pipeline);
+
       let query = model
         .find({ ...filters })
         .select(projection)
@@ -135,6 +174,8 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       }
 
       let results = await query.exec();
+
+      results = results.slice(0, 200);
 
       // Traducir los resultados utilizando translateDBResults
       results = apiHelperFunctions.translateDBResults({ results, lang });
@@ -157,7 +198,6 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       console.error(error);
     }
   }
-
   // Función para buscar entidad por ID
   // async function findEntityById({ id, userId, lang = "en" }) {
   //   if (!id) {
@@ -291,6 +331,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
   //   }
   // }
   // Función para buscar entidad por ID
+
   async function findEntityById({
     id,
     userId,
@@ -308,7 +349,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
     // Campos visibles para el usuario autenticado
     let visibleAttributes = routesConstants.authenticated_fields;
-    const currentUser = await User.findById(userId);
+    const currentUser = await UserModel.findById(userId);
 
     // console.log("current user ", currentUser?.username);
     idFields.push("username");
@@ -350,6 +391,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
     // Identificar campos que necesitan populate
 
+    // console.log("MODELO: ,", model.schema);
     const populateFields = [
       ...modelFields
         .filter((field) => {
@@ -368,7 +410,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
             model.schema.paths[field].caster.options.ref;
 
           // Obtener el modelo de referencia dinámicamente
-          const refModel = mongoose.model(refModelName);
+          const refModel = connection.model(refModelName);
           const hasI18n = refModel.schema.paths.i18n;
 
           const refModelFields = hasI18n
@@ -488,7 +530,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       let ownerUser;
 
       if (modelRequiresAuth(modelName)) {
-        ownerUser = await User.findById(userId);
+        ownerUser = await UserModel.findById(userId);
         info.entityRoleMap = [
           {
             role: "OWNER",
@@ -595,7 +637,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
           };
 
           // Realiza el update con `findByIdAndUpdate`
-          const ownerUserToUpdate = await User.findByIdAndUpdate(
+          const ownerUserToUpdate = await UserModel.findByIdAndUpdate(
             userId,
             updatedData,
             {
@@ -628,7 +670,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
     let query = {};
 
     let visibleAttributes = routesConstants.authenticated_fields;
-    const currentUser = await User.findById(userId);
+    const currentUser = await UserModel.findById(userId);
 
     if (mongoose.Types.ObjectId.isValid(id)) {
       query._id = id;

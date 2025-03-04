@@ -2,7 +2,7 @@ var express = require("express");
 const mongoose = require("mongoose");
 var helpers = require("../../../helpers/index");
 var RoutesConstants = require("./constants/index");
-const User = require("../../../models/appbase/User");
+const { User, schema: userSchema } = require("../../../models/appbase/User");
 
 const {
   generateTourOutlines,
@@ -11,8 +11,11 @@ const {
   createPaginatedDataResponse,
 } = require("../../../helpers/apiHelperFunctions");
 const routesConstants = require("./constants/routes.constants");
-const EntityDirectory = require("../../../models/appbase/EntityDirectory");
+const {
+  schema: EntityDirectorySchema,
+} = require("../../../models/appbase/EntityDirectory");
 const apiHelperFunctions = require("../../../helpers/apiHelperFunctions");
+const { getModel } = require("../../../db/db_g");
 
 var userRouter = express.Router({ mergeParams: true });
 
@@ -106,66 +109,99 @@ function filterResultsByQuery(req, result) {
 }
 
 module.exports = [
-  
-  userRouter.get(RoutesConstants.checkId, async (req, res) => {
-    const { id } = req.params;
-    let response = 'AVAILABLE';
-    const query = {
-      $or: [
-        { username: { $regex: new RegExp(`^${id}$`, "i") } },
-        // { name: { $regex: new RegExp(`^${id}$`, "i") } },
-      ],
-    };
+  userRouter.get(
+    RoutesConstants.checkId,
+    helpers.validateEnvironment,
+    async (req, res) => {
+      const { id } = req.params;
+      let response = undefined;
+      if (!id || typeof id !== "string" || id.trim() === "") {
+        return res.status(400).send({
+          message: "User ID is required.",
+          errorCode: ErrorCodes.AUTH_NO_USER_PROVIDED,
+        });
+      } else {
+        const query = {
+          $or: [
+            // { username: { $regex: new RegExp(`^${String(id).trim()}$`, "i") } },
+            { username: id },
+            // { name: { $regex: new RegExp(`^${id}$`, "i") } },
+          ],
+        };
+        response = "AVAILABLE";
+        try {
+          const EntityDirectory = getModel(
+            req.serverEnvironment,
+            "EntityDirectory",
+            EntityDirectorySchema
+          );
 
-    let queryResult = EntityDirectory.findOne(query); //.select(projection);
+          let queryResult = EntityDirectory.findOne(query); //.select(projection);
 
+          // Ejecutar la consulta
+          let entityInfo = await queryResult.exec();
 
-    // Ejecutar la consulta
-    let entityInfo = await queryResult.exec();
+          if (entityInfo?.username === id) {
+            response = "TAKEN";
+          }
+        } catch (err) {
+          console.error(err);
+          return res.status(400).send({
+            message: err,
+          });
+        }
+      }
 
-
-    if (entityInfo?.username === id) {
-      response = 'TAKEN';
+      return res
+        .status(200)
+        .json(
+          apiHelperFunctions.createPaginatedDataResponse({ status: response })
+        );
     }
+  ),
+  userRouter.get(
+    RoutesConstants.usersList,
+    helpers.validateEnvironment,
+    async (req, res) => {
+      // try {
+      //   return res.json(filterResultsByQuery(req, helpers.getEntityData("User")));
+      // } catch (error) {
+      //   console.log(error);
+      //   return res.status(500).json([]);
+      // }
+      const { page = 1, limit = 10, fields } = req.query;
 
-    return res.status(200).json(apiHelperFunctions.createPaginatedDataResponse({ status: response }));
-  }),
-  userRouter.get(RoutesConstants.usersList, async (req, res) => {
-    // try {
-    //   return res.json(filterResultsByQuery(req, helpers.getEntityData("User")));
-    // } catch (error) {
-    //   console.log(error);
-    //   return res.status(500).json([]);
-    // }
-    const { page = 1, limit = 10, fields } = req.query;
+      const modelFields = RoutesConstants.public_fields.join(",");
 
-    const modelFields = RoutesConstants.public_fields.join(",");
+      const projection = (modelFields || fields || "")
+        .split(",")
+        .reduce((acc, field) => {
+          acc[field] = 1;
+          return acc;
+        }, {});
 
-    const projection = (modelFields || fields || "")
-      .split(",")
-      .reduce((acc, field) => {
-        acc[field] = 1;
-        return acc;
-      }, {});
+      try {
+        const UserModel = getModel(req.serverEnvironment, "User", userSchema);
 
-    try {
-      const users = await User.find({})
-        .select(projection)
-        .skip((page - 1) * limit)
-        .limit(Number(limit));
+        const users = await UserModel.find({})
+          .select(projection)
+          .skip((page - 1) * limit)
+          .limit(Number(limit));
 
-      res.json({
-        data: users,
-        currentPage: page,
-        totalPages: Math.ceil(users.length / limit),
-      });
-    } catch (err) {
-      res.status(500).json({ message: err.message });
+        res.json({
+          data: users,
+          currentPage: page,
+          totalPages: Math.ceil(users.length / limit),
+        });
+      } catch (err) {
+        res.status(500).json({ message: err.message });
+      }
     }
-  }),
+  ),
 
   userRouter.get(
     RoutesConstants.findUserById,
+    helpers.validateEnvironment,
     helpers.validateAuthenticatedUser,
     async (req, res) => {
       const { userId } = req.params;
@@ -194,8 +230,8 @@ module.exports = [
       //     acc[field] = 1;
       //     return acc;
       //   }, {});
-
-      const searchUser = await User.findOne(query);
+      const UserModel = getModel(req.serverEnvironment, "User", userSchema);
+      const searchUser = await UserModel.findOne(query);
 
       // const searchUser = helpers.searchResult(
       //   helpers.getEntityData("User"),
@@ -230,148 +266,174 @@ module.exports = [
     }
   ),
 
-  userRouter.post(RoutesConstants.create, async (req, res) => {
-    // const items = helpers.getEntityData("User");
-    // return res
-    //   .status(200)
-    //   .json(items[Math.round(Math.random() * items.length)]);
-    try {
-      req.body.password = '1234556768';
-      const user = new User(req.body);
-      await user.save();
+  userRouter.post(
+    RoutesConstants.create,
+    helpers.validateEnvironment,
+    async (req, res) => {
+      // const items = helpers.getEntityData("User");
+      // return res
+      //   .status(200)
+      //   .json(items[Math.round(Math.random() * items.length)]);
+      try {
+        req.body.password = "1234556768";
+        const user = new User(req.body);
+        await user.save();
 
-      entityInfo = {
-        id: user._id,
-        shortId: user.shortId,
-        profile_pic: user.profile_pic,
-        name: user.name,
-        username: user.username,
-        subtitle: user.subtitle,
-        verified_status: user.verified_status,
-      };
-      const entityDirectory = new EntityDirectory({
-        ...entityInfo,
-        entityType: "User",
-      });
-      await entityDirectory.save();
-
-
-      res.status(201).send(createPaginatedDataResponse(user));
-    } catch (err) {
-      res.status(400).send(err);
-    }
-  }),
-
-  userRouter.put(RoutesConstants.updateById, async (req, res) => {
-    const { id: searchValue } = req.params;
-    const userId = searchValue;
-
-    const newInfo = { ...req.body };
-
-    if(newInfo.gender){
-      const genders = [
-        { label: 'Man', value: 'male' },
-        { label: 'Woman', value: 'female' },
-        { label: 'Non binary', value: 'non_binary' },
-        { label: 'Non specified', value: 'non_specified' },
-      ];
-
-      newInfo.gender = genders.findIndex(gender => gender.value === newInfo.gender);
-    }
-
-    try {
-      // Generar el objeto de actualización
-      const updateFields = helpers.flattenObject(newInfo);
-
-      let query = {};
-
-      if (mongoose.Types.ObjectId.isValid(userId)) {
-        // Si es un ObjectId válido, busca por _id
-        query._id = userId; // mongoose.Types.ObjectId(userId);
-      } else {
-        // Si no es un ObjectId, busca por otros campos
-        query = {
-          $or: [
-            // { shortId: userId },
-            { username: userId },
-            { name: userId },
-          ],
+        entityInfo = {
+          id: user._id,
+          shortId: user.shortId,
+          profile_pic: user.profile_pic,
+          name: user.name,
+          username: user.username,
+          subtitle: user.subtitle,
+          verified_status: user.verified_status,
         };
+        const entityDirectory = new EntityDirectory({
+          ...entityInfo,
+          entityType: "User",
+        });
+        await entityDirectory.save();
+
+        res.status(201).send(createPaginatedDataResponse(user));
+      } catch (err) {
+        res.status(400).send(err);
       }
-
-      // Realizar la consulta de actualización con $set
-      const updatedUser = await User.findOneAndUpdate(
-        query,
-        {
-          $set: updateFields,
-        },
-        { new: true } // Retorna el documento actualizado
-      );
-
-      // Verifica si el usuario fue encontrado y actualizado
-      if (!updatedUser) {
-        throw new Error("Usuario no encontrado.");
-      }
-
-      return res.status(200).json(createPaginatedDataResponse(updatedUser));
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: err.message });
     }
-  }),
+  ),
 
-  userRouter.delete(RoutesConstants.deleteById, (req, res) => {
-    const items = helpers.getEntityData("User");
-    return res
-      .status(200)
-      .json(items[Math.round(Math.random() * items.length)]);
-  }),
+  userRouter.put(
+    RoutesConstants.updateById,
+    helpers.validateEnvironment,
+    async (req, res) => {
+      const { id: searchValue } = req.params;
+      const userId = searchValue;
 
-  userRouter.get(RoutesConstants.favorites, (req, res) => {
-    const MAX_ELEMENTS = 10;
-    const artistsRandom = helpers
-      .getEntityData("Artist")
-      .sort(() => 0.5 - Math.random());
-    const randomArtistSize = Math.floor(Math.random() * artistsRandom.length);
-    const artistsFinalSize =
-      randomArtistSize > MAX_ELEMENTS ? MAX_ELEMENTS : randomArtistSize;
+      const newInfo = { ...req.body };
 
-    const artists = artistsRandom.slice(0, artistsFinalSize);
+      if (newInfo.gender) {
+        const genders = [
+          { label: "Man", value: "male" },
+          { label: "Woman", value: "female" },
+          { label: "Non binary", value: "non_binary" },
+          { label: "Non specified", value: "non_specified" },
+        ];
 
-    const placesRandom = helpers
-      .getEntityData("Place")
-      .sort(() => 0.5 - Math.random());
+        newInfo.gender = genders.findIndex(
+          (gender) => gender.value === newInfo.gender
+        );
+      }
 
-    const randomPlacesSize = Math.floor(Math.random() * placesRandom.length);
-    const placesFinalSize =
-      randomPlacesSize > MAX_ELEMENTS ? MAX_ELEMENTS : randomPlacesSize;
+      try {
+        // Generar el objeto de actualización
+        const updateFields = helpers.flattenObject(newInfo);
 
-    const places = placesRandom.slice(0, placesFinalSize);
+        let query = {};
 
-    const eventsRandom = helpers
-      .getEntityData("Event")
-      .sort(() => 0.5 - Math.random());
+        if (mongoose.Types.ObjectId.isValid(userId)) {
+          // Si es un ObjectId válido, busca por _id
+          query._id = userId; // mongoose.Types.ObjectId(userId);
+        } else {
+          // Si no es un ObjectId, busca por otros campos
+          query = {
+            $or: [
+              // { shortId: userId },
+              { username: userId },
+              { name: userId },
+            ],
+          };
+        }
 
-    const randomEventsSize = Math.floor(Math.random() * eventsRandom.length);
-    const eventsFinalSize =
-      randomPlacesSize > MAX_ELEMENTS ? MAX_ELEMENTS : randomPlacesSize;
+        // Realizar la consulta de actualización con $set
+        const UserModel = getModel(req.serverEnvironment, "User", userSchema);
+        const updatedUser = await UserModel.findOneAndUpdate(
+          query,
+          {
+            $set: updateFields,
+          },
+          { new: true } // Retorna el documento actualizado
+        );
 
-    const events = eventsRandom.slice(0, eventsFinalSize);
+        // Verifica si el usuario fue encontrado y actualizado
+        if (!updatedUser) {
+          throw new Error("Usuario no encontrado.");
+        }
 
-    const pagination = {
-      total_artists: randomArtistSize,
-      total_events: randomEventsSize,
-      total_places: randomPlacesSize,
-    };
+        return res.status(200).json(createPaginatedDataResponse(updatedUser));
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: err.message });
+      }
+    }
+  ),
 
-    return res.status(200).json({ artists, places, events, pagination });
-  }),
+  userRouter.delete(
+    RoutesConstants.deleteById,
+    helpers.validateEnvironment,
+    (req, res) => {
+      const items = helpers.getEntityData("User");
+      return res
+        .status(200)
+        .json(items[Math.round(Math.random() * items.length)]);
+    }
+  ),
 
-  userRouter.get(RoutesConstants.tours_outline, (req, res) => {
-    return res.status(200).json(generateTourOutlines());
-  }),
-  userRouter.get(RoutesConstants.findUserById, (req, res) => {
-    const { userId } = req.params;
-    return res.status(200).json(generateTourOutline(userId));
-  }),
+  userRouter.get(
+    RoutesConstants.favorites,
+    helpers.validateEnvironment,
+    (req, res) => {
+      const MAX_ELEMENTS = 10;
+      const artistsRandom = helpers
+        .getEntityData("Artist")
+        .sort(() => 0.5 - Math.random());
+      const randomArtistSize = Math.floor(Math.random() * artistsRandom.length);
+      const artistsFinalSize =
+        randomArtistSize > MAX_ELEMENTS ? MAX_ELEMENTS : randomArtistSize;
+
+      const artists = artistsRandom.slice(0, artistsFinalSize);
+
+      const placesRandom = helpers
+        .getEntityData("Place")
+        .sort(() => 0.5 - Math.random());
+
+      const randomPlacesSize = Math.floor(Math.random() * placesRandom.length);
+      const placesFinalSize =
+        randomPlacesSize > MAX_ELEMENTS ? MAX_ELEMENTS : randomPlacesSize;
+
+      const places = placesRandom.slice(0, placesFinalSize);
+
+      const eventsRandom = helpers
+        .getEntityData("Event")
+        .sort(() => 0.5 - Math.random());
+
+      const randomEventsSize = Math.floor(Math.random() * eventsRandom.length);
+      const eventsFinalSize =
+        randomPlacesSize > MAX_ELEMENTS ? MAX_ELEMENTS : randomPlacesSize;
+
+      const events = eventsRandom.slice(0, eventsFinalSize);
+
+      const pagination = {
+        total_artists: randomArtistSize,
+        total_events: randomEventsSize,
+        total_places: randomPlacesSize,
+      };
+
+      return res.status(200).json({ artists, places, events, pagination });
+    }
+  ),
+
+  userRouter.get(
+    RoutesConstants.tours_outline,
+    helpers.validateEnvironment,
+    (req, res) => {
+      return res.status(200).json(generateTourOutlines());
+    }
+  ),
+  userRouter.get(
+    RoutesConstants.findUserById,
+    helpers.validateEnvironment,
+    (req, res) => {
+      const { userId } = req.params;
+      return res.status(200).json(generateTourOutline(userId));
+    }
+  ),
 ];

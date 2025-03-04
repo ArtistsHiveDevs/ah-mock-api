@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const seed = require("../helpers/seed");
 const Artist = require("../models/domain/Artist.schema");
-const User = require("../models/appbase/User");
+const { User } = require("../models/appbase/User");
 const helpers = require("../helpers");
 const Place = require("../models/domain/Place.schema");
 const connectToDatabase = require("./db");
@@ -23,7 +23,7 @@ let seedConfig = {};
 async function seedData() {
   seedConfig = {
     Parametrics: {
-      seed: false,
+      seed: true,
       preUserIds: true,
       seedFunction: seedParametricsModels,
       dropFunction: dropParametricsModels,
@@ -36,20 +36,21 @@ async function seedData() {
       ],
     },
     app_base: {
-      seed: false,
+      seed: true,
       preUserIds: true,
       seedFunction: seedAppBaseModels,
       dropFunction: dropAppBaseModels,
       models: ["entitydirectories", "users"],
     },
     domain: {
-      seed: false,
+      seed: true,
       preUserIds: false,
       seedFunction: seedDomainModels,
       dropFunction: dropDomainModels,
       models: [
         "artists",
-        // "places", "events"
+        //"places",
+        // "events"
       ],
     },
   };

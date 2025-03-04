@@ -68,7 +68,7 @@ const TopTrackSchema = new mongoose.Schema({
   type: { type: String, required: true },
 });
 
-const ArtistSchema = new mongoose.Schema(
+const schema = new mongoose.Schema(
   {
     artistType: { type: String },
     name: { type: String, required: true },
@@ -170,23 +170,18 @@ const ArtistSchema = new mongoose.Schema(
 );
 
 // Configura el virtual para la relación inversa
-ArtistSchema.virtual("events", {
+schema.virtual("events", {
   ref: "Event", // Nombre del modelo relacionado
   localField: "_id", // Campo en Artist
   foreignField: "artists", // Campo en Event que referencia a Artist
 });
 
 // Incluye los virtuals en los resultados JSON
-ArtistSchema.set("toObject", { virtuals: true });
-ArtistSchema.set("toJSON", { virtuals: true });
+schema.set("toObject", { virtuals: true });
+schema.set("toJSON", { virtuals: true });
 
 // const Artist = mongoose.model("Artist", ArtistSchema);
 
 // module.exports = Artist;
-const getModel = (env) => {
-  if (!connections[env])
-    throw new Error(`No hay conexión establecida para ${env}`);
-  return connections[env].model("Artist", ArtistSchema);
-};
 
-module.exports = { getModel, ArtistSchema };
+module.exports = { schema };
