@@ -1,24 +1,24 @@
 const express = require("express");
-const mongoose = require("mongoose");
 
 const routesConstants = require("../operations/domain/artists/constants/routes.constants");
 const { createPaginatedDataResponse } = require("./apiHelperFunctions");
-const User = require("../models/appbase/User");
+const { User, schema: userSchema } = require("../models/appbase/User");
 var helpers = require("./index");
 const apiHelperFunctions = require("./apiHelperFunctions");
 const EntityDirectory = require("../models/appbase/EntityDirectory");
 const createCRUDActions = require("./crud-actions");
+
+const modelActions = {};
 
 // Función genérica para crear rutas CRUD
 function createCRUDRoutes({ modelName, schema, options = {} }) {
   try {
     const router = express.Router();
 
-    console.log("****   2 ", modelName);
-
     // GET list route
     router.get(
       routesConstants.artistsList,
+      helpers.validateEnvironment,
       helpers.validateIfUserExists,
       async (req, res) => {
         try {
@@ -28,9 +28,10 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             options,
             req,
           });
+
           const response = await modelActions.listEntities({
             page: req.query.page,
-            limit: 3000 || req.query.limit || 100,
+            limit: 3000 || req.query.limit || 50,
             fields: req.query.fields,
             lang: req.lang,
             public_fields: options.public_fields,
@@ -39,6 +40,7 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
 
           res.json(response);
         } catch (err) {
+          console.error(err);
           res.status(500).json({ message: err.message });
         }
       }
@@ -47,18 +49,27 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
     // GET by ID route
     router.get(
       routesConstants.findArtistById,
+      helpers.validateEnvironment,
       helpers.validateIfUserExists,
       async (req, res) => {
         try {
+          const modelActions = await createCRUDActions({
+            modelName,
+            schema,
+            options,
+            req,
+          });
+
           const response = await modelActions.findEntityById({
             id: req.params.artistId,
             userId: req.userId,
             lang: req.lang,
-            idFields: ["alpha2", "alpha3"],
+            idFields: ["alpha2", "alpha3", "ISO_4217_key", "key"],
             postScriptFunction: options.postScriptFunction,
           });
           res.json(response);
         } catch (err) {
+          console.error(err);
           res.status(500).json({ message: err.message });
         }
       }
@@ -67,10 +78,18 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
     // POST create route
     router.post(
       routesConstants.create,
+      helpers.validateEnvironment,
       helpers.validateIfUserExists,
       helpers.validateAuthenticatedUser,
       async (req, res) => {
         try {
+          const modelActions = await createCRUDActions({
+            modelName,
+            schema,
+            options,
+            req,
+          });
+
           const response = await modelActions.createEntity({
             userId: req.userId,
             body: req.body,
@@ -85,10 +104,18 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
     // PUT update route
     router.put(
       routesConstants.updateById,
+      helpers.validateEnvironment,
       helpers.validateIfUserExists,
       helpers.validateAuthenticatedUser,
       async (req, res) => {
         try {
+          const modelActions = await createCRUDActions({
+            modelName,
+            schema,
+            options,
+            req,
+          });
+
           const { id } = req.params;
           const response = await modelActions.updateEntity({
             id,
@@ -102,7 +129,11 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
       }
     );
 
-    return Promise.resolve(router);
+    return {
+      router: Promise.resolve(router),
+      modelName,
+      schema,
+    };
   } catch (error) {
     console.log(error);
   }

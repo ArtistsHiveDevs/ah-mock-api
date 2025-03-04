@@ -1,7 +1,7 @@
 const { networkInterfaces } = require("os");
 
 const { default: mongoose } = require("mongoose");
-const User = require("../models/appbase/User");
+const { User } = require("../models/appbase/User");
 const EntityDirectory = require("../models/appbase/EntityDirectory");
 const Place = require("../models/domain/Place.schema");
 const Artist = require("../models/domain/Artist.schema");

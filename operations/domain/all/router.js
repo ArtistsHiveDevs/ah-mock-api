@@ -2,17 +2,20 @@ var express = require("express");
 var helpers = require("../../../helpers/index");
 var RoutesConstants = require("./constants/index");
 const mongoose = require("mongoose");
-const EntityDirectory = require("../../../models/appbase/EntityDirectory");
+const {
+  schema: EntityDirectorySchema,
+} = require("../../../models/appbase/EntityDirectory");
 const {
   createPaginatedDataResponse,
 } = require("../../../helpers/apiHelperFunctions");
+const { getModel } = require("../../../db/db_g");
 
 const convertKmToDegrees = (km) => {
   const earthRadiusKm = 6371;
   return km / earthRadiusKm;
 };
 
-async function searchEntitiesDB(queryRQ) {
+async function searchEntitiesDB(req, queryRQ) {
   const {
     q: query = "",
     l = "",
@@ -41,6 +44,12 @@ async function searchEntitiesDB(queryRQ) {
     };
 
     // Búsqueda y agrupación por entityType para obtener resultados
+
+    const EntityDirectory = getModel(
+      req.serverEnvironment,
+      "EntityDirectory",
+      EntityDirectorySchema
+    );
     const results = await EntityDirectory.aggregate([
       {
         $match: matchCondition,
@@ -181,6 +190,12 @@ const searchEntities = async ({
   };
 
   // Buscar y contar artistas
+
+  const EntityDirectory = getModel(
+    req.serverEnvironment,
+    "EntityDirectory",
+    EntityDirectorySchema
+  );
   const artistQuery = EntityDirectory.find(combinedQuery)
     .skip((page - 1) * limit)
     .limit(limit)
@@ -422,48 +437,52 @@ function fillEventRelationships(element) {
 }
 
 module.exports = [
-  router.get(RoutesConstants.root, async (req, res) => {
-    try {
-      //   const { page = 1, limit = 50, fields } = req.query;
+  router.get(
+    RoutesConstants.root,
+    helpers.validateEnvironment,
+    async (req, res) => {
+      try {
+        //   const { page = 1, limit = 50, fields } = req.query;
 
-      // const modelFields = routesConstants.public_fields.join(",");
-      // const projection = (modelFields || fields || "")
-      //   .split(",")
-      //   .reduce((acc, field) => {
-      //     acc[field] = 1;
-      //     return acc;
-      //   }, {});
+        // const modelFields = routesConstants.public_fields.join(",");
+        // const projection = (modelFields || fields || "")
+        //   .split(",")
+        //   .reduce((acc, field) => {
+        //     acc[field] = 1;
+        //     return acc;
+        //   }, {});
 
-      // try {
-      //   const results = await model
-      //     .find({})
-      //     .select(projection)
-      //     .skip((page - 1) * limit)
-      //     .limit(Number(limit));
+        // try {
+        //   const results = await model
+        //     .find({})
+        //     .select(projection)
+        //     .skip((page - 1) * limit)
+        //     .limit(Number(limit));
 
-      //   res.json(
-      //     createPaginatedDataResponse(
-      //       results,
-      //       page,
-      //       Math.ceil(results.length / limit)
-      //     )
-      //   );
-      // } catch (err) {
-      //   res.status(500).json({ message: err.message });
-      // }
+        //   res.json(
+        //     createPaginatedDataResponse(
+        //       results,
+        //       page,
+        //       Math.ceil(results.length / limit)
+        //     )
+        //   );
+        // } catch (err) {
+        //   res.status(500).json({ message: err.message });
+        // }
 
-      const results = await searchEntitiesDB({
-        ...req.query,
-        page: 1,
-        limit: 200,
-      });
-      // console.log(results);
-      return res.json(createPaginatedDataResponse(results));
-      const result = searchEntities(req.query);
-      return res.json(createPaginatedDataResponse(result));
-    } catch (error) {
-      console.log(error);
-      return res.status(500).json([]);
+        const results = await searchEntitiesDB(req, {
+          ...req.query,
+          page: 1,
+          limit: 200,
+        });
+        // console.log(results);
+        return res.json(createPaginatedDataResponse(results));
+        const result = searchEntities(req.query);
+        return res.json(createPaginatedDataResponse(result));
+      } catch (error) {
+        console.log(error);
+        return res.status(500).json([]);
+      }
     }
-  }),
+  ),
 ];
