@@ -11,6 +11,7 @@ var userRouter = express.Router({ mergeParams: true });
 module.exports = [
   userRouter.get(
     RoutesConstants.usersList,
+    helpers.validateEnvironment,
     helpers.validateAuthenticatedUser,
     (req, res) => {
       const userId = req.userId;

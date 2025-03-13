@@ -1,11 +1,14 @@
 var express = require("express");
 const apiHelperFunctions = require("../../../../helpers/apiHelperFunctions");
-const { validateIfUserExists } = require("../../../../helpers");
+const {
+  validateIfUserExists,
+  validateEnvironment,
+} = require("../../../../helpers");
 
 var userRouter = express.Router({ mergeParams: true });
 
 module.exports = [
-  userRouter.get("/", validateIfUserExists, (req, res) => {
+  userRouter.get("/", validateEnvironment, validateIfUserExists, (req, res) => {
     try {
       const versions = [
         {

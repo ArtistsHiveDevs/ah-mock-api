@@ -14,7 +14,6 @@ const SECRET_IV = process.env.ENV_KEY_IV || "358e8a3a5474d65a"; // Mismo de fron
 
 function decryptEnv(encryptedText) {
   try {
-    console.log(SECRET_KEY, " ## ", SECRET_IV);
     const key = Buffer.from(SECRET_KEY, "utf8");
     const iv = Buffer.from(SECRET_IV, "utf8");
     const encryptedBuffer = Buffer.from(encryptedText, "base64");
@@ -115,7 +114,7 @@ const connectToDatabase = async (req) => {
 
 const getModel = (env, modelName, schema) => {
   if (!connections[env])
-    throw new Error(`No hay conexión establecida para ${env}`);
+    throw new Error(`No hay conexión establecida para ${env}, ${modelName}`);
   return connections[env].model(modelName, schema);
 };
 
