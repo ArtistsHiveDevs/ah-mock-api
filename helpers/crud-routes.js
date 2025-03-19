@@ -129,6 +129,61 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
       }
     );
 
+    if (!!options.actions) {
+      router.post(
+        routesConstants.action,
+        helpers.validateEnvironment,
+        helpers.validateIfUserExists,
+        helpers.validateAuthenticatedUser,
+        async (req, res) => {
+          try {
+            const { action } = req.body; // Acción a ejecutar (follow, unfollow, etc.)
+            const { id } = req.params; // ID del elemento a modificar
+            const modelActions = await createCRUDActions({
+              modelName,
+              schema,
+              options,
+              req,
+            });
+
+            if (!options.actions || !options.actions[action]) {
+              return res
+                .status(400)
+                .json({ message: `Acción '${action}' no permitida.` });
+            }
+
+            // Obtener el documento actual
+            const entity = await modelActions.findEntityById({ id });
+            if (!entity) {
+              return res
+                .status(404)
+                .json({ message: `${modelName} no encontrado.` });
+            }
+
+            // Aplicar la acción definida en options.actions
+            const updatedEntity = await options.actions[action](
+              req,
+              res,
+              entity,
+              req.body
+            );
+
+            // Guardar los cambios
+            const response = await modelActions.updateEntity({
+              id,
+              userId: req.userId,
+              body: updatedEntity,
+            });
+
+            res.json(response);
+          } catch (err) {
+            console.error(err);
+            res.status(500).json({ message: err.message });
+          }
+        }
+      );
+    }
+
     return {
       router: Promise.resolve(router),
       modelName,

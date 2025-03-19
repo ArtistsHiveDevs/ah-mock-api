@@ -26,6 +26,7 @@ var port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(cors({ origin: "*" }));
+// app.use(helpers.validateEnvironment)
 
 // Ruta para generar una nueva API key
 app.post("/api/generate-key", helpers.validateEnvironment, async (req, res) => {

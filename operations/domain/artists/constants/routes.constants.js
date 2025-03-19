@@ -4,6 +4,7 @@ module.exports = {
   updateById: "/:id",
   deleteById: "/:id",
   create: "/",
+  action: "/action",
   public_fields: [
     // "artistType",
     "id",
@@ -43,6 +44,10 @@ module.exports = {
     "city",
     "address",
     "location",
+    // "followed_by",
+    // "followed_profiles",
+    "followed_by_count",
+    "followed_profiles_count",
   ],
   authenticated_fields: [
     // "artistType",
@@ -86,6 +91,11 @@ module.exports = {
     "address",
     "location",
     "events",
+
+    // "followed_by",
+    // "followed_profiles",
+    "followed_by_count",
+    "followed_profiles_count",
   ],
   parametric_public_fields: {
     Allergy: {

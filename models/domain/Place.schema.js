@@ -81,6 +81,9 @@ const schema = new Schema({
       role: String,
     },
   ],
+
+  followed_profiles: [{ type: Schema.Types.ObjectId, ref: "EntityDirectory" }],
+  followed_by: [{ type: Schema.Types.ObjectId, ref: "EntityDirectory" }],
 });
 
 schema.virtual("events", {

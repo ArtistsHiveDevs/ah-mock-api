@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+require("dotenv").config();
 const { schema: userSchema } = require("../models/appbase/User");
 const {
   schema: EntityDirectorySchema,

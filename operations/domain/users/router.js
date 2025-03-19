@@ -14,6 +14,12 @@ const routesConstants = require("./constants/routes.constants");
 const {
   schema: EntityDirectorySchema,
 } = require("../../../models/appbase/EntityDirectory");
+const {
+  schema: ArtistSchema,
+} = require("../../../models/domain/Artist.schema");
+const {
+  schema: FollowerSchema,
+} = require("../../../models/domain/Follower.schema");
 const apiHelperFunctions = require("../../../helpers/apiHelperFunctions");
 const { getModel } = require("../../../db/db_g");
 
@@ -363,6 +369,476 @@ module.exports = [
         console.error(err);
         res.status(500).json({ message: err.message });
       }
+    }
+  ),
+
+  userRouter.put(
+    RoutesConstants.actionById,
+    helpers.validateEnvironment,
+    helpers.validateAuthenticatedUser,
+    async (req, res) => {
+      // req.currentProfileInfo
+      // {
+      //   id: '672a9a7b41e3f75738929560',
+      //   profile_pic: 'https://i.scdn.co/image/ab6761610000e5eb93de922400c3d0586b432dbf',
+      //   name: 'Bluefinch & the wanderlust',
+      //   username: 'bluefinchtheband',
+      //   subtitle: '',
+      //   verified_status: 1,
+      //   roles: [ 'OWNER' ]
+      // }
+
+      const { action, id, identifier, username, entity } = req.body;
+
+      let response;
+
+      console.log(req.currentProfileInfo, req.currentProfileEntity);
+
+      try {
+        let query = {};
+
+        // Si hay un `username` válido, agrégalo a la búsqueda
+        // if (username || identifier) {
+        query.$or = mongoose.Types.ObjectId.isValid(id)
+          ? [{ _id: id }, { username: username || identifier }]
+          : [{ username: username || identifier }];
+        // }
+        console.log("query => => = > ", query);
+
+        const modelName = "Artist";
+        const Artist = getModel(req.serverEnvironment, modelName, ArtistSchema);
+
+        // 🔍 Buscar el artista
+        let entityInfo = await Artist.findOne(query)
+          .select("_id followed_by followed_profiles")
+          .populate({
+            path: "followed_by",
+            select: "entityId entityType isFollowing",
+          });
+
+        if (!entityInfo) {
+          return res.status(404).json({ message: "Artista no encontrado" });
+        }
+
+        // 📌 Buscar si ya sigue al artista
+        const existingFollower = entityInfo.followed_by.find(
+          (f) =>
+            f.entityId.toString() === req.currentProfileInfo.id.toString() &&
+            f.entityType === req.currentProfileEntity
+        );
+
+        let update = {};
+        let arrayFilters = [];
+
+        if (action === "follow") {
+          if (!existingFollower) {
+            console.log("➡️ Agregando nuevo seguidor");
+            update = {
+              $push: {
+                followed_by: {
+                  entityId: req.currentProfileInfo.id,
+                  entityType: req.currentProfileEntity,
+                  isFollowing: true, // Asegurar que se agrega con isFollowing en true
+                },
+              },
+            };
+          } else if (!existingFollower.isFollowing) {
+            console.log("🔄 Activando seguimiento");
+            update = {
+              $set: { "followed_by.$[elem].isFollowing": true },
+            };
+            arrayFilters = [
+              {
+                "elem.entityId": req.currentProfileInfo.id,
+                "elem.entityType": req.currentProfileEntity,
+              },
+            ];
+          } else {
+            return res
+              .status(400)
+              .json({ message: "Ya sigues a este artista" });
+          }
+        } else if (action === "unfollow") {
+          if (existingFollower?.isFollowing) {
+            console.log("🔄 Desactivando seguimiento");
+            update = {
+              $set: { "followed_by.$[elem].isFollowing": false },
+            };
+            arrayFilters = [
+              {
+                "elem.entityId": req.currentProfileInfo.id,
+                "elem.entityType": req.currentProfileEntity,
+              },
+            ];
+          } else {
+            return res
+              .status(400)
+              .json({ message: "No sigues a este artista" });
+          }
+        }
+
+        // 🚀 Ejecutar la actualización si hay cambios
+        if (Object.keys(update).length > 0) {
+          console.log(
+            "⏳ Actualizando con:",
+            update,
+            arrayFilters.length > 0 ? { arrayFilters } : {}
+          );
+
+          const updateResult = await Artist.updateOne(
+            query,
+            update,
+            arrayFilters.length > 0 ? { arrayFilters } : {} // Solo incluir si es necesario
+          );
+
+          console.log("🔎 Update Result:", updateResult);
+        }
+
+        // 🔍 Obtener el artista actualizado
+        entityInfo = await Artist.findOne(query)
+          .select("_id name followed_by followed_profiles description ")
+          .populate({
+            path: "followed_by",
+            select: "entityId entityType isFollowing",
+          });
+
+        console.log("✅ Artista actualizado:", entityInfo);
+        return res.status(200).json(createPaginatedDataResponse(entityInfo));
+      } catch (err) {
+        console.error("❌ Error:", err);
+        return res.status(500).json({ message: err.message });
+      }
+      //==================================================================
+      // try {
+      //   let query = { $or: [{ username: username || identifier }] };
+
+      //   const modelName = "Artist";
+      //   const Artist = getModel(req.serverEnvironment, modelName, ArtistSchema);
+
+      //   // Buscar el artista
+      //   // ========= ESTE SI FUNCIONA EN LA BASE DE DATOS
+      //   let entityInfo = await Artist.findOne(query)
+      //     .select("_id followed_by followed_profiles") // Trae los campos principales
+      //     .populate({
+      //       path: "followed_by",
+      //       select: "entityId entityType isFollowing", // Especifica qué traer dentro del array
+      //       // options: { lean: true }, // Devuelve un objeto JSON puro
+      //     });
+      //   console.log("RECUPEDARO ", entityInfo);
+      //   if (!entityInfo) {
+      //     return res.status(404).json({ message: "Artista no encontrado" });
+      //   }
+
+      //   // Buscar si ya sigue al artista
+      //   const existingFollower = entityInfo.followed_by.find(
+      //     (f) =>
+      //       f.entityId.toString() === req.currentProfileInfo.id.toString() &&
+      //       f.entityType === req.currentProfileEntity
+      //   );
+
+      //   console.log(
+      //     "\n\nFOLLOWERS: ",
+      //     entityInfo.followed_by,
+      //     existingFollower
+      //   );
+      //   let update;
+      //   let newElement = false;
+      //   let arrayFilters = [];
+
+      //   console.log("Saving");
+      //   entityInfo.save();
+      //   console.log("Saved");
+
+      //   if (action === "follow") {
+      //     if (!existingFollower) {
+      //       console.log("SE DEBE CREAR UNO NUEVO");
+      //       // Si no existe en la lista, lo agregamos
+      //       update = {
+      //         $push: {
+      //           followed_by: {
+      //             entityId: req.currentProfileInfo.id,
+      //             entityType: req.currentProfileEntity,
+      //           },
+      //         },
+      //       };
+      //       newElement = true;
+      //     } else if (!existingFollower.isFollowing) {
+      //       console.log("SE DEBE ACTUALIZAR FOLLOW a true");
+      //       // Si existe pero isFollowing es false, lo actualizamos a true
+      //       query = {
+      //         _id: entityInfo.id,
+      //         "followed_by.entityId": req.currentProfileInfo.id,
+      //         "followed_by.entityType": req.currentProfileEntity,
+      //       };
+
+      //       update = {
+      //         $set: {
+      //           "followed_by.$[elem].isFollowing": true,
+      //         },
+      //       };
+      //       arrayFilters = [
+      //         {
+      //           "elem.entityId": req.currentProfileInfo.id,
+      //           "elem.entityType": req.currentProfileEntity,
+      //         },
+      //       ];
+      //     } else {
+      //       console.log("YA SE SEGUIA ", existingFollower);
+      //       return res
+      //         .status(400)
+      //         .json({ message: "Ya sigues a este artista" });
+      //     }
+      //   } else if (action === "unfollow") {
+      //     console.log("UNFOLLOW .... ", existingFollower);
+      //     if (existingFollower?.isFollowing) {
+      //       query = {
+      //         _id: entityInfo.id,
+      //         "followed_by.entityId": req.currentProfileInfo.id,
+      //         "followed_by.entityType": req.currentProfileEntity,
+      //       };
+
+      //       update = {
+      //         $set: {
+      //           "followed_by.$[elem].isFollowing": false,
+      //         },
+      //       };
+
+      //       arrayFilters = [
+      //         {
+      //           "elem.entityId": req.currentProfileInfo.id,
+      //           "elem.entityType": req.currentProfileEntity,
+      //         },
+      //       ];
+      //     } else {
+      //       return res
+      //         .status(400)
+      //         .json({ message: "No sigues a este artista" });
+      //     }
+      //   }
+
+      //   // Si hay algo que actualizar, lo hacemos
+      //   if (update) {
+      //     // if (newElement) {
+      //     //   entityInfo = await Artist.findOneAndUpdate(
+      //     //     query,
+      //     //     update,
+      //     //     { new: true, upsert: true }
+      //     //   );
+      //     // } else {
+      //     // Si el usuario ya existe en followed_by, actualizar isFollowing a true
+
+      //     console.log(
+      //       "query: ",
+      //       query,
+      //       "\nupdate:",
+      //       update,
+      //       "filters: ",
+      //       arrayFilters
+      //     );
+
+      //     // ESTE UPDATE NO SE ESTÄ REALIZANDO
+      //     const updateResult = await Artist.updateOne(
+      //       // {
+      //       //   _id: entityInfo.id,
+      //       //   "followed_by.entityId": req.currentProfileInfo.id,
+      //       //   "followed_by.entityType": req.currentProfileEntity,
+      //       // },
+      //       query,
+      //       update,
+      //       { new: true, upsert: true, arrayFilters } // Devuelve el documento actualizado
+      //     );
+
+      //     console.log("Update REsult: ", updateResult);
+
+      //     query = { $or: [{ username: username || identifier }] };
+      //     entityInfo = await Artist.findOne(query)
+      //       .select("_id followed_by followed_profiles")
+      //       .populate({
+      //         path: "followed_by",
+      //         select: "entityId entityType isFollowing", // Especifica qué traer dentro del array
+      //         // options: { lean: true }, // Devuelve un objeto JSON puro
+      //       });
+      //     // }
+      //     console.log("Actualizado correctamente:", entityInfo.followed_by);
+      //     return res.status(200).json(createPaginatedDataResponse(entityInfo));
+      //   }
+
+      //   return res.status(400).json({ message: "Acción inválida" });
+      // } catch (err) {
+      //   console.error(err);
+      //   return res.status(500).json({ message: err.message });
+      // }
+
+      //
+      //
+      //
+      // try {
+      //   let query = { $or: [{ username: username || identifier }] };
+
+      //   const modelName = "Artist";
+      //   const Artist = getModel(req.serverEnvironment, modelName, ArtistSchema);
+
+      //   let entityInfo;
+
+      //   // Buscar el artista por ID
+      //   let queryResult = Artist.findOne(query);
+      //   entityInfo = await queryResult.exec();
+
+      //   if (!entityInfo) {
+      //     return res.status(404).json({ message: "Artista no encontrado" });
+      //   }
+      //   console.log(entityInfo.followed_by);
+
+      //   // Verificar si la combinación entityId + entityType ya existe en followed_by
+      //   const alreadyFollowing = entityInfo.followed_by.find(
+      //     (f) =>
+      //       f.entityId.toString() === req.currentProfileInfo.id.toString() &&
+      //       f.entityType === req.currentProfileEntity
+      //   );
+
+      //   if (
+      //     !!alreadyFollowing &&
+      //     alreadyFollowing.isFollowing === true &&
+      //     action === "follow"
+      //   ) {
+      //     return res.status(400).json({ message: "Ya sigues a este artista" });
+      //   } else if (
+      //     (!alreadyFollowing || alreadyFollowing.isFollowing === false) &&
+      //     action === "unfollow"
+      //   ) {
+      //     return res.status(400).json({ message: "No sigues a este artista" });
+      //   }
+
+      //   if (!alreadyFollowing) {
+      //     entityInfo = await Artist.findOneAndUpdate(
+      //       query,
+      //       {
+      //         $addToSet: {
+      //           followed_by: {
+      //             entityId: req.currentProfileInfo.id,
+      //             entityType: req.currentProfileEntity,
+      //           },
+      //         },
+      //       },
+      //       { new: true, upsert: true } // Devuelve el documento actualizado y lo crea si no existe
+      //     );
+
+      //     if (!entityInfo) {
+      //       return res.status(404).json({ message: "Artista no encontrado" });
+      //     }
+      //   }else{
+      //     // UPDATE de isFollowing cuando entityId y entityType coincidan con los que se buscan
+      //   }
+
+      //   console.log("Actualizado correctamente:", entityInfo.followed_by);
+      //   return res.status(200).json(createPaginatedDataResponse(entityInfo));
+      // } catch (err) {
+      //   console.error(err);
+      //   return res.status(500).json({ message: err.message });
+      // }
+
+      // try {
+      //   let query = { $or: [{ username: username || identifier }] };
+
+      //   const modelName = "Artist";
+      //   const Artist = getModel(req.serverEnvironment, modelName, ArtistSchema);
+
+      //   // Buscar el artista por ID
+      //   let queryResult = Artist.findOne(query);
+      //   let entityInfo = await queryResult.exec();
+
+      //   if (!entityInfo) {
+      //     return res.status(404).json({ message: "Artista no encontrado" });
+      //   }
+      //   console.log(entityInfo.followed_by);
+
+      //   // Verificar si la combinación entityId + entityType ya existe en followed_by
+      //   const alreadyFollowing = entityInfo.followed_by.some(
+      //     (f) =>
+      //       f.entityId.toString() === req.currentProfileInfo.id.toString() &&
+      //       f.entityType === req.currentProfileEntity
+      //   );
+
+      //   if (alreadyFollowing) {
+      //     return res.status(400).json({ message: "Ya sigues a este artista" });
+      //   }
+
+      //   // Actualizar con findByIdAndUpdate
+      //   entityInfo = await Artist.findByIdAndUpdate(
+      //     entityInfo._id,
+      //     {
+      //       $push: {
+      //         followed_by: {
+      //           entityId: req.currentProfileInfo.id,
+      //           entityType: req.currentProfileEntity,
+      //         },
+      //       },
+      //     },
+      //     { new: true, upsert: true } // 🔥 Devuelve el documento actualizado
+      //   );
+
+      //   console.log(entityInfo.followed_by.length);
+      //   return res.status(200).json(createPaginatedDataResponse(entityInfo));
+      // } catch (err) {
+      //   console.error(err);
+      //   return res.status(500).json({ message: err.message });
+      // }
+      /*
+
+      if (newInfo.gender) {
+        const genders = [
+          { label: "Man", value: "male" },
+          { label: "Woman", value: "female" },
+          { label: "Non binary", value: "non_binary" },
+          { label: "Non specified", value: "non_specified" },
+        ];
+
+        newInfo.gender = genders.findIndex(
+          (gender) => gender.value === newInfo.gender
+        );
+      }
+
+      try {
+        // Generar el objeto de actualización
+        const updateFields = helpers.flattenObject(newInfo);
+
+        let query = {};
+
+        if (mongoose.Types.ObjectId.isValid(userId)) {
+          // Si es un ObjectId válido, busca por _id
+          query._id = userId; // mongoose.Types.ObjectId(userId);
+        } else {
+          // Si no es un ObjectId, busca por otros campos
+          query = {
+            $or: [
+              // { shortId: userId },
+              { username: userId },
+              { name: userId },
+            ],
+          };
+        }
+
+        // Realizar la consulta de actualización con $set
+        const UserModel = getModel(req.serverEnvironment, "User", userSchema);
+        const updatedUser = await UserModel.findOneAndUpdate(
+          query,
+          {
+            $set: updateFields,
+          },
+          { new: true } // Retorna el documento actualizado
+        );
+
+        // Verifica si el usuario fue encontrado y actualizado
+        if (!updatedUser) {
+          throw new Error("Usuario no encontrado.");
+        }
+
+        return res.status(200).json(createPaginatedDataResponse(updatedUser));
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: err.message });
+      }
+      */
     }
   ),
 

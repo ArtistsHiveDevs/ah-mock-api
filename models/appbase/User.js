@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
 const emergencyContactSchema = new mongoose.Schema({
   given_names: String,
@@ -51,6 +52,8 @@ const userSchema = new mongoose.Schema({
   created_at: String,
   updated_at: String,
   show_industry_member_banner: Boolean,
+  followed_profiles: [{ type: Schema.Types.ObjectId, ref: "EntityDirectory" }],
+  followed_by: [{ type: Schema.Types.ObjectId, ref: "EntityDirectory" }],
 });
 
 const User = mongoose.model("User", userSchema);

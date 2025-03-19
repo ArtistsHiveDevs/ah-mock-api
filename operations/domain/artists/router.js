@@ -272,25 +272,32 @@ module.exports = [
           .json({ message: "Must search an id, username or name" });
       }
       try {
+        // let query = {};
+
+        // if (mongoose.Types.ObjectId.isValid(artistId)) {
+        //   // Si es un ObjectId válido, busca por _id
+        //   query._id = artistId; // mongoose.Types.ObjectId(artistId);
+        // } else {
+        //   // Si no es un ObjectId, busca por otros campos
+        //   query = {
+        //     $or: [
+        //       // { shortId: artistId },
+        //       { username: artistId },
+        //       { name: artistId },
+        //     ],
+        //   };
+        // }
         let query = {};
 
         if (mongoose.Types.ObjectId.isValid(artistId)) {
-          // Si es un ObjectId válido, busca por _id
-          query._id = artistId; // mongoose.Types.ObjectId(artistId);
+          query.$or = [{ _id: new mongoose.Types.ObjectId(artistId) }];
         } else {
-          // Si no es un ObjectId, busca por otros campos
-          query = {
-            $or: [
-              // { shortId: artistId },
-              { username: artistId },
-              { name: artistId },
-            ],
-          };
+          query.$or = [{ username: artistId }, { name: artistId }];
         }
 
-        const Artist = getModel(req.serverEnvironment, "Artist", artistSchema);
+        const modelName = "Artist";
+        const Artist = getModel(req.serverEnvironment, modelName, artistSchema);
         const model = Artist;
-        const modelName = model.name;
 
         // Obtener campos de proyección de la configuración
         const projectionFields = routesConstants?.parametric_public_fields?.[
@@ -358,10 +365,10 @@ module.exports = [
               const fieldType = model.schema.paths[field];
               return (
                 fieldType &&
-                (fieldType.instance.toLowerCase() === "objectid" ||
-                  (fieldType.instance.toLowerCase() === "array" &&
+                (fieldType.instance?.toLowerCase() === "objectid" ||
+                  (fieldType.instance?.toLowerCase() === "array" &&
                     fieldType.caster &&
-                    fieldType.caster.instance.toLowerCase() === "objectid"))
+                    fieldType.caster.instance?.toLowerCase() === "objectid"))
               );
             })
             .map((field) => {
@@ -418,7 +425,7 @@ module.exports = [
 
         // Manejar caso en el que la entidad no sea encontrada
         if (!artistInfo) {
-          throw new Error(`${modelName} not found`);
+          throw new Error(`${modelName} not found `, model);
         }
 
         // Traducir los resultados utilizando translateDBResults
@@ -515,6 +522,27 @@ module.exports = [
           helpers.shuffle(artistInfo.arts?.music?.related_artists);
         }
 
+        //  ====================================    Followers ===========================
+        const followedByCount = await model.aggregate([
+          { $match: { _id: artistInfo._id } },
+          { $unwind: "$followed_by" },
+          { $match: { "followed_by.isFollowing": true } },
+          { $count: "followersCount" },
+        ]);
+        const followedProfilesCount = await model.aggregate([
+          { $match: { _id: artistInfo._id } },
+          { $unwind: "$followed_profiles" },
+          { $match: { "followed_profiles.isFollowing": true } },
+          { $count: "followedProfilesCount" },
+        ]);
+
+        artistInfo = {
+          ...artistInfo,
+          followed_by_count: followedByCount?.[0]?.followersCount || 0,
+          followed_profiles_count:
+            followedProfilesCount?.[0]?.followedProfilesCount || 0,
+        };
+
         if (!currentUserIsOwner) {
           let reducedArtistData = visibleAttributes.reduce((acc, field) => {
             acc[field] = artistInfo[field];
@@ -523,6 +551,15 @@ module.exports = [
 
           res.json(createPaginatedDataResponse(reducedArtistData));
         } else {
+          reducedArtistData.followed_profiles = followers;
+          // reducedArtistData.followed_by = [
+          //   ...followers,
+          //   ...followers,
+          //   ...followers,
+          //   ...followers,
+          //   ...followers,
+          // ];
+
           res.json(createPaginatedDataResponse(artistInfo));
         }
       } catch (err) {

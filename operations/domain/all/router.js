@@ -9,6 +9,7 @@ const {
   createPaginatedDataResponse,
 } = require("../../../helpers/apiHelperFunctions");
 const { getModel } = require("../../../db/db_g");
+const removeAccents = require("remove-accents");
 
 const convertKmToDegrees = (km) => {
   const earthRadiusKm = 6371;
@@ -24,40 +25,45 @@ async function searchEntitiesDB(req, queryRQ) {
     limit = 10,
     et,
   } = queryRQ;
+
   try {
     const skip = (page - 1) * limit;
 
-    // Normalizar la cadena de búsqueda (quitar acentos, diéresis, etc.)
-    // const normalizedQuery = helpers.removeStringAccents(query.toLowerCase());
-    const normalizedQuery = query.toLowerCase().trim();
+    // 1️⃣ Normalizar la búsqueda (eliminar acentos, caracteres especiales y convertir a minúsculas)
+    const normalizedQuery = removeAccents(query)
+      .toLowerCase()
+      .replace(/[^a-z0-9\s]/g, " ") // Reemplazar caracteres especiales por espacios
+      .trim();
+
+    // 2️⃣ Convertir la consulta en una expresión regular para buscar palabras que comiencen con la consulta
+    const regexPattern = `\\b${normalizedQuery}`;
+    const regex = new RegExp(regexPattern, "i");
 
     const orMatch = [
-      { name: { $regex: normalizedQuery, $options: "i" } },
-      { username: { $regex: normalizedQuery, $options: "i" } },
-      { search_cache: { $regex: normalizedQuery, $options: "i" } },
+      { name: { $regex: regex } },
+      { username: { $regex: regex } },
+      { search_cache: { $regex: regex } },
     ];
 
-    // Condición para el parámetro et
+    // 3️⃣ Filtrar por entityType si está presente
     const matchCondition = {
       $or: orMatch,
-      ...(et && { entityType: et }), // Agregar filtro por entityType si et está presente
+      ...(et && { entityType: et }),
     };
-
-    // Búsqueda y agrupación por entityType para obtener resultados
 
     const EntityDirectory = getModel(
       req.serverEnvironment,
       "EntityDirectory",
       EntityDirectorySchema
     );
+
+    // 4️⃣ Buscar y agrupar por entityType
     const results = await EntityDirectory.aggregate([
-      {
-        $match: matchCondition,
-      },
+      { $match: matchCondition },
       {
         $group: {
           _id: "$entityType",
-          entities: { $push: "$$ROOT" }, // Agregar los documentos completos
+          entities: { $push: "$$ROOT" },
         },
       },
       {
@@ -67,42 +73,37 @@ async function searchEntitiesDB(req, queryRQ) {
             $slice: [
               {
                 $sortArray: {
-                  // Ordenar las entidades antes de aplicar el límite
                   input: "$entities",
                   sortBy: {
-                    verified_status: 1, // Orden por verified_status
+                    verified_status: 1,
                     profile_pic: 1,
-                    lastActivity: -1, // Orden por lastActivity (descendente)
+                    lastActivity: -1,
                   },
                 },
               },
-              limit, // Limitar a los primeros 'limit' elementos después de ordenar
+              limit,
             ],
-          }, // Limitar a los primeros 'limit' elementos
+          },
           _id: 0,
         },
       },
-      {
-        $sort: { entityType: 1 }, // Ordenar por entityType si es necesario
-      },
+      { $sort: { entityType: 1 } },
     ]);
 
-    // Contar el número total de documentos por entityType
+    // 5️⃣ Contar resultados
     const countResults = await EntityDirectory.aggregate([
-      {
-        $match: matchCondition,
-      },
+      { $match: matchCondition },
       {
         $group: {
           _id: "$entityType",
-          count: { $sum: 1 }, // Contar el número de documentos por entityType
+          count: { $sum: 1 },
         },
       },
     ]);
 
-    // Crear un objeto de conteo para fácil acceso
+    // 6️⃣ Construir respuesta
     const countMap = countResults.reduce((acc, item) => {
-      acc[`total_${item._id.toLowerCase()}s`] = item.count; // Mapa de conteo
+      acc[`total_${item._id.toLowerCase()}s`] = item.count;
       return acc;
     }, {});
 
@@ -110,20 +111,11 @@ async function searchEntitiesDB(req, queryRQ) {
       acc[`${item.entityType.toLowerCase()}s`] = item.entities;
       return acc;
     }, {});
-    // Estructurar la respuesta
-    const response = {
+
+    return {
       ...resultData,
       pagination: countMap,
-      // pagination: countMap,
-      // {
-      //   // currentPage: page,
-      //   // totalPages: totalPages,
-      //   countMap,
-      //   // totalItems: totalCount, // Total de elementos en la base de datos
-      // },
     };
-
-    return response;
   } catch (error) {
     console.error(error);
     throw new Error("Error al realizar la búsqueda de entidades");

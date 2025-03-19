@@ -2,10 +2,11 @@ module.exports = {
   usersList: "/",
   findUserById: "/:userId",
   updateById: "/:id",
+  actionById: "/:id/action",
   deleteById: "/:id",
   create: "/",
   favorites: "/:id/favourites",
-  checkId:"/cid/:id",
+  checkId: "/cid/:id",
   tours_outline: "/:id/tours_outlines",
   public_fields: [
     // "artistType",

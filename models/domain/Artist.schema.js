@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const { connections } = require("../../db/db_g");
+const { schema: FollowerSchema } = require("./Follower.schema");
 
 const ArtistInTrackSchema = new mongoose.Schema({
   // external_urls: {
@@ -86,9 +87,9 @@ const schema = new mongoose.Schema(
     genres: {
       music: [String],
     },
-    spoken_languages: [String],
-    stage_languages: [String],
-    arts_languages: [String],
+    spoken_languages: [{ type: Schema.Types.ObjectId, ref: "Language" }],
+    stage_languages: [{ type: Schema.Types.ObjectId, ref: "Language" }],
+    arts_languages: [{ type: Schema.Types.ObjectId, ref: "Language" }],
     website: { type: String },
     email: { type: String },
     mobile_phone: { type: String },
@@ -163,6 +164,8 @@ const schema = new mongoose.Schema(
         role: String,
       },
     ],
+    followed_profiles: [FollowerSchema],
+    followed_by: [FollowerSchema],
   },
   {
     timestamps: true,
@@ -174,6 +177,41 @@ schema.virtual("events", {
   ref: "Event", // Nombre del modelo relacionado
   localField: "_id", // Campo en Artist
   foreignField: "artists", // Campo en Event que referencia a Artist
+});
+
+schema.virtual("followersCount").get(function () {
+  return async function (connection) {
+    if (!connection) throw new Error("Se requiere una conexión de Mongoose");
+
+    const Artist = connection.model("Artist");
+
+    // Contar los elementos en followed_by donde isFollowing es true
+    const count = await Artist.aggregate([
+      { $match: { _id: this._id } },
+      { $unwind: "$followed_by" },
+      { $match: { "followed_by.isFollowing": true } },
+      { $count: "total" },
+    ]);
+
+    return count.length > 0 ? count[0].total : 0;
+  };
+});
+schema.virtual("followedProfilesCount").get(function () {
+  return async function (connection) {
+    if (!connection) throw new Error("Se requiere una conexión de Mongoose");
+
+    const Artist = connection.model("Artist");
+
+    // Contar los elementos en followed_by donde isFollowing es true
+    const count = await Artist.aggregate([
+      { $match: { _id: this._id } },
+      { $unwind: "$followed_profiles" },
+      { $match: { "followed_profiles.isFollowing": true } },
+      { $count: "total" },
+    ]);
+
+    return count.length > 0 ? count[0].total : 0;
+  };
 });
 
 // Incluye los virtuals en los resultados JSON

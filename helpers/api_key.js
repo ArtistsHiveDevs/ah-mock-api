@@ -69,6 +69,40 @@ async function validateAuthenticatedUser(req, res, next) {
 
     if (user) {
       req.user = user;
+
+      let template;
+      let currentProfileEntity = "User";
+      template = {
+        entity: "User",
+        id: user.username || user.id || user._id,
+        name:
+          user.stage_name ||
+          `${user.given_names || ""} ${user.surnames || ""}`.trim(),
+        username: user.username,
+        profile_pic: user.profile_pic,
+        subtitle: user.subtitle,
+        verified_status: user.verified_status,
+        roles: ["OWNER"],
+      };
+
+      if (user.currentProfileIdentifier !== template.id) {
+        const profiles = user.roles.find((role) =>
+          role.entityRoleMap.find((roleMap) =>
+            [roleMap.id, roleMap.username].includes(
+              user.currentProfileIdentifier
+            )
+          )
+        );
+
+        const newTemplate = profiles?.entityRoleMap.find((roleMap) =>
+          [roleMap.id, roleMap.username].includes(user.currentProfileIdentifier)
+        );
+
+        template = newTemplate || template;
+        currentProfileEntity = profiles?.entityName;
+      }
+      req.currentProfileInfo = template;
+      req.currentProfileEntity = currentProfileEntity;
     }
     if (next) {
       next();
