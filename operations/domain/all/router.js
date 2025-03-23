@@ -10,6 +10,9 @@ const {
 } = require("../../../helpers/apiHelperFunctions");
 const removeAccents = require("remove-accents");
 const { getModel } = require("../../../helpers/getModel");
+const routesConstants = require("../artists/constants/routes.constants");
+
+const MAX_FOLLOWERS = 200;
 
 const convertKmToDegrees = (km) => {
   const earthRadiusKm = 6371;
@@ -422,7 +425,7 @@ function fillEventRelationships(element) {
 
 module.exports = [
   router.get(
-    RoutesConstants.root,
+    RoutesConstants.search,
     helpers.validateEnvironment,
     async (req, res) => {
       try {
@@ -466,6 +469,211 @@ module.exports = [
       } catch (error) {
         console.log(error);
         return res.status(500).json([]);
+      }
+    }
+  ),
+  router.get(
+    RoutesConstants.follow,
+    helpers.validateEnvironment,
+    helpers.validateAuthenticatedUser,
+    async (req, res) => {
+      try {
+        const profileId = req.params.profileId;
+        const skipFollowers = parseInt(req.params.skipFollowers) || 0;
+        const limitFollowers =
+          parseInt(req.params.limitFollowers) || MAX_FOLLOWERS;
+
+        let query = {};
+
+        if (mongoose.Types.ObjectId.isValid(profileId)) {
+          query.$or = [{ _id: new mongoose.Types.ObjectId(profileId) }];
+        } else {
+          query.$or = [{ username: profileId }, { name: profileId }];
+        }
+
+        // Obtener `EntityDirectory`
+        const entityDirectory = await getModel(
+          req.serverEnvironment,
+          "EntityDirectory"
+        ).findOne(query);
+
+        if (!entityDirectory) {
+          return res.status(404).json({ error: "Entity not found" });
+        }
+
+        const modelName = entityDirectory.entityType; // Obtener el modelo dinámico
+        const entityModel = getModel(req.serverEnvironment, modelName);
+
+        const followFields = ["followed_by", "followed_profiles"]; // Lista de campos a procesar dinámicamente
+
+        const aggregationPipeline = [
+          { $match: query }, // Buscar el artista
+          {
+            $project: {
+              name: 1,
+              username: 1,
+              _id: 1,
+              followed_by: 1,
+              followed_profiles: 1,
+            },
+          },
+        ];
+
+        followFields.forEach((field) => {
+          aggregationPipeline.push(
+            // Ordenar el array `field` por `updatedAt`
+            {
+              $set: {
+                [field]: {
+                  $sortArray: {
+                    input: `$${field}`,
+                    sortBy: { updatedAt: -1 },
+                  },
+                },
+              },
+            },
+            // Filtrar `isFollowing: true` y aplicar skip/limit
+            {
+              $addFields: {
+                [field]: {
+                  $slice: [
+                    {
+                      $filter: {
+                        input: `$${field}`,
+                        as: "f",
+                        cond: { $eq: ["$$f.isFollowing", true] },
+                      },
+                    },
+                    skipFollowers,
+                    limitFollowers,
+                  ],
+                },
+              },
+            },
+            // Hacer `$lookup` para `entityDirectoryId`
+            {
+              $lookup: {
+                from: "entitydirectories",
+                localField: `${field}.entityDirectoryId`,
+                foreignField: "_id",
+                as: `${field}_data`,
+              },
+            },
+            // Volver a asignar los datos del `lookup` dentro de `field`
+            {
+              $set: {
+                [field]: {
+                  $map: {
+                    input: `$${field}`,
+                    as: "f",
+                    in: {
+                      $mergeObjects: [
+                        "$$f",
+                        {
+                          entityDirectoryId: {
+                            $arrayElemAt: [
+                              {
+                                $filter: {
+                                  input: `$${field}_data`,
+                                  as: "ed",
+                                  cond: {
+                                    $eq: ["$$ed._id", "$$f.entityDirectoryId"],
+                                  },
+                                },
+                              },
+                              0,
+                            ],
+                          },
+                        },
+                      ],
+                    },
+                  },
+                },
+              },
+            },
+            // Eliminar el array temporal `${field}_data`
+            { $unset: `${field}_data` },
+            // **Volver a ordenar `field` después del `$lookup`**
+            {
+              $set: {
+                [field]: {
+                  $sortArray: {
+                    input: `$${field}`,
+                    sortBy: { updatedAt: -1 },
+                  },
+                },
+              },
+            }
+          );
+        });
+
+        // Ejecutar la agregación
+        let itemInfo = await entityModel.aggregate(aggregationPipeline);
+
+        // Retornar el primer resultado, porque `aggregate` devuelve un array
+        itemInfo = itemInfo.length ? itemInfo[0] : null;
+
+        // Manejar caso en el que la entidad no sea encontrada
+        if (!itemInfo) {
+          throw new Error(`${modelName} not found `, model);
+        }
+
+        const cleanFollowData = (data) =>
+          data
+            ?.map(({ entityDirectoryId }) =>
+              entityDirectoryId
+                ? Object.keys(entityDirectoryId).reduce((acc, key) => {
+                    if (
+                      routesConstants.appbase_public_fields.EntityDirectory.summary.includes(
+                        key
+                      )
+                    ) {
+                      acc[key] = entityDirectoryId[key];
+                    }
+                    return acc;
+                  }, {})
+                : null
+            )
+            .filter(Boolean);
+
+        itemInfo.followed_by = cleanFollowData(itemInfo?.followed_by);
+        itemInfo.followed_profiles = cleanFollowData(
+          itemInfo?.followed_profiles
+        );
+
+        let followedEntityInfo;
+
+        if (req.currentProfileInfo && req.currentProfileEntity) {
+          console.log(
+            "LO SIGUE??  ",
+            req.currentProfileInfo.id,
+            req.currentProfileEntity
+          );
+          followedEntityInfo = await entityModel
+            .findOne({
+              ...query,
+              ["followed_by"]: {
+                $elemMatch: {
+                  entityId: req.currentProfileInfo.id,
+                  entityType: req.currentProfileEntity,
+                  isFollowing: true,
+                },
+              },
+            })
+            .select("_id");
+        }
+
+        itemInfo.isFollowedByCurrentProfile = !!followedEntityInfo;
+
+        itemInfo.id = itemInfo._id;
+        delete itemInfo._id;
+
+        return res.json(createPaginatedDataResponse(itemInfo));
+      } catch (error) {
+        console.error(error);
+        res
+          .status(500)
+          .json({ error: "Error al obtener seguidores", msg: error });
       }
     }
   ),

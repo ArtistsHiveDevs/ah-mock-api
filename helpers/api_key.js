@@ -95,57 +95,9 @@ async function validateAuthenticatedUser(req, res, next) {
     const UserModel = getModel(req.serverEnvironment, "User");
     const user = await UserModel.findById(decoded.id);
 
-    if (user) {
-      req.user = user;
+    registerUserProfile(req, user);
+    registerLang(req);
 
-      let template;
-      let currentProfileEntity = "User";
-      template = {
-        entity: "User",
-        id: user.id || user._id,
-        identifier: user.username || user.id || user._id,
-        name:
-          user.stage_name ||
-          `${user.given_names || ""} ${user.surnames || ""}`.trim(),
-        username: user.username,
-        profile_pic: user.profile_pic,
-        subtitle: user.subtitle,
-        verified_status: user.verified_status,
-        roles: ["OWNER"],
-      };
-
-      if (user.currentProfileIdentifier !== template.identifier) {
-        const profiles = user.roles.find((role) =>
-          role.entityRoleMap.find((roleMap) =>
-            [roleMap.id, roleMap.username].includes(
-              user.currentProfileIdentifier
-            )
-          )
-        );
-
-        const newTemplate = profiles?.entityRoleMap.find((roleMap) =>
-          [roleMap.id, roleMap.username].includes(user.currentProfileIdentifier)
-        );
-
-        template = newTemplate || template;
-        currentProfileEntity = profiles?.entityName;
-      }
-      req.currentProfileInfo = template;
-      req.currentProfileEntity = currentProfileEntity;
-
-      if (!!req.currentProfileInfo && !!req.currentProfileEntity) {
-        const EntityDirectoryModel = getModel(
-          req.serverEnvironment,
-          "EntityDirectory"
-        );
-        const requestID = await EntityDirectoryModel.findOne({
-          id: req.currentProfileInfo.id,
-          entityType: currentProfileEntity,
-        }).select("_id");
-
-        req.currentProfileEntityDirectory = requestID?._id;
-      }
-    }
     if (next) {
       next();
     }
@@ -209,15 +161,72 @@ async function validateIfUserExists(req, res, next) {
       req.user = user;
     }
 
-    req.lang = getAvailableTranslation(
-      user?.user_language || req.headers["lang"] || "es"
-    );
+    registerUserProfile(req, user);
+    registerLang(req);
+
     if (next) {
       next();
     }
   });
 }
 
+async function registerUserProfile(req, user) {
+  if (user) {
+    req.user = user;
+
+    let template;
+    let currentProfileEntity = "User";
+    template = {
+      entity: "User",
+      id: user.id || user._id,
+      identifier: user.username || user.id || user._id,
+      name:
+        user.stage_name ||
+        `${user.given_names || ""} ${user.surnames || ""}`.trim(),
+      username: user.username,
+      profile_pic: user.profile_pic,
+      subtitle: user.subtitle,
+      verified_status: user.verified_status,
+      roles: ["OWNER"],
+    };
+
+    if (user.currentProfileIdentifier !== template.identifier) {
+      const profiles = user.roles.find((role) =>
+        role.entityRoleMap.find((roleMap) =>
+          [roleMap.id, roleMap.username].includes(user.currentProfileIdentifier)
+        )
+      );
+
+      const newTemplate = profiles?.entityRoleMap.find((roleMap) =>
+        [roleMap.id, roleMap.username].includes(user.currentProfileIdentifier)
+      );
+
+      template = newTemplate || template;
+      currentProfileEntity = profiles?.entityName;
+    }
+    req.currentProfileInfo = template;
+    req.currentProfileEntity = currentProfileEntity;
+
+    if (!!req.currentProfileInfo && !!req.currentProfileEntity) {
+      const EntityDirectoryModel = getModel(
+        req.serverEnvironment,
+        "EntityDirectory"
+      );
+      const requestID = await EntityDirectoryModel.findOne({
+        id: req.currentProfileInfo.id,
+        entityType: currentProfileEntity,
+      }).select("_id");
+
+      req.currentProfileEntityDirectory = requestID?._id;
+    }
+  }
+}
+
+function registerLang(req) {
+  req.lang = getAvailableTranslation(
+    req.user?.user_language || req.headers["lang"] || "es"
+  );
+}
 // async function validateOwnerRole(req, res, next) {
 //   try {
 //     const artistId = req.params.id; // Obtener el ID del artista desde los parámetros de la ruta

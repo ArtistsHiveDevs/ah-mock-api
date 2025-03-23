@@ -240,7 +240,7 @@ module.exports = [
   artistRouter.get(
     routesConstants.findArtistById,
     helpers.validateEnvironment,
-    helpers.validateAuthenticatedUser,
+    helpers.validateIfUserExists,
     // helpers.validateAuthenticatedUser,
     async (req, res) => {
       lang = req.lang;
@@ -438,129 +438,6 @@ module.exports = [
           );
         });
 
-        const followFields = ["followed_by", "followed_profiles"]; // Lista de campos a procesar dinámicamente
-
-        const aggregationPipeline = [
-          { $match: query }, // Buscar el artista
-        ];
-
-        followFields.forEach((field) => {
-          aggregationPipeline.push(
-            // Ordenar el array `field` por `updatedAt`
-            {
-              $set: {
-                [field]: {
-                  $sortArray: {
-                    input: `$${field}`,
-                    sortBy: { updatedAt: -1 },
-                  },
-                },
-              },
-            },
-            // Filtrar `isFollowing: true` y aplicar skip/limit
-            {
-              $addFields: {
-                [field]: {
-                  $slice: [
-                    {
-                      $filter: {
-                        input: `$${field}`,
-                        as: "f",
-                        cond: { $eq: ["$$f.isFollowing", true] },
-                      },
-                    },
-                    SKIP_FOLLOWERS,
-                    MAX_FOLLOWERS,
-                  ],
-                },
-              },
-            },
-            // Hacer `$lookup` para `entityDirectoryId`
-            {
-              $lookup: {
-                from: "entitydirectories",
-                localField: `${field}.entityDirectoryId`,
-                foreignField: "_id",
-                as: `${field}_data`,
-              },
-            },
-            // Volver a asignar los datos del `lookup` dentro de `field`
-            {
-              $set: {
-                [field]: {
-                  $map: {
-                    input: `$${field}`,
-                    as: "f",
-                    in: {
-                      $mergeObjects: [
-                        "$$f",
-                        {
-                          entityDirectoryId: {
-                            $arrayElemAt: [
-                              {
-                                $filter: {
-                                  input: `$${field}_data`,
-                                  as: "ed",
-                                  cond: {
-                                    $eq: ["$$ed._id", "$$f.entityDirectoryId"],
-                                  },
-                                },
-                              },
-                              0,
-                            ],
-                          },
-                        },
-                      ],
-                    },
-                  },
-                },
-              },
-            },
-            // Eliminar el array temporal `${field}_data`
-            { $unset: `${field}_data` },
-            // **Volver a ordenar `field` después del `$lookup`**
-            {
-              $set: {
-                [field]: {
-                  $sortArray: {
-                    input: `$${field}`,
-                    sortBy: { updatedAt: -1 },
-                  },
-                },
-              },
-            }
-          );
-        });
-
-        // Ejecutar la agregación
-        artistInfo = await model.aggregate(aggregationPipeline);
-
-        // Retornar el primer resultado, porque `aggregate` devuelve un array
-        artistInfo = artistInfo.length ? artistInfo[0] : null;
-
-        const cleanFollowData = (data) =>
-          data
-            ?.map(({ entityDirectoryId }) =>
-              entityDirectoryId
-                ? Object.keys(entityDirectoryId).reduce((acc, key) => {
-                    if (
-                      routesConstants.appbase_public_fields.EntityDirectory.summary.includes(
-                        key
-                      )
-                    ) {
-                      acc[key] = entityDirectoryId[key];
-                    }
-                    return acc;
-                  }, {})
-                : null
-            )
-            .filter(Boolean);
-
-        artistInfo.followed_by = cleanFollowData(artistInfo?.followed_by);
-        artistInfo.followed_profiles = cleanFollowData(
-          artistInfo?.followed_profiles
-        );
-
         // Definir los campos visibles según el rol del usuario
         // let visibleAttributes = !userId
         //   ? routesConstants.public_fields
@@ -664,6 +541,9 @@ module.exports = [
             followedProfilesCount?.[0]?.followedProfilesCount || 0,
           isFollowedByCurrentProfile: !!followedEntityInfo,
         };
+
+        delete artistInfo.followed_by;
+        delete artistInfo.followed_profiles;
 
         if (!currentUserIsOwner) {
           let reducedArtistData = visibleAttributes.reduce((acc, field) => {

@@ -1,4 +1,5 @@
 module.exports = {
-  root: "/",
+  search: "/search",
+  follow: "/p/:profileId/follow",
   findArtistById: "/:artistId",
 };
