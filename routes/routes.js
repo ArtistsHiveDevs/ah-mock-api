@@ -24,7 +24,7 @@ const helperFunctions = require("../helpers/helperFunctions");
 
 function loadRoutes() {
   return [
-    { path: "/search", route: { router: allRouter } },
+    { path: "/", route: { router: allRouter } },
     { path: "/academies", route: { router: academyRouter } },
     {
       path: "/allergies",
