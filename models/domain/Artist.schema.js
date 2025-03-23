@@ -164,8 +164,8 @@ const schema = new mongoose.Schema(
         role: String,
       },
     ],
-    followed_profiles: [FollowerSchema],
-    followed_by: [FollowerSchema],
+    followed_profiles: { type: [FollowerSchema], default: [] },
+    followed_by: { type: [FollowerSchema], default: [] },
   },
   {
     timestamps: true,

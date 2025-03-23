@@ -19,14 +19,13 @@ var textConstants = require("./helpers/index");
 
 const helpers = require("./helpers");
 const ErrorCodes = require("./constants/errors");
-const { getModel } = require("./db/db_g");
+const { getModel } = require("./helpers/getModel");
 
 var app = express();
 var port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(cors({ origin: "*" }));
-// app.use(helpers.validateEnvironment)
 
 // Ruta para generar una nueva API key
 app.post("/api/generate-key", helpers.validateEnvironment, async (req, res) => {
@@ -79,13 +78,12 @@ app.post("/api/generate-key", helpers.validateEnvironment, async (req, res) => {
 
   try {
     let requestedUser;
+    const UserModel = getModel(req.serverEnvironment, "User");
     if (isAWSlogin) {
-      const UserModel = getModel(req.serverEnvironment, "User", userSchema);
       requestedUser = await UserModel.findOne({
         $and: [{ username: userId || usernameRQ }, { sub: sub }],
       });
     } else {
-      const UserModel = getModel(req.serverEnvironment, "User", userSchema);
       requestedUser = await UserModel.findOne({
         $or: [{ username: userId || usernameRQ }, { email: userId }],
       });

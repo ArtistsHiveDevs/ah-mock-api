@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema(
   {
+    entityDirectoryId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "EntityDirectory",
+    },
     entityId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,

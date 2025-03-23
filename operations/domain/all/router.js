@@ -8,8 +8,8 @@ const {
 const {
   createPaginatedDataResponse,
 } = require("../../../helpers/apiHelperFunctions");
-const { getModel } = require("../../../db/db_g");
 const removeAccents = require("remove-accents");
+const { getModel } = require("../../../helpers/getModel");
 
 const convertKmToDegrees = (km) => {
   const earthRadiusKm = 6371;
@@ -51,11 +51,7 @@ async function searchEntitiesDB(req, queryRQ) {
       ...(et && { entityType: et }),
     };
 
-    const EntityDirectory = getModel(
-      req.serverEnvironment,
-      "EntityDirectory",
-      EntityDirectorySchema
-    );
+    const EntityDirectory = getModel(req.serverEnvironment, "EntityDirectory");
 
     // 4️⃣ Buscar y agrupar por entityType
     const results = await EntityDirectory.aggregate([
@@ -183,11 +179,7 @@ const searchEntities = async ({
 
   // Buscar y contar artistas
 
-  const EntityDirectory = getModel(
-    req.serverEnvironment,
-    "EntityDirectory",
-    EntityDirectorySchema
-  );
+  const EntityDirectory = getModel(req.serverEnvironment, "EntityDirectory");
   const artistQuery = EntityDirectory.find(combinedQuery)
     .skip((page - 1) * limit)
     .limit(limit)

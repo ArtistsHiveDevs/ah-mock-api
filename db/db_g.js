@@ -113,15 +113,8 @@ const connectToDatabase = async (req) => {
   return connections[env];
 };
 
-const getModel = (env, modelName, schema) => {
-  if (!connections[env])
-    throw new Error(`No hay conexión establecida para ${env}, ${modelName}`);
-  return connections[env].model(modelName, schema);
-};
-
 module.exports = {
   connectToDatabase,
   connections,
   decryptEnv,
-  getModel,
 };

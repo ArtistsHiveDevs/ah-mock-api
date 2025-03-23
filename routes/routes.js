@@ -219,22 +219,6 @@ function loadRoutes() {
               ],
             },
           ],
-          actions: {
-            follow: (req, res, entity, newBody) => {
-              const { userId } = newBody;
-              console.log(newBody);
-              if (!entity.followers.includes(userId)) {
-                entity.followers.push(userId);
-              }
-              return entity;
-            },
-            unfollow: (req, res, entity, newBody) => {
-              const { userId } = newBody;
-              console.log(newBody);
-              entity.followers = entity.followers.filter((id) => id !== userId);
-              return entity;
-            },
-          },
           postScriptFunction: (results) => {
             results.forEach((place) => {
               (place.events || []).forEach((event) => {

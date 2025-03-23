@@ -50,7 +50,7 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
     router.get(
       routesConstants.findArtistById,
       helpers.validateEnvironment,
-      helpers.validateIfUserExists,
+      helpers.validateAuthenticatedUser,
       async (req, res) => {
         try {
           const modelActions = await createCRUDActions({
@@ -61,6 +61,8 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
           });
 
           const response = await modelActions.findEntityById({
+            req,
+            res,
             id: req.params.artistId,
             userId: req.userId,
             lang: req.lang,

@@ -2,7 +2,11 @@ const jwt = require("jsonwebtoken");
 const ErrorCodes = require("../constants/errors");
 const { schema: userSchema } = require("../models/appbase/User");
 const { getAvailableTranslation } = require("./lang");
-const { connectToDatabase, getModel, decryptEnv } = require("../db/db_g");
+const { connectToDatabase, decryptEnv } = require("../db/db_g");
+const { getModel } = require("./getModel");
+const {
+  appbase_public_fields,
+} = require("../operations/domain/artists/constants");
 // const Artist = require("../models/domain/Artist");
 
 const SECRET_KEY = "your_secret_key"; // Debes usar una clave secreta segura en producción
@@ -20,8 +24,32 @@ async function validateApiKey(req, res, next) {
 
   try {
     const decoded = jwt.verify(token, SECRET_KEY);
-    const UserModel = getModel(req.serverEnvironment, "User", userSchema);
-    const user = await UserModel.findById(decoded.id);
+    const UserModel = getModel(req.serverEnvironment, "User");
+
+    let user = await UserModel.findById(decoded.id).select(
+      appbase_public_fields.User.detail.join(" ")
+    );
+
+    const followedByCount = await UserModel.aggregate([
+      { $match: { _id: user._id } },
+      { $unwind: "$followed_by" },
+      { $match: { "followed_by.isFollowing": true } },
+      { $count: "followersCount" },
+    ]);
+
+    const followedProfilesCount = await UserModel.aggregate([
+      { $match: { _id: user._id } },
+      { $unwind: "$followed_profiles" },
+      { $match: { "followed_profiles.isFollowing": true } },
+      { $count: "followedProfilesCount" },
+    ]);
+
+    user = {
+      ...user.toObject(),
+      followed_by_count: followedByCount?.[0]?.followersCount || 0,
+      followed_profiles_count:
+        followedProfilesCount?.[0]?.followedProfilesCount || 0,
+    };
 
     if (!user) {
       return res
@@ -64,7 +92,7 @@ async function validateAuthenticatedUser(req, res, next) {
     }
 
     req.userId = decoded.id; // Guarda el ID del usuario en la solicitud
-    const UserModel = getModel(req.serverEnvironment, "User", userSchema);
+    const UserModel = getModel(req.serverEnvironment, "User");
     const user = await UserModel.findById(decoded.id);
 
     if (user) {
@@ -74,7 +102,8 @@ async function validateAuthenticatedUser(req, res, next) {
       let currentProfileEntity = "User";
       template = {
         entity: "User",
-        id: user.username || user.id || user._id,
+        id: user.id || user._id,
+        identifier: user.username || user.id || user._id,
         name:
           user.stage_name ||
           `${user.given_names || ""} ${user.surnames || ""}`.trim(),
@@ -85,7 +114,7 @@ async function validateAuthenticatedUser(req, res, next) {
         roles: ["OWNER"],
       };
 
-      if (user.currentProfileIdentifier !== template.id) {
+      if (user.currentProfileIdentifier !== template.identifier) {
         const profiles = user.roles.find((role) =>
           role.entityRoleMap.find((roleMap) =>
             [roleMap.id, roleMap.username].includes(
@@ -103,6 +132,19 @@ async function validateAuthenticatedUser(req, res, next) {
       }
       req.currentProfileInfo = template;
       req.currentProfileEntity = currentProfileEntity;
+
+      if (!!req.currentProfileInfo && !!req.currentProfileEntity) {
+        const EntityDirectoryModel = getModel(
+          req.serverEnvironment,
+          "EntityDirectory"
+        );
+        const requestID = await EntityDirectoryModel.findOne({
+          id: req.currentProfileInfo.id,
+          entityType: currentProfileEntity,
+        }).select("_id");
+
+        req.currentProfileEntityDirectory = requestID?._id;
+      }
     }
     if (next) {
       next();
@@ -160,7 +202,7 @@ async function validateIfUserExists(req, res, next) {
 
     req.userId = decoded?.id; // Guarda el ID del usuario en la solicitud
 
-    const UserModel = getModel(req.serverEnvironment, "User", userSchema);
+    const UserModel = getModel(req.serverEnvironment, "User");
     const user = await UserModel.findById(decoded?.id);
 
     if (user) {

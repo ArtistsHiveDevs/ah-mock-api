@@ -2,22 +2,21 @@ var express = require("express");
 const mongoose = require("mongoose");
 var helpers = require("../../../helpers/index");
 var routesConstants = require("./constants/index");
-const {
-  schema: artistSchema,
-} = require("../../../models/domain/Artist.schema");
-const { User, schema: userSchema } = require("../../../models/appbase/User");
 const ErrorCodes = require("../../../constants/errors");
 const {
   createPaginatedDataResponse,
 } = require("../../../helpers/apiHelperFunctions");
-const Country = require("../../../models/parametrics/geo/Country.schema");
 const createCRUDActions = require("../../../helpers/crud-actions");
 const apiHelperFunctions = require("../../../helpers/apiHelperFunctions");
 const helperFunctions = require("../../../helpers/helperFunctions");
 
-const { connections, getModel } = require("../../../db/db_g");
+const { connections } = require("../../../db/db_g");
+const { getModel } = require("../../../helpers/getModel");
 
 var artistRouter = express.Router({ mergeParams: true });
+
+const MAX_FOLLOWERS = 200;
+const SKIP_FOLLOWERS = 0;
 
 function fillRelationships(element, relationships = []) {
   return helpers.attachRelationships(element, relationships);
@@ -209,7 +208,7 @@ module.exports = [
         }, {});
 
       try {
-        const Artist = getModel(req.serverEnvironment, "Artist", artistSchema);
+        const Artist = getModel(req.serverEnvironment, "Artist");
         // const artists = await Artist.find({})
         //   .select(projection)
         //   .skip((page - 1) * limit)
@@ -241,7 +240,7 @@ module.exports = [
   artistRouter.get(
     routesConstants.findArtistById,
     helpers.validateEnvironment,
-    helpers.validateIfUserExists,
+    helpers.validateAuthenticatedUser,
     // helpers.validateAuthenticatedUser,
     async (req, res) => {
       lang = req.lang;
@@ -272,21 +271,6 @@ module.exports = [
           .json({ message: "Must search an id, username or name" });
       }
       try {
-        // let query = {};
-
-        // if (mongoose.Types.ObjectId.isValid(artistId)) {
-        //   // Si es un ObjectId válido, busca por _id
-        //   query._id = artistId; // mongoose.Types.ObjectId(artistId);
-        // } else {
-        //   // Si no es un ObjectId, busca por otros campos
-        //   query = {
-        //     $or: [
-        //       // { shortId: artistId },
-        //       { username: artistId },
-        //       { name: artistId },
-        //     ],
-        //   };
-        // }
         let query = {};
 
         if (mongoose.Types.ObjectId.isValid(artistId)) {
@@ -296,7 +280,7 @@ module.exports = [
         }
 
         const modelName = "Artist";
-        const Artist = getModel(req.serverEnvironment, modelName, artistSchema);
+        const Artist = getModel(req.serverEnvironment, modelName);
         const model = Artist;
 
         // Obtener campos de proyección de la configuración
@@ -343,7 +327,9 @@ module.exports = [
                 populate: {
                   path: "country",
                   select:
-                    routesConstants.parametric_public_fields.Country.summary,
+                    routesConstants.parametric_public_fields.Country.summary.join(
+                      " "
+                    ),
                 },
               },
               {
@@ -352,7 +338,9 @@ module.exports = [
                 populate: {
                   path: "country",
                   select:
-                    routesConstants.parametric_public_fields.Country.summary,
+                    routesConstants.parametric_public_fields.Country.summary.join(
+                      " "
+                    ),
                 },
               },
             ],
@@ -403,10 +391,6 @@ module.exports = [
           ...customPopulateFields,
         ];
 
-        // console.log("POPULATE: ", populateFields);
-
-        // console.log(query);
-
         // Construir la consulta con proyección y populate
         let queryResult = model.findOne(query); //.select(projection);
 
@@ -420,8 +404,6 @@ module.exports = [
 
         // Ejecutar la consulta
         let artistInfo = await queryResult.exec();
-
-        // console.log(artistInfo);
 
         // Manejar caso en el que la entidad no sea encontrada
         if (!artistInfo) {
@@ -456,13 +438,136 @@ module.exports = [
           );
         });
 
+        const followFields = ["followed_by", "followed_profiles"]; // Lista de campos a procesar dinámicamente
+
+        const aggregationPipeline = [
+          { $match: query }, // Buscar el artista
+        ];
+
+        followFields.forEach((field) => {
+          aggregationPipeline.push(
+            // Ordenar el array `field` por `updatedAt`
+            {
+              $set: {
+                [field]: {
+                  $sortArray: {
+                    input: `$${field}`,
+                    sortBy: { updatedAt: -1 },
+                  },
+                },
+              },
+            },
+            // Filtrar `isFollowing: true` y aplicar skip/limit
+            {
+              $addFields: {
+                [field]: {
+                  $slice: [
+                    {
+                      $filter: {
+                        input: `$${field}`,
+                        as: "f",
+                        cond: { $eq: ["$$f.isFollowing", true] },
+                      },
+                    },
+                    SKIP_FOLLOWERS,
+                    MAX_FOLLOWERS,
+                  ],
+                },
+              },
+            },
+            // Hacer `$lookup` para `entityDirectoryId`
+            {
+              $lookup: {
+                from: "entitydirectories",
+                localField: `${field}.entityDirectoryId`,
+                foreignField: "_id",
+                as: `${field}_data`,
+              },
+            },
+            // Volver a asignar los datos del `lookup` dentro de `field`
+            {
+              $set: {
+                [field]: {
+                  $map: {
+                    input: `$${field}`,
+                    as: "f",
+                    in: {
+                      $mergeObjects: [
+                        "$$f",
+                        {
+                          entityDirectoryId: {
+                            $arrayElemAt: [
+                              {
+                                $filter: {
+                                  input: `$${field}_data`,
+                                  as: "ed",
+                                  cond: {
+                                    $eq: ["$$ed._id", "$$f.entityDirectoryId"],
+                                  },
+                                },
+                              },
+                              0,
+                            ],
+                          },
+                        },
+                      ],
+                    },
+                  },
+                },
+              },
+            },
+            // Eliminar el array temporal `${field}_data`
+            { $unset: `${field}_data` },
+            // **Volver a ordenar `field` después del `$lookup`**
+            {
+              $set: {
+                [field]: {
+                  $sortArray: {
+                    input: `$${field}`,
+                    sortBy: { updatedAt: -1 },
+                  },
+                },
+              },
+            }
+          );
+        });
+
+        // Ejecutar la agregación
+        artistInfo = await model.aggregate(aggregationPipeline);
+
+        // Retornar el primer resultado, porque `aggregate` devuelve un array
+        artistInfo = artistInfo.length ? artistInfo[0] : null;
+
+        const cleanFollowData = (data) =>
+          data
+            ?.map(({ entityDirectoryId }) =>
+              entityDirectoryId
+                ? Object.keys(entityDirectoryId).reduce((acc, key) => {
+                    if (
+                      routesConstants.appbase_public_fields.EntityDirectory.summary.includes(
+                        key
+                      )
+                    ) {
+                      acc[key] = entityDirectoryId[key];
+                    }
+                    return acc;
+                  }, {})
+                : null
+            )
+            .filter(Boolean);
+
+        artistInfo.followed_by = cleanFollowData(artistInfo?.followed_by);
+        artistInfo.followed_profiles = cleanFollowData(
+          artistInfo?.followed_profiles
+        );
+
         // Definir los campos visibles según el rol del usuario
         // let visibleAttributes = !userId
         //   ? routesConstants.public_fields
         //   : routesConstants.authenticated_fields; // Atributos públicos por defecto
         let visibleAttributes = routesConstants.authenticated_fields;
 
-        const UserModel = getModel(req.serverEnvironment, "User", userSchema);
+        const UserModel = getModel(req.serverEnvironment, "User");
         const currentUser = await UserModel.findById(userId);
 
         const roleAsArtist = currentUser?.roles.find(
@@ -536,11 +641,28 @@ module.exports = [
           { $count: "followedProfilesCount" },
         ]);
 
+        let followedEntityInfo;
+        if (req.currentProfileInfo && req.currentProfileEntity) {
+          followedEntityInfo = await model
+            .findOne({
+              ...query,
+              ["followed_by"]: {
+                $elemMatch: {
+                  entityId: req.currentProfileInfo.id,
+                  entityType: req.currentProfileEntity,
+                  isFollowing: true,
+                },
+              },
+            })
+            .select("_id");
+        }
+
         artistInfo = {
           ...artistInfo,
           followed_by_count: followedByCount?.[0]?.followersCount || 0,
           followed_profiles_count:
             followedProfilesCount?.[0]?.followedProfilesCount || 0,
+          isFollowedByCurrentProfile: !!followedEntityInfo,
         };
 
         if (!currentUserIsOwner) {
@@ -551,15 +673,6 @@ module.exports = [
 
           res.json(createPaginatedDataResponse(reducedArtistData));
         } else {
-          reducedArtistData.followed_profiles = followers;
-          // reducedArtistData.followed_by = [
-          //   ...followers,
-          //   ...followers,
-          //   ...followers,
-          //   ...followers,
-          //   ...followers,
-          // ];
-
           res.json(createPaginatedDataResponse(artistInfo));
         }
       } catch (err) {
@@ -585,11 +698,11 @@ module.exports = [
           },
         ];
 
-        const Artist = getModel(req.serverEnvironment, "Artist", artistSchema);
+        const Artist = getModel(req.serverEnvironment, "Artist");
         const newArtist = new Artist(info);
         await newArtist.save();
 
-        const UserModel = getModel(req.serverEnvironment, "User", userSchema);
+        const UserModel = getModel(req.serverEnvironment, "User");
         const ownerUser = await UserModel.findById(req.userId);
         let ownerRoles = (ownerUser.roles || []).find(
           (role) => role.entityName === "Artist"
@@ -677,7 +790,7 @@ module.exports = [
         //     ],
         //   };
         // }
-        // const Artist = getModel(req.serverEnvironment, "Artist", artistSchema);
+        // const Artist = getModel(req.serverEnvironment, "Artist");
         // const artist = await Artist.findOneAndUpdate(
         //   query,
         //   req.body,
@@ -691,7 +804,7 @@ module.exports = [
         // res.json(artist);
 
         // Primero, intentamos encontrar el documento basado en el searchValue
-        const Artist = getModel(req.serverEnvironment, "Artist", artistSchema);
+        const Artist = getModel(req.serverEnvironment, "Artist");
         const artist = await Artist.findOne({
           $or: [
             mongoose.Types.ObjectId.isValid(searchValue)
@@ -719,11 +832,7 @@ module.exports = [
 
           if (hasRole) {
             // Si el userId coincide con OWNER o ADMIN, hacemos la actualización
-            const Artist = getModel(
-              req.serverEnvironment,
-              "Artist",
-              artistSchema
-            );
+            const Artist = getModel(req.serverEnvironment, "Artist");
             const updatedArtist = await Artist.findOneAndUpdate(
               {
                 _id: artist._id,
@@ -767,11 +876,7 @@ module.exports = [
                   });
 
                   // Realizar la consulta de actualización solo para los campos presentes
-                  const UserModel = getModel(
-                    req.serverEnvironment,
-                    "User",
-                    userSchema
-                  );
+                  const UserModel = getModel(req.serverEnvironment, "User");
                   const roleMapUpdateResult = await UserModel.findOneAndUpdate(
                     {
                       _id: new mongoose.Types.ObjectId(userId),
@@ -825,7 +930,7 @@ module.exports = [
       const { identifier } = req.params;
 
       try {
-        const Artist = getModel(req.serverEnvironment, "Artist", artistSchema);
+        const Artist = getModel(req.serverEnvironment, "Artist");
         const artist = await Artist.findOneAndDelete(
           {
             $or: [

@@ -5,7 +5,8 @@ const apiHelperFunctions = require("./apiHelperFunctions");
 const helpers = require("./helperFunctions");
 const routesConstants = require("../operations/domain/artists/constants/routes.constants");
 
-const { connections, connectToDatabase, getModel } = require("../db/db_g");
+const { connections, connectToDatabase } = require("../db/db_g");
+const { getModel } = require("./getModel");
 
 function modelRequiresAuth(modelName) {
   return ![
@@ -26,8 +27,8 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
   // console.log(modelName, !!schema, options);
   const connection = await connectToDatabase(req); // Obtiene la conexión según el entorno
 
-  const UserModel = getModel(connection.environment, "User", userSchema);
-  const model = getModel(connection.environment, modelName, schema);
+  const UserModel = getModel(connection.environment, "User");
+  const model = getModel(connection.environment, modelName);
 
   // Función para listar entidades
   async function listEntities({
@@ -68,7 +69,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
               (fieldType.instance.toLowerCase() === "objectid" ||
                 (fieldType.instance.toLowerCase() === "array" &&
                   fieldType.caster &&
-                  fieldType.caster.instance.toLowerCase() === "objectid"))
+                  fieldType?.caster?.instance?.toLowerCase() === "objectid"))
             );
           })
           .map((field) => {
@@ -333,6 +334,8 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
   // Función para buscar entidad por ID
 
   async function findEntityById({
+    req,
+    res,
     id,
     userId,
     lang = "en",
@@ -380,8 +383,6 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       ? [...projectionFields, `i18n.${lang}`]
       : projectionFields;
 
-    // console.log(modelName, " fields ", modelFields);
-
     const projection = (modelFields || [])
       .filter(Boolean) // Filtrar cualquier campo vacío o undefined
       .reduce((acc, field) => {
@@ -390,8 +391,6 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       }, {});
 
     // Identificar campos que necesitan populate
-
-    // console.log("MODELO: ,", model.schema);
     const populateFields = [
       ...modelFields
         .filter((field) => {
@@ -401,7 +400,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
             (fieldType.instance.toLowerCase() === "objectid" ||
               (fieldType.instance.toLowerCase() === "array" &&
                 fieldType.caster &&
-                fieldType.caster.instance.toLowerCase() === "objectid"))
+                fieldType.caster?.instance?.toLowerCase() === "objectid"))
           );
         })
         .map((field) => {
@@ -436,7 +435,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
     ];
 
     // Construir la consulta con proyección y populate
-    let queryResult = model.findOne(query); //.select(projection);
+    let queryResult = model.findOne(query).select(projection);
 
     // console.log(modelName, " Populate ", populateFields);
     // Aplicar `populate` a los campos correspondientes
@@ -453,6 +452,52 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
     if (!entityInfo) {
       throw new Error(`${modelName} not found`);
     }
+
+    // Aggregates
+    let followedByCount = 0;
+    let followedProfilesCount = 0;
+
+    if (entityInfo.followersCount) {
+      followedByCount = await model.aggregate([
+        { $match: { _id: entityInfo._id } },
+        { $unwind: "$followed_by" },
+        { $match: { "followed_by.isFollowing": true } },
+        { $count: "followersCount" },
+      ]);
+    }
+
+    if (entityInfo.followedProfilesCount) {
+      followedProfilesCount = await model.aggregate([
+        { $match: { _id: entityInfo._id } },
+        { $unwind: "$followed_profiles" },
+        { $match: { "followed_profiles.isFollowing": true } },
+        { $count: "followedProfilesCount" },
+      ]);
+    }
+
+    let followedEntityInfo;
+    if (req.currentProfileInfo && req.currentProfileEntity) {
+      followedEntityInfo = await model
+        .findOne({
+          ...query,
+          ["followed_by"]: {
+            $elemMatch: {
+              entityId: req.currentProfileInfo.id,
+              entityType: req.currentProfileEntity,
+              isFollowing: true,
+            },
+          },
+        })
+        .select("_id");
+    }
+
+    entityInfo = {
+      ...entityInfo.toObject(),
+      followed_by_count: followedByCount?.[0]?.followersCount || 0,
+      followed_profiles_count:
+        followedProfilesCount?.[0]?.followedProfilesCount || 0,
+      isFollowedByCurrentProfile: !!followedEntityInfo,
+    };
 
     // Traducir los resultados utilizando translateDBResults
     entityInfo = apiHelperFunctions.translateDBResults({
@@ -502,7 +547,6 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       entityInfo = results[0];
     }
 
-    // console.log(JSON.stringify(entityInfo, null, 4));
     // Retornar los datos visibles para el usuario
     if (false && !currentUserIsOwner) {
       let reducedEntityData = visibleAttributes.reduce((acc, field) => {

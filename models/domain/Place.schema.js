@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { schema: FollowerSchema } = require("./Follower.schema");
 const { Schema } = mongoose;
 
 const imageSchema = new mongoose.Schema(
@@ -53,6 +54,8 @@ const schema = new Schema({
   email: { type: String },
   phone: { type: String },
   public_private: { type: String },
+  spoken_languages: [{ type: Schema.Types.ObjectId, ref: "Language" }],
+  stage_languages: [{ type: Schema.Types.ObjectId, ref: "Language" }],
   facebook: { type: String },
   instagram: { type: String },
   twitter: { type: String },
@@ -82,8 +85,8 @@ const schema = new Schema({
     },
   ],
 
-  followed_profiles: [{ type: Schema.Types.ObjectId, ref: "EntityDirectory" }],
-  followed_by: [{ type: Schema.Types.ObjectId, ref: "EntityDirectory" }],
+  followed_profiles: { type: [FollowerSchema], default: [] },
+  followed_by: { type: [FollowerSchema], default: [] },
 });
 
 schema.virtual("events", {
@@ -92,6 +95,41 @@ schema.virtual("events", {
   foreignField: "place", // Campo en Event que referencia a Place
 });
 
+schema.virtual("followersCount").get(function () {
+  return async function (connection) {
+    if (!connection) throw new Error("Se requiere una conexión de Mongoose");
+
+    const Model = connection.model("Place");
+
+    // Contar los elementos en followed_by donde isFollowing es true
+    const count = await Model.aggregate([
+      { $match: { _id: this._id } },
+      { $unwind: "$followed_by" },
+      { $match: { "followed_by.isFollowing": true } },
+      { $count: "total" },
+    ]);
+
+    return count.length > 0 ? count[0].total : 0;
+  };
+});
+
+schema.virtual("followedProfilesCount").get(function () {
+  return async function (connection) {
+    if (!connection) throw new Error("Se requiere una conexión de Mongoose");
+
+    const Model = connection.model("Place");
+
+    // Contar los elementos en followed_by donde isFollowing es true
+    const count = await Model.aggregate([
+      { $match: { _id: this._id } },
+      { $unwind: "$followed_profiles" },
+      { $match: { "followed_profiles.isFollowing": true } },
+      { $count: "total" },
+    ]);
+
+    return count.length > 0 ? count[0].total : 0;
+  };
+});
 // Incluye los virtuals en los resultados de JSON
 schema.set("toObject", { virtuals: true });
 schema.set("toJSON", { virtuals: true });
