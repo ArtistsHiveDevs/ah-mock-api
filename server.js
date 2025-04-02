@@ -78,7 +78,7 @@ app.post("/api/generate-key", helpers.validateEnvironment, async (req, res) => {
 
   try {
     let requestedUser;
-    const UserModel = getModel(req.serverEnvironment, "User");
+    const UserModel = await getModel(req.serverEnvironment, "User");
     if (isAWSlogin) {
       requestedUser = await UserModel.findOne({
         $and: [{ username: userId || usernameRQ }, { sub: sub }],

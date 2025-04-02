@@ -24,7 +24,7 @@ async function validateApiKey(req, res, next) {
 
   try {
     const decoded = jwt.verify(token, SECRET_KEY);
-    const UserModel = getModel(req.serverEnvironment, "User");
+    const UserModel = await getModel(req.serverEnvironment, "User");
 
     let user = await UserModel.findById(decoded.id).select(
       appbase_public_fields.User.detail.join(" ")
@@ -92,7 +92,7 @@ async function validateAuthenticatedUser(req, res, next) {
     }
 
     req.userId = decoded.id; // Guarda el ID del usuario en la solicitud
-    const UserModel = getModel(req.serverEnvironment, "User");
+    const UserModel = await getModel(req.serverEnvironment, "User");
     const user = await UserModel.findById(decoded.id);
 
     registerUserProfile(req, user);
@@ -154,7 +154,7 @@ async function validateIfUserExists(req, res, next) {
 
     req.userId = decoded?.id; // Guarda el ID del usuario en la solicitud
 
-    const UserModel = getModel(req.serverEnvironment, "User");
+    const UserModel = await getModel(req.serverEnvironment, "User");
     const user = await UserModel.findById(decoded?.id);
 
     if (user) {
@@ -208,7 +208,7 @@ async function registerUserProfile(req, user) {
     req.currentProfileEntity = currentProfileEntity;
 
     if (!!req.currentProfileInfo && !!req.currentProfileEntity) {
-      const EntityDirectoryModel = getModel(
+      const EntityDirectoryModel = await getModel(
         req.serverEnvironment,
         "EntityDirectory"
       );

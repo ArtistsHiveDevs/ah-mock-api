@@ -208,7 +208,7 @@ module.exports = [
         }, {});
 
       try {
-        const Artist = getModel(req.serverEnvironment, "Artist");
+        const Artist = await getModel(req.serverEnvironment, "Artist");
         // const artists = await Artist.find({})
         //   .select(projection)
         //   .skip((page - 1) * limit)
@@ -280,7 +280,7 @@ module.exports = [
         }
 
         const modelName = "Artist";
-        const Artist = getModel(req.serverEnvironment, modelName);
+        const Artist = await getModel(req.serverEnvironment, modelName);
         const model = Artist;
 
         // Obtener campos de proyección de la configuración
@@ -444,7 +444,7 @@ module.exports = [
         //   : routesConstants.authenticated_fields; // Atributos públicos por defecto
         let visibleAttributes = routesConstants.authenticated_fields;
 
-        const UserModel = getModel(req.serverEnvironment, "User");
+        const UserModel = await getModel(req.serverEnvironment, "User");
         const currentUser = await UserModel.findById(userId);
 
         const roleAsArtist = currentUser?.roles.find(
@@ -463,6 +463,49 @@ module.exports = [
               }
             })
         );
+
+        if (!!artistInfo.spotify) {
+          try {
+            const AlbumModel = await getModel(req.serverEnvironment, "Album");
+            const albumsQuery = await AlbumModel.find({
+              idx: { $regex: artistInfo.spotify, $options: "i" },
+            });
+            const albums = albumsQuery.map((album) => {
+              return {
+                name: album.n,
+                images: album.img.map((image) => {
+                  return {
+                    url: `https://i.scdn.co/image/${image.url}`,
+                    height: image.s,
+                    width: image.s,
+                  };
+                }),
+                release_date: album.rd,
+                release_date_precision: album.rdp,
+                spotify: {
+                  id: album.aId,
+                  url: `https://open.spotify.com/album/${album.aId}`,
+                },
+                total_tracks: album.nt,
+                tracks: (album.t || []).map((track) => {
+                  return {
+                    artists: track.artists,
+                    disc_number: track.d_n,
+                    duration_ms: track.dur,
+                    // explicit: boolean;
+                    id: track.id,
+                    name: track.n,
+                    track_number: track.num,
+                  };
+                }),
+              };
+            });
+
+            artistInfo.arts.music.albums = albums;
+          } catch (error) {
+            console.log("Error pidiendo álbumes: ", error);
+          }
+        }
 
         let currentUserIsOwner = false;
         if (roleAsArtist) {
@@ -578,11 +621,11 @@ module.exports = [
           },
         ];
 
-        const Artist = getModel(req.serverEnvironment, "Artist");
+        const Artist = await getModel(req.serverEnvironment, "Artist");
         const newArtist = new Artist(info);
         await newArtist.save();
 
-        const UserModel = getModel(req.serverEnvironment, "User");
+        const UserModel = await getModel(req.serverEnvironment, "User");
         const ownerUser = await UserModel.findById(req.userId);
         let ownerRoles = (ownerUser.roles || []).find(
           (role) => role.entityName === "Artist"
@@ -670,7 +713,7 @@ module.exports = [
         //     ],
         //   };
         // }
-        // const Artist = getModel(req.serverEnvironment, "Artist");
+        // const Artist = await getModel(req.serverEnvironment, "Artist");
         // const artist = await Artist.findOneAndUpdate(
         //   query,
         //   req.body,
@@ -684,7 +727,7 @@ module.exports = [
         // res.json(artist);
 
         // Primero, intentamos encontrar el documento basado en el searchValue
-        const Artist = getModel(req.serverEnvironment, "Artist");
+        const Artist = await getModel(req.serverEnvironment, "Artist");
         const artist = await Artist.findOne({
           $or: [
             mongoose.Types.ObjectId.isValid(searchValue)
@@ -712,7 +755,7 @@ module.exports = [
 
           if (hasRole) {
             // Si el userId coincide con OWNER o ADMIN, hacemos la actualización
-            const Artist = getModel(req.serverEnvironment, "Artist");
+            const Artist = await getModel(req.serverEnvironment, "Artist");
             const updatedArtist = await Artist.findOneAndUpdate(
               {
                 _id: artist._id,
@@ -756,7 +799,10 @@ module.exports = [
                   });
 
                   // Realizar la consulta de actualización solo para los campos presentes
-                  const UserModel = getModel(req.serverEnvironment, "User");
+                  const UserModel = await getModel(
+                    req.serverEnvironment,
+                    "User"
+                  );
                   const roleMapUpdateResult = await UserModel.findOneAndUpdate(
                     {
                       _id: new mongoose.Types.ObjectId(userId),
@@ -810,7 +856,7 @@ module.exports = [
       const { identifier } = req.params;
 
       try {
-        const Artist = getModel(req.serverEnvironment, "Artist");
+        const Artist = await getModel(req.serverEnvironment, "Artist");
         const artist = await Artist.findOneAndDelete(
           {
             $or: [

@@ -127,7 +127,7 @@ module.exports = [
         };
         response = "AVAILABLE";
         try {
-          const EntityDirectory = getModel(
+          const EntityDirectory = await getModel(
             req.serverEnvironment,
             "EntityDirectory"
           );
@@ -177,7 +177,7 @@ module.exports = [
         }, {});
 
       try {
-        const UserModel = getModel(req.serverEnvironment, "User");
+        const UserModel = await getModel(req.serverEnvironment, "User");
 
         const users = await UserModel.find({})
           .select(projection)
@@ -226,7 +226,7 @@ module.exports = [
       //     acc[field] = 1;
       //     return acc;
       //   }, {});
-      const UserModel = getModel(req.serverEnvironment, "User");
+      const UserModel = await getModel(req.serverEnvironment, "User");
       const searchUser = await UserModel.findOne(query);
 
       // const searchUser = helpers.searchResult(
@@ -341,7 +341,7 @@ module.exports = [
         }
 
         // Realizar la consulta de actualización con $set
-        const UserModel = getModel(req.serverEnvironment, "User");
+        const UserModel = await getModel(req.serverEnvironment, "User");
         const updatedUser = await UserModel.findOneAndUpdate(
           query,
           {
@@ -370,7 +370,7 @@ module.exports = [
     async (req, res) => {
       const { action, id, identifier, username, entity } = req.body;
 
-      const EntityDirectoryModel = getModel(
+      const EntityDirectoryModel = await getModel(
         req.serverEnvironment,
         "EntityDirectory"
       );
@@ -429,7 +429,7 @@ module.exports = [
 
         // 🔍 Obtener el artista actualizado
 
-        const Model = getModel(req.serverEnvironment, entity);
+        const Model = await getModel(req.serverEnvironment, entity);
         entityInfo = await Model.findOne(query)
           .select("_id name followed_by followed_profiles description ")
           .populate({

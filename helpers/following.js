@@ -36,7 +36,10 @@ async function followProfile(
   const idFollower = new mongoose.Types.ObjectId(idFollowerData);
 
   const modelNameFollowed = entityFollowed;
-  const FollowedModel = getModel(req.serverEnvironment, modelNameFollowed);
+  const FollowedModel = await getModel(
+    req.serverEnvironment,
+    modelNameFollowed
+  );
   let followList = list === "followed" ? "followed_by" : "followed_profiles";
 
   let query = {

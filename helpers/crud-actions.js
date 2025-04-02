@@ -27,8 +27,8 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
   // console.log(modelName, !!schema, options);
   const connection = await connectToDatabase(req); // Obtiene la conexión según el entorno
 
-  const UserModel = getModel(connection.environment, "User");
-  const model = getModel(connection.environment, modelName);
+  const UserModel = await getModel(connection.environment, "User");
+  const model = await getModel(connection.environment, modelName);
 
   // Función para listar entidades
   async function listEntities({

@@ -54,7 +54,10 @@ async function searchEntitiesDB(req, queryRQ) {
       ...(et && { entityType: et }),
     };
 
-    const EntityDirectory = getModel(req.serverEnvironment, "EntityDirectory");
+    const EntityDirectory = await getModel(
+      req.serverEnvironment,
+      "EntityDirectory"
+    );
 
     // 4️⃣ Buscar y agrupar por entityType
     const results = await EntityDirectory.aggregate([
@@ -182,7 +185,10 @@ const searchEntities = async ({
 
   // Buscar y contar artistas
 
-  const EntityDirectory = getModel(req.serverEnvironment, "EntityDirectory");
+  const EntityDirectory = await getModel(
+    req.serverEnvironment,
+    "EntityDirectory"
+  );
   const artistQuery = EntityDirectory.find(combinedQuery)
     .skip((page - 1) * limit)
     .limit(limit)
@@ -502,7 +508,7 @@ module.exports = [
         }
 
         const modelName = entityDirectory.entityType; // Obtener el modelo dinámico
-        const entityModel = getModel(req.serverEnvironment, modelName);
+        const entityModel = await getModel(req.serverEnvironment, modelName);
 
         const followFields = ["followed_by", "followed_profiles"]; // Lista de campos a procesar dinámicamente
 

@@ -7,11 +7,15 @@ const {
 const { schema: artistSchema } = require("../models/domain/Artist.schema");
 
 const connections = {}; // Cache de conexiones para evitar múltiples instancias
+const connectionsByModel = {}; // Cache de conexiones para evitar múltiples instancias
 
 const crypto = require("crypto");
+const { schema: ArtistAlbum } = require("../models/domain/ArtistAlbum.schema");
 
 const SECRET_KEY = process.env.ENV_KEY || "d855f76d6fe2ac84f7c0e38a619c5810"; // Mismo de frontend
 const SECRET_IV = process.env.ENV_KEY_IV || "358e8a3a5474d65a"; // Mismo de frontend
+
+const modelsWithCustomConnections = ["Album"];
 
 function decryptEnv(encryptedText) {
   try {
@@ -113,8 +117,45 @@ const connectToDatabase = async (req) => {
   return connections[env];
 };
 
+const connectToDatabaseByModel = async (model) => {
+  const modelURIs = {
+    Album: process.env.MONGO_ALBUMS_URI,
+  };
+
+  if (!modelURIs[model]) {
+    console.warn(`No se encuentra la URI del modelo solicitado: ${model}`);
+  }
+
+  if (!!model && !connectionsByModel[model]) {
+    try {
+      console.log(`🔄 Conectando a MongoDB (${model})`);
+      const connection = await mongoose.createConnection(modelURIs[model], {
+        // useNewUrlParser: true,
+        // useUnifiedTopology: true,
+        serverSelectionTimeoutMS: 30000,
+      });
+
+      connection.on("connected", () =>
+        console.log(`✅ MongoDB (${model}) conectado`)
+      );
+      connection.on("error", (err) =>
+        console.error(`❌ Error en MongoDB (${model}):`, err)
+      );
+
+      connectionsByModel[model] = connection;
+    } catch (err) {
+      console.error(`🚨 Error al conectar a MongoDB (${model}):`, err);
+      throw err;
+    }
+  }
+  return connectionsByModel[model];
+};
+
 module.exports = {
   connectToDatabase,
+  connectToDatabaseByModel,
+  modelsWithCustomConnections,
   connections,
+  connectionsByModel,
   decryptEnv,
 };
