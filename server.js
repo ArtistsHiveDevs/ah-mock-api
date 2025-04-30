@@ -24,8 +24,9 @@ const { getModel } = require("./helpers/getModel");
 var app = express();
 var port = process.env.PORT || 3000;
 
-app.use(bodyParser.json());
 app.use(cors({ origin: "*" }));
+app.use(bodyParser.json());
+app.options("*", cors());
 
 // Ruta para generar una nueva API key
 app.post("/api/generate-key", helpers.validateEnvironment, async (req, res) => {
