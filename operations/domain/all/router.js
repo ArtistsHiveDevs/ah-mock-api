@@ -498,10 +498,13 @@ module.exports = [
         }
 
         // Obtener `EntityDirectory`
-        const entityDirectory = await getModel(
+
+        const EntityDirectoryModel = await getModel(
           req.serverEnvironment,
           "EntityDirectory"
-        ).findOne(query);
+        );
+
+        const entityDirectory = await EntityDirectoryModel.findOne(query);
 
         if (!entityDirectory) {
           return res.status(404).json({ error: "Entity not found" });
@@ -650,11 +653,6 @@ module.exports = [
         let followedEntityInfo;
 
         if (req.currentProfileInfo && req.currentProfileEntity) {
-          console.log(
-            "LO SIGUE??  ",
-            req.currentProfileInfo.id,
-            req.currentProfileEntity
-          );
           followedEntityInfo = await entityModel
             .findOne({
               ...query,

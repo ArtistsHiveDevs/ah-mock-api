@@ -588,6 +588,31 @@ module.exports = [
         delete artistInfo.followed_by;
         delete artistInfo.followed_profiles;
 
+        // ==========================  CLAIM PROFILE =====
+
+        const ProfileClaimModel = await getModel(
+          req.serverEnvironment,
+          "ProfileClaim"
+        );
+        let claimResult;
+        try {
+          let queryClaim = {};
+
+          if (mongoose.Types.ObjectId.isValid(artistId)) {
+            queryClaim.$or = [
+              { entityId: new mongoose.Types.ObjectId(artistId) },
+            ];
+          } else {
+            queryClaim.$or = [{ identifier: artistId }];
+          }
+          claimResult = await ProfileClaimModel.findOne({ ...queryClaim });
+        } catch (error) {
+          console.log(error);
+        }
+        artistInfo.isClaimedProfile = !!claimResult;
+
+        // ================================= Ownership
+
         if (!currentUserIsOwner) {
           let reducedArtistData = visibleAttributes.reduce((acc, field) => {
             acc[field] = artistInfo[field];

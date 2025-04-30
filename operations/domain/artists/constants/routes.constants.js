@@ -96,6 +96,8 @@ module.exports = {
     // "followed_profiles",
     "followed_by_count",
     "followed_profiles_count",
+
+    "isClaimedProfile",
   ],
   appbase_public_fields: {
     EntityDirectory: {

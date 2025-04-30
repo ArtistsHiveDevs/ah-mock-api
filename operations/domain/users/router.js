@@ -382,65 +382,93 @@ module.exports = [
       entityDirectoryIdFollowed = requestID?._id;
 
       let response;
+      switch (action) {
+        case "follow":
+        case "unfollow":
+          try {
+            const followerInfo = {
+              entityDirectoryId: req.currentProfileEntityDirectory,
+              id: req.currentProfileInfo.id,
+              identifier: req.currentProfileInfo.identifier,
+              username: req.currentProfileInfo.username,
+              entity: req.currentProfileEntity,
+            };
 
-      try {
-        const followerInfo = {
-          entityDirectoryId: req.currentProfileEntityDirectory,
-          id: req.currentProfileInfo.id,
-          identifier: req.currentProfileInfo.identifier,
-          username: req.currentProfileInfo.username,
-          entity: req.currentProfileEntity,
-        };
+            const followedInfo = {
+              entityDirectoryId: entityDirectoryIdFollowed,
+              id,
+              identifier,
+              username,
+              entity,
+            };
 
-        const followedInfo = {
-          entityDirectoryId: entityDirectoryIdFollowed,
-          id,
-          identifier,
-          username,
-          entity,
-        };
+            await followProfile(
+              req,
+              res,
+              action,
+              "followed",
+              followerInfo,
+              followedInfo
+            );
 
-        await followProfile(
-          req,
-          res,
-          action,
-          "followed",
-          followerInfo,
-          followedInfo
-        );
+            await followProfile(
+              req,
+              res,
+              action,
+              "followeρ",
+              followedInfo,
+              followerInfo
+            );
+            let query = {};
+            // Si hay un `username` válido, agrégalo a la búsqueda
 
-        await followProfile(
-          req,
-          res,
-          action,
-          "followeρ",
-          followedInfo,
-          followerInfo
-        );
-        let query = {};
-        // Si hay un `username` válido, agrégalo a la búsqueda
+            query.$or = mongoose.Types.ObjectId.isValid(id)
+              ? [
+                  { _id: new mongoose.Types.ObjectId(id) },
+                  { username: username || identifier },
+                ]
+              : [{ username: username || identifier }];
 
-        query.$or = mongoose.Types.ObjectId.isValid(id)
-          ? [
-              { _id: new mongoose.Types.ObjectId(id) },
-              { username: username || identifier },
-            ]
-          : [{ username: username || identifier }];
+            // 🔍 Obtener el artista actualizado
 
-        // 🔍 Obtener el artista actualizado
+            const Model = await getModel(req.serverEnvironment, entity);
+            entityInfo = await Model.findOne(query)
+              .select("_id name followed_by followed_profiles description ")
+              .populate({
+                path: "followed_by",
+                select: "entityId entityType isFollowing",
+              });
 
-        const Model = await getModel(req.serverEnvironment, entity);
-        entityInfo = await Model.findOne(query)
-          .select("_id name followed_by followed_profiles description ")
-          .populate({
-            path: "followed_by",
-            select: "entityId entityType isFollowing",
-          });
+            return res
+              .status(200)
+              .json(createPaginatedDataResponse(entityInfo));
+          } catch (err) {
+            console.error("❌ Error:", err);
+            return res.status(500).json({ message: err.message });
+          }
 
-        return res.status(200).json(createPaginatedDataResponse(entityInfo));
-      } catch (err) {
-        console.error("❌ Error:", err);
-        return res.status(500).json({ message: err.message });
+        case "claim":
+          try {
+            const ProfileClaimModel = await getModel(
+              req.serverEnvironment,
+              "ProfileClaim"
+            );
+            const claim = new ProfileClaimModel({
+              user: req.userId,
+              entityType: entity,
+              entityId: new mongoose.Types.ObjectId(id),
+              identifier: identifier,
+            });
+            await claim.save();
+            return res
+              .status(200)
+              .json(createPaginatedDataResponse({ result: true }));
+          } catch (error) {
+            console.error("❌ Error:", error);
+            return res.status(500).json({ message: error.message });
+          }
+        default:
+          break;
       }
     }
   ),

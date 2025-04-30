@@ -12,6 +12,7 @@ function getModelSchema(modelName) {
     Artist: require("../models/domain/Artist.schema").schema,
     Album: require("../models/domain/ArtistAlbum.schema").schema,
     Place: require("../models/domain/Place.schema").schema,
+    ProfileClaim: require("../models/domain/ProfileClaim.schema").schema,
     Follower: require("../models/domain/Follower.schema").schema,
   };
 

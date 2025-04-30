@@ -114,7 +114,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         };
       }
 
-      console.log("FLTROS", JSON.stringify(filters));
+      // console.log("FLTROS", JSON.stringify(filters));
 
       // Consulta a la base de datos con select y populate
 
@@ -498,6 +498,27 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         followedProfilesCount?.[0]?.followedProfilesCount || 0,
       isFollowedByCurrentProfile: !!followedEntityInfo,
     };
+
+    // ==========================  CLAIM PROFILE =====
+
+    const ProfileClaimModel = await getModel(
+      req.serverEnvironment,
+      "ProfileClaim"
+    );
+    let claimResult;
+    try {
+      let queryClaim = {};
+
+      if (mongoose.Types.ObjectId.isValid(id)) {
+        queryClaim.$or = [{ entityId: new mongoose.Types.ObjectId(id) }];
+      } else {
+        queryClaim.$or = [{ identifier: id }];
+      }
+      claimResult = await ProfileClaimModel.findOne({ ...queryClaim });
+    } catch (error) {
+      console.log(error);
+    }
+    entityInfo.isClaimedProfile = !!claimResult;
 
     // Traducir los resultados utilizando translateDBResults
     entityInfo = apiHelperFunctions.translateDBResults({

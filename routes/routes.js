@@ -14,6 +14,7 @@ var faqRouter = require("../operations/app/faq/router");
 const createCRUDRoutes = require("../helpers/crud-routes");
 const Place = require("../models/domain/Place.schema");
 const Event = require("../models/domain/Event.schema");
+const ProfileClaim = require("../models/domain/ProfileClaim.schema");
 const Currency = require("../models/parametrics/geo/Currency.schema");
 const Continent = require("../models/parametrics/geo/Continent.schema");
 const Country = require("../models/parametrics/geo/Country.schema");
@@ -245,6 +246,14 @@ function loadRoutes() {
             });
           },
         },
+      }),
+    },
+    {
+      path: "/claimprofile",
+      route: createCRUDRoutes({
+        modelName: "ProfileClaim",
+        schema: ProfileClaim.schema,
+        options: { listEntities: { limit: 0 } },
       }),
     },
     { path: "/rehearsal_rooms", route: { router: rehearsalRoomsRouter } },
