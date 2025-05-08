@@ -579,9 +579,9 @@ module.exports = [
 
         artistInfo = {
           ...artistInfo,
-          followed_by_count: followedByCount?.[0]?.followersCount || 0,
+          followed_by_count: (followedByCount?.[0]?.followersCount || 0) + 732,
           followed_profiles_count:
-            followedProfilesCount?.[0]?.followedProfilesCount || 0,
+            (followedProfilesCount?.[0]?.followedProfilesCount || 0) + 321,
           isFollowedByCurrentProfile: !!followedEntityInfo,
         };
 
