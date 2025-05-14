@@ -152,16 +152,28 @@ function loadRoutes() {
                 result.description = automaticName;
               }
 
-              result.timetable__initial_date = helperFunctions.addMonthsToDate(
-                result.timetable__initial_date,
-                5
-              );
+              try {
+                result.timetable__initial_date =
+                  helperFunctions.addMonthsToDate(
+                    result.timetable__initial_date,
+                    5
+                  );
+              } catch (error) {}
               result.timetable__openning_doors = Number(
                 result.timetable__openning_doors?.replace(":", "") || 0
               );
               result.timetable__main_artist_time = Number(
                 result.timetable__main_artist_time?.replace(":", "") || 0
               );
+
+              result.price = 25000 + Math.floor(Math.random() * 10000) - 5000;
+
+              result.phone = 3 + Math.floor(Math.random() * 99999999);
+              result.additional_info =
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.";
+              result.dress_code =
+                "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.";
+              result.promoter = "Sed ut perspiciatis unde omnis";
             });
           },
         },
