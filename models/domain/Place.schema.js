@@ -85,6 +85,8 @@ const schema = new Schema({
     },
   ],
 
+  associations: [{ type: Schema.Types.ObjectId, ref: "AgentAssociation" }],
+
   followed_profiles: { type: [FollowerSchema], default: [] },
   followed_by: { type: [FollowerSchema], default: [] },
 });
