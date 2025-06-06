@@ -199,6 +199,10 @@ app.get(
   }
 );
 
+app.get("/", async (req, res) => {
+  res.status(200).send({ message: "Probando ambiente DEV :)" });
+});
+
 //  Server Zone
 app.listen(port, function () {
   console.log(textConstants.runningServer, port);
