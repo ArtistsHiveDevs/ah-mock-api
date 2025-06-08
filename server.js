@@ -24,8 +24,9 @@ const { getModel } = require("./helpers/getModel");
 var app = express();
 var port = process.env.PORT || 3000;
 
-app.use(cors({ origin: "*" }));
-app.use(bodyParser.json());
+// app.use(cors({ origin: "*" })); // Debe ser lo primero
+app.use(cors()); // Debe ser lo primero
+app.use(bodyParser.json()); // Después de CORS
 app.options("*", cors());
 
 // Ruta para generar una nueva API key
