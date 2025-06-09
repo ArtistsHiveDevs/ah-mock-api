@@ -22,12 +22,34 @@ const ErrorCodes = require("./constants/errors");
 const { getModel } = require("./helpers/getModel");
 
 var app = express();
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 8080;
 
-// app.use(cors({ origin: "*" })); // Debe ser lo primero
-app.use(cors()); // Debe ser lo primero
-app.use(bodyParser.json()); // Después de CORS
-app.options("*", cors());
+// *****************************   CORS   ****************************
+// Leer orígenes permitidos desde variable de entorno
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(",").map((origin) => origin.trim())
+  : [];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Permitir sin origin (ej. curl o servidores internos)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS no permitido para este origen"));
+    }
+  },
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+
+// Asegura que las solicitudes OPTIONS preflight también usen CORS
+app.options("*", cors(corsOptions));
+
+app.use(bodyParser.json());
+
+// ******************************************************************
 
 // Ruta para generar una nueva API key
 app.post("/api/generate-key", helpers.validateEnvironment, async (req, res) => {
@@ -200,9 +222,7 @@ app.get(
   }
 );
 
-app.get("/", async (req, res) => {
-  res.status(200).send({ message: "Probando ambiente DEV :)" });
-});
+app.get("/", (req, res) => res.status(200).send("OK DEV"));
 
 //  Server Zone
 app.listen(port, function () {
