@@ -30,9 +30,9 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(",").map((origin) => origin.trim())
   : [];
 
-allowedOrigins.push("https://artist-hive.com");
-allowedOrigins.push("https://www.artist-hive.com");
-allowedOrigins.push("https://almost.artist-hive.com");
+// allowedOrigins.push("https://artist-hive.com");
+// allowedOrigins.push("https://www.artist-hive.com");
+// allowedOrigins.push("https://almost.artist-hive.com");
 
 console.log("ALLOWED: ", allowedOrigins);
 
@@ -232,7 +232,7 @@ app.get(
 
 app.get("/", async (req, res) => {
   res.status(200).send({
-    message: "Probando ambiente PROD V8 :)",
+    message: "Probando ambiente PROD V9 :)",
     allowedOrigins,
     consts: process.env.ALLOWED_ORIGINS,
   });
