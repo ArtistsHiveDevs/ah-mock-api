@@ -232,7 +232,7 @@ app.get(
 
 app.get("/", async (req, res) => {
   res.status(200).send({
-    message: "Probando ambiente PROD V9 :)",
+    message: "Probando ambiente PROD V10 :)",
     allowedOrigins,
     consts: process.env.ALLOWED_ORIGINS,
   });
