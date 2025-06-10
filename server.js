@@ -223,7 +223,7 @@ app.get(
 );
 
 app.get("/", async (req, res) => {
-  res.status(200).send({ message: "Probando ambiente PROD V2 :)" });
+  res.status(200).send({ message: "Probando ambiente PROD V5 :)" });
 });
 
 //  Server Zone
