@@ -189,15 +189,15 @@ Promise.all(
       });
     });
 
-    console.log("Routes:");
-    listPathRoutes.forEach((pathRoute, index) => {
-      console.log(index + 1, ") - ", pathRoute);
-    });
-    console.log(
-      "Todas las rutas han sido registradas correctamente.",
-      process.env.ENV_KEY,
-      " ##"
-    );
+    // console.log("Routes:");
+    // listPathRoutes.forEach((pathRoute, index) => {
+    //   console.log(index + 1, ") - ", pathRoute);
+    // });
+    // console.log(
+    //   "Todas las rutas han sido registradas correctamente.",
+    //   process.env.ENV_KEY,
+    //   " ##"
+    // );
   })
   .catch((err) => {
     console.error("Error al inicializar rutas:", err);
@@ -225,7 +225,9 @@ app.get(
 );
 
 app.get("/", async (req, res) => {
-  res.status(200).send({ message: "Probando ambiente PROD V5 :)" });
+  res
+    .status(200)
+    .send({ message: "Probando ambiente PROD V6 :)", allowedOrigins });
 });
 
 //  Server Zone
