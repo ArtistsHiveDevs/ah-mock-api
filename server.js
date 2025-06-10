@@ -39,6 +39,7 @@ console.log("ALLOWED: ", allowedOrigins);
 const corsOptions = {
   origin: function (origin, callback) {
     // Permitir sin origin (ej. curl o servidores internos)
+    console.log("CORS validation: ", origin);
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
@@ -48,7 +49,8 @@ const corsOptions = {
   credentials: true,
 };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+app.use(cors({ origin: "*" }));
 
 // Asegura que las solicitudes OPTIONS preflight también usen CORS
 app.options("*", cors(corsOptions));
@@ -229,13 +231,11 @@ app.get(
 );
 
 app.get("/", async (req, res) => {
-  res
-    .status(200)
-    .send({
-      message: "Probando ambiente PROD V7 :)",
-      allowedOrigins,
-      consts: process.env.ALLOWED_ORIGINS,
-    });
+  res.status(200).send({
+    message: "Probando ambiente PROD V8 :)",
+    allowedOrigins,
+    consts: process.env.ALLOWED_ORIGINS,
+  });
 });
 
 //  Server Zone
