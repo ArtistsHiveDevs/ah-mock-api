@@ -22,46 +22,82 @@ const convertKmToDegrees = (km) => {
 async function searchEntitiesDB(req, queryRQ) {
   const {
     q: query = "",
-    l = "",
+    l: location = undefined,
+    cs = "",
     maxDistance = 15,
     page = 1,
-    limit = 10,
+    limit = 30,
     et,
   } = queryRQ;
 
   try {
     const skip = (page - 1) * limit;
 
-    // 1️⃣ Normalizar la búsqueda (eliminar acentos, caracteres especiales y convertir a minúsculas)
+    // 1️⃣ Normalizar el texto de búsqueda y preparar expresión regular
     const normalizedQuery = removeAccents(query)
       .toLowerCase()
-      .replace(/[^a-z0-9\s]/g, " ") // Reemplazar caracteres especiales por espacios
+      .replace(/[^a-z0-9\s]/g, " ")
       .trim();
-
-    // 2️⃣ Convertir la consulta en una expresión regular para buscar palabras que comiencen con la consulta
     const regexPattern = `\\b${normalizedQuery}`;
     const regex = new RegExp(regexPattern, "i");
 
-    const orMatch = [
-      { name: { $regex: regex } },
-      { username: { $regex: regex } },
-      { search_cache: { $regex: regex } },
-    ];
+    const countries = cs.split(",");
 
-    // 3️⃣ Filtrar por entityType si está presente
+    // 2️⃣ Construir condición $match con texto, tipo, país y geolocalización
     const matchCondition = {
-      $or: orMatch,
+      $or: [
+        { name: { $regex: regex } },
+        { username: { $regex: regex } },
+        { search_cache: { $regex: regex } },
+      ],
       ...(et && { entityType: et }),
+      ...(countries.length > 0 && {
+        $and: [
+          { "location.country_alpha2": { $exists: true } },
+          { "location.country_alpha2": { $in: countries } },
+        ],
+      }),
     };
+
+    // 2️⃣➕ Agregar filtro por ubicación y país (si se especifican)
+    if (location?.latitude && location?.longitude) {
+      const lat = parseFloat(location.latitude);
+      const lon = parseFloat(location.longitude);
+      const radiusInDegrees = maxDistance / 2 / 111.32; // dividir una sola vez
+
+      matchCondition["location.latitude"] = {
+        $gte: lat - radiusInDegrees,
+        $lte: lat + radiusInDegrees,
+      };
+      matchCondition["location.longitude"] = {
+        $gte: lon - radiusInDegrees,
+        $lte: lon + radiusInDegrees,
+      };
+    }
+
+    if (countries.length > 0) {
+      matchCondition.$and = [
+        ...(matchCondition.$and || []),
+        { "location.country_alpha2": { $exists: true } },
+        { "location.country_alpha2": { $in: countries } },
+      ];
+    }
 
     const EntityDirectory = await getModel(
       req.serverEnvironment,
       "EntityDirectory"
     );
 
-    // 4️⃣ Buscar y agrupar por entityType
-    const results = await EntityDirectory.aggregate([
+    // 3️⃣ Construir pipeline principal con paginación y agrupación
+    const pipeline = [
       { $match: matchCondition },
+      {
+        $sort: {
+          verified_status: 1,
+          profile_pic: 1,
+          lastActivity: -1,
+        },
+      },
       {
         $group: {
           _id: "$entityType",
@@ -72,27 +108,20 @@ async function searchEntitiesDB(req, queryRQ) {
         $project: {
           entityType: "$_id",
           entities: {
-            $slice: [
-              {
-                $sortArray: {
-                  input: "$entities",
-                  sortBy: {
-                    verified_status: 1,
-                    profile_pic: 1,
-                    lastActivity: -1,
-                  },
-                },
-              },
-              limit,
-            ],
+            $slice: ["$entities", skip, limit],
           },
           _id: 0,
         },
       },
       { $sort: { entityType: 1 } },
-    ]);
+    ];
 
-    // 5️⃣ Contar resultados
+    // 4️⃣ Ejecutar la consulta principal
+    const results = await EntityDirectory.aggregate(pipeline, {
+      allowDiskUse: true,
+    });
+
+    // 5️⃣ Ejecutar conteo total por tipo (para paginación)
     const countResults = await EntityDirectory.aggregate([
       { $match: matchCondition },
       {
@@ -103,7 +132,7 @@ async function searchEntitiesDB(req, queryRQ) {
       },
     ]);
 
-    // 6️⃣ Construir respuesta
+    // 6️⃣ Formatear resultados y conteos
     const countMap = countResults.reduce((acc, item) => {
       acc[`total_${item._id.toLowerCase()}s`] = item.count;
       return acc;
