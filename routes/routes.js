@@ -20,6 +20,9 @@ const Continent = require("../models/parametrics/geo/Continent.schema");
 const Country = require("../models/parametrics/geo/Country.schema");
 const Language = require("../models/parametrics/geo/Language.schema");
 const Allergy = require("../models/parametrics/geo/demographics/Allergies.schema");
+const ChatConversation = require("../models/appbase/chat/ChatConversation.schema");
+const ChatMessage = require("../models/appbase/chat/ChatMessage.schema");
+
 const routesConstants = require("../operations/domain/artists/constants/routes.constants");
 const helperFunctions = require("../helpers/helperFunctions");
 
@@ -266,6 +269,22 @@ function loadRoutes() {
         modelName: "ProfileClaim",
         schema: ProfileClaim.schema,
         options: { listEntities: { limit: 0 } },
+      }),
+    },
+    {
+      path: "/chats",
+      route: createCRUDRoutes({
+        modelName: "ChatConversation",
+        schema: ChatConversation.schema,
+        options: { listEntities: { limit: 30 } },
+      }),
+    },
+    {
+      path: "/chat_messages",
+      route: createCRUDRoutes({
+        modelName: "ChatMessage",
+        schema: ChatMessage.schema,
+        options: { listEntities: { limit: 30 } },
       }),
     },
     { path: "/rehearsal_rooms", route: { router: rehearsalRoomsRouter } },
