@@ -315,9 +315,8 @@ module.exports = [
           { label: "Non specified", value: "non_specified" },
         ];
 
-        newInfo.gender = genders.findIndex(
-          (gender) => gender.value === newInfo.gender
-        );
+        newInfo.gender =
+          genders.findIndex((gender) => gender.value === newInfo.gender) + 1;
       }
 
       try {
@@ -339,6 +338,7 @@ module.exports = [
             ],
           };
         }
+
 
         // Realizar la consulta de actualización con $set
         const UserModel = await getModel(req.serverEnvironment, "User");

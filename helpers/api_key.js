@@ -6,6 +6,7 @@ const { connectToDatabase, decryptEnv } = require("../db/db_g");
 const { getModel } = require("./getModel");
 const {
   appbase_public_fields,
+  parametric_public_fields,
 } = require("../operations/domain/artists/constants");
 // const Artist = require("../models/domain/Artist");
 
@@ -26,9 +27,12 @@ async function validateApiKey(req, res, next) {
     const decoded = jwt.verify(token, SECRET_KEY);
     const UserModel = await getModel(req.serverEnvironment, "User");
 
-    let user = await UserModel.findById(decoded.id).select(
-      appbase_public_fields.User.detail.join(" ")
-    );
+    let user = await UserModel.findById(decoded.id)
+      .select(appbase_public_fields.User.detail.join(" "))
+      .populate({
+        path: "country",
+        select: parametric_public_fields.Country.summary,
+      });
 
     const followedByCount = await UserModel.aggregate([
       { $match: { _id: user._id } },
@@ -59,6 +63,7 @@ async function validateApiKey(req, res, next) {
     req.user = user; // Guardar la información del usuario en el request
     next();
   } catch (err) {
+    console.log(err);
     return res.status(401).send({ message: "Invalid or expired API key." });
   }
 }
