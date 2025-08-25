@@ -2,6 +2,7 @@ var allRouter = require("../operations/domain/all/router");
 var academyRouter = require("../operations/domain/academies/router");
 var artistRouter = require("../operations/domain/artists/router");
 var citiesRouter = require("../operations/parametrics/general/cities/router");
+var locationEntitiesRouter = require("../operations/parametrics/general/locationEntities/router");
 var rehearsalRoomsRouter = require("../operations/domain/rehearsal_rooms/router");
 var ridersRouter = require("../operations/domain/riders/router");
 var usersRouter = require("../operations/domain/users/router");
@@ -186,6 +187,10 @@ function loadRoutes() {
         schema: Language.schema,
         options: { listEntities: { limit: 0 } },
       }),
+    },
+    {
+      path: "/locationEntities",
+      route: { router: locationEntitiesRouter },
     },
     // { path: "/instruments", route: createCRUDRoutes({model:Instrument, "Instrument") },
     // { path: "/places", route: placesRoutetrue

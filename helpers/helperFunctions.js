@@ -526,27 +526,41 @@ module.exports = {
       userRoleMapFields.includes(updateKey)
     );
   },
-  flattenObject(obj, parentPath = "") {
-    const updateFields = {};
+  flattenObject: function flattenObject(
+    obj,
+    parentPath = "",
+    result = {},
+    exclude = []
+  ) {
     for (const key in obj) {
+      if (!obj.hasOwnProperty(key)) continue;
+
+      const value = obj[key];
       const path = parentPath ? `${parentPath}.${key}` : key;
 
+      const shouldExclude = exclude.some((excludedPath) =>
+        path.startsWith(excludedPath)
+      );
+
+      if (shouldExclude) {
+        result[path] = value;
+        continue;
+      }
+
       if (
-        typeof obj[key] === "object" &&
-        !Array.isArray(obj[key]) &&
-        obj[key] !== null
+        typeof value === "object" &&
+        value !== null &&
+        !Array.isArray(value) &&
+        !(value instanceof Date)
       ) {
-        // Verifica si el objeto intermedio existe y si no, lo crea
-        if (!updateFields[path]) {
-          updateFields[path] = {};
-        }
-        this.flattenObject(obj[key], path);
+        flattenObject(value, path, result, exclude);
       } else {
-        updateFields[path] = obj[key];
+        result[path] = value;
       }
     }
-    return updateFields;
+    return result;
   },
+
   addMonthsToDate(dateString, monthsToAdd) {
     // Convertir la fecha de string a objeto Date
     const date = new Date(dateString);

@@ -49,7 +49,7 @@ async function validateApiKey(req, res, next) {
     ]);
 
     user = {
-      ...user.toObject(),
+      ...user.toObject({ flattenMaps: true }),
       followed_by_count: followedByCount?.[0]?.followersCount || 0,
       followed_profiles_count:
         followedProfilesCount?.[0]?.followedProfilesCount || 0,
