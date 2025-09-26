@@ -139,7 +139,7 @@ function fillResultWithFields(fields, result) {
 
     artist.arts = {};
 
-    const albumsInfo = albums.find(
+    const albumsInfo = (albums || []).find(
       (artistInfo) => `${artistInfo.ah_id}` === `${artist.id}`
     );
 
@@ -579,14 +579,19 @@ module.exports = [
 
         artistInfo = {
           ...artistInfo,
-          followed_by_count: (followedByCount?.[0]?.followersCount || 0) + (Math.floor(Math.random() * 5000)),
+          followed_by_count:
+            (followedByCount?.[0]?.followersCount || 0) +
+            Math.floor(Math.random() * 5000),
           followed_profiles_count:
-            (followedProfilesCount?.[0]?.followedProfilesCount || 0) + (Math.floor(Math.random() * 2000)),
+            (followedProfilesCount?.[0]?.followedProfilesCount || 0) +
+            Math.floor(Math.random() * 2000),
           isFollowedByCurrentProfile: !!followedEntityInfo,
         };
 
         delete artistInfo.followed_by;
         delete artistInfo.followed_profiles;
+        delete artistInfo.chartmetric;
+        delete artistInfo.chartmetric_data;
 
         // ==========================  CLAIM PROFILE =====
 
@@ -606,6 +611,39 @@ module.exports = [
             queryClaim.$or = [{ identifier: artistId }];
           }
           claimResult = await ProfileClaimModel.findOne({ ...queryClaim });
+        } catch (error) {
+          console.log(error);
+        }
+        artistInfo.isClaimedProfile = !!claimResult;
+
+        // ==========================  CREW MEMBERS =====
+
+        try {
+          console.log(
+            "MIEMBROS   ",
+            JSON.stringify(artistInfo.entityRoleMap, null, 2)
+          );
+          const EntityDirectoryModel = await getModel(
+            req.serverEnvironment,
+            "EntityDirectory"
+          );
+          for (const roleEntry of artistInfo.entityRoleMap) {
+            console.log("    IDS...... ", roleEntry.ids);
+            roleEntry.entities = await EntityDirectoryModel.find({
+              id: { $in: roleEntry.ids },
+            }).select([
+              ...routesConstants.appbase_public_fields.EntityDirectory.summary,
+              "-_id",
+            ]);
+            delete roleEntry.ids;
+            delete roleEntry.id;
+            delete roleEntry._id;
+          }
+
+          console.log(
+            "MIEMBROS 2   ",
+            JSON.stringify(artistInfo.entityRoleMap, null, 2)
+          );
         } catch (error) {
           console.log(error);
         }

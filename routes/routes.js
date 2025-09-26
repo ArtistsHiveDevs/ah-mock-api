@@ -16,11 +16,18 @@ const createCRUDRoutes = require("../helpers/crud-routes");
 const Place = require("../models/domain/Place.schema");
 const Event = require("../models/domain/Event.schema");
 const ProfileClaim = require("../models/domain/ProfileClaim.schema");
+const MusicGenresLevel1 = require("../models/parametrics/music-genres/genres-level1.schema");
+const MusicGenresLevel2 = require("../models/parametrics/music-genres/genres-level2.schema");
+const MusicGenresLevel3 = require("../models/parametrics/music-genres/genres-level3.schema");
 const Currency = require("../models/parametrics/geo/Currency.schema");
 const Continent = require("../models/parametrics/geo/Continent.schema");
 const Country = require("../models/parametrics/geo/Country.schema");
 const Language = require("../models/parametrics/geo/Language.schema");
 const Allergy = require("../models/parametrics/geo/demographics/Allergies.schema");
+const Instrument = require("../models/domain/Instrument.schema");
+const MusicianClassification = require("../models/domain/MusicianClassification.schema");
+const VenueEquipment = require("../models/domain/VenueEquipment.schema");
+const BandShowConfiguration = require("../models/domain/BandShowConfiguration.schema");
 const routesConstants = require("../operations/domain/artists/constants/routes.constants");
 const helperFunctions = require("../helpers/helperFunctions");
 
@@ -186,6 +193,210 @@ function loadRoutes() {
         modelName: "Language",
         schema: Language.schema,
         options: { listEntities: { limit: 0 } },
+      }),
+    },
+    {
+      path: "/genres1",
+      route: createCRUDRoutes({
+        modelName: "MusicGenresLevel1",
+        schema: MusicGenresLevel1.schema,
+        options: { listEntities: { limit: 0 } },
+      }),
+    },
+    {
+      path: "/genres2",
+      route: createCRUDRoutes({
+        modelName: "MusicGenresLevel2",
+        schema: MusicGenresLevel2.schema,
+        options: { listEntities: { limit: 0 } },
+      }),
+    },
+    {
+      path: "/genres3",
+      route: createCRUDRoutes({
+        modelName: "MusicGenresLevel3",
+        schema: MusicGenresLevel3.schema,
+        options: { listEntities: { limit: 0 } },
+      }),
+    },
+    {
+      path: "/instruments",
+      route: createCRUDRoutes({
+        modelName: "Instrument",
+        schema: Instrument.schema,
+        options: {
+          public_fields: [
+            "uniqueId",
+            "name",
+            "slug",
+            "family",
+            "category",
+            "subcategory",
+            "musicianClassification",
+            "physicalProperties",
+            "musicalProperties",
+            "transportLogistics",
+            "usageContext",
+            "popularityScore",
+            "status",
+            "i18n",
+          ],
+          customPopulateFields: [
+            {
+              path: "geographic.originCountry",
+              select: "name alpha2 alpha3",
+            },
+            {
+              path: "geographic.popularIn",
+              select: "name alpha2 alpha3",
+            },
+          ],
+          listEntities: { limit: 500 },
+        },
+      }),
+    },
+    {
+      path: "/musician-classifications",
+      route: createCRUDRoutes({
+        modelName: "MusicianClassification",
+        schema: MusicianClassification.schema,
+        options: {
+          public_fields: [
+            "id",
+            "displayName",
+            "description",
+            "icon",
+            "color",
+            "techniqueFamily",
+            "techniqueSimilarityScore",
+            "brandImportance",
+            "sponsorPotential",
+            "crossoverDifficulty",
+            "skillTransferability",
+            "typicalBrands",
+            "uiConfig",
+            "isActive",
+            "isPopular",
+            "i18n",
+          ],
+          customPopulateFields: [
+            {
+              path: "coversInstruments",
+              select: "name uniqueId popularityScore family category",
+            },
+            {
+              path: "geographicPopularity.country",
+              select: "name alpha2 alpha3",
+            },
+          ],
+          listEntities: { limit: 0 },
+        },
+      }),
+    },
+    {
+      path: "/venue-equipment",
+      route: createCRUDRoutes({
+        modelName: "VenueEquipment",
+        schema: VenueEquipment.schema,
+        options: {
+          public_fields: [
+            "venue",
+            "venueName",
+            "location",
+            "inventory",
+            "policies",
+            "contacts",
+            "capabilities",
+            "statistics",
+            "isActive",
+          ],
+          authenticated_fields: [
+            "venue",
+            "venueName",
+            "location",
+            "inventory",
+            "policies",
+            "contacts",
+            "capabilities",
+            "statistics",
+            "lastInventoryUpdate",
+            "featuredEquipment",
+            "isActive",
+          ],
+          customPopulateFields: [
+            {
+              path: "venue",
+              select: routesConstants.public_fields.join(" "),
+              populate: {
+                path: "country",
+                select:
+                  routesConstants.parametric_public_fields.Country.summary,
+              },
+            },
+            {
+              path: "location.country",
+              select: "name alpha2 alpha3",
+            },
+          ],
+        },
+      }),
+    },
+    {
+      path: "/band-show-configurations",
+      route: createCRUDRoutes({
+        modelName: "BandShowConfiguration",
+        schema: BandShowConfiguration.schema,
+        options: {
+          public_fields: [
+            "band",
+            "bandName",
+            "homeLocation",
+            "showConfigurations",
+            "defaultPreferences",
+            "aggregateStats",
+            "isActive",
+            "isPublicProfile",
+          ],
+          authenticated_fields: [
+            "band",
+            "bandName",
+            "homeLocation",
+            "showConfigurations",
+            "defaultPreferences",
+            "globalSponsorships",
+            "aggregateStats",
+            "availability",
+            "isActive",
+            "isPublicProfile",
+          ],
+          customPopulateFields: [
+            {
+              path: "band",
+              select: routesConstants.public_fields.join(" "),
+              populate: {
+                path: "country",
+                select:
+                  routesConstants.parametric_public_fields.Country.summary,
+              },
+            },
+            {
+              path: "homeLocation.country",
+              select: "name alpha2 alpha3",
+            },
+            {
+              path: "showConfigurations.bandMembers.member",
+              select: "name username profile_pic",
+            },
+            {
+              path: "showConfigurations.venueCompatibility.geographicPreferences.preferredCountries",
+              select: "name alpha2 alpha3",
+            },
+            {
+              path: "showConfigurations.performanceHistory.successfulVenueMatches",
+              select: "name city country",
+            },
+          ],
+        },
       }),
     },
     {

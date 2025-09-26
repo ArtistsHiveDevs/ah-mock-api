@@ -22,7 +22,7 @@ const ErrorCodes = require("./constants/errors");
 const { getModel } = require("./helpers/getModel");
 
 var app = express();
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 8085;
 
 // *****************************   CORS   ****************************
 // Leer orígenes permitidos desde variable de entorno

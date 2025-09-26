@@ -1,0 +1,416 @@
+{
+  "instrumentFamilies": {
+    "strings": {
+      "name": "String Instruments",
+      "icon": "🎻",
+      "categories": {
+        "guitars": {
+          "name": "Guitars",
+          "instruments": [
+            { "id": "electric-guitar", "name": "Electric Guitar", "popularity": 100 },
+            { "id": "acoustic-guitar", "name": "Acoustic Guitar", "popularity": 98 },
+            { "id": "bass-guitar", "name": "Bass Guitar", "popularity": 95 },
+            { "id": "classical-guitar", "name": "Classical Guitar", "popularity": 85 },
+            { "id": "12-string-guitar", "name": "12-String Guitar", "popularity": 70 },
+            { "id": "resonator-guitar", "name": "Resonator Guitar", "popularity": 60 },
+            { "id": "electric-bass", "name": "Electric Bass", "popularity": 94 },
+            { "id": "fretless-bass", "name": "Fretless Bass", "popularity": 55 },
+            { "id": "semi-acoustic-guitar", "name": "Semi-Acoustic Guitar", "popularity": 75 },
+            { "id": "baritone-guitar", "name": "Baritone Guitar", "popularity": 45 },
+            { "id": "travel-guitar", "name": "Travel Guitar", "popularity": 40 },
+            { "id": "parlor-guitar", "name": "Parlor Guitar", "popularity": 50 }
+          ]
+        },
+        "plucked": {
+          "name": "Plucked Strings",
+          "instruments": [
+            { "id": "banjo", "name": "Banjo", "popularity": 80 },
+            { "id": "mandolin", "name": "Mandolin", "popularity": 75 },
+            { "id": "ukulele", "name": "Ukulele", "popularity": 85 },
+            { "id": "bouzouki", "name": "Bouzouki", "popularity": 35 },
+            { "id": "balalaika", "name": "Balalaika", "popularity": 25 },
+            { "id": "lute", "name": "Lute", "popularity": 30 },
+            { "id": "cittern", "name": "Cittern", "popularity": 20 },
+            { "id": "tenor-banjo", "name": "Tenor Banjo", "popularity": 45 },
+            { "id": "octave-mandolin", "name": "Octave Mandolin", "popularity": 35 },
+            { "id": "mandola", "name": "Mandola", "popularity": 30 },
+            { "id": "tenor-ukulele", "name": "Tenor Ukulele", "popularity": 65 },
+            { "id": "concert-ukulele", "name": "Concert Ukulele", "popularity": 60 },
+            { "id": "soprano-ukulele", "name": "Soprano Ukulele", "popularity": 70 },
+            { "id": "baritone-ukulele", "name": "Baritone Ukulele", "popularity": 50 }
+          ]
+        },
+        "bowed": {
+          "name": "Bowed Strings",
+          "instruments": [
+            { "id": "violin", "name": "Violin", "popularity": 90 },
+            { "id": "viola", "name": "Viola", "popularity": 75 },
+            { "id": "cello", "name": "Cello", "popularity": 85 },
+            { "id": "double-bass", "name": "Double Bass", "popularity": 80 },
+            { "id": "electric-violin", "name": "Electric Violin", "popularity": 65 },
+            { "id": "electric-viola", "name": "Electric Viola", "popularity": 40 },
+            { "id": "electric-cello", "name": "Electric Cello", "popularity": 50 },
+            { "id": "fiddle", "name": "Fiddle", "popularity": 75 },
+            { "id": "hardanger-fiddle", "name": "Hardanger Fiddle", "popularity": 25 },
+            { "id": "erhu", "name": "Erhu", "popularity": 45 },
+            { "id": "rebec", "name": "Rebec", "popularity": 15 },
+            { "id": "viol", "name": "Viol", "popularity": 20 }
+          ]
+        },
+        "zither": {
+          "name": "Zither Family",
+          "instruments": [
+            { "id": "dulcimer", "name": "Dulcimer", "popularity": 55 },
+            { "id": "hammered-dulcimer", "name": "Hammered Dulcimer", "popularity": 45 },
+            { "id": "autoharp", "name": "Autoharp", "popularity": 40 },
+            { "id": "koto", "name": "Koto", "popularity": 35 },
+            { "id": "guzheng", "name": "Guzheng", "popularity": 40 },
+            { "id": "psaltery", "name": "Psaltery", "popularity": 25 }
+          ]
+        },
+        "world": {
+          "name": "World Strings",
+          "instruments": [
+            { "id": "sitar", "name": "Sitar", "popularity": 60 },
+            { "id": "oud", "name": "Oud", "popularity": 50 },
+            { "id": "sarod", "name": "Sarod", "popularity": 35 },
+            { "id": "veena", "name": "Veena", "popularity": 40 },
+            { "id": "tar", "name": "Tar", "popularity": 30 },
+            { "id": "shamisen", "name": "Shamisen", "popularity": 25 },
+            { "id": "pipa", "name": "Pipa", "popularity": 30 },
+            { "id": "charango", "name": "Charango", "popularity": 35 },
+            { "id": "cuatro", "name": "Cuatro", "popularity": 40 },
+            { "id": "tres", "name": "Tres", "popularity": 30 }
+          ]
+        },
+        "harp": {
+          "name": "Harps",
+          "instruments": [
+            { "id": "concert-harp", "name": "Concert Harp", "popularity": 70 },
+            { "id": "celtic-harp", "name": "Celtic Harp", "popularity": 55 },
+            { "id": "electric-harp", "name": "Electric Harp", "popularity": 30 },
+            { "id": "lap-harp", "name": "Lap Harp", "popularity": 35 },
+            { "id": "cross-strung-harp", "name": "Cross-Strung Harp", "popularity": 20 }
+          ]
+        }
+      }
+    },
+    "keyboards": {
+      "name": "Keyboard Instruments",
+      "icon": "🎹",
+      "categories": {
+        "piano": {
+          "name": "Pianos",
+          "instruments": [
+            { "id": "acoustic-piano", "name": "Acoustic Piano", "popularity": 95 },
+            { "id": "digital-piano", "name": "Digital Piano", "popularity": 88 },
+            { "id": "electric-piano", "name": "Electric Piano", "popularity": 85 },
+            { "id": "stage-piano", "name": "Stage Piano", "popularity": 75 },
+            { "id": "upright-piano", "name": "Upright Piano", "popularity": 80 },
+            { "id": "grand-piano", "name": "Grand Piano", "popularity": 90 },
+            { "id": "baby-grand", "name": "Baby Grand", "popularity": 70 }
+          ]
+        },
+        "organ": {
+          "name": "Organs",
+          "instruments": [
+            { "id": "hammond-organ", "name": "Hammond Organ", "popularity": 80 },
+            { "id": "pipe-organ", "name": "Pipe Organ", "popularity": 65 },
+            { "id": "electric-organ", "name": "Electric Organ", "popularity": 70 },
+            { "id": "reed-organ", "name": "Reed Organ", "popularity": 40 },
+            { "id": "harmonium", "name": "Harmonium", "popularity": 45 }
+          ]
+        },
+        "synthesizer": {
+          "name": "Synthesizers",
+          "instruments": [
+            { "id": "analog-synthesizer", "name": "Analog Synthesizer", "popularity": 85 },
+            { "id": "digital-synthesizer", "name": "Digital Synthesizer", "popularity": 80 },
+            { "id": "modular-synthesizer", "name": "Modular Synthesizer", "popularity": 60 },
+            { "id": "workstation", "name": "Workstation", "popularity": 75 },
+            { "id": "rompler", "name": "Rompler", "popularity": 65 },
+            { "id": "sampler", "name": "Sampler", "popularity": 70 }
+          ]
+        },
+        "electronic": {
+          "name": "Electronic Keyboards",
+          "instruments": [
+            { "id": "midi-controller", "name": "MIDI Controller", "popularity": 85 },
+            { "id": "electric-keyboard", "name": "Electric Keyboard", "popularity": 75 },
+            { "id": "keytar", "name": "Keytar", "popularity": 45 },
+            { "id": "melodica", "name": "Melodica", "popularity": 55 }
+          ]
+        },
+        "historic": {
+          "name": "Historic Keyboards",
+          "instruments": [
+            { "id": "harpsichord", "name": "Harpsichord", "popularity": 50 },
+            { "id": "clavichord", "name": "Clavichord", "popularity": 25 },
+            { "id": "celesta", "name": "Celesta", "popularity": 40 },
+            { "id": "spinet", "name": "Spinet", "popularity": 20 }
+          ]
+        }
+      }
+    },
+    "percussion": {
+      "name": "Percussion Instruments",
+      "icon": "🥁",
+      "categories": {
+        "drums": {
+          "name": "Drums",
+          "instruments": [
+            { "id": "drum-kit", "name": "Drum Kit", "popularity": 100 },
+            { "id": "snare-drum", "name": "Snare Drum", "popularity": 95 },
+            { "id": "bass-drum", "name": "Bass Drum", "popularity": 90 },
+            { "id": "tom-tom", "name": "Tom-Tom", "popularity": 85 },
+            { "id": "floor-tom", "name": "Floor Tom", "popularity": 80 },
+            { "id": "electronic-drums", "name": "Electronic Drums", "popularity": 75 },
+            { "id": "cajón", "name": "Cajón", "popularity": 70 },
+            { "id": "djembe", "name": "Djembe", "popularity": 65 },
+            { "id": "conga", "name": "Conga", "popularity": 75 },
+            { "id": "bongo", "name": "Bongo", "popularity": 70 },
+            { "id": "timbales", "name": "Timbales", "popularity": 55 },
+            { "id": "tabla", "name": "Tabla", "popularity": 60 },
+            { "id": "frame-drum", "name": "Frame Drum", "popularity": 50 },
+            { "id": "bodhran", "name": "Bodhrán", "popularity": 45 },
+            { "id": "taiko", "name": "Taiko", "popularity": 40 },
+            { "id": "talking-drum", "name": "Talking Drum", "popularity": 35 },
+            { "id": "timpani", "name": "Timpani", "popularity": 80 },
+            { "id": "field-drum", "name": "Field Drum", "popularity": 30 },
+            { "id": "tabor", "name": "Tabor", "popularity": 25 }
+          ]
+        },
+        "cymbals": {
+          "name": "Cymbals",
+          "instruments": [
+            { "id": "crash-cymbal", "name": "Crash Cymbal", "popularity": 90 },
+            { "id": "ride-cymbal", "name": "Ride Cymbal", "popularity": 85 },
+            { "id": "hi-hat", "name": "Hi-Hat", "popularity": 95 },
+            { "id": "splash-cymbal", "name": "Splash Cymbal", "popularity": 70 },
+            { "id": "china-cymbal", "name": "China Cymbal", "popularity": 65 },
+            { "id": "suspended-cymbal", "name": "Suspended Cymbal", "popularity": 60 },
+            { "id": "finger-cymbals", "name": "Finger Cymbals", "popularity": 40 }
+          ]
+        },
+        "mallet": {
+          "name": "Mallet Percussion",
+          "instruments": [
+            { "id": "xylophone", "name": "Xylophone", "popularity": 75 },
+            { "id": "vibraphone", "name": "Vibraphone", "popularity": 70 },
+            { "id": "marimba", "name": "Marimba", "popularity": 80 },
+            { "id": "glockenspiel", "name": "Glockenspiel", "popularity": 65 },
+            { "id": "chimes", "name": "Chimes", "popularity": 60 },
+            { "id": "metallophone", "name": "Metallophone", "popularity": 45 },
+            { "id": "balafon", "name": "Balafon", "popularity": 35 },
+            { "id": "gamelan", "name": "Gamelan", "popularity": 30 },
+            { "id": "hang-drum", "name": "Hang Drum", "popularity": 55 },
+            { "id": "steel-drum", "name": "Steel Drum", "popularity": 65 }
+          ]
+        },
+        "small": {
+          "name": "Small Percussion",
+          "instruments": [
+            { "id": "tambourine", "name": "Tambourine", "popularity": 85 },
+            { "id": "triangle", "name": "Triangle", "popularity": 75 },
+            { "id": "cowbell", "name": "Cowbell", "popularity": 70 },
+            { "id": "woodblock", "name": "Woodblock", "popularity": 60 },
+            { "id": "claves", "name": "Claves", "popularity": 65 },
+            { "id": "maracas", "name": "Maracas", "popularity": 75 },
+            { "id": "shaker", "name": "Shaker", "popularity": 80 },
+            { "id": "castanets", "name": "Castanets", "popularity": 50 },
+            { "id": "guiro", "name": "Güiro", "popularity": 55 },
+            { "id": "cabasa", "name": "Cabasa", "popularity": 45 },
+            { "id": "egg-shaker", "name": "Egg Shaker", "popularity": 60 },
+            { "id": "bell-tree", "name": "Bell Tree", "popularity": 40 },
+            { "id": "rain-stick", "name": "Rain Stick", "popularity": 50 },
+            { "id": "vibraslap", "name": "Vibraslap", "popularity": 35 },
+            { "id": "jaw-harp", "name": "Jaw Harp", "popularity": 30 },
+            { "id": "singing-bowl", "name": "Singing Bowl", "popularity": 45 }
+          ]
+        },
+        "world": {
+          "name": "World Percussion",
+          "instruments": [
+            { "id": "berimbau", "name": "Berimbau", "popularity": 25 },
+            { "id": "cajón-peruano", "name": "Cajón Peruano", "popularity": 60 },
+            { "id": "pandeiro", "name": "Pandeiro", "popularity": 45 },
+            { "id": "riq", "name": "Riq", "popularity": 35 },
+            { "id": "daf", "name": "Daf", "popularity": 30 },
+            { "id": "bendir", "name": "Bendir", "popularity": 25 },
+            { "id": "ashiko", "name": "Ashiko", "popularity": 35 },
+            { "id": "doumbek", "name": "Doumbek", "popularity": 40 },
+            { "id": "udu", "name": "Udu", "popularity": 30 },
+            { "id": "mbira", "name": "Mbira", "popularity": 35 }
+          ]
+        }
+      }
+    },
+    "winds": {
+      "name": "Wind Instruments",
+      "icon": "🎺",
+      "categories": {
+        "brass": {
+          "name": "Brass",
+          "instruments": [
+            { "id": "trumpet", "name": "Trumpet", "popularity": 90 },
+            { "id": "trombone", "name": "Trombone", "popularity": 85 },
+            { "id": "french-horn", "name": "French Horn", "popularity": 75 },
+            { "id": "tuba", "name": "Tuba", "popularity": 70 },
+            { "id": "cornet", "name": "Cornet", "popularity": 60 },
+            { "id": "euphonium", "name": "Euphonium", "popularity": 55 },
+            { "id": "flugelhorn", "name": "Flugelhorn", "popularity": 50 },
+            { "id": "piccolo-trumpet", "name": "Piccolo Trumpet", "popularity": 40 },
+            { "id": "bass-trombone", "name": "Bass Trombone", "popularity": 45 },
+            { "id": "alto-horn", "name": "Alto Horn", "popularity": 35 },
+            { "id": "bugle", "name": "Bugle", "popularity": 30 },
+            { "id": "sousaphone", "name": "Sousaphone", "popularity": 40 }
+          ]
+        },
+        "saxophone": {
+          "name": "Saxophones",
+          "instruments": [
+            { "id": "alto-saxophone", "name": "Alto Saxophone", "popularity": 85 },
+            { "id": "tenor-saxophone", "name": "Tenor Saxophone", "popularity": 80 },
+            { "id": "soprano-saxophone", "name": "Soprano Saxophone", "popularity": 65 },
+            { "id": "baritone-saxophone", "name": "Baritone Saxophone", "popularity": 60 },
+            { "id": "bass-saxophone", "name": "Bass Saxophone", "popularity": 35 },
+            { "id": "sopranino-saxophone", "name": "Sopranino Saxophone", "popularity": 25 }
+          ]
+        },
+        "woodwinds": {
+          "name": "Woodwinds",
+          "instruments": [
+            { "id": "flute", "name": "Flute", "popularity": 85 },
+            { "id": "piccolo", "name": "Piccolo", "popularity": 60 },
+            { "id": "clarinet", "name": "Clarinet", "popularity": 80 },
+            { "id": "bass-clarinet", "name": "Bass Clarinet", "popularity": 55 },
+            { "id": "oboe", "name": "Oboe", "popularity": 70 },
+            { "id": "english-horn", "name": "English Horn", "popularity": 50 },
+            { "id": "bassoon", "name": "Bassoon", "popularity": 65 },
+            { "id": "contrabassoon", "name": "Contrabassoon", "popularity": 30 },
+            { "id": "alto-flute", "name": "Alto Flute", "popularity": 40 },
+            { "id": "bass-flute", "name": "Bass Flute", "popularity": 25 },
+            { "id": "recorder", "name": "Recorder", "popularity": 55 }
+          ]
+        },
+        "folk": {
+          "name": "Folk Winds",
+          "instruments": [
+            { "id": "tin-whistle", "name": "Tin Whistle", "popularity": 65 },
+            { "id": "harmonica", "name": "Harmonica", "popularity": 80 },
+            { "id": "ocarina", "name": "Ocarina", "popularity": 45 },
+            { "id": "panpipes", "name": "Panpipes", "popularity": 40 },
+            { "id": "didgeridoo", "name": "Didgeridoo", "popularity": 35 },
+            { "id": "bagpipes", "name": "Bagpipes", "popularity": 55 },
+            { "id": "accordion", "name": "Accordion", "popularity": 70 },
+            { "id": "concertina", "name": "Concertina", "popularity": 40 },
+            { "id": "bandoneon", "name": "Bandoneón", "popularity": 30 },
+            { "id": "melodeon", "name": "Melodeon", "popularity": 25 }
+          ]
+        },
+        "world": {
+          "name": "World Winds",
+          "instruments": [
+            { "id": "shakuhachi", "name": "Shakuhachi", "popularity": 35 },
+            { "id": "bansuri", "name": "Bansuri", "popularity": 40 },
+            { "id": "ney", "name": "Ney", "popularity": 35 },
+            { "id": "duduk", "name": "Duduk", "popularity": 30 },
+            { "id": "zurna", "name": "Zurna", "popularity": 25 },
+            { "id": "suona", "name": "Suona", "popularity": 25 },
+            { "id": "mijwiz", "name": "Mijwiz", "popularity": 20 },
+            { "id": "quena", "name": "Quena", "popularity": 30 },
+            { "id": "zampoña", "name": "Zampoña", "popularity": 25 }
+          ]
+        }
+      }
+    },
+    "electronic": {
+      "name": "Electronic Instruments",
+      "icon": "🎛️",
+      "categories": {
+        "synthesizers": {
+          "name": "Electronic Synthesizers",
+          "instruments": [
+            { "id": "analog-synth", "name": "Analog Synthesizer", "popularity": 85 },
+            { "id": "digital-synth", "name": "Digital Synthesizer", "popularity": 80 },
+            { "id": "modular-synth", "name": "Modular Synthesizer", "popularity": 60 },
+            { "id": "virtual-analog", "name": "Virtual Analog Synth", "popularity": 70 },
+            { "id": "fm-synthesizer", "name": "FM Synthesizer", "popularity": 55 },
+            { "id": "wavetable-synth", "name": "Wavetable Synthesizer", "popularity": 50 }
+          ]
+        },
+        "controllers": {
+          "name": "Controllers & Interfaces",
+          "instruments": [
+            { "id": "midi-keyboard", "name": "MIDI Keyboard", "popularity": 90 },
+            { "id": "pad-controller", "name": "Pad Controller", "popularity": 75 },
+            { "id": "dj-controller", "name": "DJ Controller", "popularity": 80 },
+            { "id": "control-surface", "name": "Control Surface", "popularity": 65 },
+            { "id": "wind-controller", "name": "Wind Controller", "popularity": 40 },
+            { "id": "drum-pad", "name": "Electronic Drum Pad", "popularity": 70 }
+          ]
+        },
+        "effects": {
+          "name": "Electronic Effects",
+          "instruments": [
+            { "id": "theremin", "name": "Theremin", "popularity": 45 },
+            { "id": "talk-box", "name": "Talk Box", "popularity": 40 },
+            { "id": "vocoder", "name": "Vocoder", "popularity": 55 },
+            { "id": "loop-station", "name": "Loop Station", "popularity": 70 },
+            { "id": "drum-machine", "name": "Drum Machine", "popularity": 75 },
+            { "id": "groovebox", "name": "Groovebox", "popularity": 60 }
+          ]
+        },
+        "software": {
+          "name": "Software Instruments",
+          "instruments": [
+            { "id": "vst-instrument", "name": "VST Instrument", "popularity": 85 },
+            { "id": "software-sampler", "name": "Software Sampler", "popularity": 80 },
+            { "id": "virtual-piano", "name": "Virtual Piano", "popularity": 75 },
+            { "id": "software-drums", "name": "Software Drums", "popularity": 70 },
+            { "id": "virtual-guitar", "name": "Virtual Guitar", "popularity": 60 }
+          ]
+        }
+      }
+    },
+    "voice": {
+      "name": "Vocal",
+      "icon": "🎤",
+      "categories": {
+        "vocal": {
+          "name": "Vocal Types",
+          "instruments": [
+            { "id": "lead-vocals", "name": "Lead Vocals", "popularity": 100 },
+            { "id": "backing-vocals", "name": "Backing Vocals", "popularity": 85 },
+            { "id": "soprano", "name": "Soprano", "popularity": 80 },
+            { "id": "alto", "name": "Alto", "popularity": 75 },
+            { "id": "tenor", "name": "Tenor", "popularity": 70 },
+            { "id": "bass-voice", "name": "Bass Voice", "popularity": 65 },
+            { "id": "countertenor", "name": "Countertenor", "popularity": 40 },
+            { "id": "mezzo-soprano", "name": "Mezzo-Soprano", "popularity": 60 },
+            { "id": "baritone-voice", "name": "Baritone Voice", "popularity": 55 }
+          ]
+        },
+        "techniques": {
+          "name": "Vocal Techniques",
+          "instruments": [
+            { "id": "beatboxing", "name": "Beatboxing", "popularity": 60 },
+            { "id": "overtone-singing", "name": "Overtone Singing", "popularity": 30 },
+            { "id": "throat-singing", "name": "Throat Singing", "popularity": 25 },
+            { "id": "yodeling", "name": "Yodeling", "popularity": 35 },
+            { "id": "scat-singing", "name": "Scat Singing", "popularity": 45 },
+            { "id": "whistle-register", "name": "Whistle Register", "popularity": 40 }
+          ]
+        }
+      }
+    }
+  },
+  "metadata": {
+    "totalInstruments": 250,
+    "version": "1.0",
+    "lastUpdated": "2025-01-22",
+    "popularityScale": "1-100 based on live performance frequency",
+    "categories": "Hierarchical: Family > Category > Instrument",
+    "usage": "For musician profile instrument selection in Artists Hive platform"
+  }
+}

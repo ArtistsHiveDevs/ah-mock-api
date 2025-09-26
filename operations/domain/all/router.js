@@ -19,6 +19,124 @@ const convertKmToDegrees = (km) => {
   return km / earthRadiusKm;
 };
 
+// 🎵 Helper function to detect genres in text query
+async function detectGenresInText(query, req) {
+  if (!query || query.length < 3) return null;
+
+  try {
+    // Check if GenreLookup model exists, if not, use basic detection
+    const GenreLookup = await getModel(req.serverEnvironment, "GenreLookup");
+    
+    if (!GenreLookup) {
+      console.warn("GenreLookup model not found - using basic genre detection");
+      return basicGenreDetection(query);
+    }
+
+    // Search for genre matches in query text
+    const genreMatches = await GenreLookup.find({
+      $or: [
+        { level1_name: { $regex: new RegExp(query, "i") } },
+        { level2_name: { $regex: new RegExp(query, "i") } },
+        { level3_tag: { $regex: new RegExp(query, "i") } },
+        { aliases: { $in: [new RegExp(query, "i")] } },
+      ],
+    })
+      .limit(5)
+      .sort({ popularity_score: -1 });
+
+    return genreMatches.length > 0 ? genreMatches : null;
+  } catch (error) {
+    console.warn("Genre detection failed (model may not exist yet):", error.message);
+    return basicGenreDetection(query);
+  }
+}
+
+// 🎵 Basic genre detection fallback when GenreLookup doesn't exist
+function basicGenreDetection(query) {
+  const lowerQuery = query.toLowerCase();
+  
+  // Common genre patterns for basic detection
+  const genrePatterns = {
+    'latin': ['latin', 'latino', 'salsa', 'cumbia', 'reggaeton', 'bachata', 'merengue', 'mariachi', 'ranchera'],
+    'rock': ['rock', 'metal', 'punk', 'grunge', 'alternative'],
+    'electronic': ['electronic', 'house', 'techno', 'edm', 'dance'],
+    'hip_hop': ['hip hop', 'rap', 'trap', 'drill'],
+    'jazz': ['jazz', 'blues', 'soul', 'funk'],
+    'pop': ['pop', 'indie']
+  };
+  
+  for (const [level1Key, keywords] of Object.entries(genrePatterns)) {
+    for (const keyword of keywords) {
+      if (lowerQuery.includes(keyword)) {
+        return [{
+          level1_key: level1Key,
+          level1_name: level1Key.charAt(0).toUpperCase() + level1Key.slice(1).replace('_', ' '),
+          level2_key: `${level1Key}_basic`,
+          level2_name: `${level1Key.charAt(0).toUpperCase() + level1Key.slice(1).replace('_', ' ')} (Basic)`,
+          level3_tag: keyword,
+          hierarchy_path: `${level1Key}.${level1Key}_basic`,
+          popularity_score: 50
+        }];
+      }
+    }
+  }
+  
+  return null;
+}
+
+// 🎵 Helper function to build genre filters
+function buildGenreFilters({
+  explicit = {},
+  detected = null,
+  userLocation = {},
+}) {
+  const filters = {
+    hardFilters: {},
+    boostConditions: [],
+    scoreBoosts: [],
+  };
+
+  // Explicit dropdown filters (hard filters)
+  if (explicit.genre_l1) {
+    filters.hardFilters["genres.level1_key"] = explicit.genre_l1;
+  }
+  if (explicit.genre_l2) {
+    filters.hardFilters["genres.level2_key"] = explicit.genre_l2;
+  }
+  if (explicit.genre_tags) {
+    const tags = explicit.genre_tags.split(",").map((t) => t.trim());
+    filters.hardFilters["genres.all_tags"] = { $in: tags };
+  }
+
+  // Detected genres (soft boost conditions)
+  if (detected && detected.length > 0) {
+    const detectedPaths = detected.map((g) => g.hierarchy_path);
+    const detectedL1s = detected.map((g) => g.level1_key);
+    const detectedTags = detected.flatMap((g) =>
+      g.level3_tag ? [g.level3_tag] : []
+    );
+
+    // Add boost conditions for detected genres
+    if (detectedPaths.length > 0) {
+      filters.boostConditions.push({
+        "genres.hierarchy_path": { $in: detectedPaths },
+      });
+    }
+    if (detectedL1s.length > 0) {
+      filters.boostConditions.push({
+        "genres.level1_key": { $in: detectedL1s },
+      });
+    }
+    if (detectedTags.length > 0) {
+      filters.boostConditions.push({
+        "genres.all_tags": { $in: detectedTags },
+      });
+    }
+  }
+
+  return filters;
+}
+
 async function searchEntitiesDB(req, queryRQ) {
   const {
     q: query = "",
@@ -27,9 +145,19 @@ async function searchEntitiesDB(req, queryRQ) {
     page = 1,
     limit = 10,
     et,
+    // 🎵 NEW: Genre filter parameters
+    genre_l1,
+    genre_l2,
+    genre_tags,
+    country,
+    continent,
+    // Future extensibility placeholders
+    availability_date,
+    availability_range,
   } = queryRQ;
 
   try {
+    console.log(queryRQ);
     const skip = (page - 1) * limit;
 
     // 1️⃣ Normalizar la búsqueda (eliminar acentos, caracteres especiales y convertir a minúsculas)
@@ -42,15 +170,30 @@ async function searchEntitiesDB(req, queryRQ) {
     const regexPattern = `\\b${normalizedQuery}`;
     const regex = new RegExp(regexPattern, "i");
 
-    const orMatch = [
+    // 🎵 3️⃣ Detect genres in text query
+    const detectedGenres = await detectGenresInText(normalizedQuery, req);
+
+    // 🎵 4️⃣ Build genre filters (explicit + detected)
+    const genreFilters = buildGenreFilters({
+      explicit: { genre_l1, genre_l2, genre_tags },
+      detected: detectedGenres,
+      userLocation: { country, continent },
+    });
+
+    // 5️⃣ Build base text search conditions
+    const baseTextMatch = [
       { name: { $regex: regex } },
       { username: { $regex: regex } },
       { search_cache: { $regex: regex } },
     ];
 
-    // 3️⃣ Filtrar por entityType si está presente
+    // 🎵 6️⃣ Add genre boost conditions to text search
+    const orMatch = [...baseTextMatch, ...genreFilters.boostConditions];
+
+    // 7️⃣ Build final match condition
     const matchCondition = {
-      $or: orMatch,
+      $or: orMatch.length > 0 ? orMatch : baseTextMatch,
+      ...genreFilters.hardFilters, // 🎵 Apply hard genre filters
       ...(et && { entityType: et }),
     };
 
@@ -59,9 +202,87 @@ async function searchEntitiesDB(req, queryRQ) {
       "EntityDirectory"
     );
 
-    // 4️⃣ Buscar y agrupar por entityType
-    const results = await EntityDirectory.aggregate([
+    // 🎵 8️⃣ Build genre-aware aggregation pipeline
+    const aggregationPipeline = [
       { $match: matchCondition },
+      {
+        $addFields: {
+          // 🎵 Calculate genre relevance score
+          genre_score: {
+            $cond: {
+              if: {
+                $and: [
+                  { $ne: ["$genres", null] },
+                  { $ne: [detectedGenres, null] },
+                ],
+              },
+              then: {
+                $switch: {
+                  branches: [
+                    // Perfect hierarchy match gets highest score
+                    {
+                      case: {
+                        $in: [
+                          "$genres.hierarchy_path",
+                          detectedGenres?.map((g) => g.hierarchy_path) || [],
+                        ],
+                      },
+                      then: 100,
+                    },
+                    // Level 1 match gets medium score
+                    {
+                      case: {
+                        $in: [
+                          "$genres.level1_key",
+                          detectedGenres?.map((g) => g.level1_key) || [],
+                        ],
+                      },
+                      then: 50,
+                    },
+                    // Any tag match gets lower score
+                    {
+                      case: {
+                        $gt: [
+                          {
+                            $size: {
+                              $setIntersection: [
+                                "$genres.all_tags",
+                                detectedGenres?.flatMap((g) =>
+                                  g.level3_tag ? [g.level3_tag] : []
+                                ) || [],
+                              ],
+                            },
+                          },
+                          0,
+                        ],
+                      },
+                      then: 25,
+                    },
+                  ],
+                  default: 0,
+                },
+              },
+              else: 0,
+            },
+          },
+          // 🎵 Calculate geographic relevance score
+          geo_score: {
+            $cond: {
+              if: {
+                $and: [{ $ne: ["$genres", null] }, { $ne: [country, null] }],
+              },
+              then: {
+                $cond: {
+                  if: { $in: [country, "$genres.country_relevance"] },
+                  then: 20,
+                  else: 0,
+                },
+              },
+              else: 0,
+            },
+          },
+        },
+      },
       {
         $group: {
           _id: "$entityType",
@@ -77,9 +298,12 @@ async function searchEntitiesDB(req, queryRQ) {
                 $sortArray: {
                   input: "$entities",
                   sortBy: {
-                    verified_status: 1,
-                    profile_pic: 1,
-                    lastActivity: -1,
+                    // 🎵 Enhanced sorting with genre + geographic relevance
+                    genre_score: -1, // Genre matches first
+                    geo_score: -1, // Geographic relevance second
+                    verified_status: 1, // Verified profiles third
+                    profile_pic: 1, // Profiles with pictures fourth
+                    lastActivity: -1, // Recent activity last
                   },
                 },
               },
@@ -90,7 +314,10 @@ async function searchEntitiesDB(req, queryRQ) {
         },
       },
       { $sort: { entityType: 1 } },
-    ]);
+    ];
+
+    // 9️⃣ Execute genre-aware search
+    const results = await EntityDirectory.aggregate(aggregationPipeline);
 
     // 5️⃣ Contar resultados
     const countResults = await EntityDirectory.aggregate([

@@ -1,0 +1,188 @@
+[
+  {
+    "level1_key": "latin",
+    "level1_name": "Latin Music",
+    "level2_key": "latin_pop_rock",
+    "level2_name": "Latin Pop & Rock",
+    "level3_genres": [
+      "latin indie",
+      "latin pop",
+      "latin rock",
+      "rock en español",
+      "latin alternative"
+    ],
+    "search_keywords": [
+      "latin music",
+      "latin pop & rock",
+      "latin indie",
+      "latin pop",
+      "latin rock",
+      "rock en español",
+      "latin alternative"
+    ],
+    "hierarchy_path": "latin.latin_pop_rock",
+    "continent_weight": {},
+    "country_weight": {},
+    "isActive": true
+  },
+  {
+    "level1_key": "latin",
+    "level1_name": "Latin Music",
+    "level2_key": "salsa_tropical",
+    "level2_name": "Salsa & Tropical",
+    "level3_genres": [
+      "salsa",
+      "salsa romantica",
+      "timba",
+      "son cubano",
+      "cumbia",
+      "chicha",
+      "merengue",
+      "bachata"
+    ],
+    "search_keywords": [
+      "latin music",
+      "salsa & tropical",
+      "salsa",
+      "salsa romantica",
+      "timba",
+      "son cubano",
+      "cumbia",
+      "chicha",
+      "merengue",
+      "bachata"
+    ],
+    "hierarchy_path": "latin.salsa_tropical",
+    "continent_weight": {},
+    "country_weight": {},
+    "isActive": true
+  },
+  {
+    "level1_key": "latin",
+    "level1_name": "Latin Music",
+    "level2_key": "regional_mexican",
+    "level2_name": "Regional Mexican",
+    "level3_genres": [
+      "mariachi",
+      "ranchera",
+      "banda",
+      "norteño",
+      "corrido",
+      "vallenato"
+    ],
+    "search_keywords": [
+      "latin music",
+      "regional mexican",
+      "mariachi",
+      "ranchera",
+      "banda",
+      "norteño",
+      "corrido",
+      "vallenato"
+    ],
+    "hierarchy_path": "latin.regional_mexican",
+    "continent_weight": {},
+    "country_weight": {},
+    "isActive": true
+  },
+  {
+    "level1_key": "rock",
+    "level1_name": "Rock",
+    "level2_key": "alternative_rock",
+    "level2_name": "Alternative Rock",
+    "level3_genres": [
+      "alternative rock",
+      "indie rock",
+      "grunge",
+      "post-rock",
+      "art rock"
+    ],
+    "search_keywords": [
+      "rock",
+      "alternative rock",
+      "alternative rock",
+      "indie rock",
+      "grunge",
+      "post-rock",
+      "art rock"
+    ],
+    "hierarchy_path": "rock.alternative_rock",
+    "continent_weight": {},
+    "country_weight": {},
+    "isActive": true
+  },
+  {
+    "level1_key": "rock",
+    "level1_name": "Rock",
+    "level2_key": "classic_rock",
+    "level2_name": "Classic Rock",
+    "level3_genres": [
+      "classic rock",
+      "hard rock",
+      "blues rock",
+      "southern rock"
+    ],
+    "search_keywords": [
+      "rock",
+      "classic rock",
+      "classic rock",
+      "hard rock",
+      "blues rock",
+      "southern rock"
+    ],
+    "hierarchy_path": "rock.classic_rock",
+    "continent_weight": {},
+    "country_weight": {},
+    "isActive": true
+  },
+  {
+    "level1_key": "electronic",
+    "level1_name": "Electronic",
+    "level2_key": "house",
+    "level2_name": "House",
+    "level3_genres": [
+      "house",
+      "deep house",
+      "tech house",
+      "latin house",
+      "afro house"
+    ],
+    "search_keywords": [
+      "electronic",
+      "house",
+      "house",
+      "deep house",
+      "tech house",
+      "latin house",
+      "afro house"
+    ],
+    "hierarchy_path": "electronic.house",
+    "continent_weight": {},
+    "country_weight": {},
+    "isActive": true
+  },
+  {
+    "level1_key": "electronic",
+    "level1_name": "Electronic",
+    "level2_key": "techno",
+    "level2_name": "Techno",
+    "level3_genres": [
+      "techno",
+      "melodic techno",
+      "acid techno",
+      "hard techno"
+    ],
+    "search_keywords": [
+      "electronic",
+      "techno",
+      "techno",
+      "melodic techno",
+      "acid techno",
+      "hard techno"
+    ],
+    "hierarchy_path": "electronic.techno",
+    "continent_weight": {},
+    "country_weight": {},
+    "isActive": true
+  }
+]

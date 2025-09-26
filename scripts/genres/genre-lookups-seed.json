@@ -1,0 +1,527 @@
+[
+  {
+    "level3_tag": "latin indie",
+    "level1_key": "latin",
+    "level1_name": "Latin Music",
+    "level2_key": "latin_pop_rock",
+    "level2_name": "Latin Pop & Rock",
+    "hierarchy_path": "latin.latin_pop_rock",
+    "aliases": [
+      "latino indie",
+      "latinx indie",
+      "latin independent",
+      "latin alternativo",
+      "indie latino",
+      "indie latinoamericano",
+      "latin independent"
+    ],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 90,
+    "isActive": true
+  },
+  {
+    "level3_tag": "latin pop",
+    "level1_key": "latin",
+    "level1_name": "Latin Music",
+    "level2_key": "latin_pop_rock",
+    "level2_name": "Latin Pop & Rock",
+    "hierarchy_path": "latin.latin_pop_rock",
+    "aliases": [
+      "latino pop",
+      "latinx pop"
+    ],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 85,
+    "isActive": true
+  },
+  {
+    "level3_tag": "latin rock",
+    "level1_key": "latin",
+    "level1_name": "Latin Music",
+    "level2_key": "latin_pop_rock",
+    "level2_name": "Latin Pop & Rock",
+    "hierarchy_path": "latin.latin_pop_rock",
+    "aliases": [
+      "latino rock",
+      "latinx rock",
+      "latin rock music"
+    ],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 80,
+    "isActive": true
+  },
+  {
+    "level3_tag": "rock en español",
+    "level1_key": "latin",
+    "level1_name": "Latin Music",
+    "level2_key": "latin_pop_rock",
+    "level2_name": "Latin Pop & Rock",
+    "hierarchy_path": "latin.latin_pop_rock",
+    "aliases": [
+      "rock music en español",
+      "spanish rock",
+      "rock español",
+      "rock hispano"
+    ],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 75,
+    "isActive": true
+  },
+  {
+    "level3_tag": "latin alternative",
+    "level1_key": "latin",
+    "level1_name": "Latin Music",
+    "level2_key": "latin_pop_rock",
+    "level2_name": "Latin Pop & Rock",
+    "hierarchy_path": "latin.latin_pop_rock",
+    "aliases": [
+      "latino alternative",
+      "latinx alternative"
+    ],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 70,
+    "isActive": true
+  },
+  {
+    "level3_tag": "salsa",
+    "level1_key": "latin",
+    "level1_name": "Latin Music",
+    "level2_key": "salsa_tropical",
+    "level2_name": "Salsa & Tropical",
+    "hierarchy_path": "latin.salsa_tropical",
+    "aliases": [],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 90,
+    "isActive": true
+  },
+  {
+    "level3_tag": "salsa romantica",
+    "level1_key": "latin",
+    "level1_name": "Latin Music",
+    "level2_key": "salsa_tropical",
+    "level2_name": "Salsa & Tropical",
+    "hierarchy_path": "latin.salsa_tropical",
+    "aliases": [],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 85,
+    "isActive": true
+  },
+  {
+    "level3_tag": "timba",
+    "level1_key": "latin",
+    "level1_name": "Latin Music",
+    "level2_key": "salsa_tropical",
+    "level2_name": "Salsa & Tropical",
+    "hierarchy_path": "latin.salsa_tropical",
+    "aliases": [],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 80,
+    "isActive": true
+  },
+  {
+    "level3_tag": "son cubano",
+    "level1_key": "latin",
+    "level1_name": "Latin Music",
+    "level2_key": "salsa_tropical",
+    "level2_name": "Salsa & Tropical",
+    "hierarchy_path": "latin.salsa_tropical",
+    "aliases": [],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 75,
+    "isActive": true
+  },
+  {
+    "level3_tag": "cumbia",
+    "level1_key": "latin",
+    "level1_name": "Latin Music",
+    "level2_key": "salsa_tropical",
+    "level2_name": "Salsa & Tropical",
+    "hierarchy_path": "latin.salsa_tropical",
+    "aliases": [],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 70,
+    "isActive": true
+  },
+  {
+    "level3_tag": "chicha",
+    "level1_key": "latin",
+    "level1_name": "Latin Music",
+    "level2_key": "salsa_tropical",
+    "level2_name": "Salsa & Tropical",
+    "hierarchy_path": "latin.salsa_tropical",
+    "aliases": [],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 65,
+    "isActive": true
+  },
+  {
+    "level3_tag": "merengue",
+    "level1_key": "latin",
+    "level1_name": "Latin Music",
+    "level2_key": "salsa_tropical",
+    "level2_name": "Salsa & Tropical",
+    "hierarchy_path": "latin.salsa_tropical",
+    "aliases": [],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 60,
+    "isActive": true
+  },
+  {
+    "level3_tag": "bachata",
+    "level1_key": "latin",
+    "level1_name": "Latin Music",
+    "level2_key": "salsa_tropical",
+    "level2_name": "Salsa & Tropical",
+    "hierarchy_path": "latin.salsa_tropical",
+    "aliases": [],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 55,
+    "isActive": true
+  },
+  {
+    "level3_tag": "mariachi",
+    "level1_key": "latin",
+    "level1_name": "Latin Music",
+    "level2_key": "regional_mexican",
+    "level2_name": "Regional Mexican",
+    "hierarchy_path": "latin.regional_mexican",
+    "aliases": [],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 90,
+    "isActive": true
+  },
+  {
+    "level3_tag": "ranchera",
+    "level1_key": "latin",
+    "level1_name": "Latin Music",
+    "level2_key": "regional_mexican",
+    "level2_name": "Regional Mexican",
+    "hierarchy_path": "latin.regional_mexican",
+    "aliases": [],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 85,
+    "isActive": true
+  },
+  {
+    "level3_tag": "banda",
+    "level1_key": "latin",
+    "level1_name": "Latin Music",
+    "level2_key": "regional_mexican",
+    "level2_name": "Regional Mexican",
+    "hierarchy_path": "latin.regional_mexican",
+    "aliases": [],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 80,
+    "isActive": true
+  },
+  {
+    "level3_tag": "norteño",
+    "level1_key": "latin",
+    "level1_name": "Latin Music",
+    "level2_key": "regional_mexican",
+    "level2_name": "Regional Mexican",
+    "hierarchy_path": "latin.regional_mexican",
+    "aliases": [],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 75,
+    "isActive": true
+  },
+  {
+    "level3_tag": "corrido",
+    "level1_key": "latin",
+    "level1_name": "Latin Music",
+    "level2_key": "regional_mexican",
+    "level2_name": "Regional Mexican",
+    "hierarchy_path": "latin.regional_mexican",
+    "aliases": [],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 70,
+    "isActive": true
+  },
+  {
+    "level3_tag": "vallenato",
+    "level1_key": "latin",
+    "level1_name": "Latin Music",
+    "level2_key": "regional_mexican",
+    "level2_name": "Regional Mexican",
+    "hierarchy_path": "latin.regional_mexican",
+    "aliases": [],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 65,
+    "isActive": true
+  },
+  {
+    "level3_tag": "alternative rock",
+    "level1_key": "rock",
+    "level1_name": "Rock",
+    "level2_key": "alternative_rock",
+    "level2_name": "Alternative Rock",
+    "hierarchy_path": "rock.alternative_rock",
+    "aliases": [
+      "alternative rock music"
+    ],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 90,
+    "isActive": true
+  },
+  {
+    "level3_tag": "indie rock",
+    "level1_key": "rock",
+    "level1_name": "Rock",
+    "level2_key": "alternative_rock",
+    "level2_name": "Alternative Rock",
+    "hierarchy_path": "rock.alternative_rock",
+    "aliases": [
+      "independent rock",
+      "alternativo rock",
+      "indie rock music"
+    ],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 85,
+    "isActive": true
+  },
+  {
+    "level3_tag": "grunge",
+    "level1_key": "rock",
+    "level1_name": "Rock",
+    "level2_key": "alternative_rock",
+    "level2_name": "Alternative Rock",
+    "hierarchy_path": "rock.alternative_rock",
+    "aliases": [],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 80,
+    "isActive": true
+  },
+  {
+    "level3_tag": "post-rock",
+    "level1_key": "rock",
+    "level1_name": "Rock",
+    "level2_key": "alternative_rock",
+    "level2_name": "Alternative Rock",
+    "hierarchy_path": "rock.alternative_rock",
+    "aliases": [
+      "post-rock music"
+    ],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 75,
+    "isActive": true
+  },
+  {
+    "level3_tag": "art rock",
+    "level1_key": "rock",
+    "level1_name": "Rock",
+    "level2_key": "alternative_rock",
+    "level2_name": "Alternative Rock",
+    "hierarchy_path": "rock.alternative_rock",
+    "aliases": [
+      "art rock music"
+    ],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 70,
+    "isActive": true
+  },
+  {
+    "level3_tag": "classic rock",
+    "level1_key": "rock",
+    "level1_name": "Rock",
+    "level2_key": "classic_rock",
+    "level2_name": "Classic Rock",
+    "hierarchy_path": "rock.classic_rock",
+    "aliases": [
+      "classic rock music"
+    ],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 90,
+    "isActive": true
+  },
+  {
+    "level3_tag": "hard rock",
+    "level1_key": "rock",
+    "level1_name": "Rock",
+    "level2_key": "classic_rock",
+    "level2_name": "Classic Rock",
+    "hierarchy_path": "rock.classic_rock",
+    "aliases": [
+      "hard rock music"
+    ],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 85,
+    "isActive": true
+  },
+  {
+    "level3_tag": "blues rock",
+    "level1_key": "rock",
+    "level1_name": "Rock",
+    "level2_key": "classic_rock",
+    "level2_name": "Classic Rock",
+    "hierarchy_path": "rock.classic_rock",
+    "aliases": [
+      "blues rock music"
+    ],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 80,
+    "isActive": true
+  },
+  {
+    "level3_tag": "southern rock",
+    "level1_key": "rock",
+    "level1_name": "Rock",
+    "level2_key": "classic_rock",
+    "level2_name": "Classic Rock",
+    "hierarchy_path": "rock.classic_rock",
+    "aliases": [
+      "southern rock music"
+    ],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 75,
+    "isActive": true
+  },
+  {
+    "level3_tag": "house",
+    "level1_key": "electronic",
+    "level1_name": "Electronic",
+    "level2_key": "house",
+    "level2_name": "House",
+    "hierarchy_path": "electronic.house",
+    "aliases": [],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 90,
+    "isActive": true
+  },
+  {
+    "level3_tag": "deep house",
+    "level1_key": "electronic",
+    "level1_name": "Electronic",
+    "level2_key": "house",
+    "level2_name": "House",
+    "hierarchy_path": "electronic.house",
+    "aliases": [],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 85,
+    "isActive": true
+  },
+  {
+    "level3_tag": "tech house",
+    "level1_key": "electronic",
+    "level1_name": "Electronic",
+    "level2_key": "house",
+    "level2_name": "House",
+    "hierarchy_path": "electronic.house",
+    "aliases": [],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 80,
+    "isActive": true
+  },
+  {
+    "level3_tag": "latin house",
+    "level1_key": "electronic",
+    "level1_name": "Electronic",
+    "level2_key": "house",
+    "level2_name": "House",
+    "hierarchy_path": "electronic.house",
+    "aliases": [
+      "latino house",
+      "latinx house"
+    ],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 75,
+    "isActive": true
+  },
+  {
+    "level3_tag": "afro house",
+    "level1_key": "electronic",
+    "level1_name": "Electronic",
+    "level2_key": "house",
+    "level2_name": "House",
+    "hierarchy_path": "electronic.house",
+    "aliases": [],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 70,
+    "isActive": true
+  },
+  {
+    "level3_tag": "techno",
+    "level1_key": "electronic",
+    "level1_name": "Electronic",
+    "level2_key": "techno",
+    "level2_name": "Techno",
+    "hierarchy_path": "electronic.techno",
+    "aliases": [],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 90,
+    "isActive": true
+  },
+  {
+    "level3_tag": "melodic techno",
+    "level1_key": "electronic",
+    "level1_name": "Electronic",
+    "level2_key": "techno",
+    "level2_name": "Techno",
+    "hierarchy_path": "electronic.techno",
+    "aliases": [],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 85,
+    "isActive": true
+  },
+  {
+    "level3_tag": "acid techno",
+    "level1_key": "electronic",
+    "level1_name": "Electronic",
+    "level2_key": "techno",
+    "level2_name": "Techno",
+    "hierarchy_path": "electronic.techno",
+    "aliases": [],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 80,
+    "isActive": true
+  },
+  {
+    "level3_tag": "hard techno",
+    "level1_key": "electronic",
+    "level1_name": "Electronic",
+    "level2_key": "techno",
+    "level2_name": "Techno",
+    "hierarchy_path": "electronic.techno",
+    "aliases": [],
+    "continent_weight": {},
+    "country_weight": {},
+    "popularity_score": 75,
+    "isActive": true
+  }
+]

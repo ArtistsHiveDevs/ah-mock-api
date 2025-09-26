@@ -48,6 +48,7 @@ module.exports = {
     // "followed_profiles",
     "followed_by_count",
     "followed_profiles_count",
+    "entityRoleMap",
   ],
   authenticated_fields: [
     // "artistType",
@@ -98,6 +99,7 @@ module.exports = {
     "followed_profiles_count",
 
     "isClaimedProfile",
+    "entityRoleMap",
   ],
   appbase_public_fields: {
     EntityDirectory: {
@@ -106,6 +108,9 @@ module.exports = {
         "entityType",
         "profile_pic",
         "name",
+        "given_names",
+        "surnames",
+        "stage_name",
         "username",
         "subtitle",
         "verified_status",
@@ -143,6 +148,7 @@ module.exports = {
         "blood_group",
         "spoken_languages",
         "dietary_restrictions",
+        "arts",
         // "followed_by",
         // "followed_profiles",
         "birthplace_country",

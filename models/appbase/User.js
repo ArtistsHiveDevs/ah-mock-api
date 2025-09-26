@@ -55,12 +55,22 @@ const schema = new mongoose.Schema({
   home_address: String,
   // spoken_languages: [{ type: Schema.Types.ObjectId, ref: "Language" }],
   spoken_languages: [String],
-  dietary_restrictions: String,
+  dietary_restrictions: [String],
   latlng: String,
   profile_pic: String,
   verified_status: Number,
   user_language: String,
   roles: [roleSchema],
+  arts: {
+    type: Map,
+    of: new Schema(
+      {
+        played_instruments: [String],
+        roles: [String],
+      },
+      { _id: false }
+    ),
+  },
   created_at: String,
   updated_at: String,
   show_industry_member_banner: Boolean,

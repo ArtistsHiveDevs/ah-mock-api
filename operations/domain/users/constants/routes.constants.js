@@ -38,6 +38,7 @@ module.exports = {
     // "latlng",
     "profile_pic",
     "verified_status",
+    "arts",
     // "user_language",
     // "roles",
   ],

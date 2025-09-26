@@ -307,6 +307,8 @@ module.exports = [
 
       const newInfo = { ...req.body };
 
+      console.log("REQ ", req.body);
+
       if (newInfo.gender) {
         const genders = [
           { label: "Man", value: "male" },
@@ -321,8 +323,9 @@ module.exports = [
 
       try {
         // Generar el objeto de actualización
-        const updateFields = helpers.flattenObject(newInfo);
+        const updateFields = helpers.flattenObject(newInfo, "", {}, ["arts  "]);
 
+        console.log("UPDTE= ", updateFields);
         let query = {};
 
         if (mongoose.Types.ObjectId.isValid(userId)) {
@@ -339,7 +342,53 @@ module.exports = [
           };
         }
 
+        if (!!updateFields.roles) {
+          try {
+            console.log(" se deben actualizar los roles... ");
+            const ArtistModel = await getModel(req.serverEnvironment, "Artist");
 
+            const artistRoles =
+              updateFields.roles.find(
+                (entityRole) => entityRole.entityName === "Artist"
+              )?.entityRoleMap || [];
+
+            await Promise.all(
+              artistRoles.map(async (roleMap) => {
+                const artist = await ArtistModel.findOne({ _id: roleMap.id });
+
+                if (!artist) {
+                  console.warn(`Artist with ID ${roleMap.id} not found.`);
+                  return; // Salta este si no encontró el artista
+                }
+
+                console.log("Artist:", artist.name, artist.entityRoleMap);
+
+                const newRolesInArtist = [...(artist.entityRoleMap || [])];
+
+                for (const roleRQ of roleMap?.roles || []) {
+                  let existingRole = newRolesInArtist.find(
+                    (artistRole) => artistRole.role === roleRQ
+                  );
+
+                  if (!existingRole) {
+                    existingRole = { role: roleRQ, ids: [] };
+                    newRolesInArtist.push(existingRole);
+                  }
+
+                  // Asegúrate de que el userId no esté duplicado
+                  if (!existingRole.ids.includes(req.userId)) {
+                    existingRole.ids.push(req.userId);
+                  }
+                }
+
+                artist.entityRoleMap = newRolesInArtist;
+                await artist.save();
+              })
+            );
+          } catch (error) {
+            console.log("erroooorrrr ", error);
+          }
+        }
         // Realizar la consulta de actualización con $set
         const UserModel = await getModel(req.serverEnvironment, "User");
         const updatedUser = await UserModel.findOneAndUpdate(
