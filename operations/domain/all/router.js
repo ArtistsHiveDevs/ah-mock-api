@@ -32,8 +32,9 @@ async function searchEntitiesDB(req, queryRQ) {
   try {
     const skip = (page - 1) * limit;
 
-    // 1️⃣ Normalizar la búsqueda (eliminar acentos, caracteres especiales y convertir a minúsculas)
-    const normalizedQuery = removeAccents(query)
+    // 1️⃣ Decodificar URL y normalizar la búsqueda (eliminar acentos, caracteres especiales y convertir a minúsculas)
+    const decodedQuery = decodeURIComponent(query);
+    const normalizedQuery = removeAccents(decodedQuery)
       .toLowerCase()
       .replace(/[^a-z0-9\s]/g, " ") // Reemplazar caracteres especiales por espacios
       .trim();
