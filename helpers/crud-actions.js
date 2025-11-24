@@ -28,6 +28,10 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
   const connection = await connectToDatabase(req); // Obtiene la conexión según el entorno
 
   const UserModel = await getModel(connection.environment, "User");
+  const EntityDirectoryModel = await getModel(
+    connection.environment,
+    "EntityDirectory"
+  );
   const model = await getModel(connection.environment, modelName);
 
   // Función para listar entidades
@@ -492,12 +496,23 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
     }
 
     entityInfo = {
-      ...entityInfo.toObject(),
+      ...entityInfo.toObject({ flattenMaps: false }),
       followed_by_count: followedByCount?.[0]?.followersCount || 0,
       followed_profiles_count:
         followedProfilesCount?.[0]?.followedProfilesCount || 0,
       isFollowedByCurrentProfile: !!followedEntityInfo,
     };
+
+    // Convertir todos los Maps a objetos planos para serialización JSON
+    Object.keys(entityInfo).forEach((key) => {
+      if (entityInfo[key] instanceof Map) {
+        const mapObj = {};
+        entityInfo[key].forEach((value, mapKey) => {
+          mapObj[mapKey] = value;
+        });
+        entityInfo[key] = mapObj;
+      }
+    });
 
     // ==========================  CLAIM PROFILE =====
 
@@ -684,7 +699,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
                 ),
               ].join(" ") || "";
 
-            const entityDirectory = new EntityDirectory({
+            const entityDirectory = new EntityDirectoryModel({
               ...entityInfo,
               entityType: modelName,
               search_cache: helpers.removeStringAccents(search_cache),

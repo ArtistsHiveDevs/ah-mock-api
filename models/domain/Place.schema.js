@@ -40,6 +40,14 @@ const SocialNetworkStatsSchema = new Schema(
   { _id: false }
 );
 
+const GenreLevelsSchema = new Schema(
+  {
+    l1: [String],
+    l2: [String],
+  },
+  { _id: false }
+);
+
 const schema = new Schema({
   username: { type: String },
   name: { type: String },
@@ -67,9 +75,13 @@ const schema = new Schema({
   verified_status: { type: Number, default: 0 },
   image_gallery: [imageSchema],
 
+  activity: String,
+
+  has_open_mic: { type: Boolean },
+
   genres: {
     type: Map,
-    of: [String],
+    of: GenreLevelsSchema,
     required: true,
   },
 

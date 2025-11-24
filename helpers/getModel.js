@@ -20,8 +20,16 @@ function getModelSchema(modelName) {
 }
 
 function getModelWithSchema(env, modelName, schema) {
-  if (!connections[env])
+  if (!env) {
+    console.error(`⚠️ Environment (env) is undefined or null para el modelo ${modelName}`);
+    throw new Error(`Environment no definido para el modelo ${modelName}. Verifica que req.serverEnvironment esté configurado.`);
+  }
+
+  if (!connections[env]) {
+    console.error(`⚠️ No hay conexión establecida para env: "${env}", modelo: "${modelName}"`);
     throw new Error(`No hay conexión establecida para ${env}, ${modelName}`);
+  }
+
   const conn = connections[env];
   return conn.models[modelName] || conn.model(modelName, schema);
 }

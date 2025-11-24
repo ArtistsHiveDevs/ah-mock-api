@@ -110,20 +110,32 @@ async function validateAuthenticatedUser(req, res, next) {
 }
 
 async function validateEnvironment(req, res, next) {
-  let encryptedEnv = req?.headers["x-env"];
-  let env = !!encryptedEnv && decryptEnv(encryptedEnv); // Descifra el entorno
-  req.serverEnvironment = env;
-  if (!env) {
-    return res.status(400).send({
-      message: "Headers are not complete.",
+  try {
+    let encryptedEnv = req?.headers["x-env"];
+    let env = !!encryptedEnv && decryptEnv(encryptedEnv); // Descifra el entorno
+    req.serverEnvironment = env;
+
+    if (!env) {
+      return res.status(400).send({
+        message: "Headers are not complete.",
+        errorCode: ErrorCodes.CONNECTION_REQUEST_FAILED,
+      });
+    }
+
+    const connection = await connectToDatabase(req);
+
+    if (!req.serverEnvironment) {
+      return res.status(400).send({
+        message: "No se encuentra el ambiente",
+        errorCode: ErrorCodes.CONNECTION_REQUEST_FAILED,
+      });
+    }
+  } catch (error) {
+    console.error("❌ Error en validateEnvironment:", error);
+    return res.status(500).send({
+      message: "Error al validar el ambiente",
       errorCode: ErrorCodes.CONNECTION_REQUEST_FAILED,
     });
-  }
-
-  const connection = await connectToDatabase(req);
-
-  if (!req.serverEnvironment) {
-    return next(new Error("No se encuentra el ambiente: ", env));
   }
   if (next) {
     next();
@@ -157,20 +169,38 @@ async function validateIfUserExists(req, res, next) {
       }
     }
 
-    req.userId = decoded?.id; // Guarda el ID del usuario en la solicitud
+    try {
+      req.userId = decoded?.id; // Guarda el ID del usuario en la solicitud
 
-    const UserModel = await getModel(req.serverEnvironment, "User");
-    const user = await UserModel.findById(decoded?.id);
+      // Verificar que serverEnvironment esté definido
+      if (!req.serverEnvironment) {
+        console.error("⚠️ req.serverEnvironment is undefined en validateIfUserExists");
+        // Intentar establecer un valor por defecto o saltar la validación
+        if (next) {
+          return next();
+        }
+        return;
+      }
 
-    if (user) {
-      req.user = user;
-    }
+      const UserModel = await getModel(req.serverEnvironment, "User");
+      const user = await UserModel.findById(decoded?.id);
 
-    registerUserProfile(req, user);
-    registerLang(req);
+      if (user) {
+        req.user = user;
+      }
 
-    if (next) {
-      next();
+      registerUserProfile(req, user);
+      registerLang(req);
+
+      if (next) {
+        next();
+      }
+    } catch (error) {
+      console.error("❌ Error en validateIfUserExists:", error);
+      // No lanzar el error, solo loguearlo y continuar
+      if (next) {
+        next();
+      }
     }
   });
 }

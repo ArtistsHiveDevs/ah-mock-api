@@ -19,14 +19,109 @@ const convertKmToDegrees = (km) => {
   return km / earthRadiusKm;
 };
 
+// /**
+//  * Construye las condiciones de MongoDB para filtrar por ubicación geográfica
+//  * @param {Object} includedGeo - Objeto con arrays de países, estados y ciudades a incluir
+//  * @param {Object} excludedGeo - Objeto con arrays de países, estados y ciudades a excluir
+//  * @returns {Object} Condiciones de MongoDB para agregar al $match
+//  */
+// function buildGeoFilters(includedGeo, excludedGeo) {
+//   const geoConditions = [];
+
+//   // Procesar inclusiones (si se especifican, debe cumplir al menos una)
+//   if (includedGeo) {
+//     const includeConditions = [];
+
+//     if (includedGeo.countries && includedGeo.countries.length > 0) {
+//       includeConditions.push({
+//         "location.country_name": {
+//           $in: includedGeo.countries.map((c) => new RegExp(c, "i")),
+//         },
+//       });
+//       includeConditions.push({
+//         "location.country_alpha2": {
+//           $in: includedGeo.countries.map((c) => c.toUpperCase()),
+//         },
+//       });
+//       includeConditions.push({
+//         "location.country_alpha3": {
+//           $in: includedGeo.countries.map((c) => c.toUpperCase()),
+//         },
+//       });
+//     }
+
+//     if (includedGeo.states && includedGeo.states.length > 0) {
+//       includeConditions.push({
+//         "location.state": {
+//           $in: includedGeo.states.map((s) => new RegExp(s, "i")),
+//         },
+//       });
+//     }
+
+//     if (includedGeo.cities && includedGeo.cities.length > 0) {
+//       includeConditions.push({
+//         "location.city": {
+//           $in: includedGeo.cities.map((c) => new RegExp(c, "i")),
+//         },
+//       });
+//     }
+
+//     if (includeConditions.length > 0) {
+//       geoConditions.push({ $or: includeConditions });
+//     }
+//   }
+
+//   // Procesar exclusiones (debe NO cumplir ninguna)
+//   if (excludedGeo) {
+//     if (excludedGeo.countries && excludedGeo.countries.length > 0) {
+//       geoConditions.push({
+//         "location.country_name": {
+//           $nin: excludedGeo.countries.map((c) => new RegExp(c, "i")),
+//         },
+//       });
+//       geoConditions.push({
+//         "location.country_alpha2": {
+//           $nin: excludedGeo.countries.map((c) => c.toUpperCase()),
+//         },
+//       });
+//       geoConditions.push({
+//         "location.country_alpha3": {
+//           $nin: excludedGeo.countries.map((c) => c.toUpperCase()),
+//         },
+//       });
+//     }
+
+//     if (excludedGeo.states && excludedGeo.states.length > 0) {
+//       geoConditions.push({
+//         "location.state": {
+//           $nin: excludedGeo.states.map((s) => new RegExp(s, "i")),
+//         },
+//       });
+//     }
+
+//     if (excludedGeo.cities && excludedGeo.cities.length > 0) {
+//       geoConditions.push({
+//         "location.city": {
+//           $nin: excludedGeo.cities.map((c) => new RegExp(c, "i")),
+//         },
+//       });
+//     }
+//   }
+
+//   return geoConditions;
+// }
+
 async function searchEntitiesDB(req, queryRQ) {
-  const {
+  let {
     q: query = "",
     l = "",
     maxDistance = 15,
     page = 1,
     limit = 10,
     et,
+    // includedGeo = null,
+    // excludedGeo = null,
+    activity = null,
   } = queryRQ;
 
   try {
@@ -39,6 +134,11 @@ async function searchEntitiesDB(req, queryRQ) {
       .replace(/[^a-z0-9\s]/g, " ") // Reemplazar caracteres especiales por espacios
       .trim();
 
+    console.log("QUERY ", normalizedQuery);
+
+    if (!activity) {
+      activity = ["active", "probably_active"];
+    }
     // 2️⃣ Convertir la consulta en una expresión regular para buscar palabras que comiencen con la consulta
     const regexPattern = `\\b${normalizedQuery}`;
     const regex = new RegExp(regexPattern, "i");
@@ -49,18 +149,83 @@ async function searchEntitiesDB(req, queryRQ) {
       { search_cache: { $regex: regex } },
     ];
 
-    // 3️⃣ Filtrar por entityType si está presente
-    const matchCondition = {
+    // // 3️⃣ Construir filtros geográficos
+    // const geoFilters = buildGeoFilters(includedGeo, excludedGeo);
+
+    // 4️⃣ Construir condiciones base
+    const baseConditions = {
       $or: orMatch,
       ...(et && { entityType: et }),
+      // ...(geoFilters.length > 0 && { $and: geoFilters }),
     };
+
+    // 5️⃣ Agregar filtro de activity solo si entityType es "Place"
+    let matchCondition;
+    if (activity && Array.isArray(activity) && activity.length > 0) {
+      if (et === "Place") {
+        // Si el entityType es Place, agregar filtro de activity
+        matchCondition = {
+          ...baseConditions,
+          activity: { $in: activity },
+        };
+      } else if (!et) {
+        // Si no se especifica entityType, usar $or para aplicar activity solo a Places
+        matchCondition = {
+          $or: orMatch,
+          $and: [
+            {
+              $or: [
+                { entityType: { $ne: "Place" } }, // No es Place, no importa activity
+                { entityType: "Place", activity: { $in: activity } }, // Es Place y cumple activity
+              ],
+            },
+          ],
+        };
+
+        // Código anterior con geoFilters (comentado)
+        // matchCondition = {
+        //   ...baseConditions,
+        //   $and: [
+        //     ...(geoFilters.length > 0 ? geoFilters : []),
+        //     {
+        //       $or: [
+        //         { entityType: { $ne: "Place" } },
+        //         { entityType: "Place", activity: { $in: activity } },
+        //       ],
+        //     },
+        //   ].filter((cond) => Object.keys(cond).length > 0),
+        // };
+        // delete matchCondition.$and;
+        // matchCondition = {
+        //   $or: orMatch,
+        //   ...(geoFilters.length > 0 && {
+        //     $and: [
+        //       ...geoFilters,
+        //       {
+        //         $or: [
+        //           { entityType: { $ne: "Place" } },
+        //           { entityType: "Place", activity: { $in: activity } },
+        //         ],
+        //       },
+        //     ],
+        //   }),
+        // };
+      } else {
+        // Si entityType es otro diferente de Place, ignorar activity
+        matchCondition = baseConditions;
+      }
+    } else {
+      matchCondition = baseConditions;
+    }
+
+    console.log(matchCondition);
 
     const EntityDirectory = await getModel(
       req.serverEnvironment,
       "EntityDirectory"
     );
 
-    // 4️⃣ Buscar y agrupar por entityType
+    // 5️⃣ Buscar y agrupar por entityType
     const results = await EntityDirectory.aggregate([
       { $match: matchCondition },
       {
@@ -93,7 +258,7 @@ async function searchEntitiesDB(req, queryRQ) {
       { $sort: { entityType: 1 } },
     ]);
 
-    // 5️⃣ Contar resultados
+    // 6️⃣ Contar resultados
     const countResults = await EntityDirectory.aggregate([
       { $match: matchCondition },
       {
@@ -104,7 +269,7 @@ async function searchEntitiesDB(req, queryRQ) {
       },
     ]);
 
-    // 6️⃣ Construir respuesta
+    // 7️⃣ Construir respuesta
     const countMap = countResults.reduce((acc, item) => {
       acc[`total_${item._id.toLowerCase()}s`] = item.count;
       return acc;

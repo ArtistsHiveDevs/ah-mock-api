@@ -48,6 +48,9 @@ module.exports = {
     // "followed_profiles",
     "followed_by_count",
     "followed_profiles_count",
+    "activity",
+    "genres",
+    "has_open_mic",
   ],
   authenticated_fields: [
     // "artistType",
@@ -98,6 +101,7 @@ module.exports = {
     "followed_profiles_count",
 
     "isClaimedProfile",
+    "activity",
   ],
   appbase_public_fields: {
     EntityDirectory: {
@@ -109,6 +113,8 @@ module.exports = {
         "username",
         "subtitle",
         "verified_status",
+        "genres",
+        "activity",
       ],
       detail: [
         "id",
@@ -118,6 +124,8 @@ module.exports = {
         "username",
         "subtitle",
         "verified_status",
+        "genres",
+        "activity",
       ],
     },
     User: {
@@ -155,6 +163,8 @@ module.exports = {
         "home_city_level3",
         "followed_by_count",
         "followed_profiles_count",
+        "show_industry_member_banner",
+        "request_industry_member",
       ],
     },
   },

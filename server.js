@@ -238,6 +238,35 @@ app.get("/", async (req, res) => {
   });
 });
 
+// Middleware global para manejar errores de URIError (URLs malformadas)
+app.use((err, req, res, next) => {
+  if (err instanceof URIError) {
+    console.error("URIError capturado:", err.message, "URL:", req.url);
+    return res.status(400).json({
+      error: "Malformed URL",
+      message: "La URL proporcionada contiene caracteres inválidos",
+    });
+  }
+
+  // Otros errores
+  console.error("Error no manejado:", err);
+  res.status(500).json({
+    error: "Internal Server Error",
+    message: "Ha ocurrido un error en el servidor",
+  });
+});
+
+// Manejar errores no capturados
+process.on("uncaughtException", (err) => {
+  console.error("❌ Excepción no capturada:", err);
+  // No terminar el proceso, solo logear el error
+});
+
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("❌ Promesa rechazada no manejada:", reason);
+  // No terminar el proceso, solo logear el error
+});
+
 //  Server Zone
 app.listen(port, function () {
   console.log(textConstants.runningServer, port);

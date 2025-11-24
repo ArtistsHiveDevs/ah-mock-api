@@ -272,7 +272,10 @@ module.exports = [
       //   .json(items[Math.round(Math.random() * items.length)]);
       try {
         req.body.password = "1234556768";
-        const user = new User(req.body);
+
+        const UserModel = await getModel(req.serverEnvironment, "User");
+        const user = new UserModel(req.body);
+
         await user.save();
 
         entityInfo = {
@@ -283,15 +286,20 @@ module.exports = [
           username: user.username,
           subtitle: user.subtitle,
           verified_status: user.verified_status,
-        };
-        const entityDirectory = new EntityDirectory({
-          ...entityInfo,
           entityType: "User",
-        });
+        };
+
+        const EntityDirectoryModel = await getModel(
+          req.serverEnvironment,
+          "EntityDirectory"
+        );
+        const entityDirectory = new EntityDirectoryModel(entityInfo);
+
         await entityDirectory.save();
 
         res.status(201).send(createPaginatedDataResponse(user));
       } catch (err) {
+        console.log(err);
         res.status(400).send(err);
       }
     }
@@ -338,7 +346,6 @@ module.exports = [
             ],
           };
         }
-
 
         // Realizar la consulta de actualización con $set
         const UserModel = await getModel(req.serverEnvironment, "User");

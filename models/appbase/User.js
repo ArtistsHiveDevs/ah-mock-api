@@ -64,6 +64,7 @@ const schema = new mongoose.Schema({
   created_at: String,
   updated_at: String,
   show_industry_member_banner: Boolean,
+  request_industry_member: Number,
   followed_profiles: { type: [FollowerSchema], default: [] },
   followed_by: { type: [FollowerSchema], default: [] },
 });
