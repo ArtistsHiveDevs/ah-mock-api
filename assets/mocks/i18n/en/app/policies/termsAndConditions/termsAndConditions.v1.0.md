@@ -1,124 +1,42 @@
-# Artist Hive Terms EN
+# ARTIST HIVE TERMS AND CONDITIONS
 
-## Acerca de nosotros
+These Terms and Conditions constitute a legally binding agreement between the user and Artist Hive S.A.S., a company domiciled in Colombia. Use of the platform is subject to Colombian laws, particularly the Commercial Code, Civil Code, Law 1480 of 2011 (Consumer Statute), Law 1581 of 2012 (Protection of Personal Data), and Law 527 of 1999 (Electronic Commerce).
 
-Con Spotify es muy fácil encontrar la música o el podcast perfectos para cada momento desde tu teléfono, computadora, tablet y muchos otros dispositivos.
+## 1\. SCOPE AND ACCEPTANCE
 
-En Spotify hay millones de canciones y episodios. Entonces, ya sea que estés manejando, haciendo ejercicio, de fiesta o en un momento relajante, la música o el podcast perfectos siempre están a tu alcance. Elige lo que quieres escuchar o deja que Spotify te sorprenda.
+By accessing or using the Artist Hive platform, you represent that you have read, understood, and fully accepted these Terms and Conditions. If you do not agree, you must refrain from using the platform.
 
-Además, puedes explorar las colecciones de tus amigos, de artistas y celebridades o crear una estación de radio para relajarte y disfrutar de la música.
+## 2\. PROTECTION OF PERSONAL DATA
 
-Ponle música a tu vida con Spotify. Suscríbete o escucha música gratis.
+Artist Hive complies with Law 1581 of 2012 and Decree 1377 of 2013 on Protection of Personal Data. Personal information collected will be processed in accordance with the Personal Data Processing Policy LINK, which includes the procedure for exercising the rights of access, rectification, cancellation, and opposition (ARCO). The competent authority for monitoring compliance is the Superintendency of Industry and Commerce (SIC) of Colombia.
 
-## Servicio de ayuda y atención al cliente
+## 3\. RELATIONSHIP WITH CONSUMERS
 
-1.  [Sitio de ayuda](https://support.spotify.com/). Visita nuestro sitio de ayuda para resolver tus dudas y aprender cómo aprovechar al máximo el servicio de Spotify y tu música.
-2.  [Comunidad](https://community.spotify.com/). Obtén ayuda rápida de los usuarios expertos de Spotify. Si todavía no hay una respuesta a tu pregunta, publícala y alguien te responderá a la brevedad. También puedes sugerir y votar por nuevas ideas para Spotify o, simplemente, hablar sobre música con otros fans.
-3.  [Comunícate con nosotros](https://support.spotify.com/co-es/contact-spotify-support). Comunícate con nuestro equipo de atención al cliente si no encuentras una solución en nuestro sitio de ayuda o en la Comunidad.
+When users act as consumers, the inalienable rights provided in the Consumer Statute shall apply. In particular, the right of withdrawal may be exercised within five (5) business days following the acquisition of a digital service, provided it has not been used.
 
-## O elige un tema:
+## 4\. INTELLECTUAL PROPERTY
 
-- ¿Quieres crear anuncios en Spotify? [Sección de anunciantes](https://ads.spotify.com/)
-- ¿Eres de la prensa y quieres hacer una consulta? [Sección de contacto para la prensa](https://newsroom.spotify.com/press-inquiries)
-- ¿Quieres postularte a un empleo? [Sección de empleos](https://www.lifeatspotify.com/)
+All content on the platform is the property of Artist Hive S.A.S. or its licensors. Users guarantee that the content they upload is their property or they have authorization. Artist Hive will implement a notice and takedown mechanism to address claims of copyright or trademark infringement, in accordance with the provisions of the National Copyright Directorate (DNDA).
 
-Spotify USA, Inc. brinda el servicio de Spotify a usuarios en los Estados Unidos. Spotify AB brinda el servicio de Spotify a los usuarios en todos los otros mercados.
+## 5\. LIMITATION OF LIABILITY
 
-## Sede central de Spotify
+Artist Hive's liability shall be limited, with respect to professional users, to the amount actually paid for services in the six (6) months prior to the event giving rise to the claim. Under no circumstances may liability be limited to the detriment of consumers' inalienable rights.
 
-**Spotify AB**  
-Regeringsgatan 19  
-SE-111 53 Stockholm  
-Sweden  
-Reg no: 556703-7485  
-office@spotify.com
+## 6\. DISPUTE RESOLUTION
 
-## Spotify en todo el mundo
+Disputes between Artist Hive and professional users shall be submitted to arbitration in law administered by the Arbitration and Conciliation Center of the Chamber of Commerce of Bogotá, Colombia. Regarding consumers, they may resort to the Superintendency of Industry and Commerce or competent courts.
 
-**Spotify Belgium**  
-Square de Meeus 37  
-4th floor  
-1000 Brussels  
-Belgium  
-office@spotify.com
+## 7\. TERMINATION AND SUSPENSION
 
-**Spotify GmbH**  
-Unter den Linden 10  
-10117 Berlin  
-Germany  
-office@spotify.com
+Artist Hive may suspend or cancel accounts in case of breach of these terms, prolonged inactivity, or by order of a competent authority. Users may request deletion of their account at any time.
 
-**Spotify Canada Inc.**  
-220 Adelaide Street West  
-M5H 1W7 Toronto Ontario  
-Canada  
-office@spotify.com
+## 8\. VALIDITY AND MODIFICATIONS
 
-**Spotify Denmark ApS**  
-Vestergade 27, 1 th  
-1456 København K  
-Denmark  
-office@spotify.com
+These Terms and Conditions enter into force upon publication. Artist Hive may modify them at any time, notifying users through the platform. Continued use of the platform constitutes acceptance of the modifications.
 
-**SPOTIFY SPAIN SL**  
-Paseo de Recoletos, 7-9  
-28004 Madrid  
-Spain  
-office@spotify.com
+## 9\. SERVICES OFFERED
 
-**Spotify Finland Oy**  
-Merimiehenkatu 36 D  
-FI-00150 Helsinki  
-Finland  
-office@spotify.com
-
-**Spotify France SAS**  
-48 Rue la Bruyère  
-75009  
-Paris  
-France  
-office@spotify.com
-
-**Spotify India LLP**  
-Regus, North F/A-4,  
-Floor 1st,A Block,  
-Shivsagar Estate, Dr Annie Besant Road,  
-Worli, Mumbai Mumbai City,  
-MH 400018 INDIA  
-office@spotify.com
-
-**Spotify Italy S.r.l.**  
-Via Joe Colombo 4  
-20124 Milano  
-Italy  
-office@spotify.com
-
-**Spotify Netherlands**  
-Singel 540 3h  
-1017AZ, Amsterdam  
-Netherlands  
-office@spotify.com
-
-**Spotify Ltd**  
-Adelphi Building  
-4 Savoy Place  
-London WC2N 6AT  
-United Kingdom  
-office@spotify.com
-
-**Spotify USA Inc**  
-4 World Trade Center  
-150 Greenwich Street, 62nd Floor  
-New York, NY 10007  
-USA  
-office@spotify.com
-
-**Spotify Mexico**  
-Pedregal 24 Torre Virreyes Piso 8  
-Col. Molino del Rey  
-DF 11040  
-Mexico  
-office@spotify.com
-
-**Spotify Israel**  
-office@spotify.com
+Artist Hive is a platform that allows connecting and interacting, from a professional point of view, the different actors in the music industry (artists, venues, festivals, recording studios, rehearsal rooms, agencies, among others).
+Each actor or entity has an associated profile that presents its information to be consulted by all users.
+Only validated profiles can interact with other profiles and users. According to their nature (type of actor), each user will be able to access different functionalities which are part of Artist Hive's strategy to contribute to the professionalization of the sector, particularly regarding the emerging and/or independent industry.
+The current service offer, its costs, operation, payment methods, and other related information is described on the plans page. The service offer available to all users is subject to change at Artist Hive's discretion, which will be notified with a reasonable minimum notice of at least 2 weeks.

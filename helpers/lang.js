@@ -1,7 +1,7 @@
 module.exports = {
   getAvailableTranslation: function (langRQ) {
     let newLang = langRQ;
-    const availableTranslations = ["de", "en", "es", "fr", "it", "pt"];
+    const availableTranslations = ["de", "el", "en", "es", "fr", "it", "pt"];
     // Try country especific messages
     let messages = availableTranslations.find((aL) => aL === newLang);
 
