@@ -43,4 +43,62 @@ const schema = new Schema(
   }
 );
 
-module.exports = { schema };
+/**
+ * Virtual para populate de recipients
+ */
+schema.virtual("identifier").get(function () {
+  return this.username || this.shortId || this.id || this._id;
+});
+
+/**
+ * Normaliza un profile_id (username, shortId o ObjectId) a ObjectId de EntityDirectory
+ * @param {string|ObjectId} id - Identificador a normalizar (username, shortId o ObjectId)
+ * @param {Connection} connection - Conexión de Mongoose a usar
+ * @returns {Promise<ObjectId>} ObjectId normalizado de EntityDirectory
+ * @throws {Error} Si no se encuentra la entidad
+ */
+async function normalizeProfileId(id, connection) {
+  // Obtener la conexión correcta para EntityDirectory
+  const { connections } = require("../../db/db_g");
+
+  // Usar la conexión del entorno actual del documento
+  const env = connection.environment || connection.name;
+  const entityDirectoryConnection = connections[env] || connection;
+
+  const EntityDirectory = entityDirectoryConnection.model("EntityDirectory");
+
+  const idFields = ["username", "shortId"];
+
+  const idFieldsRegexFilter = idFields.map((field) => {
+    return { [field]: { $regex: new RegExp(`^${id}$`, "i") } };
+  });
+
+  let query = {};
+
+  // Validar si `id` es un ObjectId válido
+  if (mongoose.Types.ObjectId.isValid(id)) {
+    query.id = id;
+  } else {
+    // Búsqueda por `username` o `shortId` si `id` no es un ObjectId
+    query = {
+      $or: idFieldsRegexFilter,
+    };
+  }
+
+  const entity = await EntityDirectory.findOne(query);
+
+  if (entity) {
+    console.log("******     \n", entity);
+    return {
+      _id: entity._id,
+      identifier: entity.identifier,
+      entity_id: entity.id,
+      username: entity.username,
+    };
+  }
+
+  // Si no se encuentra, lanzar error
+  throw new Error(`EntityDirectory not found for identifier: ${id}`);
+}
+
+module.exports = { schema, normalizeProfileId };

@@ -23,6 +23,165 @@ function modelRequiresEntityIndex(modelName) {
   return ["Artist", "Place", "User"].includes(modelName);
 }
 
+/**
+ * Procesa los filtros para construir queries MongoDB con $elemMatch
+ *
+ * Permite filtrar documentos por campos que referencian EntityDirectory,
+ * comparando con el perfil o usuario actual del request.
+ *
+ * @param {Array} filters - Array de objetos de filtro con la siguiente estructura:
+ *   - field: {string} Path del campo a filtrar. Usar '*' para indicar arrays.
+ *            Ejemplo: "recipient_ids.*.id" significa "en cada elemento del array recipient_ids, buscar su campo id"
+ *   - compareWith: {string} "sameProfile" o "sameUser" - indica con qué comparar
+ *   - compareField: {string} Campo del EntityDirectory a comparar (default: "id")
+ *            Puede ser: "_id", "entity_id", "username", "identifier"
+ *
+ * @example
+ * // Filtrar prebookings donde el usuario actual está en los recipients
+ * filters: [{
+ *   field: "recipient_ids.*.id",
+ *   compareWith: "sameProfile",
+ *   compareField: "entity_id"
+ * }]
+ *
+ * // Filtrar por campo no-array
+ * filters: [{
+ *   field: "requester_profile_id",
+ *   compareWith: "sameProfile",
+ *   compareField: "_id"
+ * }]
+ *
+ * @param {Object} user - Usuario actual con currentProfileIdentifier
+ * @param {Object} currentProfileIdNormalization - Profile ID normalizado
+ * @param {Object} currentUserIdNormalization - User ID normalizado
+ * @param {Connection} connection - Conexión de Mongoose
+ * @returns {Promise<{mongoQuery: Object, populateFields: Array}>}
+ */
+async function processFilters(
+  filters,
+  user,
+  currentProfileIdNormalization,
+  currentUserIdNormalization,
+  connection
+) {
+  console.log("\n=== DEBUG: processFilters START ===");
+  console.log("filters:", JSON.stringify(filters, null, 2));
+  console.log("user:", JSON.stringify(user, null, 2));
+  console.log(
+    "currentProfileIdNormalization:",
+    currentProfileIdNormalization
+      ? JSON.stringify(currentProfileIdNormalization, null, 2)
+      : undefined
+  );
+  console.log(
+    "currentUserIdNormalization:",
+    currentUserIdNormalization
+      ? JSON.stringify(currentUserIdNormalization, null, 2)
+      : undefined
+  );
+
+  const { normalizeProfileId } = require("../models/appbase/EntityDirectory");
+  const mongoQuery = {};
+  const populateFieldsSet = new Set();
+
+  for (const filter of filters) {
+    console.log("\n--- Processing filter:", JSON.stringify(filter, null, 2));
+    const { field, compareWith, compareField = "id" } = filter;
+
+    // Parsear el field para identificar arrays (indicados por '*')
+    const parts = field.split(".");
+    const arrayIndex = parts.indexOf("*");
+    console.log("field parts:", parts);
+    console.log("arrayIndex:", arrayIndex);
+
+    if (arrayIndex !== -1) {
+      // Es un array: usar $elemMatch
+      const arrayPath = parts.slice(0, arrayIndex).join(".");
+      const subPath = parts.slice(arrayIndex + 1).join(".");
+      console.log("arrayPath:", arrayPath);
+      console.log("subPath:", subPath);
+
+      // Agregar al set de campos a popular
+      populateFieldsSet.add(arrayPath);
+      console.log("Added to populate:", arrayPath);
+
+      // Obtener el valor a comparar
+      let compareValue;
+      if (compareWith === "sameProfile" && currentProfileIdNormalization) {
+        compareValue = currentProfileIdNormalization[compareField];
+        console.log(
+          `compareWith: sameProfile, compareField: ${compareField}, value:`,
+          compareValue
+        );
+      } else if (compareWith === "sameUser" && currentUserIdNormalization) {
+        compareValue = currentUserIdNormalization[compareField];
+        console.log(
+          `compareWith: sameUser, compareField: ${compareField}, value:`,
+          compareValue
+        );
+      } else {
+        console.log(
+          "⚠️ Skipping filter - compareWith not recognized:",
+          compareWith
+        );
+        continue;
+      }
+
+      // Construir $elemMatch query
+      const elemMatchQuery = {
+        $elemMatch: {
+          [subPath]: compareValue,
+        },
+      };
+      mongoQuery[arrayPath] = elemMatchQuery;
+      console.log(
+        "Built $elemMatch query:",
+        JSON.stringify({ [arrayPath]: elemMatchQuery }, null, 2)
+      );
+    } else {
+      // No es array: query directo
+      console.log("Non-array field detected");
+      let compareValue;
+      if (compareWith === "sameProfile" && currentUserIdNormalization) {
+        compareValue = currentProfileIdNormalization[compareField];
+        console.log(
+          `compareWith: sameProfile, compareField: ${compareField}, value:`,
+          compareValue
+        );
+      } else if (compareWith === "sameUser" && currentUserIdNormalization) {
+        compareValue = currentUserIdNormalization[compareField];
+        console.log(
+          `compareWith: sameUser, compareField: ${compareField}, value:`,
+          compareValue
+        );
+      } else {
+        console.log(
+          "⚠️ Skipping filter - compareWith not recognized:",
+          compareWith
+        );
+        continue;
+      }
+
+      mongoQuery[field] = compareValue;
+      console.log(
+        "Built direct query:",
+        JSON.stringify({ [field]: compareValue }, null, 2)
+      );
+    }
+  }
+
+  console.log("\n=== Final mongoQuery ===");
+  console.log(JSON.stringify(mongoQuery, null, 2));
+  console.log("\n=== Final populateFields ===");
+  console.log(Array.from(populateFieldsSet));
+  console.log("=== DEBUG: processFilters END ===\n");
+
+  return {
+    mongoQuery,
+    populateFields: Array.from(populateFieldsSet),
+  };
+}
+
 async function createCRUDActions({ modelName, schema, options = {}, req }) {
   // console.log(modelName, !!schema, options);
   const connection = await connectToDatabase(req); // Obtiene la conexión según el entorno
@@ -36,15 +195,27 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
   // Función para listar entidades
   async function listEntities({
+    user,
     page = 1,
     limit = options?.listEntities?.limit === undefined
       ? 50
       : options?.listEntities?.limit,
     fields,
+    filters,
     lang = "en",
     public_fields,
     postScriptFunction,
   }) {
+    const currentProfileIdNormalization = !!user.currentProfileIdentifier
+      ? await EntityDirectory.normalizeProfileId(
+          user.currentProfileIdentifier,
+          connection
+        )
+      : undefined;
+    const currentUserIdNormalization = !!user.id
+      ? await EntityDirectory.normalizeProfileId(user.id, connection)
+      : undefined;
+
     try {
       // Obtener campos de proyección de la configuración
       const projectionFields = public_fields ??
@@ -78,8 +249,8 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
           })
           .map((field) => {
             const refModel =
-              model.schema.paths[field].options.ref ||
-              model.schema.paths[field].caster.options.ref;
+              model.schema.paths[field].options?.ref ||
+              model.schema.paths[field].caster?.options.ref;
             const refModelFields = model.schema.paths.i18n
               ? [
                   `i18n.${lang}`,
@@ -108,9 +279,9 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       const startOfYear = new Date(currentYear, 0, 1); // 1 de enero, 00:00:00
       const startOfNextYear = new Date(currentYear + 1, 0, 1); // 1 de enero del próximo año, 00:00:00
 
-      let filters = {};
+      let allFilters = {};
       if (modelName === "Event") {
-        filters = {
+        allFilters = {
           createdAt: {
             $gte: startOfYear,
             $lt: startOfNextYear,
@@ -118,7 +289,32 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         };
       }
 
-      // console.log("FLTROS", JSON.stringify(filters));
+      // Procesar filtros personalizados si existen
+      let filterPopulateFields = [];
+      console.log("\n=== DEBUG: Checking filters ===");
+      console.log("filters exists:", !!filters);
+      console.log("filters.length:", filters?.length);
+      console.log("user exists:", !!user);
+
+      if (filters && filters.length > 0 && user) {
+        console.log("✓ Processing custom filters...");
+        const processed = await processFilters(
+          filters,
+          user,
+          currentProfileIdNormalization,
+          currentUserIdNormalization,
+          connection
+        );
+        // Combinar los filtros procesados con los existentes
+        allFilters = { ...allFilters, ...processed.mongoQuery };
+        filterPopulateFields = processed.populateFields;
+        console.log("✓ Filters processed and combined");
+      } else {
+        console.log("⚠️ No custom filters to process");
+      }
+
+      console.log("\n=== DEBUG: Final allFilters ===");
+      console.log(JSON.stringify(allFilters, null, 2));
 
       // Consulta a la base de datos con select y populate
 
@@ -166,21 +362,53 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
       // let results = await model.aggregate(pipeline);
 
+      console.log("\n=== DEBUG: Building MongoDB query ===");
+      console.log("Model:", modelName);
+      console.log("Query filters:", JSON.stringify(allFilters, null, 2));
+
       let query = model
-        .find({ ...filters })
+        .find({ ...allFilters })
         .select(projection)
         .skip((page - 1) * limit)
         .limit(Number(limit));
 
+      console.log("\n=== DEBUG: Applying populates ===");
+      console.log("populateFields:", JSON.stringify(populateFields, null, 2));
+      console.log("filterPopulateFields:", filterPopulateFields);
+
       if (populateFields.length > 0) {
+        console.log("✓ Applying standard populates:", populateFields.length);
         populateFields.forEach((populateOption) => {
           query = query.populate(populateOption);
         });
       }
 
+      // Populate adicional para campos de filtros
+      if (filterPopulateFields.length > 0) {
+        console.log(
+          "✓ Applying filter populates:",
+          filterPopulateFields.length
+        );
+        filterPopulateFields.forEach((fieldPath) => {
+          // Solo popular si no está ya en populateFields
+          const alreadyPopulated = populateFields.some(
+            (pop) => pop.path === fieldPath || pop === fieldPath
+          );
+          if (!alreadyPopulated) {
+            console.log(`  - Populating: ${fieldPath}`);
+            query = query.populate(fieldPath);
+          } else {
+            console.log(`  - Skipping (already populated): ${fieldPath}`);
+          }
+        });
+      }
+
+      console.log("\n=== DEBUG: Executing query ===");
       let results = await query.exec();
+      console.log("Results count BEFORE slice:", results.length);
 
       results = results.slice(0, 200);
+      console.log("Results count AFTER slice:", results.length);
 
       // Traducir los resultados utilizando translateDBResults
       results = apiHelperFunctions.translateDBResults({ results, lang });
@@ -607,10 +835,16 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       }
       const info = { ...body };
 
+      const hasPreConstructor =
+        model.schema.statics.preConstruct &&
+        typeof model.schema.statics.preConstruct === "function";
       let ownerUser;
 
-      if (modelRequiresAuth(modelName)) {
+      if (modelRequiresAuth(modelName) || hasPreConstructor) {
         ownerUser = await UserModel.findById(userId);
+      }
+
+      if (modelRequiresAuth(modelName)) {
         info.entityRoleMap = [
           {
             role: "OWNER",
@@ -618,6 +852,13 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
           },
         ];
       }
+
+      // Para modelos con pre-procesamiento especial antes de construcción
+      // Llamar al método estático preConstruct si existe en el schema
+      if (hasPreConstructor) {
+        await model.schema.statics.preConstruct(connection, ownerUser, info);
+      }
+
       const newEntity = new model(info);
       await newEntity.save();
 

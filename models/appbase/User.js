@@ -41,6 +41,7 @@ const schema = new mongoose.Schema({
   emergency_contact: [emergencyContactSchema],
   gender: Number,
   blood_group: String,
+  agrees_to_a_blood_transfusion: Boolean,
   birthdate: String,
   country: { type: Schema.Types.ObjectId, ref: "Country" },
   nationality: String,

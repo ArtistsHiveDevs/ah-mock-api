@@ -7,7 +7,9 @@ module.exports = {
   action: "/action",
   public_fields: [
     // "artistType",
+    "_id",
     "id",
+    "identifier",
     "name",
     "username",
     // "subtitle",
@@ -107,6 +109,7 @@ module.exports = {
     EntityDirectory: {
       summary: [
         "id",
+        "identifier",
         "entityType",
         "profile_pic",
         "name",
@@ -118,7 +121,9 @@ module.exports = {
       ],
       detail: [
         "id",
+        "identifier",
         "entityType",
+        "location",
         "profile_pic",
         "name",
         "username",
@@ -149,6 +154,7 @@ module.exports = {
         "birthdate",
         "country",
         "blood_group",
+        "agrees_to_a_blood_transfusion",
         "spoken_languages",
         "dietary_restrictions",
         // "followed_by",

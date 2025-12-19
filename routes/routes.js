@@ -15,6 +15,7 @@ var faqRouter = require("../operations/app/faq/router");
 const createCRUDRoutes = require("../helpers/crud-routes");
 const Place = require("../models/domain/Place.schema");
 const Event = require("../models/domain/Event.schema");
+const Prebooking = require("../models/domain/Prebooking.schema");
 const ProfileClaim = require("../models/domain/ProfileClaim.schema");
 const Currency = require("../models/parametrics/geo/Currency.schema");
 const Continent = require("../models/parametrics/geo/Continent.schema");
@@ -262,6 +263,84 @@ function loadRoutes() {
               });
             });
           },
+        },
+      }),
+    },
+    {
+      path: "/prebookings",
+      route: createCRUDRoutes({
+        modelName: "Prebooking",
+        schema: Prebooking.schema,
+        options: {
+          public_fields: [
+            ...routesConstants.public_fields,
+            "event_name",
+            "description",
+            "requester",
+            "recipients",
+            "participant_approvals",
+            "flexible_dates",
+            "status",
+            "created_by",
+            "response_deadline",
+            "last_viewed_by",
+            "requested_date_start",
+            "requested_date_end",
+          ],
+          authenticated_fields: [
+            ...routesConstants.public_fields,
+            "event_name",
+            "description",
+            "requester",
+            "recipients",
+            "participant_approvals",
+            "flexible_dates",
+            "status",
+            "created_by",
+            "response_deadline",
+            "last_viewed_by",
+            "requested_date_start",
+            "requested_date_end",
+          ],
+          customPopulateFields: [
+            {
+              path: "requester_profile_id",
+              select: [
+                ...routesConstants.appbase_public_fields.EntityDirectory
+                  .summary,
+                "location",
+              ].join(" "),
+            },
+            {
+              path: "recipient_ids",
+              select: [
+                ...routesConstants.appbase_public_fields.EntityDirectory
+                  .summary,
+                "location",
+              ].join(" "),
+            },
+          ],
+          postScriptFunction: (results) => {
+            results.forEach((result) => {
+              result["requester"] = result["requester_profile_id"];
+              result["recipients"] = result["recipient_ids"];
+
+              result["recipients"].forEach((recipient) => {
+                delete recipient["_id"];
+                delete recipient["genres"];
+              });
+
+              delete result["requester_profile_id"];
+              delete result["recipient_ids"];
+            });
+          },
+          filters: [
+            {
+              field: "recipient_ids",
+              compareWith: "sameProfile",
+              compareField: "_id",
+            },
+          ],
         },
       }),
     },

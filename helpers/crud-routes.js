@@ -36,6 +36,8 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             lang: req.lang,
             public_fields: options.public_fields,
             postScriptFunction: options.postScriptFunction,
+            filters: options.filters,
+            user: req.user,
           });
 
           res.json(response);
@@ -98,6 +100,8 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
           });
           res.json(response);
         } catch (err) {
+          console.error(`[${modelName}] Error creating entity:`, err.message);
+          console.error("Stack trace:", err.stack);
           res.status(500).json({ message: err.message });
         }
       }
