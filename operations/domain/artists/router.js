@@ -12,6 +12,7 @@ const helperFunctions = require("../../../helpers/helperFunctions");
 
 const { connections } = require("../../../db/db_g");
 const { getModel } = require("../../../helpers/getModel");
+const { decompressJSON } = require("../../../helpers/compression");
 
 var artistRouter = express.Router({ mergeParams: true });
 
@@ -470,38 +471,60 @@ module.exports = [
             const albumsQuery = await AlbumModel.find({
               idx: { $regex: artistInfo.spotify, $options: "i" },
             });
-            const albums = albumsQuery.map((album) => {
-              return {
-                name: album.n,
-                images: album.img.map((image) => {
-                  return {
-                    url: `https://i.scdn.co/image/${image.url}`,
-                    height: image.s,
-                    width: image.s,
-                  };
-                }),
-                release_date: album.rd,
-                release_date_precision: album.rdp,
-                spotify: {
-                  id: album.aId,
-                  url: `https://open.spotify.com/album/${album.aId}`,
-                },
-                total_tracks: album.nt,
-                tracks: (album.t || []).map((track) => {
-                  return {
-                    artists: track.artists,
-                    disc_number: track.d_n,
-                    duration_ms: track.dur,
-                    // explicit: boolean;
-                    id: track.id,
-                    name: track.n,
-                    track_number: track.num,
-                  };
-                }),
-              };
+
+            // Resolver todas las promesas en paralelo para mejor performance
+            const albums = await Promise.all(
+              albumsQuery.map(async (album) => {
+                const decompressed = JSON.parse(
+                  (await decompressJSON(album.c)) || "{}"
+                );
+                const { n, img, rd, rdp, nt, t } = decompressed || {};
+
+                return {
+                  name: n,
+                  images: (img || []).map((image) => {
+                    return {
+                      url: `https://i.scdn.co/image/${image.url}`,
+                      height: image.s,
+                      width: image.s,
+                    };
+                  }),
+                  release_date: rd,
+                  release_date_precision: rdp,
+                  spotify: {
+                    id: album.aId,
+                    url: `https://open.spotify.com/album/${album.aId}`,
+                  },
+                  total_tracks: nt,
+                  tracks: (t || []).map((track) => {
+                    return {
+                      artists: (track.as || []).map((artist) => {
+                        return { name: artist.n, id: artist.id };
+                      }),
+                      disc_number: track.d_n,
+                      duration_ms: track.dur,
+                      // explicit: boolean;
+                      id: track.id,
+                      name: track.n,
+                      track_number: track.num,
+                    };
+                  }),
+                };
+              })
+            );
+
+            // Ordenar álbumes por fecha de lanzamiento (más reciente primero)
+            const sortedAlbums = albums.sort((a, b) => {
+              // Manejar casos donde release_date puede no existir
+              if (!a.release_date && !b.release_date) return 0;
+              if (!a.release_date) return 1;  // a va al final
+              if (!b.release_date) return -1; // b va al final
+
+              // Comparar fechas: más reciente primero (descendente)
+              return b.release_date.localeCompare(a.release_date);
             });
 
-            artistInfo.arts.music.albums = albums;
+            artistInfo.arts.music.albums = sortedAlbums;
           } catch (error) {
             console.log("Error pidiendo álbumes: ", error);
           }
@@ -579,9 +602,12 @@ module.exports = [
 
         artistInfo = {
           ...artistInfo,
-          followed_by_count: (followedByCount?.[0]?.followersCount || 0) + (Math.floor(Math.random() * 5000)),
+          followed_by_count:
+            (followedByCount?.[0]?.followersCount || 0) +
+            Math.floor(Math.random() * 5000),
           followed_profiles_count:
-            (followedProfilesCount?.[0]?.followedProfilesCount || 0) + (Math.floor(Math.random() * 2000)),
+            (followedProfilesCount?.[0]?.followedProfilesCount || 0) +
+            Math.floor(Math.random() * 2000),
           isFollowedByCurrentProfile: !!followedEntityInfo,
         };
 

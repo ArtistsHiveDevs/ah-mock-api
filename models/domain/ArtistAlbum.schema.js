@@ -38,6 +38,7 @@ const schema = new mongoose.Schema(
     idx: {
       type: String,
     },
+    c: String,
   },
   { timestamps: true }
 );
