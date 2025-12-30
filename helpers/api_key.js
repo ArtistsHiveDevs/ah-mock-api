@@ -123,6 +123,7 @@ async function validateEnvironment(req, res, next) {
     }
 
     const connection = await connectToDatabase(req);
+    req.connection = connection;
 
     if (!req.serverEnvironment) {
       return res.status(400).send({
@@ -174,7 +175,9 @@ async function validateIfUserExists(req, res, next) {
 
       // Verificar que serverEnvironment esté definido
       if (!req.serverEnvironment) {
-        console.error("⚠️ req.serverEnvironment is undefined en validateIfUserExists");
+        console.error(
+          "⚠️ req.serverEnvironment is undefined en validateIfUserExists"
+        );
         // Intentar establecer un valor por defecto o saltar la validación
         if (next) {
           return next();
@@ -298,10 +301,66 @@ function registerLang(req) {
 //   }
 // }
 
+// ============================================================================
+// HELPER FUNCTIONS - Middleware Arrays
+// ============================================================================
+
+/**
+ * Función para verificar si un modelo requiere autenticación
+ * @param {string} modelName - Nombre del modelo
+ * @returns {boolean} - true si requiere autenticación
+ */
+function modelRequiresAuth(modelName) {
+  return ![
+    "Allergy",
+    "Continent",
+    "Country",
+    "Currency",
+    "Language",
+    "User",
+    "Event",
+  ].includes(modelName);
+}
+
+/**
+ * Obtiene los middlewares base para todos los endpoints
+ * @returns {Array} Array de middlewares base
+ */
+function getBaseMiddlewares() {
+  return [validateEnvironment, validateIfUserExists];
+}
+
+/**
+ * Obtiene los middlewares que proporcionan contexto de usuario
+ * Incluye validateAuthenticatedUser solo si el modelo requiere autenticación
+ * @param {string} modelName - Nombre del modelo
+ * @returns {Array} Array de middlewares con contexto de usuario
+ */
+function getActionContextMiddlewares(modelName) {
+  const base = getBaseMiddlewares();
+  return modelRequiresAuth(modelName)
+    ? [...base, validateAuthenticatedUser]
+    : base;
+}
+
+/**
+ * Obtiene los middlewares para operaciones de escritura
+ * Siempre incluye validateAuthenticatedUser
+ * @returns {Array} Array de middlewares para escritura
+ */
+function getWriteMiddlewares() {
+  return [...getBaseMiddlewares(), validateAuthenticatedUser];
+}
+
 module.exports = {
   validateApiKey,
   validateAuthenticatedUser,
   // validateOwnerRole,
   validateIfUserExists,
   validateEnvironment,
+  // Helper functions
+  modelRequiresAuth,
+  getBaseMiddlewares,
+  getActionContextMiddlewares,
+  getWriteMiddlewares,
 };

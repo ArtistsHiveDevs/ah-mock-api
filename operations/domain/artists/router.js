@@ -16,6 +16,11 @@ const { decompressJSON } = require("../../../helpers/compression");
 
 var artistRouter = express.Router({ mergeParams: true });
 
+// Middlewares centralizados
+const baseMiddlewares = helpers.getBaseMiddlewares();
+const actionContextMiddlewares = helpers.getActionContextMiddlewares("Artist");
+const writeMiddlewares = helpers.getWriteMiddlewares();
+
 const MAX_FOLLOWERS = 200;
 const SKIP_FOLLOWERS = 0;
 
@@ -195,7 +200,7 @@ function filterResultsByQuery(req, result) {
 module.exports = [
   artistRouter.get(
     routesConstants.artistsList,
-    helpers.validateEnvironment,
+    ...baseMiddlewares,
     async (req, res) => {
       let { page = 1, limit = 50, fields } = req.query;
 
@@ -240,9 +245,8 @@ module.exports = [
 
   artistRouter.get(
     routesConstants.findArtistById,
-    helpers.validateEnvironment,
-    helpers.validateIfUserExists,
-    // helpers.validateAuthenticatedUser,
+    ...baseMiddlewares,
+    // helpers.validateAuthenticatedUser, // Comentado porque Artist no requiere auth
     async (req, res) => {
       lang = req.lang;
       // const { artistId } = req.params;
@@ -659,8 +663,7 @@ module.exports = [
   // Crear Artista
   artistRouter.post(
     routesConstants.create,
-    helpers.validateEnvironment,
-    helpers.validateAuthenticatedUser,
+    ...writeMiddlewares,
     async (req, res) => {
       try {
         const info = { ...req.body };
@@ -740,8 +743,7 @@ module.exports = [
 
   artistRouter.put(
     routesConstants.updateById,
-    helpers.validateEnvironment,
-    helpers.validateAuthenticatedUser,
+    ...writeMiddlewares,
     async (req, res) => {
       const { id: searchValue } = req.params;
       const userId = req.userId;
@@ -898,7 +900,7 @@ module.exports = [
 
   artistRouter.delete(
     routesConstants.deleteById,
-    helpers.validateEnvironment,
+    ...baseMiddlewares,
     async (req, res) => {
       //   const items = helpers.getEntityData("Artist");
       //   return res

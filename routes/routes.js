@@ -3,7 +3,7 @@ var academyRouter = require("../operations/domain/academies/router");
 var artistRouter = require("../operations/domain/artists/router");
 var citiesRouter = require("../operations/parametrics/general/cities/router");
 var locationEntitiesRouter = require("../operations/parametrics/general/locationEntities/router");
-var rehearsalRoomsRouter = require("../operations/domain/rehearsal_rooms/router");
+// var rehearsalRoomsRouter = require("../operations/domain/rehearsal_rooms/router");
 var ridersRouter = require("../operations/domain/riders/router");
 var usersRouter = require("../operations/domain/users/router");
 var toursOutlinesRouter = require("../operations/domain/favourites/toursOutlines/router");
@@ -24,6 +24,21 @@ const Language = require("../models/parametrics/geo/Language.schema");
 const Allergy = require("../models/parametrics/geo/demographics/Allergies.schema");
 const routesConstants = require("../operations/domain/artists/constants/routes.constants");
 const helperFunctions = require("../helpers/helperFunctions");
+const { normalizeProfileId } = require("../models/appbase/EntityDirectory");
+const { getModel } = require("../helpers/getModel");
+
+// ============================================================================
+// HELPER FUNCTIONS
+// ============================================================================
+
+/**
+ * Elimina múltiples campos de un objeto
+ * @param {Object} obj - Objeto del cual eliminar campos
+ * @param {Array<string>} fields - Array de nombres de campos a eliminar
+ */
+function deleteFields(obj, fields) {
+  fields.forEach((field) => delete obj[field]);
+}
 
 function loadRoutes() {
   return [
@@ -320,19 +335,46 @@ function loadRoutes() {
               ].join(" "),
             },
           ],
-          postScriptFunction: (results) => {
-            results.forEach((result) => {
-              result["requester"] = result["requester_profile_id"];
-              result["recipients"] = result["recipient_ids"];
+          postScriptFunction: async (results, req) => {
+            // Normalizar el profile ID del usuario actual
+            const ids = await normalizeProfileId(
+              req.user.currentProfileIdentifier,
+              req.connection
+            );
 
-              result["recipients"].forEach((recipient) => {
-                delete recipient["_id"];
-                delete recipient["genres"];
+            const PrebookingModel = await getModel(
+              req.serverEnvironment,
+              "Prebooking"
+            );
+
+            const processResult = async (result) => {
+              // Auto-agregar a participant_approvals si es recipient y no está
+              await PrebookingModel.ensureParticipantExists(
+                result,
+                ids.entity_id,
+                req.user.id,
+                req.connection
+              );
+
+              // Renombrar campos
+              result.requester = result.requester_profile_id;
+              result.recipients = result.recipient_ids;
+
+              // Limpiar campos de recipients
+              result.recipients?.forEach((recipient) => {
+                deleteFields(recipient, ["_id", "genres"]);
               });
 
-              delete result["requester_profile_id"];
-              delete result["recipient_ids"];
-            });
+              // Limpiar campos del resultado
+              deleteFields(result, ["requester_profile_id", "recipient_ids"]);
+            };
+
+            // Procesar array o objeto único
+            if (Array.isArray(results)) {
+              await Promise.all(results.map(processResult));
+            } else if (results) {
+              await processResult(results);
+            }
           },
           filters: [
             {
@@ -341,6 +383,33 @@ function loadRoutes() {
               compareField: "_id",
             },
           ],
+          actions: {
+            setStatus: async (req, res, entity, body) => {
+              // Normalizar el profile ID del usuario actual
+              const ids = await normalizeProfileId(
+                req.user.currentProfileIdentifier,
+                req.connection
+              );
+
+              // Actualizar el estado del participante
+              // body debe contener: { status: "accepted"|"rejected"|"viewed"|"pending", notes: "..." }
+              entity.updateParticipantStatus(
+                ids.entity_id,
+                body.status,
+                body.notes
+              );
+
+              console.log(
+                "[setStatus] Profile ID:",
+                ids.entity_id,
+                "| New status:",
+                body.status
+              );
+
+              // Retornar el entity modificado para que crud-routes lo guarde
+              return entity;
+            },
+          },
         },
       }),
     },
@@ -352,7 +421,7 @@ function loadRoutes() {
         options: { listEntities: { limit: 0 } },
       }),
     },
-    { path: "/rehearsal_rooms", route: { router: rehearsalRoomsRouter } },
+    // { path: "/rehearsal_rooms", route: { router: rehearsalRoomsRouter } },
     { path: "/industryOffer", route: { router: industryOfferRouter } },
     { path: "/riders", route: { router: ridersRouter } },
     { path: "/users", route: { router: usersRouter } },

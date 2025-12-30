@@ -16,6 +16,11 @@ const routesConstants = require("../artists/constants/routes.constants");
 
 var userRouter = express.Router({ mergeParams: true });
 
+// Middlewares centralizados
+const baseMiddlewares = helpers.getBaseMiddlewares();
+const actionContextMiddlewares = helpers.getActionContextMiddlewares("User");
+const writeMiddlewares = helpers.getWriteMiddlewares();
+
 function fillRelationships(element, relationships = []) {
   return helpers.attachRelationships(element, relationships);
 }
@@ -108,7 +113,7 @@ function filterResultsByQuery(req, result) {
 module.exports = [
   userRouter.get(
     RoutesConstants.checkId,
-    helpers.validateEnvironment,
+    ...baseMiddlewares,
     async (req, res) => {
       const { id } = req.params;
       let response = undefined;
@@ -157,7 +162,7 @@ module.exports = [
   ),
   userRouter.get(
     RoutesConstants.usersList,
-    helpers.validateEnvironment,
+    ...baseMiddlewares,
     async (req, res) => {
       // try {
       //   return res.json(filterResultsByQuery(req, helpers.getEntityData("User")));
@@ -197,8 +202,7 @@ module.exports = [
 
   userRouter.get(
     RoutesConstants.findUserById,
-    helpers.validateEnvironment,
-    helpers.validateAuthenticatedUser,
+    ...actionContextMiddlewares,
     async (req, res) => {
       const { userId } = req.params;
       const currentUserId = req.userId;
@@ -264,7 +268,7 @@ module.exports = [
 
   userRouter.post(
     RoutesConstants.create,
-    helpers.validateEnvironment,
+    ...baseMiddlewares,
     async (req, res) => {
       // const items = helpers.getEntityData("User");
       // return res
@@ -307,8 +311,7 @@ module.exports = [
 
   userRouter.put(
     RoutesConstants.updateById,
-    helpers.validateEnvironment,
-    helpers.validateAuthenticatedUser,
+    ...writeMiddlewares,
     async (req, res) => {
       const { id: searchValue } = req.params;
       const userId = searchValue;
@@ -372,8 +375,7 @@ module.exports = [
 
   userRouter.put(
     RoutesConstants.actionById,
-    helpers.validateEnvironment,
-    helpers.validateAuthenticatedUser,
+    ...writeMiddlewares,
     async (req, res) => {
       const { action, id, identifier, username, entity } = req.body;
 
@@ -482,7 +484,7 @@ module.exports = [
 
   userRouter.delete(
     RoutesConstants.deleteById,
-    helpers.validateEnvironment,
+    ...baseMiddlewares,
     (req, res) => {
       const items = helpers.getEntityData("User");
       return res
@@ -493,7 +495,7 @@ module.exports = [
 
   userRouter.get(
     RoutesConstants.favorites,
-    helpers.validateEnvironment,
+    ...baseMiddlewares,
     (req, res) => {
       const MAX_ELEMENTS = 10;
       const artistsRandom = helpers
@@ -537,14 +539,14 @@ module.exports = [
 
   userRouter.get(
     RoutesConstants.tours_outline,
-    helpers.validateEnvironment,
+    ...baseMiddlewares,
     (req, res) => {
       return res.status(200).json(generateTourOutlines());
     }
   ),
   userRouter.get(
     RoutesConstants.findUserById,
-    helpers.validateEnvironment,
+    ...baseMiddlewares,
     (req, res) => {
       const { userId } = req.params;
       return res.status(200).json(generateTourOutline(userId));

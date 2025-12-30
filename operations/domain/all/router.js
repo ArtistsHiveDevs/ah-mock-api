@@ -418,6 +418,11 @@ const searchEntities = async ({
 
 var router = express.Router({ mergeParams: true });
 
+// Middlewares centralizados
+const baseMiddlewares = helpers.getBaseMiddlewares();
+const actionContextMiddlewares = helpers.getActionContextMiddlewares("EntityDirectory");
+const writeMiddlewares = helpers.getWriteMiddlewares();
+
 function fillRelationships(element, relationships = []) {
   return helpers.attachRelationships(element, relationships);
 }
@@ -598,7 +603,7 @@ function fillEventRelationships(element) {
 module.exports = [
   router.get(
     RoutesConstants.search,
-    helpers.validateEnvironment,
+    ...baseMiddlewares,
     async (req, res) => {
       try {
         //   const { page = 1, limit = 50, fields } = req.query;
@@ -646,8 +651,7 @@ module.exports = [
   ),
   router.get(
     RoutesConstants.follow,
-    helpers.validateEnvironment,
-    helpers.validateAuthenticatedUser,
+    ...actionContextMiddlewares,
     async (req, res) => {
       try {
         const profileId = req.params.profileId;

@@ -15,11 +15,16 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
   try {
     const router = express.Router();
 
+    // Obtener middlewares desde helpers (centralizados)
+    const baseMiddlewares = helpers.getBaseMiddlewares();
+    const actionContextMiddlewares =
+      helpers.getActionContextMiddlewares(modelName);
+    const writeMiddlewares = helpers.getWriteMiddlewares();
+
     // GET list route
     router.get(
       routesConstants.artistsList,
-      helpers.validateEnvironment,
-      helpers.validateIfUserExists,
+      ...baseMiddlewares,
       async (req, res) => {
         try {
           const modelActions = await createCRUDActions({
@@ -51,8 +56,7 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
     // GET by ID route
     router.get(
       routesConstants.findArtistById,
-      helpers.validateEnvironment,
-      helpers.validateIfUserExists,
+      ...actionContextMiddlewares,
       async (req, res) => {
         try {
           const modelActions = await createCRUDActions({
@@ -82,9 +86,7 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
     // POST create route
     router.post(
       routesConstants.create,
-      helpers.validateEnvironment,
-      helpers.validateIfUserExists,
-      helpers.validateAuthenticatedUser,
+      ...writeMiddlewares,
       async (req, res) => {
         try {
           const modelActions = await createCRUDActions({
@@ -110,9 +112,7 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
     // PUT update route
     router.put(
       routesConstants.updateById,
-      helpers.validateEnvironment,
-      helpers.validateIfUserExists,
-      helpers.validateAuthenticatedUser,
+      ...writeMiddlewares,
       async (req, res) => {
         try {
           const modelActions = await createCRUDActions({
@@ -138,13 +138,11 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
     if (!!options.actions) {
       router.post(
         routesConstants.action,
-        helpers.validateEnvironment,
-        helpers.validateIfUserExists,
-        helpers.validateAuthenticatedUser,
+        ...writeMiddlewares,
         async (req, res) => {
           try {
-            const { action } = req.body; // Acción a ejecutar (follow, unfollow, etc.)
-            const { id } = req.params; // ID del elemento a modificar
+            const { id, action } = req.body; // Acción a ejecutar (follow, unfollow, etc.)
+
             const modelActions = await createCRUDActions({
               modelName,
               schema,
@@ -158,8 +156,8 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
                 .json({ message: `Acción '${action}' no permitida.` });
             }
 
-            // Obtener el documento actual
-            const entity = await modelActions.findEntityById({ id });
+            // Obtener el documento actual (raw = documento de Mongoose con métodos)
+            const entity = await modelActions.findEntityById({ id, raw: true });
             if (!entity) {
               return res
                 .status(404)
@@ -175,13 +173,23 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             );
 
             // Guardar los cambios
-            const response = await modelActions.updateEntity({
-              id,
-              userId: req.userId,
-              body: updatedEntity,
-            });
-
-            res.json(response);
+            // Si la acción retorna un documento de Mongoose, guardarlo directamente
+            if (updatedEntity && typeof updatedEntity.save === "function") {
+              await updatedEntity.save();
+              res.json(
+                apiHelperFunctions.createPaginatedDataResponse(
+                  updatedEntity.toObject()
+                )
+              );
+            } else {
+              // Si retorna un objeto plano, usar updateEntity
+              const response = await modelActions.updateEntity({
+                id,
+                userId: req.userId,
+                body: updatedEntity,
+              });
+              res.json(response);
+            }
           } catch (err) {
             console.error(err);
             res.status(500).json({ message: err.message });

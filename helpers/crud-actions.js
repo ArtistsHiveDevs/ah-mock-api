@@ -64,21 +64,21 @@ async function processFilters(
   currentUserIdNormalization,
   connection
 ) {
-  console.log("\n=== DEBUG: processFilters START ===");
-  console.log("filters:", JSON.stringify(filters, null, 2));
-  console.log("user:", JSON.stringify(user, null, 2));
-  console.log(
-    "currentProfileIdNormalization:",
-    currentProfileIdNormalization
-      ? JSON.stringify(currentProfileIdNormalization, null, 2)
-      : undefined
-  );
-  console.log(
-    "currentUserIdNormalization:",
-    currentUserIdNormalization
-      ? JSON.stringify(currentUserIdNormalization, null, 2)
-      : undefined
-  );
+  // console.log("\n=== DEBUG: processFilters START ===");
+  // console.log("filters:", JSON.stringify(filters, null, 2));
+  // console.log("user:", JSON.stringify(user, null, 2));
+  // console.log(
+  //   "currentProfileIdNormalization:",
+  //   currentProfileIdNormalization
+  //     ? JSON.stringify(currentProfileIdNormalization, null, 2)
+  //     : undefined
+  // );
+  // console.log(
+  //   "currentUserIdNormalization:",
+  //   currentUserIdNormalization
+  //     ? JSON.stringify(currentUserIdNormalization, null, 2)
+  //     : undefined
+  // );
 
   const { normalizeProfileId } = require("../models/appbase/EntityDirectory");
   const mongoQuery = {};
@@ -170,11 +170,11 @@ async function processFilters(
     }
   }
 
-  console.log("\n=== Final mongoQuery ===");
-  console.log(JSON.stringify(mongoQuery, null, 2));
-  console.log("\n=== Final populateFields ===");
-  console.log(Array.from(populateFieldsSet));
-  console.log("=== DEBUG: processFilters END ===\n");
+  // console.log("\n=== Final mongoQuery ===");
+  // console.log(JSON.stringify(mongoQuery, null, 2));
+  // console.log("\n=== Final populateFields ===");
+  // console.log(Array.from(populateFieldsSet));
+  // console.log("=== DEBUG: processFilters END ===\n");
 
   return {
     mongoQuery,
@@ -206,14 +206,14 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
     public_fields,
     postScriptFunction,
   }) {
-    const currentProfileIdNormalization = !!user.currentProfileIdentifier
+    const currentProfileIdNormalization = !!user?.currentProfileIdentifier
       ? await EntityDirectory.normalizeProfileId(
-          user.currentProfileIdentifier,
+          user?.currentProfileIdentifier,
           connection
         )
       : undefined;
-    const currentUserIdNormalization = !!user.id
-      ? await EntityDirectory.normalizeProfileId(user.id, connection)
+    const currentUserIdNormalization = !!user?.id
+      ? await EntityDirectory.normalizeProfileId(user?.id, connection)
       : undefined;
 
     try {
@@ -291,13 +291,13 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
       // Procesar filtros personalizados si existen
       let filterPopulateFields = [];
-      console.log("\n=== DEBUG: Checking filters ===");
-      console.log("filters exists:", !!filters);
-      console.log("filters.length:", filters?.length);
-      console.log("user exists:", !!user);
+      // console.log("\n=== DEBUG: Checking filters ===");
+      // console.log("filters exists:", !!filters);
+      // console.log("filters.length:", filters?.length);
+      // console.log("user exists:", !!user);
 
       if (filters && filters.length > 0 && user) {
-        console.log("✓ Processing custom filters...");
+        // console.log("✓ Processing custom filters...");
         const processed = await processFilters(
           filters,
           user,
@@ -308,13 +308,13 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         // Combinar los filtros procesados con los existentes
         allFilters = { ...allFilters, ...processed.mongoQuery };
         filterPopulateFields = processed.populateFields;
-        console.log("✓ Filters processed and combined");
+        // console.log("✓ Filters processed and combined");
       } else {
-        console.log("⚠️ No custom filters to process");
+        // console.log("⚠️ No custom filters to process");
       }
 
-      console.log("\n=== DEBUG: Final allFilters ===");
-      console.log(JSON.stringify(allFilters, null, 2));
+      // console.log("\n=== DEBUG: Final allFilters ===");
+      // console.log(JSON.stringify(allFilters, null, 2));
 
       // Consulta a la base de datos con select y populate
 
@@ -362,9 +362,9 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
       // let results = await model.aggregate(pipeline);
 
-      console.log("\n=== DEBUG: Building MongoDB query ===");
-      console.log("Model:", modelName);
-      console.log("Query filters:", JSON.stringify(allFilters, null, 2));
+      // console.log("\n=== DEBUG: Building MongoDB query ===");
+      // console.log("Model:", modelName);
+      // console.log("Query filters:", JSON.stringify(allFilters, null, 2));
 
       let query = model
         .find({ ...allFilters })
@@ -372,9 +372,9 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         .skip((page - 1) * limit)
         .limit(Number(limit));
 
-      console.log("\n=== DEBUG: Applying populates ===");
-      console.log("populateFields:", JSON.stringify(populateFields, null, 2));
-      console.log("filterPopulateFields:", filterPopulateFields);
+      // console.log("\n=== DEBUG: Applying populates ===");
+      // console.log("populateFields:", JSON.stringify(populateFields, null, 2));
+      // console.log("filterPopulateFields:", filterPopulateFields);
 
       if (populateFields.length > 0) {
         console.log("✓ Applying standard populates:", populateFields.length);
@@ -385,10 +385,10 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
       // Populate adicional para campos de filtros
       if (filterPopulateFields.length > 0) {
-        console.log(
-          "✓ Applying filter populates:",
-          filterPopulateFields.length
-        );
+        // console.log(
+        //   "✓ Applying filter populates:",
+        //   filterPopulateFields.length
+        // );
         filterPopulateFields.forEach((fieldPath) => {
           // Solo popular si no está ya en populateFields
           const alreadyPopulated = populateFields.some(
@@ -403,12 +403,12 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         });
       }
 
-      console.log("\n=== DEBUG: Executing query ===");
+      // console.log("\n=== DEBUG: Executing query ===");
       let results = await query.exec();
-      console.log("Results count BEFORE slice:", results.length);
+      // console.log("Results count BEFORE slice:", results.length);
 
       results = results.slice(0, 200);
-      console.log("Results count AFTER slice:", results.length);
+      // console.log("Results count AFTER slice:", results.length);
 
       // Traducir los resultados utilizando translateDBResults
       results = apiHelperFunctions.translateDBResults({ results, lang });
@@ -418,7 +418,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       }
 
       if (postScriptFunction && typeof postScriptFunction === "function") {
-        postScriptFunction(results);
+        await postScriptFunction(results, req);
       }
 
       // Crear la respuesta paginada
@@ -575,6 +575,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
     specific_projection = undefined,
     public_fields,
     postScriptFunction,
+    raw = false, // Si es true, retorna el documento de Mongoose sin convertir a objeto
   }) {
     if (!id) {
       throw new Error("Must search an id, username or name");
@@ -667,7 +668,10 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
     ];
 
     // Construir la consulta con proyección y populate
-    let queryResult = model.findOne(query).select(projection);
+    // Si raw === true, NO usar select() para obtener TODOS los campos
+    let queryResult = raw
+      ? model.findOne(query)
+      : model.findOne(query).select(projection);
 
     // console.log(modelName, " Populate ", populateFields);
     // Aplicar `populate` a los campos correspondientes
@@ -683,6 +687,11 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
     // Manejar caso en el que la entidad no sea encontrada
     if (!entityInfo) {
       throw new Error(`${modelName} not found`);
+    }
+
+    // Si raw === true, retornar el documento de Mongoose directamente sin procesar
+    if (raw) {
+      return entityInfo;
     }
 
     // Aggregates
@@ -707,29 +716,35 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       ]);
     }
 
-    let followedEntityInfo;
-    if (req.currentProfileInfo && req.currentProfileEntity) {
-      followedEntityInfo = await model
-        .findOne({
-          ...query,
-          ["followed_by"]: {
-            $elemMatch: {
-              entityId: req.currentProfileInfo.id,
-              entityType: req.currentProfileEntity,
-              isFollowing: true,
-            },
-          },
-        })
-        .select("_id");
-    }
-
     entityInfo = {
       ...entityInfo.toObject({ flattenMaps: false }),
-      followed_by_count: followedByCount?.[0]?.followersCount || 0,
-      followed_profiles_count:
-        followedProfilesCount?.[0]?.followedProfilesCount || 0,
-      isFollowedByCurrentProfile: !!followedEntityInfo,
     };
+
+    if (modelRequiresEntityIndex(modelName)) {
+      let followedEntityInfo;
+      if (req.currentProfileInfo && req.currentProfileEntity) {
+        followedEntityInfo = await model
+          .findOne({
+            ...query,
+            ["followed_by"]: {
+              $elemMatch: {
+                entityId: req.currentProfileInfo.id,
+                entityType: req.currentProfileEntity,
+                isFollowing: true,
+              },
+            },
+          })
+          .select("_id");
+      }
+
+      entityInfo = {
+        ...entityInfo,
+        followed_by_count: followedByCount?.[0]?.followersCount || 0,
+        followed_profiles_count:
+          followedProfilesCount?.[0]?.followedProfilesCount || 0,
+        isFollowedByCurrentProfile: !!followedEntityInfo,
+      };
+    }
 
     // Convertir todos los Maps a objetos planos para serialización JSON
     Object.keys(entityInfo).forEach((key) => {
@@ -743,25 +758,26 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
     });
 
     // ==========================  CLAIM PROFILE =====
+    if (modelRequiresEntityIndex(modelName)) {
+      const ProfileClaimModel = await getModel(
+        req.serverEnvironment,
+        "ProfileClaim"
+      );
+      let claimResult;
+      try {
+        let queryClaim = {};
 
-    const ProfileClaimModel = await getModel(
-      req.serverEnvironment,
-      "ProfileClaim"
-    );
-    let claimResult;
-    try {
-      let queryClaim = {};
-
-      if (mongoose.Types.ObjectId.isValid(id)) {
-        queryClaim.$or = [{ entityId: new mongoose.Types.ObjectId(id) }];
-      } else {
-        queryClaim.$or = [{ identifier: id }];
+        if (mongoose.Types.ObjectId.isValid(id)) {
+          queryClaim.$or = [{ entityId: new mongoose.Types.ObjectId(id) }];
+        } else {
+          queryClaim.$or = [{ identifier: id }];
+        }
+        claimResult = await ProfileClaimModel.findOne({ ...queryClaim });
+      } catch (error) {
+        console.log(error);
       }
-      claimResult = await ProfileClaimModel.findOne({ ...queryClaim });
-    } catch (error) {
-      console.log(error);
+      entityInfo.isClaimedProfile = !!claimResult;
     }
-    entityInfo.isClaimedProfile = !!claimResult;
 
     // Traducir los resultados utilizando translateDBResults
     entityInfo = apiHelperFunctions.translateDBResults({
@@ -1007,10 +1023,15 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       throw new Error(`${modelName} not found`);
     }
 
-    const hasRole = entityInfo.entityRoleMap.some(
-      (role) =>
-        ["OWNER", "ADMIN"].includes(role.role) && role.ids.includes(userId)
-    );
+    let hasRole = false;
+    if (entityInfo.entityRoleMap) {
+      hasRole = entityInfo.entityRoleMap.some(
+        (role) =>
+          ["OWNER", "ADMIN"].includes(role.role) && role.ids.includes(userId)
+      );
+    }
+
+    console.log(newInfo);
 
     if (hasRole) {
       const updatedEntity = await model.findOneAndUpdate(

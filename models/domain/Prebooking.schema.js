@@ -260,6 +260,11 @@ schema.virtual("approvalCounts").get(function () {
 
   return this.participant_approvals.reduce(
     (counts, approval) => {
+      // "viewed" cuenta cualquier status que NO sea "pending"
+      if (approval.status !== "pending") {
+        counts.viewed = (counts.viewed || 0) + 1;
+      }
+      // También contar por status específico
       counts[approval.status] = (counts[approval.status] || 0) + 1;
       return counts;
     },
@@ -364,30 +369,182 @@ schema.statics.preConstruct = async function (connection, ownerUser, data) {
 };
 
 // ============================================================================
+// STATICS (métodos estáticos del modelo)
+// ============================================================================
+
+/**
+ * Recalcula los virtuals en un objeto plano (después de modificar participant_approvals)
+ * @param {Object} prebookingObj - Objeto plano de prebooking
+ * @returns {Object} El mismo objeto con virtuals recalculados
+ */
+schema.statics.recalculateVirtuals = function (prebookingObj) {
+  if (!prebookingObj) return prebookingObj;
+
+  const now = new Date();
+
+  // Recalcular approvalCounts
+  if (prebookingObj.participant_approvals) {
+    prebookingObj.approvalCounts = prebookingObj.participant_approvals.reduce(
+      (counts, approval) => {
+        // "viewed" cuenta cualquier status que NO sea "pending"
+        if (approval.status !== "pending") {
+          counts.viewed = (counts.viewed || 0) + 1;
+        }
+        // También contar por status específico
+        counts[approval.status] = (counts[approval.status] || 0) + 1;
+        return counts;
+      },
+      { pending: 0, viewed: 0, accepted: 0, rejected: 0 }
+    );
+  }
+
+  // Recalcular allParticipantsViewed
+  if (prebookingObj.participant_approvals) {
+    prebookingObj.allParticipantsViewed =
+      prebookingObj.participant_approvals.length > 0 &&
+      prebookingObj.participant_approvals.every(
+        (approval) => approval.status !== "pending"
+      );
+  }
+
+  // Recalcular isExpired
+  if (prebookingObj.status && prebookingObj.response_deadline) {
+    if (
+      prebookingObj.status === "CONVERTED" ||
+      prebookingObj.status === "CANCELLED" ||
+      prebookingObj.status === "EXPIRED"
+    ) {
+      prebookingObj.isExpired = false;
+    } else {
+      prebookingObj.isExpired = new Date(prebookingObj.response_deadline) < now;
+    }
+  }
+
+  // Recalcular daysUntilEvent
+  if (prebookingObj.requested_date_start) {
+    const start = new Date(prebookingObj.requested_date_start);
+    const diffTime = start - now;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    prebookingObj.daysUntilEvent = diffDays;
+  }
+
+  // Recalcular daysUntilDeadline
+  if (prebookingObj.response_deadline) {
+    const deadline = new Date(prebookingObj.response_deadline);
+    const diffTime = deadline - now;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    prebookingObj.daysUntilDeadline = Math.max(0, diffDays);
+  }
+
+  return prebookingObj;
+};
+
+/**
+ * Auto-agrega un usuario a participant_approvals si es recipient y no está presente
+ * @param {Object} prebooking - Documento de Prebooking (puede ser objeto plano)
+ * @param {ObjectId|String} currentProfileId - ID del perfil actual
+ * @param {String} currentUserId - ID del usuario actual
+ * @param {Connection} connection - Conexión de Mongoose
+ * @returns {Promise<Boolean>} true si se agregó, false si ya existía o no es recipient
+ */
+schema.statics.ensureParticipantExists = async function (
+  prebooking,
+  currentProfileId,
+  currentUserId,
+  connection
+) {
+  // Convertir a string para comparación
+  const currentProfileIdStr = currentProfileId.toString();
+
+  // Verificar si ya está en participant_approvals
+  const exists = prebooking.participant_approvals?.some(
+    (a) => a.participant_profile_id?.toString() === currentProfileIdStr
+  );
+
+  if (exists) {
+    return false; // Ya existe, no hacer nada
+  }
+
+  // Verificar si está en recipient_ids
+  const isRecipient = prebooking.recipient_ids?.some(
+    (recipient) => recipient?.id?.toString() === currentProfileIdStr
+  );
+
+  if (!isRecipient) {
+    return false; // No es recipient, no agregarlo
+  }
+
+  // Crear el nuevo approval
+  const newApproval = {
+    participant_profile_id: currentProfileId,
+    participant_user_id: currentUserId,
+    status: "pending",
+    responded_at: new Date(),
+    response_notes: "Auto-added on first view",
+  };
+
+  // PRIMERO actualizar en la DB (puede fallar)
+  await this.findByIdAndUpdate(
+    prebooking._id,
+    {
+      $push: {
+        participant_approvals: newApproval,
+      },
+    },
+    { new: true }
+  );
+
+  // Si llegamos aquí, la DB se actualizó correctamente
+  // Ahora actualizar el objeto en memoria
+  if (!prebooking.participant_approvals) {
+    prebooking.participant_approvals = [];
+  }
+  prebooking.participant_approvals.push(newApproval);
+
+  // Recalcular todos los virtuals usando la función centralizada
+  this.recalculateVirtuals(prebooking);
+
+  console.log(
+    `[Prebooking] Auto-added participant ${currentProfileIdStr} to prebooking ${prebooking._id}`
+  );
+
+  return true; // Se agregó exitosamente
+};
+
+// ============================================================================
 // MÉTODOS
 // ============================================================================
 
 /**
  * Método para actualizar el estado de aprobación de un participante
+ * @param {String|ObjectId} participantProfileId - ID del perfil del participante
+ * @param {String} newStatus - Nuevo estado: "pending", "viewed", "accepted", "rejected"
+ * @param {String} responseNotes - Notas opcionales sobre la respuesta
+ * @returns {Document} El documento modificado (sin guardar)
  */
 schema.methods.updateParticipantStatus = function (
-  participantId,
+  participantProfileId,
   newStatus,
   responseNotes
 ) {
-  const approval = this.participant_approvals.find(
-    (a) => a.participant_id === participantId
+  const approval = (this.participant_approvals || []).find(
+    (a) =>
+      a.participant_profile_id.toString() === participantProfileId.toString()
   );
 
-  if (approval) {
-    approval.status = newStatus;
-    approval.responded_at = new Date();
-    if (responseNotes) {
-      approval.response_notes = responseNotes;
-    }
+  if (!approval) {
+    throw new Error(
+      `Participant with profile ID ${participantProfileId} not found in approvals`
+    );
   }
 
-  return this.save();
+  approval.status = newStatus;
+  approval.responded_at = new Date();
+  if (responseNotes) {
+    approval.response_notes = responseNotes;
+  }
+
+  return this; // Retorna el documento modificado SIN guardar
 };
 
 /**

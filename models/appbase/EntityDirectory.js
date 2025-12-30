@@ -88,7 +88,7 @@ async function normalizeProfileId(id, connection) {
   const entity = await EntityDirectory.findOne(query);
 
   if (entity) {
-    console.log("******     \n", entity);
+    // console.log("******     \n", entity);
     return {
       _id: entity._id,
       identifier: entity.identifier,
