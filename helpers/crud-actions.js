@@ -19,6 +19,9 @@ function modelRequiresAuth(modelName) {
     "Event",
   ].includes(modelName);
 }
+function modelRequiresOwnership(modelName) {
+  return !["Prebooking"].includes(modelName);
+}
 function modelRequiresEntityIndex(modelName) {
   return ["Artist", "Place", "User"].includes(modelName);
 }
@@ -1054,11 +1057,129 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
     }
   }
 
+  // Función para eliminar una entidad
+  async function deleteEntity({ id, userId }) {
+    console.log(`[${modelName}] deleteEntity - Start`);
+    console.log(`[${modelName}] - id:`, id);
+    console.log(`[${modelName}] - userId:`, userId);
+
+    if (!userId) {
+      throw new Error(
+        "Unauthorized operation. To execute this operation you require a valid session"
+      );
+    }
+
+    if (!id) {
+      throw new Error("Must search an id, username or name");
+    }
+
+    let query = {};
+
+    let visibleAttributes = routesConstants.authenticated_fields;
+    const currentUser = await UserModel.findById(userId);
+    console.log(`[${modelName}] - currentUser found:`, !!currentUser);
+
+    if (mongoose.Types.ObjectId.isValid(id)) {
+      query._id = id;
+    } else {
+      query = {
+        $or: [{ username: id }, { name: id }],
+      };
+    }
+    console.log(`[${modelName}] - query:`, JSON.stringify(query));
+
+    const entityInfo = await model.findOne(query);
+    console.log(`[${modelName}] - entityInfo found:`, !!entityInfo);
+
+    if (!entityInfo) {
+      throw new Error(`${modelName} not found`);
+    }
+
+    console.log(`[${modelName}] - entityRoleMap:`, entityInfo.entityRoleMap);
+
+    let hasRole = false;
+    if (entityInfo.entityRoleMap) {
+      console.log(`[${modelName}] - Checking roles for userId:`, userId);
+      entityInfo.entityRoleMap.forEach((roleEntry, index) => {
+        console.log(`[${modelName}]   - roleEntry[${index}]:`, {
+          role: roleEntry.role,
+          ids: roleEntry.ids,
+          includesUserId: roleEntry.ids?.includes(userId),
+          isOwnerOrAdmin: ["OWNER", "ADMIN"].includes(roleEntry.role),
+        });
+      });
+
+      hasRole = entityInfo.entityRoleMap.some(
+        (role) =>
+          ["OWNER", "ADMIN"].includes(role.role) && role.ids.includes(userId)
+      );
+    } else {
+      console.log(`[${modelName}] - No entityRoleMap found`);
+    }
+
+    console.log(`[${modelName}] - hasRole:`, hasRole);
+    console.log(
+      `[${modelName}] - modelRequiresOwnership:`,
+      modelRequiresOwnership(modelName)
+    );
+
+    if (!modelRequiresOwnership(modelName) || hasRole) {
+      // Construir query de eliminación según si el modelo requiere ownership o no
+      let deleteQuery = { _id: entityInfo._id };
+
+      if (modelRequiresOwnership(modelName)) {
+        // Modelos con ownership: verificar roles en el query
+        deleteQuery.entityRoleMap = {
+          $elemMatch: {
+            role: { $in: ["OWNER", "ADMIN"] },
+            ids: userId,
+          },
+        };
+      }
+
+      console.log(`[${modelName}] - deleteQuery:`, JSON.stringify(deleteQuery));
+
+      // Eliminar la entidad
+      const deletedEntity = await model.findOneAndDelete(deleteQuery);
+
+      if (!deletedEntity) {
+        throw new Error(`Failed to delete entity [${modelName}]`);
+      }
+
+      console.log(
+        `[${modelName}] - Entity deleted successfully:`,
+        deletedEntity._id
+      );
+
+      // Si el modelo requiere EntityDirectory, también eliminarlo
+      if (modelRequiresEntityIndex(modelName)) {
+        const EntityDirectoryModel = await getModel(
+          connection.environment || connection.name,
+          "EntityDirectory"
+        );
+
+        await EntityDirectoryModel.findOneAndDelete({
+          entity_id: deletedEntity._id,
+          entityType: modelName,
+        });
+
+        console.log(
+          `[${modelName}] Deleted EntityDirectory entry for entity ${deletedEntity._id}`
+        );
+      }
+
+      return apiHelperFunctions.createPaginatedDataResponse(deletedEntity);
+    } else {
+      throw new Error("Permission denied");
+    }
+  }
+
   return {
     listEntities,
     findEntityById,
     createEntity,
     updateEntity,
+    deleteEntity,
   };
 }
 

@@ -135,6 +135,32 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
       }
     );
 
+    // DELETE route
+    router.delete(
+      routesConstants.updateById,
+      ...writeMiddlewares,
+      async (req, res) => {
+        try {
+          const modelActions = await createCRUDActions({
+            modelName,
+            schema,
+            options,
+            req,
+          });
+
+          const { id } = req.params;
+          const response = await modelActions.deleteEntity({
+            id,
+            userId: req.userId,
+          });
+          res.json(response);
+        } catch (err) {
+          console.error(`[${modelName}] Error deleting entity:`, err.message);
+          res.status(500).json({ message: err.message });
+        }
+      }
+    );
+
     if (!!options.actions) {
       router.post(
         routesConstants.action,
