@@ -149,7 +149,9 @@ function loadRoutes() {
               },
             },
           ],
-          postScriptFunction: (results) => {
+          postScriptFunction: (data) => {
+            const { results, req } = data || {};
+            console.log("EVENTOS::::::    ", results?.length);
             results.forEach((result) => {
               const artistName = result.artists?.[0]?.name || null;
               const placeName = result.place?.name || null;
@@ -253,7 +255,8 @@ function loadRoutes() {
               ],
             },
           ],
-          postScriptFunction: (results) => {
+          postScriptFunction: (data) => {
+            const { results, req } = data || {};
             results.forEach((place) => {
               (place.events || []).forEach((event) => {
                 if (!event.name) {
@@ -335,12 +338,15 @@ function loadRoutes() {
               ].join(" "),
             },
           ],
-          postScriptFunction: async (results, req) => {
+          postScriptFunction: async (data) => {
+            const { results, req } = data || {};
             // Normalizar el profile ID del usuario actual
             const ids = await normalizeProfileId(
               req.user.currentProfileIdentifier,
               req.connection
             );
+
+            console.log("IDS Prebooking: ", ids);
 
             const PrebookingModel = await getModel(
               req.serverEnvironment,

@@ -199,14 +199,12 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             );
 
             // Guardar los cambios
+            let result;
+
             // Si la acción retorna un documento de Mongoose, guardarlo directamente
             if (updatedEntity && typeof updatedEntity.save === "function") {
               await updatedEntity.save();
-              res.json(
-                apiHelperFunctions.createPaginatedDataResponse(
-                  updatedEntity.toObject()
-                )
-              );
+              result = updatedEntity.toObject();
             } else {
               // Si retorna un objeto plano, usar updateEntity
               const response = await modelActions.updateEntity({
@@ -214,8 +212,20 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
                 userId: req.userId,
                 body: updatedEntity,
               });
-              res.json(response);
+              // Extraer el dato del response (puede estar en .data o directamente)
+              result = response.data || response;
             }
+
+            // Aplicar postScriptFunction si existe
+            if (
+              options.postScriptFunction &&
+              typeof options.postScriptFunction === "function"
+            ) {
+              await options.postScriptFunction({ results: result, req });
+            }
+
+            // Retornar respuesta paginada
+            res.json(apiHelperFunctions.createPaginatedDataResponse(result));
           } catch (err) {
             console.error(err);
             res.status(500).json({ message: err.message });

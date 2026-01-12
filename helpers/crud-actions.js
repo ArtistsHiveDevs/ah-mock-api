@@ -284,12 +284,12 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
       let allFilters = {};
       if (modelName === "Event") {
-        allFilters = {
-          createdAt: {
-            $gte: startOfYear,
-            $lt: startOfNextYear,
-          },
-        };
+        // allFilters = {
+        //   timetable__initial_date: {  // Filtrar por fecha del evento, no por createdAt
+        //     $gte: startOfYear,
+        //     $lt: startOfNextYear,
+        //   },
+        // };
       }
 
       // Procesar filtros personalizados si existen
@@ -408,10 +408,17 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
       // console.log("\n=== DEBUG: Executing query ===");
       let results = await query.exec();
-      // console.log("Results count BEFORE slice:", results.length);
+
+      if (modelName === "Event") {
+        console.log("[Event] Results count BEFORE slice:", results.length);
+        console.log("[Event] allFilters:", JSON.stringify(allFilters));
+      }
 
       results = results.slice(0, 200);
-      // console.log("Results count AFTER slice:", results.length);
+
+      if (modelName === "Event") {
+        console.log("[Event] Results count AFTER slice:", results.length);
+      }
 
       // Traducir los resultados utilizando translateDBResults
       results = apiHelperFunctions.translateDBResults({ results, lang });
@@ -420,8 +427,11 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         helpers.shuffle(results);
       }
 
+      if (modelName === "Event") {
+        console.log("[Event] Results count AFTER translate:", results.length);
+      }
       if (postScriptFunction && typeof postScriptFunction === "function") {
-        await postScriptFunction(results, req);
+        await postScriptFunction({ results, req });
       }
 
       // Crear la respuesta paginada
@@ -826,7 +836,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
     if (postScriptFunction && typeof postScriptFunction === "function") {
       const results = [entityInfo];
-      postScriptFunction(results);
+      postScriptFunction({ results });
       entityInfo = results[0];
     }
 
