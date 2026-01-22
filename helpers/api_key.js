@@ -16,7 +16,25 @@ const API_KEY_EXPIRATION = "1h"; // Expiración de la API key, puede ser '1h', '
 // Middleware para validar API key
 async function validateApiKey(req, res, next) {
   const token = req.headers["x-api-key"];
+  const reqContext = req.headers["x-req-ctx"];
+
+  // IMPORTANTE: Los headers x-api-key y x-req-ctx son mutuamente excluyentes
+  // Si ambos están presentes, es un intento de bypass de seguridad
+  if (token && reqContext) {
+    return res.status(400).send({
+      message: "Invalid request headers.",
+      errorCode: ErrorCodes.CONNECTION_REQUEST_FAILED,
+    });
+  }
+
+  // Este middleware REQUIERE autenticación, no permite x-req-ctx
   if (!token) {
+    if (reqContext) {
+      return res.status(403).send({
+        message: "Authentication required for this operation.",
+        errorCode: ErrorCodes.AUTH_NO_TOKEN_PROVIDED,
+      });
+    }
     return res.status(403).send({
       message: "No API key provided.",
       errorCode: ErrorCodes.AUTH_NO_TOKEN_PROVIDED,
@@ -71,8 +89,25 @@ async function validateApiKey(req, res, next) {
 // Middleware para validar API key y autenticar usuario
 async function validateAuthenticatedUser(req, res, next) {
   const token = req.headers["x-api-key"];
+  const reqContext = req.headers["x-req-ctx"];
 
+  // IMPORTANTE: Los headers x-api-key y x-req-ctx son mutuamente excluyentes
+  // Si ambos están presentes, es un intento de bypass de seguridad
+  if (token && reqContext) {
+    return res.status(400).send({
+      message: "Invalid request headers.",
+      errorCode: ErrorCodes.CONNECTION_REQUEST_FAILED,
+    });
+  }
+
+  // Este middleware REQUIERE autenticación, no permite x-req-ctx
   if (!token) {
+    if (reqContext) {
+      return res.status(403).send({
+        message: "Authentication required for this operation.",
+        errorCode: ErrorCodes.AUTH_NO_TOKEN_PROVIDED,
+      });
+    }
     return res.status(403).send({ message: "No API key provided." });
   }
 
@@ -146,7 +181,47 @@ async function validateEnvironment(req, res, next) {
 // Middleware para validar API key y autenticar usuario
 async function validateIfUserExists(req, res, next) {
   const token = req.headers["x-api-key"];
+  const reqContext = req.headers["x-req-ctx"];
+
+  // IMPORTANTE: Los headers x-api-key y x-req-ctx son mutuamente excluyentes
+  // Si ambos están presentes, es un intento de bypass de seguridad
+  if (token && reqContext) {
+    return res.status(400).send({
+      message: "Invalid request headers.",
+      errorCode: ErrorCodes.CONNECTION_REQUEST_FAILED,
+    });
+  }
+
+  // Si no hay token, verificar si es una operación pre-autenticación permitida
   if (!token) {
+    if (reqContext) {
+      try {
+        const { decryptText } = require("../db/db_g");
+        const decryptedFull = decryptText(reqContext);
+
+        // El formato es "context@date", extraer solo el contexto
+        const decryptedContext = decryptedFull ? decryptedFull.split("@")[0] : null;
+
+        // Solo permitir contextos muy específicos para operaciones pre-auth
+        const allowedPreAuthContexts = ["username_signin", "user_signup"];
+
+        if (decryptedContext && allowedPreAuthContexts.includes(decryptedContext)) {
+          // Continuar sin autenticar (acceso limitado)
+          if (next) {
+            return next();
+          }
+          return;
+        }
+      } catch (error) {
+        console.error("Error desencriptando x-req-ctx:", error);
+        // Si falla la desencriptación, rechazar la petición
+        return res.status(403).send({
+          message: "Invalid request context.",
+          errorCode: ErrorCodes.AUTH_PERMISSION_DENIED,
+        });
+      }
+    }
+
     return res.status(403).send({ message: "No API key provided." });
   }
 
@@ -176,7 +251,7 @@ async function validateIfUserExists(req, res, next) {
       // Verificar que serverEnvironment esté definido
       if (!req.serverEnvironment) {
         console.error(
-          "⚠️ req.serverEnvironment is undefined en validateIfUserExists"
+          "⚠️ req.serverEnvironment is undefined en validateIfUserExists",
         );
         // Intentar establecer un valor por defecto o saltar la validación
         if (next) {
@@ -231,12 +306,14 @@ async function registerUserProfile(req, user) {
     if (user.currentProfileIdentifier !== template.identifier) {
       const profiles = user.roles.find((role) =>
         role.entityRoleMap.find((roleMap) =>
-          [roleMap.id, roleMap.username].includes(user.currentProfileIdentifier)
-        )
+          [roleMap.id, roleMap.username].includes(
+            user.currentProfileIdentifier,
+          ),
+        ),
       );
 
       const newTemplate = profiles?.entityRoleMap.find((roleMap) =>
-        [roleMap.id, roleMap.username].includes(user.currentProfileIdentifier)
+        [roleMap.id, roleMap.username].includes(user.currentProfileIdentifier),
       );
 
       template = newTemplate || template;
@@ -248,7 +325,7 @@ async function registerUserProfile(req, user) {
     if (!!req.currentProfileInfo && !!req.currentProfileEntity) {
       const EntityDirectoryModel = await getModel(
         req.serverEnvironment,
-        "EntityDirectory"
+        "EntityDirectory",
       );
       const requestID = await EntityDirectoryModel.findOne({
         id: req.currentProfileInfo.id,
@@ -262,7 +339,7 @@ async function registerUserProfile(req, user) {
 
 function registerLang(req) {
   req.lang = getAvailableTranslation(
-    req.user?.user_language || req.headers["lang"] || "es"
+    req.user?.user_language || req.headers["lang"] || "es",
   );
 }
 // async function validateOwnerRole(req, res, next) {

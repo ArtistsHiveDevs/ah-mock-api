@@ -17,7 +17,10 @@ const SECRET_IV = process.env.ENV_KEY_IV || "358e8a3a5474d65a"; // Mismo de fron
 
 const modelsWithCustomConnections = ["Album"];
 
-function decryptEnv(encryptedText) {
+/**
+ * Desencripta texto genérico (sin validación de formato)
+ */
+function decryptText(encryptedText) {
   try {
     const key = Buffer.from(SECRET_KEY, "utf8");
     const iv = Buffer.from(SECRET_IV, "utf8");
@@ -26,7 +29,20 @@ function decryptEnv(encryptedText) {
     const decipher = crypto.createDecipheriv("aes-256-cbc", key, iv);
     let decrypted = decipher.update(encryptedBuffer);
     decrypted = Buffer.concat([decrypted, decipher.final()]);
-    const str = decrypted.toString();
+    return decrypted.toString();
+  } catch (error) {
+    console.error("❌ Error al descifrar texto:", error.message);
+    return null;
+  }
+}
+
+/**
+ * Desencripta y valida el header x-env (formato: environment@date)
+ */
+function decryptEnv(encryptedText) {
+  try {
+    const str = decryptText(encryptedText);
+    if (!str) return null;
 
     const [env, date] = str.split("@");
     const today = new Date().toISOString().split("T")[0].replace(/-/g, "");
@@ -35,7 +51,7 @@ function decryptEnv(encryptedText) {
       ? env
       : undefined;
   } catch (error) {
-    console.error("❌ Error al descifrar:", encryptedText, error.message);
+    console.error("❌ Error al descifrar env:", encryptedText, error.message);
     return null;
   }
 }
@@ -158,4 +174,5 @@ module.exports = {
   connections,
   connectionsByModel,
   decryptEnv,
+  decryptText,
 };

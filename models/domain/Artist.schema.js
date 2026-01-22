@@ -158,6 +158,8 @@ const schema = new mongoose.Schema(
       },
     },
 
+    activity: String,
+
     entityRoleMap: [
       {
         ids: [mongoose.Types.ObjectId],

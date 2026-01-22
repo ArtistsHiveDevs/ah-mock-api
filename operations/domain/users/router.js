@@ -38,8 +38,8 @@ function fillResultWithFields(fields, result) {
   const filled = fillRelationships(
     result,
     relationships.filter((relationship) =>
-      fields.find((fieldName) => fieldName === relationship.field)
-    )
+      fields.find((fieldName) => fieldName === relationship.field),
+    ),
   );
 
   // filled.forEach((user) => {
@@ -98,7 +98,7 @@ function filterResultsByQuery(req, result) {
             let event = events.find((event) => `${event.id}` === `${eventId}`);
             event = helpers.fillRelationship(event, "place_id", places);
             return event;
-          }
+          },
         );
       });
     });
@@ -123,27 +123,55 @@ module.exports = [
           errorCode: ErrorCodes.AUTH_NO_USER_PROVIDED,
         });
       } else {
-        const query = {
-          $or: [
-            // { username: { $regex: new RegExp(`^${String(id).trim()}$`, "i") } },
-            { username: id },
-            // { name: { $regex: new RegExp(`^${id}$`, "i") } },
-          ],
-        };
-        response = "AVAILABLE";
+        // Detectar si el id es un email
+        const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(id);
+
+        response = { status: "AVAILABLE" };
         try {
-          const EntityDirectory = await getModel(
-            req.serverEnvironment,
-            "EntityDirectory"
-          );
+          // Si es email, buscar directamente en User por email
+          if (isEmail) {
+            const UserModel = await getModel(req.serverEnvironment, "User");
+            const userInfo = await UserModel.findOne({ email: id });
 
-          let queryResult = EntityDirectory.findOne(query); //.select(projection);
+            if (userInfo) {
+              response = {
+                status: "TAKEN",
+                email: userInfo.email || null,
+                username: userInfo.username || null,
+              };
+            }
+          } else {
+            // Si es username, buscar en EntityDirectory
+            const query = {
+              $or: [
+                // { username: { $regex: new RegExp(`^${String(id).trim()}$`, "i") } },
+                { username: id },
+                // { name: { $regex: new RegExp(`^${id}$`, "i") } },
+              ],
+            };
 
-          // Ejecutar la consulta
-          let entityInfo = await queryResult.exec();
+            const EntityDirectory = await getModel(
+              req.serverEnvironment,
+              "EntityDirectory",
+            );
 
-          if (entityInfo?.username === id) {
-            response = "TAKEN";
+            let queryResult = EntityDirectory.findOne(query); //.select(projection);
+
+            // Ejecutar la consulta
+            let entityInfo = await queryResult.exec();
+
+            if (entityInfo?.username === id) {
+              // Buscar el email del usuario en la colección User
+              const UserModel = await getModel(req.serverEnvironment, "User");
+              const userInfo = await UserModel.findOne({ username: id }).select(
+                "email",
+              );
+
+              response = {
+                status: "TAKEN",
+                email: userInfo?.email || null,
+              };
+            }
           }
         } catch (err) {
           console.error(err);
@@ -155,10 +183,8 @@ module.exports = [
 
       return res
         .status(200)
-        .json(
-          apiHelperFunctions.createPaginatedDataResponse({ status: response })
-        );
-    }
+        .json(apiHelperFunctions.createPaginatedDataResponse(response));
+    },
   ),
   userRouter.get(
     RoutesConstants.usersList,
@@ -197,7 +223,7 @@ module.exports = [
       } catch (err) {
         res.status(500).json({ message: err.message });
       }
-    }
+    },
   ),
 
   userRouter.get(
@@ -263,7 +289,7 @@ module.exports = [
 
         return res.status(500).json({});
       }
-    }
+    },
   ),
 
   userRouter.post(
@@ -295,7 +321,7 @@ module.exports = [
 
         const EntityDirectoryModel = await getModel(
           req.serverEnvironment,
-          "EntityDirectory"
+          "EntityDirectory",
         );
         const entityDirectory = new EntityDirectoryModel(entityInfo);
 
@@ -306,7 +332,7 @@ module.exports = [
         console.log(err);
         res.status(400).send(err);
       }
-    }
+    },
   ),
 
   userRouter.put(
@@ -357,7 +383,7 @@ module.exports = [
           {
             $set: updateFields,
           },
-          { new: true } // Retorna el documento actualizado
+          { new: true }, // Retorna el documento actualizado
         );
 
         // Verifica si el usuario fue encontrado y actualizado
@@ -370,7 +396,7 @@ module.exports = [
         console.error(err);
         res.status(500).json({ message: err.message });
       }
-    }
+    },
   ),
 
   userRouter.put(
@@ -381,7 +407,7 @@ module.exports = [
 
       const EntityDirectoryModel = await getModel(
         req.serverEnvironment,
-        "EntityDirectory"
+        "EntityDirectory",
       );
       const requestID = await EntityDirectoryModel.findOne({
         id: id,
@@ -417,7 +443,7 @@ module.exports = [
               action,
               "followed",
               followerInfo,
-              followedInfo
+              followedInfo,
             );
 
             await followProfile(
@@ -426,7 +452,7 @@ module.exports = [
               action,
               "followeρ",
               followedInfo,
-              followerInfo
+              followerInfo,
             );
             let query = {};
             // Si hay un `username` válido, agrégalo a la búsqueda
@@ -460,7 +486,7 @@ module.exports = [
           try {
             const ProfileClaimModel = await getModel(
               req.serverEnvironment,
-              "ProfileClaim"
+              "ProfileClaim",
             );
             const claim = new ProfileClaimModel({
               user: req.userId,
@@ -479,7 +505,7 @@ module.exports = [
         default:
           break;
       }
-    }
+    },
   ),
 
   userRouter.delete(
@@ -490,59 +516,55 @@ module.exports = [
       return res
         .status(200)
         .json(items[Math.round(Math.random() * items.length)]);
-    }
+    },
   ),
 
-  userRouter.get(
-    RoutesConstants.favorites,
-    ...baseMiddlewares,
-    (req, res) => {
-      const MAX_ELEMENTS = 10;
-      const artistsRandom = helpers
-        .getEntityData("Artist")
-        .sort(() => 0.5 - Math.random());
-      const randomArtistSize = Math.floor(Math.random() * artistsRandom.length);
-      const artistsFinalSize =
-        randomArtistSize > MAX_ELEMENTS ? MAX_ELEMENTS : randomArtistSize;
+  userRouter.get(RoutesConstants.favorites, ...baseMiddlewares, (req, res) => {
+    const MAX_ELEMENTS = 10;
+    const artistsRandom = helpers
+      .getEntityData("Artist")
+      .sort(() => 0.5 - Math.random());
+    const randomArtistSize = Math.floor(Math.random() * artistsRandom.length);
+    const artistsFinalSize =
+      randomArtistSize > MAX_ELEMENTS ? MAX_ELEMENTS : randomArtistSize;
 
-      const artists = artistsRandom.slice(0, artistsFinalSize);
+    const artists = artistsRandom.slice(0, artistsFinalSize);
 
-      const placesRandom = helpers
-        .getEntityData("Place")
-        .sort(() => 0.5 - Math.random());
+    const placesRandom = helpers
+      .getEntityData("Place")
+      .sort(() => 0.5 - Math.random());
 
-      const randomPlacesSize = Math.floor(Math.random() * placesRandom.length);
-      const placesFinalSize =
-        randomPlacesSize > MAX_ELEMENTS ? MAX_ELEMENTS : randomPlacesSize;
+    const randomPlacesSize = Math.floor(Math.random() * placesRandom.length);
+    const placesFinalSize =
+      randomPlacesSize > MAX_ELEMENTS ? MAX_ELEMENTS : randomPlacesSize;
 
-      const places = placesRandom.slice(0, placesFinalSize);
+    const places = placesRandom.slice(0, placesFinalSize);
 
-      const eventsRandom = helpers
-        .getEntityData("Event")
-        .sort(() => 0.5 - Math.random());
+    const eventsRandom = helpers
+      .getEntityData("Event")
+      .sort(() => 0.5 - Math.random());
 
-      const randomEventsSize = Math.floor(Math.random() * eventsRandom.length);
-      const eventsFinalSize =
-        randomPlacesSize > MAX_ELEMENTS ? MAX_ELEMENTS : randomPlacesSize;
+    const randomEventsSize = Math.floor(Math.random() * eventsRandom.length);
+    const eventsFinalSize =
+      randomPlacesSize > MAX_ELEMENTS ? MAX_ELEMENTS : randomPlacesSize;
 
-      const events = eventsRandom.slice(0, eventsFinalSize);
+    const events = eventsRandom.slice(0, eventsFinalSize);
 
-      const pagination = {
-        total_artists: randomArtistSize,
-        total_events: randomEventsSize,
-        total_places: randomPlacesSize,
-      };
+    const pagination = {
+      total_artists: randomArtistSize,
+      total_events: randomEventsSize,
+      total_places: randomPlacesSize,
+    };
 
-      return res.status(200).json({ artists, places, events, pagination });
-    }
-  ),
+    return res.status(200).json({ artists, places, events, pagination });
+  }),
 
   userRouter.get(
     RoutesConstants.tours_outline,
     ...baseMiddlewares,
     (req, res) => {
       return res.status(200).json(generateTourOutlines());
-    }
+    },
   ),
   userRouter.get(
     RoutesConstants.findUserById,
@@ -550,6 +572,6 @@ module.exports = [
     (req, res) => {
       const { userId } = req.params;
       return res.status(200).json(generateTourOutline(userId));
-    }
+    },
   ),
 ];

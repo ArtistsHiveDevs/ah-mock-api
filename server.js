@@ -111,27 +111,59 @@ app.post("/api/generate-key", helpers.validateEnvironment, async (req, res) => {
   try {
     let requestedUser;
     const UserModel = await getModel(req.serverEnvironment, "User");
-    if (isAWSlogin) {
-      requestedUser = await UserModel.findOne({
-        $and: [{ username: userId || usernameRQ }, { sub: sub }],
-      });
-    } else {
-      requestedUser = await UserModel.findOne({
-        $or: [{ username: userId || usernameRQ }, { email: userId }],
-      });
+
+    const identifier = usernameRQ || userId;
+
+    // Login tradicional: detectar el tipo de identificador y buscar en el campo correcto
+    // Detectar si es un UUID (sub de Cognito)
+    const isUUID =
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
+        identifier,
+      );
+    // Detectar si es un email
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identifier);
+
+    if (!requestedUser && sub) {
+      // Login con AWS Cognito: buscar por sub
+      requestedUser = await UserModel.findOne({ sub: sub });
+    }
+    if (!requestedUser && isUUID) {
+      // Buscar por sub
+      requestedUser = await UserModel.findOne({ sub: identifier });
+    }
+    if (!requestedUser && isEmail) {
+      // Buscar por email
+      requestedUser = await UserModel.findOne({ email: identifier });
     }
     if (!requestedUser) {
-      return res.status(404).send({ message: "User not found" });
+      // Buscar por username
+      requestedUser = await UserModel.findOne({ username: identifier });
     }
 
-    if (isAWSlogin) {
-      // if (requestedUser.sub !== sub) {
-      //   return res.status(401).send({ message: "Invalid sub" });
-      // }
+    if (!requestedUser) {
+      return res.status(404).send({
+        message: "User not found",
+        errorCode: ErrorCodes.AUTH_USER_NOT_FOUND,
+      });
     }
-    // Aquí puedes agregar la lógica para verificar la contraseña (ej. hash comparision)
-    else if (requestedUser.password !== password) {
-      return res.status(401).send({ message: "Invalid password" });
+
+    // Validar credenciales según el tipo de login
+    if (isAWSlogin) {
+      // Para AWS login, validar que el sub coincida
+      if (requestedUser.sub !== sub) {
+        return res.status(401).send({
+          message: "Invalid credentials",
+          errorCode: ErrorCodes.AUTH_INVALID_CREDENTIALS,
+        });
+      }
+    } else {
+      // Para login tradicional, validar password
+      if (true || requestedUser.password !== password) {
+        return res.status(401).send({
+          message: "Invalid password",
+          errorCode: ErrorCodes.AUTH_WRONG_PASSWORD,
+        });
+      }
     }
 
     const authTokenPayload = { id: requestedUser._id };
@@ -141,7 +173,12 @@ app.post("/api/generate-key", helpers.validateEnvironment, async (req, res) => {
 
     res.status(200).send({ apiKey: token });
   } catch (err) {
-    res.status(500).send({ message: "Server error", error: err.message });
+    console.error("Error in generate-key:", err);
+    res.status(500).send({
+      message: "Server error",
+      error: err.message,
+      errorCode: ErrorCodes.CONNECTION_REQUEST_FAILED,
+    });
   }
 });
 
@@ -162,7 +199,7 @@ app.post("/api/generate-key", helpers.validateEnvironment, async (req, res) => {
 Promise.all(
   loadRoutes().map(async (r) => {
     return { path: r.path, route: await r.route.router };
-  })
+  }),
 )
   .then((resolvedRoutes) => {
     resolvedRoutes.forEach(({ path, route }) => app.use(path, route));
@@ -227,7 +264,7 @@ app.get(
   validateApiKey,
   (req, res) => {
     res.status(200).send({ message: "This is a protected route." });
-  }
+  },
 );
 
 app.get("/", async (req, res) => {
