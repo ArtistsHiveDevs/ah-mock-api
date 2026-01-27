@@ -43,6 +43,7 @@ async function validateApiKey(req, res, next) {
 
   try {
     const decoded = jwt.verify(token, SECRET_KEY);
+
     const UserModel = await getModel(req.serverEnvironment, "User");
 
     let user = await UserModel.findById(decoded.id)
@@ -138,9 +139,7 @@ async function validateAuthenticatedUser(req, res, next) {
     registerUserProfile(req, user);
     registerLang(req);
 
-    if (next) {
-      next();
-    }
+    next();
   });
 }
 
@@ -166,15 +165,27 @@ async function validateEnvironment(req, res, next) {
         errorCode: ErrorCodes.CONNECTION_REQUEST_FAILED,
       });
     }
+
+    // Verificar que la conexión esté realmente establecida
+    if (!connection || connection.readyState !== 1) {
+      console.error(
+        "⚠️ MongoDB connection not ready en validateEnvironment, readyState:",
+        connection?.readyState,
+      );
+      return res.status(500).send({
+        message: "Database connection not ready",
+        errorCode: ErrorCodes.CONNECTION_REQUEST_FAILED,
+      });
+    }
+
+    // Conexión lista, continuar
+    next();
   } catch (error) {
     console.error("❌ Error en validateEnvironment:", error);
     return res.status(500).send({
       message: "Error al validar el ambiente",
       errorCode: ErrorCodes.CONNECTION_REQUEST_FAILED,
     });
-  }
-  if (next) {
-    next();
   }
 }
 
@@ -200,17 +211,19 @@ async function validateIfUserExists(req, res, next) {
         const decryptedFull = decryptText(reqContext);
 
         // El formato es "context@date", extraer solo el contexto
-        const decryptedContext = decryptedFull ? decryptedFull.split("@")[0] : null;
+        const decryptedContext = decryptedFull
+          ? decryptedFull.split("@")[0]
+          : null;
 
         // Solo permitir contextos muy específicos para operaciones pre-auth
         const allowedPreAuthContexts = ["username_signin", "user_signup"];
 
-        if (decryptedContext && allowedPreAuthContexts.includes(decryptedContext)) {
+        if (
+          decryptedContext &&
+          allowedPreAuthContexts.includes(decryptedContext)
+        ) {
           // Continuar sin autenticar (acceso limitado)
-          if (next) {
-            return next();
-          }
-          return;
+          return next();
         }
       } catch (error) {
         console.error("Error desencriptando x-req-ctx:", error);
@@ -254,10 +267,17 @@ async function validateIfUserExists(req, res, next) {
           "⚠️ req.serverEnvironment is undefined en validateIfUserExists",
         );
         // Intentar establecer un valor por defecto o saltar la validación
-        if (next) {
-          return next();
-        }
-        return;
+        return next();
+      }
+
+      // Verificar que la conexión esté lista
+      if (!req.connection || req.connection.readyState !== 1) {
+        console.error(
+          "⚠️ MongoDB connection not ready en validateIfUserExists, readyState:",
+          req.connection?.readyState,
+        );
+        // Continuar sin usuario autenticado
+        return next();
       }
 
       const UserModel = await getModel(req.serverEnvironment, "User");
@@ -270,15 +290,11 @@ async function validateIfUserExists(req, res, next) {
       registerUserProfile(req, user);
       registerLang(req);
 
-      if (next) {
-        next();
-      }
+      next();
     } catch (error) {
       console.error("❌ Error en validateIfUserExists:", error);
       // No lanzar el error, solo loguearlo y continuar
-      if (next) {
-        next();
-      }
+      next();
     }
   });
 }

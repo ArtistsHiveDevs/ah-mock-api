@@ -391,6 +391,41 @@ module.exports = [
           throw new Error("Usuario no encontrado.");
         }
 
+        // Update de los campos en EntityDirectory
+        const EntityDirectoryModel = await getModel(
+          req.serverEnvironment,
+          "EntityDirectory",
+        );
+
+        // Obtener los campos del schema de EntityDirectory
+        const entityDirectoryFields = Object.keys(
+          EntityDirectoryModel.schema.paths,
+        ).filter(
+          (field) =>
+            !["_id", "id", "entityType", "createdAt", "updatedAt"].includes(
+              field,
+            ),
+        );
+
+        // Filtrar los campos que están en EntityDirectory
+        const entityDirectoryUpdates = Object.keys(updateFields)
+          .filter((key) =>
+            entityDirectoryFields.some((field) => key.startsWith(field)),
+          )
+          .reduce((acc, key) => {
+            acc[key] = updateFields[key];
+            return acc;
+          }, {});
+
+        // Si hay campos para actualizar en EntityDirectory
+        if (Object.keys(entityDirectoryUpdates).length > 0) {
+          await EntityDirectoryModel.findOneAndUpdate(
+            { id: updatedUser._id, entityType: "User" },
+            { $set: entityDirectoryUpdates },
+            { new: true },
+          );
+        }
+
         return res.status(200).json(createPaginatedDataResponse(updatedUser));
       } catch (err) {
         console.error(err);

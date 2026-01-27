@@ -26,6 +26,6 @@ const schema = new mongoose.Schema(
   { timestamps: true }
 );
 
-schema.index({ entityId: 1, entityType: 1 }, { unique: true });
+schema.index({ entityId: 1, entityType: 1 }, { unique: true, sparse: true });
 
 module.exports = { schema };
