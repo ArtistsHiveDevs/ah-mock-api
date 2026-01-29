@@ -28,8 +28,8 @@ export enum ApprovalStatus {
 export enum ParticipantStatus {
   PENDING = 'pending',
   VIEWED = 'viewed',
-  ACCEPTED = 'accepted',
-  REJECTED = 'rejected'
+  INTERESTED = 'interested',
+  NOT_INTERESTED = 'not_interested'
 }
 
 export type RequestType = 'single_date' | 'date_range' | 'week' | 'month' | 'quarter';
@@ -50,7 +50,7 @@ const DateRangeSchema = new mongoose.Schema(
     end: { type: Date, required: true }, // Incluye fecha, hora y minuto
     priority: { type: Number, required: true }, // 1 = preferida, 2 = alternativa, etc.
   },
-  { _id: false }
+  { _id: false },
 );
 
 /**
@@ -68,14 +68,14 @@ const ParticipantApprovalStatusSchema = new mongoose.Schema(
     // participant_type: { type: String, required: true }, // 'artist' | 'place' | 'booker' | etc.
     status: {
       type: String,
-      enum: ["pending", "viewed", "accepted", "rejected"],
+      enum: ["pending", "viewed", "interested", "not_interested"],
       default: "pending",
       required: true,
     },
     responded_at: { type: Date, default: Date.now },
     response_notes: { type: String },
   },
-  { _id: false }
+  { _id: false },
 );
 
 /**
@@ -91,7 +91,7 @@ const ParticipantNoteSchema = new mongoose.Schema(
     created_at: { type: Date, default: Date.now, required: true },
     is_private: { type: Boolean, default: false }, // Solo visible para el autor
   },
-  { _id: false }
+  { _id: false },
 );
 
 // ============================================================================
@@ -183,7 +183,7 @@ const schema = new Schema(
   },
   {
     timestamps: true, // Agrega createdAt y updatedAt automáticamente
-  }
+  },
 );
 
 // ============================================================================
@@ -246,7 +246,7 @@ schema.virtual("allParticipantsViewed").get(function () {
     return false;
   }
   return this.participant_approvals.every(
-    (approval) => approval.status !== "pending"
+    (approval) => approval.status !== "pending",
   );
 });
 
@@ -255,7 +255,7 @@ schema.virtual("allParticipantsViewed").get(function () {
  */
 schema.virtual("approvalCounts").get(function () {
   if (!this.participant_approvals) {
-    return { pending: 0, viewed: 0, accepted: 0, rejected: 0 };
+    return { pending: 0, viewed: 0, interested: 0, not_interested: 0 };
   }
 
   return this.participant_approvals.reduce(
@@ -268,7 +268,7 @@ schema.virtual("approvalCounts").get(function () {
       counts[approval.status] = (counts[approval.status] || 0) + 1;
       return counts;
     },
-    { pending: 0, viewed: 0, accepted: 0, rejected: 0 }
+    { pending: 0, viewed: 0, interested: 0, not_interested: 0 },
   );
 });
 
@@ -299,7 +299,7 @@ schema.virtual("recipients", {
 /**
  * Pre-procesa los datos ANTES de la construcción del documento
  * Normaliza los profile_ids para que Mongoose pueda validarlos correctamente
- * También asegura que el requester tenga un approval automático en "accepted"
+ * También asegura que el requester tenga un approval automático en "interested"
  */
 schema.statics.preConstruct = async function (connection, ownerUser, data) {
   data.requester_user_id = ownerUser._id;
@@ -312,7 +312,7 @@ schema.statics.preConstruct = async function (connection, ownerUser, data) {
   // ) {
   const requesterNormalization = await normalizeProfileId(
     data.requester_profile_id,
-    connection
+    connection,
   );
 
   data.requester_profile_id = requesterNormalization._id;
@@ -321,7 +321,7 @@ schema.statics.preConstruct = async function (connection, ownerUser, data) {
   // PASO 2: Normalizar recipient_ids
   if (data.recipient_ids && Array.isArray(data.recipient_ids)) {
     data.recipient_ids = await Promise.all(
-      data.recipient_ids.map((id) => normalizeProfileId(id, connection))
+      data.recipient_ids.map((id) => normalizeProfileId(id, connection)),
     );
   }
 
@@ -336,33 +336,33 @@ schema.statics.preConstruct = async function (connection, ownerUser, data) {
       if (approval.participant_profile_id) {
         approval.participant_profile_id = await normalizeProfileId(
           approval.participant_profile_id,
-          connection
+          connection,
         );
       }
     }
   }
 
-  // PASO 5: Asegurar que el requester tenga un approval automático en "accepted"
+  // PASO 5: Asegurar que el requester tenga un approval automático en "interested"
   const requesterApproval = data.participant_approvals.find(
     (approval) =>
       approval.participant_profile_id?.toString() ===
-      data.requester_profile_id?.toString()
+      data.requester_profile_id?.toString(),
   );
 
   if (!requesterApproval) {
-    // Agregar el requester con status "accepted" automáticamente
+    // Agregar el requester con status "interested" automáticamente
     data.participant_approvals.push({
       participant_profile_id: requesterNormalization.entity_id,
       // participant_profile_id: ownerUser.currentProfileIdentifier,
 
       participant_user_id: data.requester_user_id,
-      status: "accepted",
+      status: "interested",
       responded_at: new Date(),
       response_notes: "Automatic approval (requester)",
     });
   } else {
-    // Si ya existe, forzar status a "accepted"
-    requesterApproval.status = "accepted";
+    // Si ya existe, forzar status a "interested"
+    requesterApproval.status = "interested";
     requesterApproval.response_notes =
       requesterApproval.response_notes || "Automatic approval (requester)";
   }
@@ -394,7 +394,7 @@ schema.statics.recalculateVirtuals = function (prebookingObj) {
         counts[approval.status] = (counts[approval.status] || 0) + 1;
         return counts;
       },
-      { pending: 0, viewed: 0, accepted: 0, rejected: 0 }
+      { pending: 0, viewed: 0, interested: 0, not_interested: 0 },
     );
   }
 
@@ -403,7 +403,7 @@ schema.statics.recalculateVirtuals = function (prebookingObj) {
     prebookingObj.allParticipantsViewed =
       prebookingObj.participant_approvals.length > 0 &&
       prebookingObj.participant_approvals.every(
-        (approval) => approval.status !== "pending"
+        (approval) => approval.status !== "pending",
       );
   }
 
@@ -451,14 +451,14 @@ schema.statics.ensureParticipantExists = async function (
   prebooking,
   currentProfileId,
   currentUserId,
-  connection
+  connection,
 ) {
   // Convertir a string para comparación
   const currentProfileIdStr = currentProfileId.toString();
 
   // Verificar si ya está en participant_approvals
   const exists = prebooking.participant_approvals?.some(
-    (a) => a.participant_profile_id?.toString() === currentProfileIdStr
+    (a) => a.participant_profile_id?.toString() === currentProfileIdStr,
   );
 
   if (exists) {
@@ -467,7 +467,7 @@ schema.statics.ensureParticipantExists = async function (
 
   // Verificar si está en recipient_ids
   const isRecipient = prebooking.recipient_ids?.some(
-    (recipient) => recipient?.id?.toString() === currentProfileIdStr
+    (recipient) => recipient?.id?.toString() === currentProfileIdStr,
   );
 
   if (!isRecipient) {
@@ -491,7 +491,7 @@ schema.statics.ensureParticipantExists = async function (
         participant_approvals: newApproval,
       },
     },
-    { new: true }
+    { new: true },
   );
 
   // Si llegamos aquí, la DB se actualizó correctamente
@@ -505,7 +505,7 @@ schema.statics.ensureParticipantExists = async function (
   this.recalculateVirtuals(prebooking);
 
   console.log(
-    `[Prebooking] Auto-added participant ${currentProfileIdStr} to prebooking ${prebooking._id}`
+    `[Prebooking] Auto-added participant ${currentProfileIdStr} to prebooking ${prebooking._id}`,
   );
 
   return true; // Se agregó exitosamente
@@ -518,23 +518,23 @@ schema.statics.ensureParticipantExists = async function (
 /**
  * Método para actualizar el estado de aprobación de un participante
  * @param {String|ObjectId} participantProfileId - ID del perfil del participante
- * @param {String} newStatus - Nuevo estado: "pending", "viewed", "accepted", "rejected"
+ * @param {String} newStatus - Nuevo estado: "pending", "viewed", "interested", "not_interested"
  * @param {String} responseNotes - Notas opcionales sobre la respuesta
  * @returns {Document} El documento modificado (sin guardar)
  */
 schema.methods.updateParticipantStatus = function (
   participantProfileId,
   newStatus,
-  responseNotes
+  responseNotes,
 ) {
   const approval = (this.participant_approvals || []).find(
     (a) =>
-      a.participant_profile_id.toString() === participantProfileId.toString()
+      a.participant_profile_id.toString() === participantProfileId.toString(),
   );
 
   if (!approval) {
     throw new Error(
-      `Participant with profile ID ${participantProfileId} not found in approvals`
+      `Participant with profile ID ${participantProfileId} not found in approvals`,
     );
   }
 
@@ -555,7 +555,7 @@ schema.methods.addNote = function (
   authorProfileId,
   authorName,
   noteText,
-  isPrivate = false
+  isPrivate = false,
 ) {
   this.notes.push({
     author_user_id: authorUserId,

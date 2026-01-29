@@ -1,5 +1,5 @@
 var express = require("express");
-var helpers = require("../../../helpers/index");
+var helpers = require("../helpers/index");
 var RoutesConstants = require("./constants/index");
 var router = express.Router({ mergeParams: true });
 

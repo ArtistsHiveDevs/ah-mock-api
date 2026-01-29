@@ -20,9 +20,11 @@ var textConstants = require("./helpers/index");
 const helpers = require("./helpers");
 const ErrorCodes = require("./constants/errors");
 const { getModel } = require("./helpers/getModel");
+// TODO: Fix emailService SES v2 configuration
+// const { sendEmail } = require("./helpers/emailService");
 
 var app = express();
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 8180;
 
 // *****************************   CORS   ****************************
 // Leer orígenes permitidos desde variable de entorno
@@ -62,6 +64,8 @@ app.use(bodyParser.json());
 // Ruta para generar una nueva API key
 app.post("/api/generate-key", helpers.validateEnvironment, async (req, res) => {
   const { userId, password, username: usernameRQ, sub } = req.body;
+
+  console.log("GENERATE  KEY :::::::    ", req.body);
 
   const isAWSlogin = !!usernameRQ && !!sub;
   if (!isAWSlogin) {
@@ -307,4 +311,10 @@ process.on("unhandledRejection", (reason, promise) => {
 //  Server Zone
 app.listen(port, function () {
   console.log(textConstants.runningServer, port);
+  // sendEmail({
+  //   to: "cnpiensadigital@gmail.com",
+  //   subject: "Inicio de servidor",
+  //   text: "El servidor ha iniciado correctamente",
+  //   html: "El servidor ha iniciado <b>correctamente</b> ",
+  // });
 });

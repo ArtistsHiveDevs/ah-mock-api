@@ -158,6 +158,13 @@ const schema = new mongoose.Schema(
       },
     },
 
+    pricing: {
+      startingPrice: { type: Number },
+      finalPrice: { type: Number },
+      currency: { type: String, required: false },
+      since: { type: Date, required: false },
+    },
+
     activity: String,
 
     entityRoleMap: [
