@@ -13,6 +13,7 @@ const apiHelperFunctions = require("../../../helpers/apiHelperFunctions");
 const { followProfile } = require("../../../helpers/following");
 const { getModel } = require("../../../helpers/getModel");
 const routesConstants = require("../artists/constants/routes.constants");
+const { notifyUserWelcome } = require("../../../helpers/userNotifications");
 
 var userRouter = express.Router({ mergeParams: true });
 
@@ -326,6 +327,9 @@ module.exports = [
         const entityDirectory = new EntityDirectoryModel(entityInfo);
 
         await entityDirectory.save();
+
+        // Enviar notificación de bienvenida al nuevo usuario
+        await notifyUserWelcome(user);
 
         res.status(201).send(createPaginatedDataResponse(user));
       } catch (err) {

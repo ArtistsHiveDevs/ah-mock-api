@@ -14,7 +14,7 @@ module.exports = [
 
       const content = fs.readFileSync(
         `./assets/mocks/i18n/${req.lang}/app/faq/faq.md`,
-        { encoding: "utf8", flag: "r" }
+        { encoding: "utf8", flag: "r" },
       );
       return res.status(200).json(
         apiHelperFunctions.createPaginatedDataResponse({
@@ -22,7 +22,7 @@ module.exports = [
           lang: req.lang,
           version: 1,
           creationDate: 1,
-        })
+        }),
       );
     } catch (error) {
       console.log(error.code);

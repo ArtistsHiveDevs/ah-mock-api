@@ -997,6 +997,23 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
           );
         }
       }
+      // Llamar a postCreateFunction si existe en options
+      if (options.postCreateFunction && typeof options.postCreateFunction === "function") {
+        try {
+          await options.postCreateFunction({
+            entity: newEntity,
+            req: { user: ownerUser, connection },
+          });
+        } catch (postCreateError) {
+          console.error(
+            `[${modelName}] Error en postCreateFunction:`,
+            postCreateError.message
+          );
+          console.error(`[${modelName}] Stack:`, postCreateError.stack);
+          // No lanzar el error para no afectar la creación
+        }
+      }
+
       return apiHelperFunctions.createPaginatedDataResponse(newEntity);
     } catch (error) {
       // console.log("ERROR: ", modelName, ", UserId: ", userId, ", body: ", 'message ', error );
