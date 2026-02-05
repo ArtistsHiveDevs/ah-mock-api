@@ -60,6 +60,18 @@ function countRelations(schema) {
   return Object.values(schema.paths).filter((path) => path.options.ref).length;
 }
 
+// Espera a que una conexión esté lista (readyState === 1)
+const waitForConnection = (connection, env) => {
+  return new Promise((resolve, reject) => {
+    if (connection.readyState === 1) {
+      resolve(connection);
+      return;
+    }
+    connection.once("connected", () => resolve(connection));
+    connection.once("error", (err) => reject(err));
+  });
+};
+
 const connectToDatabase = async (req) => {
   let env = req.serverEnvironment;
 
@@ -74,24 +86,29 @@ const connectToDatabase = async (req) => {
     req.serverEnvironment = env;
   }
 
+  // Si ya existe una conexión, esperar a que esté lista
+  if (connections[env]) {
+    await waitForConnection(connections[env], env);
+    return connections[env];
+  }
+
   if (!!env && !connections[env]) {
     try {
       console.log(`🔄 Conectando a MongoDB (${env})`);
-      const connection = await mongoose.createConnection(mongoURIs[env], {
-        // useNewUrlParser: true,
-        // useUnifiedTopology: true,
+      const connection = mongoose.createConnection(mongoURIs[env], {
         serverSelectionTimeoutMS: 30000,
       });
 
-      connection.on("connected", () =>
-        console.log(`✅ MongoDB (${env}) conectado`)
-      );
+      connection.environment = env;
+      connections[env] = connection;
+
       connection.on("error", (err) =>
         console.error(`❌ Error en MongoDB (${env}):`, err)
       );
 
-      connection.environment = env;
-      connections[env] = connection;
+      // Esperar a que la conexión esté lista
+      await waitForConnection(connection, env);
+      console.log(`✅ MongoDB (${env}) conectado`);
 
       connection.model("EntityDirectory", EntityDirectorySchema);
       connection.model("User", userSchema);
@@ -142,23 +159,28 @@ const connectToDatabaseByModel = async (model) => {
     console.warn(`No se encuentra la URI del modelo solicitado: ${model}`);
   }
 
+  // Si ya existe una conexión, esperar a que esté lista
+  if (connectionsByModel[model]) {
+    await waitForConnection(connectionsByModel[model], model);
+    return connectionsByModel[model];
+  }
+
   if (!!model && !connectionsByModel[model]) {
     try {
       console.log(`🔄 Conectando a MongoDB (${model})`);
-      const connection = await mongoose.createConnection(modelURIs[model], {
-        // useNewUrlParser: true,
-        // useUnifiedTopology: true,
+      const connection = mongoose.createConnection(modelURIs[model], {
         serverSelectionTimeoutMS: 30000,
       });
 
-      connection.on("connected", () =>
-        console.log(`✅ MongoDB (${model}) conectado`)
-      );
+      connectionsByModel[model] = connection;
+
       connection.on("error", (err) =>
         console.error(`❌ Error en MongoDB (${model}):`, err)
       );
 
-      connectionsByModel[model] = connection;
+      // Esperar a que la conexión esté lista
+      await waitForConnection(connection, model);
+      console.log(`✅ MongoDB (${model}) conectado`);
     } catch (err) {
       console.error(`🚨 Error al conectar a MongoDB (${model}):`, err);
       throw err;
