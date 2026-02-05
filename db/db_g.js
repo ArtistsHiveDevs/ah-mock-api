@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
+const dns = require("dns");
 require("dotenv").config();
+
+// Usar Google DNS para resolver SRV records de MongoDB Atlas
+dns.setServers(["8.8.8.8", "8.8.4.4"]);
 const { schema: userSchema } = require("../models/appbase/User");
 const {
   schema: EntityDirectorySchema,
