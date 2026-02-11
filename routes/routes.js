@@ -12,6 +12,7 @@ var industryOfferRouter = require("../operations/app/industryOffer/industryOffer
 var termsAndConditionsRouter = require("../operations/app/policies/termsAndConditions/router");
 var privacyRouter = require("../operations/app/policies/privacyPolicy/router");
 var faqRouter = require("../operations/app/faq/router");
+var notificationsRouter = require("../operations/system/notifications/router");
 const createCRUDRoutes = require("../helpers/crud-routes");
 const Place = require("../models/domain/Place.schema");
 const Event = require("../models/domain/Event.schema");
@@ -26,6 +27,10 @@ const routesConstants = require("../operations/domain/artists/constants/routes.c
 const helperFunctions = require("../helpers/helperFunctions");
 const { normalizeProfileId } = require("../models/appbase/EntityDirectory");
 const { getModel } = require("../helpers/getModel");
+const {
+  notifyPrebookingCreated,
+  notifyPrebookingStatusChanged,
+} = require("../helpers/prebookingNotifications");
 
 // ============================================================================
 // HELPER FUNCTIONS
@@ -389,6 +394,26 @@ function loadRoutes() {
               compareField: "_id",
             },
           ],
+          postCreateFunction: async (data) => {
+            const { entity, req } = data || {};
+
+            // Populate requester y recipients para las notificaciones
+            await entity.populate([
+              {
+                path: "requester_profile_id",
+                select: ["name", "email"].join(" "),
+              },
+              {
+                path: "recipient_ids",
+                select: ["name", "email", "entity_type"].join(" "),
+              },
+            ]);
+
+            // Enviar notificaciones a los recipients
+            await notifyPrebookingCreated(entity, req.connection, req.lang);
+
+            return entity;
+          },
           actions: {
             setStatus: async (req, res, entity, body) => {
               // Normalizar el profile ID del usuario actual
@@ -410,6 +435,27 @@ function loadRoutes() {
                 ids.entity_id,
                 "| New status:",
                 body.status
+              );
+
+              // Populate para las notificaciones
+              await entity.populate([
+                {
+                  path: "requester_profile_id",
+                  select: ["name", "email"].join(" "),
+                },
+                {
+                  path: "recipient_ids",
+                  select: ["name", "email", "entity_type"].join(" "),
+                },
+              ]);
+
+              // Enviar notificación al requester sobre el cambio de estado
+              await notifyPrebookingStatusChanged(
+                entity,
+                ids.entity_id,
+                body.status,
+                body.notes,
+                req.lang
               );
 
               // Retornar el entity modificado para que crud-routes lo guarde
@@ -436,6 +482,7 @@ function loadRoutes() {
     { path: "/terms", route: { router: termsAndConditionsRouter } },
     { path: "/privacy", route: { router: privacyRouter } },
     { path: "/faq", route: { router: faqRouter } },
+    { path: "/notifications", route: { router: notificationsRouter } },
   ];
 }
 

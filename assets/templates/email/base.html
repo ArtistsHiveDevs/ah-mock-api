@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="x-apple-disable-message-reformatting">
+  <meta name="color-scheme" content="light dark">
+  <meta name="supported-color-schemes" content="light dark">
+  <title>{{EMAIL_SUBJECT}}</title>
+
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
+
+  <style>
+    /* ============================================
+       RESET & BASE STYLES
+    ============================================ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, table, td, a {
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+
+    table {
+      border-collapse: collapse !important;
+      mso-table-lspace: 0pt;
+      mso-table-rspace: 0pt;
+    }
+
+    img {
+      -ms-interpolation-mode: bicubic;
+      border: 0;
+      height: auto;
+      line-height: 100%;
+      outline: none;
+      text-decoration: none;
+    }
+
+    body {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
+      background-color: #F5F5F5;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ============================================
+       LAYOUT
+    ============================================ */
+    .email-wrapper {
+      width: 100%;
+      background-color: #F5F5F5;
+      padding: 32px 16px;
+    }
+
+    .email-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #FFFFFF;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    /* ============================================
+       HEADER
+    ============================================ */
+    .header {
+      background-color: #000000;
+      padding: 28px 24px;
+      text-align: center;
+    }
+
+    .header img {
+      max-width: 160px;
+      height: auto;
+    }
+
+    /* ============================================
+       STATUS BANNER (Success, Warning, Error, Info)
+    ============================================ */
+    .status-banner {
+      padding: 20px 24px;
+      text-align: center;
+    }
+
+    .status-banner.success {
+      background: linear-gradient(135deg, #00C853 0%, #00E676 100%);
+    }
+
+    .status-banner.warning {
+      background: linear-gradient(135deg, #FF9800 0%, #FFB74D 100%);
+    }
+
+    .status-banner.error {
+      background: linear-gradient(135deg, #F44336 0%, #EF5350 100%);
+    }
+
+    .status-banner.info {
+      background: linear-gradient(135deg, #2196F3 0%, #42A5F5 100%);
+    }
+
+    .status-banner h2 {
+      color: #FFFFFF;
+      font-size: 20px;
+      font-weight: 600;
+      margin: 0;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .status-banner p {
+      color: rgba(255, 255, 255, 0.95);
+      font-size: 14px;
+      margin-top: 6px;
+    }
+
+    /* ============================================
+       CONTENT
+    ============================================ */
+    .content {
+      padding: 32px 28px;
+      color: #4A4A4A;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .content h1 {
+      margin: 0 0 16px 0;
+      font-size: 24px;
+      font-weight: 700;
+      color: #1A1A1A;
+    }
+
+    .content h2 {
+      margin: 24px 0 12px 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: #2A2A2A;
+    }
+
+    .content p {
+      margin: 0 0 16px 0;
+    }
+
+    .content a {
+      color: #00C853;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .content a:hover {
+      text-decoration: underline;
+    }
+
+    /* ============================================
+       INFO BOX (como Booking)
+    ============================================ */
+    .info-box {
+      background-color: #F8F9FA;
+      border-left: 4px solid #00C853;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .info-box.warning {
+      border-left-color: #FF9800;
+      background-color: #FFF8E1;
+    }
+
+    .info-box.security {
+      border-left-color: #2196F3;
+      background-color: #E3F2FD;
+    }
+
+    .info-box h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1A1A1A;
+      margin: 0 0 8px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .info-box p {
+      font-size: 13px;
+      color: #5A5A5A;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* ============================================
+       CHECK LIST (como Booking)
+    ============================================ */
+    .check-list {
+      margin: 16px 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .check-list li {
+      position: relative;
+      padding-left: 28px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: #4A4A4A;
+    }
+
+    .check-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #00C853;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    /* ============================================
+       DETAILS TABLE
+    ============================================ */
+    .details-table {
+      width: 100%;
+      margin: 20px 0;
+      border-collapse: collapse;
+    }
+
+    .details-table tr {
+      border-bottom: 1px solid #EEEEEE;
+    }
+
+    .details-table tr:last-child {
+      border-bottom: none;
+    }
+
+    .details-table td {
+      padding: 12px 0;
+      font-size: 14px;
+      vertical-align: top;
+    }
+
+    .details-table td:first-child {
+      color: #777777;
+      width: 40%;
+      font-weight: 500;
+    }
+
+    .details-table td:last-child {
+      color: #1A1A1A;
+    }
+
+    /* ============================================
+       BUTTONS
+    ============================================ */
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 8px;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background-color: #00C853;
+      color: #FFFFFF !important;
+    }
+
+    .btn-primary:hover {
+      background-color: #00B248;
+    }
+
+    .btn-secondary {
+      background-color: #1A1A1A;
+      color: #FFFFFF !important;
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      color: #00C853 !important;
+      border: 2px solid #00C853;
+    }
+
+    .btn-container {
+      text-align: center;
+      margin: 28px 0;
+    }
+
+    /* ============================================
+       DIVIDER
+    ============================================ */
+    .divider {
+      height: 1px;
+      background-color: #EEEEEE;
+      margin: 28px 0;
+    }
+
+    /* ============================================
+       FOOTER
+    ============================================ */
+    .footer {
+      background-color: #FAFAFA;
+      padding: 28px 24px;
+      text-align: center;
+      border-top: 1px solid #EEEEEE;
+    }
+
+    .social-links {
+      margin-bottom: 20px;
+    }
+
+    .social-links a {
+      display: inline-block;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+
+    .social-links img {
+      width: 28px;
+      height: 28px;
+      opacity: 0.7;
+      transition: opacity 0.2s ease;
+    }
+
+    .social-links a:hover img {
+      opacity: 1;
+    }
+
+    .footer-brand {
+      font-size: 13px;
+      color: #777777;
+      margin-bottom: 12px;
+    }
+
+    .footer-links {
+      font-size: 12px;
+      margin-bottom: 16px;
+    }
+
+    .footer-links a {
+      color: #666666;
+      text-decoration: none;
+      margin: 0 8px;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-note {
+      font-size: 11px;
+      color: #999999;
+      line-height: 1.5;
+    }
+
+    .footer-note a {
+      color: #999999;
+    }
+
+    /* ============================================
+       DARK MODE
+    ============================================ */
+    @media (prefers-color-scheme: dark) {
+      body,
+      .email-wrapper {
+        background-color: #121212 !important;
+      }
+
+      .email-container {
+        background-color: #1E1E1E !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+      }
+
+      .content {
+        color: #E0E0E0 !important;
+      }
+
+      .content h1,
+      .content h2 {
+        color: #FFFFFF !important;
+      }
+
+      .content a {
+        color: #69F0AE !important;
+      }
+
+      .info-box {
+        background-color: #2A2A2A !important;
+      }
+
+      .info-box.warning {
+        background-color: #3D3020 !important;
+      }
+
+      .info-box.security {
+        background-color: #1E3A5F !important;
+      }
+
+      .info-box h3 {
+        color: #FFFFFF !important;
+      }
+
+      .info-box p {
+        color: #BBBBBB !important;
+      }
+
+      .check-list li {
+        color: #E0E0E0 !important;
+      }
+
+      .details-table tr {
+        border-bottom-color: #333333 !important;
+      }
+
+      .details-table td:first-child {
+        color: #AAAAAA !important;
+      }
+
+      .details-table td:last-child {
+        color: #FFFFFF !important;
+      }
+
+      .divider {
+        background-color: #333333 !important;
+      }
+
+      .footer {
+        background-color: #151515 !important;
+        border-top-color: #333333 !important;
+      }
+
+      .footer-brand,
+      .footer-links a {
+        color: #AAAAAA !important;
+      }
+
+      .footer-note,
+      .footer-note a {
+        color: #777777 !important;
+      }
+
+      .social-links img {
+        filter: invert(1) !important;
+      }
+    }
+
+    /* ============================================
+       RESPONSIVE
+    ============================================ */
+    @media only screen and (max-width: 600px) {
+      .email-wrapper {
+        padding: 16px 8px !important;
+      }
+
+      .email-container {
+        border-radius: 8px !important;
+      }
+
+      .header {
+        padding: 20px 16px !important;
+      }
+
+      .header img {
+        max-width: 140px !important;
+      }
+
+      .status-banner {
+        padding: 16px 20px !important;
+      }
+
+      .status-banner h2 {
+        font-size: 18px !important;
+      }
+
+      .content {
+        padding: 24px 20px !important;
+      }
+
+      .content h1 {
+        font-size: 20px !important;
+      }
+
+      .btn {
+        display: block !important;
+        padding: 16px 24px !important;
+      }
+
+      .footer {
+        padding: 24px 16px !important;
+      }
+
+      .details-table td {
+        display: block !important;
+        width: 100% !important;
+        padding: 4px 0 !important;
+      }
+
+      .details-table td:first-child {
+        padding-top: 12px !important;
+        font-weight: 600 !important;
+      }
+
+      .details-table tr {
+        padding: 8px 0 !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <table class="email-wrapper" role="presentation" width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="center">
+        <table class="email-container" role="presentation" cellpadding="0" cellspacing="0">
+
+          <!-- ============================================
+               HEADER
+          ============================================ -->
+          <tr>
+            <td class="header">
+              <img src="{{LOGO_URL}}" alt="Artist Hive&reg;" width="160">
+            </td>
+          </tr>
+
+          <!-- ============================================
+               STATUS BANNER (opcional - usa: success, warning, error, info)
+          ============================================ -->
+          {{#STATUS_BANNER}}
+          <tr>
+            <td class="status-banner {{STATUS_TYPE}}">
+              <h2>{{STATUS_TITLE}}</h2>
+              {{#STATUS_SUBTITLE}}<p>{{STATUS_SUBTITLE}}</p>{{/STATUS_SUBTITLE}}
+            </td>
+          </tr>
+          {{/STATUS_BANNER}}
+
+          <!-- ============================================
+               CONTENT
+          ============================================ -->
+          <tr>
+            <td class="content">
+
+              {{#GREETING}}
+              <p style="margin-bottom: 20px;">{{GREETING}}</p>
+              {{/GREETING}}
+
+              {{#CONTENT_TITLE}}
+              <h1>{{CONTENT_TITLE}}</h1>
+              {{/CONTENT_TITLE}}
+
+              {{CONTENT_BODY}}
+
+              <!-- Info Box (opcional) -->
+              {{#INFO_BOX}}
+              <div class="info-box {{INFO_BOX_TYPE}}">
+                <h3>{{INFO_BOX_ICON}} {{INFO_BOX_TITLE}}</h3>
+                <p>{{INFO_BOX_TEXT}}</p>
+              </div>
+              {{/INFO_BOX}}
+
+              <!-- Check List (opcional) -->
+              {{#CHECK_LIST}}
+              <ul class="check-list">
+                {{#ITEMS}}
+                <li>{{.}}</li>
+                {{/ITEMS}}
+              </ul>
+              {{/CHECK_LIST}}
+
+              <!-- Details Table (opcional) -->
+              {{#DETAILS_TABLE}}
+              <table class="details-table" role="presentation">
+                {{#ROWS}}
+                <tr>
+                  <td>{{LABEL}}</td>
+                  <td>{{VALUE}}</td>
+                </tr>
+                {{/ROWS}}
+              </table>
+              {{/DETAILS_TABLE}}
+
+              <!-- CTA Button (opcional) -->
+              {{#CTA_BUTTON}}
+              <div class="btn-container">
+                <a href="{{CTA_URL}}" class="btn btn-primary">{{CTA_TEXT}}</a>
+              </div>
+              {{/CTA_BUTTON}}
+
+              <div class="divider"></div>
+
+              <p style="font-size: 13px; color: #777777;">
+                Si tienes preguntas o necesitas ayuda, puedes escribirnos a
+                <a href="mailto:soporte@artist-hive.com">soporte@artist-hive.com</a>
+                o visitarnos en <a href="{{APP_URL}}">artist-hive.com</a>.
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- ============================================
+               FOOTER
+          ============================================ -->
+          <tr>
+            <td class="footer">
+
+              <!-- Social Links -->
+              <div class="social-links">
+                {{#SOCIAL_INSTAGRAM}}
+                <a href="https://instagram.com/{{SOCIAL_INSTAGRAM}}" title="Instagram">
+                  <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
+                </a>
+                {{/SOCIAL_INSTAGRAM}}
+                {{#SOCIAL_FACEBOOK}}
+                <a href="https://facebook.com/{{SOCIAL_FACEBOOK}}" title="Facebook">
+                  <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
+                </a>
+                {{/SOCIAL_FACEBOOK}}
+                {{#SOCIAL_TWITTER}}
+                <a href="https://x.com/{{SOCIAL_TWITTER}}" title="X (Twitter)">
+                  <img src="https://cdn-icons-png.flaticon.com/512/5969/5969020.png" alt="X">
+                </a>
+                {{/SOCIAL_TWITTER}}
+                {{#SOCIAL_TIKTOK}}
+                <a href="https://tiktok.com/@{{SOCIAL_TIKTOK}}" title="TikTok">
+                  <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok">
+                </a>
+                {{/SOCIAL_TIKTOK}}
+                {{#SOCIAL_YOUTUBE}}
+                <a href="https://youtube.com/@{{SOCIAL_YOUTUBE}}" title="YouTube">
+                  <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">
+                </a>
+                {{/SOCIAL_YOUTUBE}}
+                {{#SOCIAL_LINKEDIN}}
+                <a href="https://linkedin.com/company/{{SOCIAL_LINKEDIN}}" title="LinkedIn">
+                  <img src="https://cdn-icons-png.flaticon.com/512/145/145807.png" alt="LinkedIn">
+                </a>
+                {{/SOCIAL_LINKEDIN}}
+                {{#SOCIAL_TWITCH}}
+                <a href="https://twitch.tv/{{SOCIAL_TWITCH}}" title="Twitch">
+                  <img src="https://cdn-icons-png.flaticon.com/512/5968/5968819.png" alt="Twitch">
+                </a>
+                {{/SOCIAL_TWITCH}}
+              </div>
+
+              <!-- Brand -->
+              <p class="footer-brand">
+<strong>Artist Hive&reg;</strong><br>
+                2022&ndash;{{CURRENT_YEAR}} <br>
+                Todos los derechos reservados.
+              </p>
+
+              <!-- Legal Links -->
+              <p class="footer-links">
+                <a href="{{TERMS_URL}}">Términos de uso</a> &middot;
+                <a href="{{PRIVACY_URL}}">Política de privacidad</a> &middot;
+                <a href="{{UNSUBSCRIBE_URL}}">Cancelar suscripción</a>
+              </p>
+
+              <!-- Note -->
+              <p class="footer-note">
+                Este es un mensaje automático enviado desde Artist Hive&reg;.<br>
+                Por favor no respondas directamente a este correo.
+              </p>
+
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

@@ -1,15 +1,21 @@
 const nodemailer = require("nodemailer");
-const awsSES = require("@aws-sdk/client-sesv2");
+const { defaultProvider } = require("@aws-sdk/credential-provider-node");
+const { SESv2Client, SendEmailCommand } = require("@aws-sdk/client-sesv2");
 
 // Configurar SES v2 client
-const ses = new awsSES.SESv2Client({
+const sesClient = new SESv2Client({
   region: process.env.AWS_REGION || "us-east-1",
+  credentialDefaultProvider: defaultProvider,
   // Las credenciales se toman automáticamente del IAM role en Elastic Beanstalk
 });
 
 // Crear transporter de Nodemailer con SES v2
+// Documentación: https://nodemailer.com/transports/ses/
 const transporter = nodemailer.createTransport({
-  SES: { ses, aws: awsSES },
+  SES: {
+    sesClient,
+    SendEmailCommand,
+  },
 });
 
 /**

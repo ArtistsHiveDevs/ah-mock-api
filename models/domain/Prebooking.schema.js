@@ -310,8 +310,9 @@ schema.statics.preConstruct = async function (connection, ownerUser, data) {
   //   data.requester_profile_id &&
   //   !mongoose.Types.ObjectId.isValid(data.requester_profile_id)
   // ) {
+  console.log("PRECONSTRUCT!!!!!   ", JSON.stringify(data, null, 2))
   const requesterNormalization = await normalizeProfileId(
-    data.requester_profile_id,
+    data.requester_profile_id || ownerUser.username || ownerUser.shortId|| ownerUser.sub || ownerUser.email || ownerUser._id,
     connection,
   );
 

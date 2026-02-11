@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(export AWS_PROFILE=anterior:*)",
+      "Bash(aws amplify start-job:*)",
+      "Bash(aws amplify get-job:*)",
+      "Bash(curl:*)",
+      "Bash(aws amplify list-branches:*)",
+      "Bash(aws amplify delete-backend-environment:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

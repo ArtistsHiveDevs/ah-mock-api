@@ -96,6 +96,7 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             req,
           });
 
+          console.log("CREATING..... ", modelName, "..... ",req.userId, "... ", JSON.stringify(req.body,null, 2) )
           const response = await modelActions.createEntity({
             userId: req.userId,
             body: req.body,
