@@ -56,7 +56,7 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
     // GET by ID route
     router.get(
       routesConstants.findArtistById,
-      ...actionContextMiddlewares,
+      ...baseMiddlewares,
       async (req, res) => {
         try {
           const modelActions = await createCRUDActions({
