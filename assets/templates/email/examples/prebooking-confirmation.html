@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <meta name="supported-color-schemes" content="light dark">
+  <title>Tu pre-reserva está confirmada - Artist Hive&reg;</title>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table { border-collapse: collapse !important; }
+    img { border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+
+    body {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
+      background-color: #F5F5F5;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    .email-wrapper { width: 100%; background-color: #F5F5F5; padding: 32px 16px; }
+    .email-container { width: 100%; max-width: 600px; margin: 0 auto; background-color: #FFFFFF; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+    .header { background-color: #000000; padding: 28px 24px; text-align: center; }
+    .header img { max-width: 160px; height: auto; }
+
+    .status-banner { padding: 24px; text-align: center; background: linear-gradient(135deg, #00C853 0%, #00E676 100%); }
+    .status-banner h2 { color: #FFFFFF; font-size: 22px; font-weight: 600; margin: 0; }
+    .status-banner p { color: rgba(255,255,255,0.9); font-size: 14px; margin-top: 8px; }
+
+    .content { padding: 32px 28px; color: #4A4A4A; font-size: 15px; line-height: 1.7; }
+    .content h1 { margin: 0 0 8px 0; font-size: 24px; font-weight: 700; color: #1A1A1A; }
+    .content p { margin: 0 0 16px 0; }
+    .content a { color: #00C853; text-decoration: none; font-weight: 500; }
+
+    .check-list { margin: 16px 0; padding: 0; list-style: none; }
+    .check-list li { position: relative; padding-left: 28px; margin-bottom: 12px; font-size: 14px; color: #4A4A4A; }
+    .check-list li::before { content: "✓"; position: absolute; left: 0; color: #00C853; font-weight: bold; font-size: 18px; }
+
+    .info-box { background-color: #E8F5E9; border-left: 4px solid #00C853; padding: 16px 20px; margin: 24px 0; border-radius: 0 8px 8px 0; }
+    .info-box.security { border-left-color: #2196F3; background-color: #E3F2FD; }
+    .info-box h3 { font-size: 14px; font-weight: 600; color: #1A1A1A; margin: 0 0 8px 0; }
+    .info-box p { font-size: 13px; color: #5A5A5A; margin: 0; line-height: 1.5; }
+
+    .details-section { background-color: #FAFAFA; border-radius: 8px; padding: 20px; margin: 24px 0; }
+    .details-section h3 { font-size: 16px; font-weight: 600; color: #1A1A1A; margin: 0 0 16px 0; padding-bottom: 12px; border-bottom: 1px solid #EEEEEE; }
+
+    .details-table { width: 100%; }
+    .details-table tr { border-bottom: 1px solid #EEEEEE; }
+    .details-table tr:last-child { border-bottom: none; }
+    .details-table td { padding: 10px 0; font-size: 14px; vertical-align: top; }
+    .details-table td:first-child { color: #777777; width: 40%; }
+    .details-table td:last-child { color: #1A1A1A; font-weight: 500; }
+
+    .btn-container { text-align: center; margin: 28px 0; }
+    .btn { display: inline-block; padding: 14px 36px; font-size: 15px; font-weight: 600; text-decoration: none; border-radius: 8px; }
+    .btn-primary { background-color: #00C853; color: #FFFFFF !important; }
+
+    .divider { height: 1px; background-color: #EEEEEE; margin: 28px 0; }
+
+    .footer { background-color: #FAFAFA; padding: 28px 24px; text-align: center; border-top: 1px solid #EEEEEE; }
+    .social-links { margin-bottom: 20px; }
+    .social-links a { display: inline-block; margin: 0 10px; }
+    .social-links img { width: 28px; height: 28px; opacity: 0.7; }
+    .footer-brand { font-size: 13px; color: #777777; margin-bottom: 12px; }
+    .footer-links { font-size: 12px; margin-bottom: 16px; }
+    .footer-links a { color: #666666; text-decoration: none; margin: 0 8px; }
+    .footer-note { font-size: 11px; color: #999999; line-height: 1.5; }
+
+    /* Dark Mode */
+    @media (prefers-color-scheme: dark) {
+      body, .email-wrapper { background-color: #121212 !important; }
+      .email-container { background-color: #1E1E1E !important; }
+      .content { color: #E0E0E0 !important; }
+      .content h1 { color: #FFFFFF !important; }
+      .content a { color: #69F0AE !important; }
+      .check-list li { color: #E0E0E0 !important; }
+      .info-box { background-color: #1B3D1B !important; }
+      .info-box.security { background-color: #1E3A5F !important; }
+      .info-box h3 { color: #FFFFFF !important; }
+      .info-box p { color: #BBBBBB !important; }
+      .details-section { background-color: #2A2A2A !important; }
+      .details-section h3 { color: #FFFFFF !important; border-bottom-color: #444444 !important; }
+      .details-table tr { border-bottom-color: #444444 !important; }
+      .details-table td:first-child { color: #AAAAAA !important; }
+      .details-table td:last-child { color: #FFFFFF !important; }
+      .divider { background-color: #333333 !important; }
+      .footer { background-color: #151515 !important; border-top-color: #333333 !important; }
+      .footer-brand, .footer-links a { color: #AAAAAA !important; }
+      .footer-note { color: #777777 !important; }
+      .social-links img { filter: invert(1); }
+    }
+
+    @media only screen and (max-width: 600px) {
+      .email-wrapper { padding: 16px 8px !important; }
+      .content { padding: 24px 20px !important; }
+      .content h1 { font-size: 20px !important; }
+      .btn { display: block !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <table class="email-wrapper" role="presentation" width="100%">
+    <tr>
+      <td align="center">
+        <table class="email-container" role="presentation">
+
+          <!-- Header -->
+          <tr>
+            <td class="header">
+              <img src="https://npcarlos.co/artistsHive_mocks/logo.png" alt="Artist Hive&reg;" width="160">
+            </td>
+          </tr>
+
+          <!-- Status Banner -->
+          <tr>
+            <td class="status-banner">
+              <h2>¡Tu pre-reserva está confirmada!</h2>
+              <p>Código de reserva: <strong>#PRE-2024-00847</strong></p>
+            </td>
+          </tr>
+
+          <!-- Content -->
+          <tr>
+            <td class="content">
+
+              <p>¡Hola <strong>Carlos</strong>!</p>
+
+              <p>
+                Tu solicitud de pre-reserva para <strong>Los Mesoneros</strong> ha sido
+                recibida exitosamente. El artista revisará tu propuesta y te notificaremos
+                cuando haya una respuesta.
+              </p>
+
+              <ul class="check-list">
+                <li>Tu pre-reserva ha sido registrada correctamente</li>
+                <li>El artista tiene hasta 72 horas para responder</li>
+                <li>Puedes cancelar sin costo hasta que el artista confirme</li>
+              </ul>
+
+              <!-- Detalles del evento -->
+              <div class="details-section">
+                <h3>Detalles de tu pre-reserva</h3>
+                <table class="details-table" role="presentation">
+                  <tr>
+                    <td>Artista</td>
+                    <td>Los Mesoneros</td>
+                  </tr>
+                  <tr>
+                    <td>Fecha del evento</td>
+                    <td>16 de febrero de 2026</td>
+                  </tr>
+                  <tr>
+                    <td>Hora</td>
+                    <td>20:00 - 23:00</td>
+                  </tr>
+                  <tr>
+                    <td>Lugar</td>
+                    <td>Medellín Vibes<br><span style="color:#777; font-weight:400; font-size:13px;">Carrera 47 #7-60, El Poblado</span></td>
+                  </tr>
+                  <tr>
+                    <td>Tipo de evento</td>
+                    <td>Concierto privado</td>
+                  </tr>
+                  <tr>
+                    <td>Presupuesto</td>
+                    <td>COP $15,000,000</td>
+                  </tr>
+                </table>
+              </div>
+
+              <!-- Info box de seguridad -->
+              <div class="info-box security">
+                <h3>🔒 Garantiza tu seguridad</h3>
+                <p>
+                  Por motivos de seguridad, nunca compartas tus datos personales ni
+                  información de pago fuera de la plataforma Artist Hive&reg;.
+                </p>
+              </div>
+
+              <div class="btn-container">
+                <a href="https://artist-hive.com/prebookings/PRE-2024-00847" class="btn btn-primary">
+                  Ver mi pre-reserva
+                </a>
+              </div>
+
+              <div class="divider"></div>
+
+              <p style="font-size: 13px; color: #777777;">
+                ¿Necesitas ayuda? Escríbenos a
+                <a href="mailto:soporte@artist-hive.com">soporte@artist-hive.com</a>
+                o visita nuestro <a href="https://artist-hive.com/help">centro de ayuda</a>.
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td class="footer">
+              <div class="social-links">
+                <a href="https://instagram.com/artist_hive_"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram"></a>
+                <a href="https://facebook.com/artistshive"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook"></a>
+                <a href="https://x.com/artistshivecom"><img src="https://cdn-icons-png.flaticon.com/512/5969/5969020.png" alt="X"></a>
+                <a href="https://tiktok.com/@artist.hive"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok"></a>
+                <a href="https://youtube.com/@ArtistsHive"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube"></a>
+              </div>
+              <p class="footer-brand"><strong>Artist Hive&reg;</strong><br>2022&ndash;2026<br>Todos los derechos reservados.</p>
+              <p class="footer-links">
+                <a href="https://artist-hive.com/terms">Términos de uso</a> &middot;
+                <a href="https://artist-hive.com/privacy">Política de privacidad</a>
+              </p>
+              <p class="footer-note">Este es un mensaje automático. Por favor no respondas directamente a este correo.</p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

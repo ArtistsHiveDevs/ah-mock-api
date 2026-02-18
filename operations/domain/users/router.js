@@ -13,8 +13,120 @@ const apiHelperFunctions = require("../../../helpers/apiHelperFunctions");
 const { followProfile } = require("../../../helpers/following");
 const { getModel } = require("../../../helpers/getModel");
 const routesConstants = require("../artists/constants/routes.constants");
+const {
+  notifyUserWelcome,
+  notifyProfileAssigned,
+  notifyProfileRoleUpdated,
+  notifyProfileRemoved,
+} = require("../../../helpers/userNotifications");
 
 var userRouter = express.Router({ mergeParams: true });
+
+/**
+ * Detecta cambios en los roles de un usuario y envía notificaciones
+ * @param {Object} currentUser - Usuario actual antes de la actualización
+ * @param {Object} newRoles - Nuevos roles del usuario
+ * @param {Object} updatedBy - Usuario que realiza los cambios
+ */
+async function detectAndNotifyRoleChanges(currentUser, newRoles, updatedBy, lang) {
+  if (!newRoles || !Array.isArray(newRoles)) return;
+
+  const currentRoles = currentUser.roles || [];
+
+  // Crear mapas para comparación rápida
+  // Estructura: { entityName: { entityId: roles[] } }
+  const currentRolesMap = {};
+  const newRolesMap = {};
+
+  // Poblar mapa de roles actuales
+  currentRoles.forEach((roleGroup) => {
+    if (!currentRolesMap[roleGroup.entityName]) {
+      currentRolesMap[roleGroup.entityName] = {};
+    }
+    (roleGroup.entityRoleMap || []).forEach((entity) => {
+      currentRolesMap[roleGroup.entityName][entity.id] = {
+        roles: entity.roles || [],
+        profile: entity,
+      };
+    });
+  });
+
+  // Poblar mapa de nuevos roles
+  newRoles.forEach((roleGroup) => {
+    if (!newRolesMap[roleGroup.entityName]) {
+      newRolesMap[roleGroup.entityName] = {};
+    }
+    (roleGroup.entityRoleMap || []).forEach((entity) => {
+      newRolesMap[roleGroup.entityName][entity.id] = {
+        roles: entity.roles || [],
+        profile: entity,
+      };
+    });
+  });
+
+  // Detectar cambios
+  for (const entityName of Object.keys(newRolesMap)) {
+    for (const entityId of Object.keys(newRolesMap[entityName])) {
+      const newEntry = newRolesMap[entityName][entityId];
+      const currentEntry = currentRolesMap[entityName]?.[entityId];
+
+      const profile = {
+        id: entityId,
+        name: newEntry.profile.name,
+        type: entityName,
+      };
+
+      if (!currentEntry) {
+        // Nueva asignación
+        console.log(`[RoleChanges] Nueva asignación: ${entityName}/${entityId}`);
+        await notifyProfileAssigned({
+          user: currentUser,
+          profile,
+          role: newEntry.roles.join(", "),
+          assignedBy: updatedBy,
+          lang,
+        });
+      } else {
+        // Verificar si los roles cambiaron
+        const rolesChanged =
+          JSON.stringify(currentEntry.roles.sort()) !==
+          JSON.stringify(newEntry.roles.sort());
+
+        if (rolesChanged) {
+          console.log(`[RoleChanges] Rol actualizado: ${entityName}/${entityId}`);
+          await notifyProfileRoleUpdated({
+            user: currentUser,
+            profile,
+            previousRole: currentEntry.roles.join(", "),
+            newRole: newEntry.roles.join(", "),
+            lang,
+          });
+        }
+      }
+    }
+  }
+
+  // Detectar roles removidos
+  for (const entityName of Object.keys(currentRolesMap)) {
+    for (const entityId of Object.keys(currentRolesMap[entityName])) {
+      const existsInNew = newRolesMap[entityName]?.[entityId];
+
+      if (!existsInNew) {
+        const currentEntry = currentRolesMap[entityName][entityId];
+        console.log(`[RoleChanges] Rol removido: ${entityName}/${entityId}`);
+        await notifyProfileRemoved({
+          user: currentUser,
+          profile: {
+            id: entityId,
+            name: currentEntry.profile.name,
+            type: entityName,
+          },
+          lang,
+        });
+      }
+    }
+  }
+}
 
 // Middlewares centralizados
 const baseMiddlewares = helpers.getBaseMiddlewares();
@@ -327,6 +439,9 @@ module.exports = [
 
         await entityDirectory.save();
 
+        // Enviar notificación de bienvenida al nuevo usuario
+        await notifyUserWelcome(user, req.lang);
+
         res.status(201).send(createPaginatedDataResponse(user));
       } catch (err) {
         console.log(err);
@@ -376,8 +491,12 @@ module.exports = [
           };
         }
 
-        // Realizar la consulta de actualización con $set
         const UserModel = await getModel(req.serverEnvironment, "User");
+
+        // Obtener usuario actual ANTES de actualizar para detectar cambios en roles
+        const currentUser = await UserModel.findOne(query);
+
+        // Realizar la consulta de actualización con $set
         const updatedUser = await UserModel.findOneAndUpdate(
           query,
           {
@@ -385,6 +504,15 @@ module.exports = [
           },
           { new: true }, // Retorna el documento actualizado
         );
+
+        // Si se actualizaron los roles, detectar cambios y notificar
+        if (newInfo.roles && currentUser) {
+          const updatedBy = {
+            _id: req.userId,
+            name: req.currentProfileInfo?.name || "Sistema",
+          };
+          await detectAndNotifyRoleChanges(currentUser, newInfo.roles, updatedBy, req.lang);
+        }
 
         // Verifica si el usuario fue encontrado y actualizado
         if (!updatedUser) {

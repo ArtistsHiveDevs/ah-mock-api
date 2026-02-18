@@ -63,15 +63,19 @@ app.use(bodyParser.json());
 
 // Ruta para generar una nueva API key
 app.post("/api/generate-key", helpers.validateEnvironment, async (req, res) => {
-  const { userId, password, username: usernameRQ, sub } = req.body;
+  const { userId, password, username: usernameRQ, sub, email, identifier: identifierRQ } = req.body;
 
-  console.log("GENERATE  KEY :::::::    ", req.body);
+  // console.log("GENERATE KEY :::::::    ", req.body);
 
-  const isAWSlogin = !!usernameRQ && !!sub;
+  const isAWSlogin = !!sub;
+
+  // Acepta cualquiera de estos campos como identificador
+  const identifier = identifierRQ || usernameRQ || userId || email;
+
   if (!isAWSlogin) {
-    if (!userId) {
+    if (!identifier) {
       return res.status(400).send({
-        message: "User ID is required.",
+        message: "User identifier is required (username, email, userId, or identifier).",
         errorCode: ErrorCodes.AUTH_NO_USER_PROVIDED,
       });
     }
@@ -83,66 +87,39 @@ app.post("/api/generate-key", helpers.validateEnvironment, async (req, res) => {
     }
   }
 
-  // const users = helpers.getEntityData("User");
-  // const requestedUser = users.find(
-  //   (user) => user.username === userId || user.email === userId
-  // );
-
-  // if (!requestedUser) {
-  //   return res.status(404).send({
-  //     message: "User is not found",
-  //     errorCode: ErrorCodes.AUTH_USER_NOT_FOUND,
-  //   });
-  // }
-
-  // if (requestedUser.password !== password) {
-  //   return res.status(404).send({
-  //     message: "Password is incorrect",
-  //     errorCode: ErrorCodes.AUTH_WRONG_PASSWORD,
-  //   });
-  // if (!requestedUser) {
-  //   return res.status(404).send({ message: "User is not found" });
-  // }
-
-  // const authTokenPayload = { id: userId, lalala: "asd3412" };
-
-  // const token = jwt.sign(authTokenPayload, SECRET_KEY, {
-  //   expiresIn: API_KEY_EXPIRATION,
-  // });
-
-  // res.status(200).send({ apiKey: token });
-
   try {
-    let requestedUser;
     const UserModel = await getModel(req.serverEnvironment, "User");
 
-    const identifier = usernameRQ || userId;
+    // Construir query con $or para buscar en una sola consulta
+    const orConditions = [];
 
-    // Login tradicional: detectar el tipo de identificador y buscar en el campo correcto
-    // Detectar si es un UUID (sub de Cognito)
-    const isUUID =
-      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
-        identifier,
+    // Si es login AWS, buscar por sub
+    if (sub) {
+      orConditions.push({ sub: sub });
+    }
+
+    if (identifier) {
+      // username, shortID, email
+      orConditions.push(
+        { username: identifier },
+        { shortID: identifier },
+        { email: identifier }
       );
-    // Detectar si es un email
-    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identifier);
 
-    if (!requestedUser && sub) {
-      // Login con AWS Cognito: buscar por sub
-      requestedUser = await UserModel.findOne({ sub: sub });
+      // _id si es ObjectId válido
+      const isObjectId = /^[0-9a-fA-F]{24}$/.test(identifier);
+      if (isObjectId) {
+        orConditions.push({ _id: identifier });
+      }
+
+      // sub si es UUID
+      const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(identifier);
+      if (isUUID) {
+        orConditions.push({ sub: identifier });
+      }
     }
-    if (!requestedUser && isUUID) {
-      // Buscar por sub
-      requestedUser = await UserModel.findOne({ sub: identifier });
-    }
-    if (!requestedUser && isEmail) {
-      // Buscar por email
-      requestedUser = await UserModel.findOne({ email: identifier });
-    }
-    if (!requestedUser) {
-      // Buscar por username
-      requestedUser = await UserModel.findOne({ username: identifier });
-    }
+
+    const requestedUser = await UserModel.findOne({ $or: orConditions });
 
     if (!requestedUser) {
       return res.status(404).send({
@@ -156,13 +133,14 @@ app.post("/api/generate-key", helpers.validateEnvironment, async (req, res) => {
       // Para AWS login, validar que el sub coincida
       if (requestedUser.sub !== sub) {
         return res.status(401).send({
-          message: "Invalid credentials",
+          message: "Invalid credentials " + requestedUser.sub+" || "+sub,
           errorCode: ErrorCodes.AUTH_INVALID_CREDENTIALS,
         });
       }
     } else {
       // Para login tradicional, validar password
-      if (true || requestedUser.password !== password) {
+      const isValidPassword = await bcrypt.compare(password, requestedUser.password);
+      if (!isValidPassword) {
         return res.status(401).send({
           message: "Invalid password",
           errorCode: ErrorCodes.AUTH_WRONG_PASSWORD,

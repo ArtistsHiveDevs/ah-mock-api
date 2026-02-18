@@ -885,6 +885,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       // Para modelos con pre-procesamiento especial antes de construcción
       // Llamar al método estático preConstruct si existe en el schema
       if (hasPreConstructor) {
+        console.log("Create Entity     ", hasPreConstructor, ownerUser, info)
         await model.schema.statics.preConstruct(connection, ownerUser, info);
       }
 
@@ -997,6 +998,23 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
           );
         }
       }
+      // Llamar a postCreateFunction si existe en options
+      if (options.postCreateFunction && typeof options.postCreateFunction === "function") {
+        try {
+          await options.postCreateFunction({
+            entity: newEntity,
+            req: { user: ownerUser, connection },
+          });
+        } catch (postCreateError) {
+          console.error(
+            `[${modelName}] Error en postCreateFunction:`,
+            postCreateError.message
+          );
+          console.error(`[${modelName}] Stack:`, postCreateError.stack);
+          // No lanzar el error para no afectar la creación
+        }
+      }
+
       return apiHelperFunctions.createPaginatedDataResponse(newEntity);
     } catch (error) {
       // console.log("ERROR: ", modelName, ", UserId: ", userId, ", body: ", 'message ', error );
