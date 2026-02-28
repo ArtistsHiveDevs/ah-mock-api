@@ -99,6 +99,8 @@ const schema = new Schema({
 
   followed_profiles: { type: [FollowerSchema], default: [] },
   followed_by: { type: [FollowerSchema], default: [] },
+
+  total_audience_capacity: { type: Number }
 });
 
 schema.virtual("events", {

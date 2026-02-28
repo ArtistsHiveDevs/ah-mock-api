@@ -53,6 +53,7 @@ module.exports = {
     "activity",
     "genres",
     "has_open_mic",
+    "total_audience_capacity"
   ],
   authenticated_fields: [
     // "artistType",
@@ -104,6 +105,9 @@ module.exports = {
 
     "isClaimedProfile",
     "activity",
+    
+    "has_open_mic",
+    "total_audience_capacity"
   ],
   appbase_public_fields: {
     EntityDirectory: {
