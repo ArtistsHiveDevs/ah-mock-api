@@ -479,7 +479,7 @@ module.exports = [
 
         if (mongoose.Types.ObjectId.isValid(userId)) {
           // Si es un ObjectId válido, busca por _id
-          query._id = userId; // mongoose.Types.ObjectId(userId);
+          query._id = new mongoose.Types.ObjectId(userId);
         } else {
           // Si no es un ObjectId, busca por otros campos
           query = {
@@ -505,6 +505,11 @@ module.exports = [
           { new: true }, // Retorna el documento actualizado
         );
 
+        // Verifica si el usuario fue encontrado y actualizado
+        if (!updatedUser) {
+          throw new Error("Usuario no encontrado.");
+        }
+
         // Si se actualizaron los roles, detectar cambios y notificar
         if (newInfo.roles && currentUser) {
           const updatedBy = {
@@ -512,11 +517,6 @@ module.exports = [
             name: req.currentProfileInfo?.name || "Sistema",
           };
           await detectAndNotifyRoleChanges(currentUser, newInfo.roles, updatedBy, req.lang);
-        }
-
-        // Verifica si el usuario fue encontrado y actualizado
-        if (!updatedUser) {
-          throw new Error("Usuario no encontrado.");
         }
 
         // Update de los campos en EntityDirectory
