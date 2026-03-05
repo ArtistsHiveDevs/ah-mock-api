@@ -8,6 +8,10 @@ const notificationService = require("../infrastructure/notifications");
 const TEMP_TEST_EMAIL = process.env.TEMP_NOTIFICATION_EMAIL || "admiprogramacion@gmail.com";
 const USE_TEST_EMAIL = process.env.USE_TEST_EMAIL === "true";
 
+// Email quemado para pruebas cuando el recipient no tiene email configurado
+const FALLBACK_TEST_EMAIL = process.env.FALLBACK_TEST_EMAIL || "test@artist-hive.com";
+const USE_FALLBACK_TEST_EMAIL = process.env.USE_FALLBACK_TEST_EMAIL === "true";
+
 /**
  * Enviar notificación cuando se crea un prebooking
  * @param {Object} prebooking - El prebooking creado (populado con requester y recipients)
@@ -44,11 +48,20 @@ async function notifyPrebookingCreated(prebooking, connection, lang) {
         emailTo = TEMP_TEST_EMAIL;
         console.log(`[PrebookingNotifications] 🧪 Modo de prueba activo: ${recipient.name} → ${emailTo}`);
       } else if (!recipient.email) {
-        // En producción, si no hay email, omitir
-        console.warn(
-          `[PrebookingNotifications] ⚠️ Recipient ${recipient._id || recipient.id} no tiene email configurado - OMITIDO`
-        );
-        continue;
+        // Si no hay email configurado
+        if (USE_FALLBACK_TEST_EMAIL) {
+          // Usar email quemado de prueba
+          emailTo = FALLBACK_TEST_EMAIL;
+          console.warn(
+            `[PrebookingNotifications] ⚠️ Recipient ${recipient._id || recipient.id} no tiene email configurado - usando email quemado: ${emailTo}`
+          );
+        } else {
+          // Omitir este recipient
+          console.warn(
+            `[PrebookingNotifications] ⚠️ Recipient ${recipient._id || recipient.id} no tiene email configurado - OMITIDO`
+          );
+          continue;
+        }
       } else {
         // En producción con email configurado
         emailTo = recipient.email;
@@ -169,11 +182,20 @@ async function notifyPrebookingStatusChanged(
       emailTo = TEMP_TEST_EMAIL;
       console.log(`[PrebookingNotifications] 🧪 Modo de prueba activo: ${requester.name} → ${emailTo}`);
     } else if (!requester.email) {
-      // En producción, si no hay email, cancelar
-      console.warn(
-        `[PrebookingNotifications] ⚠️ Requester ${requester._id || requester.id} no tiene email configurado - CANCELADO`
-      );
-      return;
+      // Si no hay email configurado
+      if (USE_FALLBACK_TEST_EMAIL) {
+        // Usar email quemado de prueba
+        emailTo = FALLBACK_TEST_EMAIL;
+        console.warn(
+          `[PrebookingNotifications] ⚠️ Requester ${requester._id || requester.id} no tiene email configurado - usando email quemado: ${emailTo}`
+        );
+      } else {
+        // Cancelar envío
+        console.warn(
+          `[PrebookingNotifications] ⚠️ Requester ${requester._id || requester.id} no tiene email configurado - CANCELADO`
+        );
+        return;
+      }
     } else {
       // En producción con email configurado
       emailTo = requester.email;

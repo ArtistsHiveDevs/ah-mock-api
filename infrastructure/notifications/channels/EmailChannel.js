@@ -1,6 +1,9 @@
 const emailService = require("../../../helpers/emailService");
 const { getChannelConfig } = require("../notificationConfig");
-const { t, ARTIST_HIVE_SOCIAL } = require("../../../assets/templates/email/i18n");
+const {
+  t,
+  ARTIST_HIVE_SOCIAL,
+} = require("../../../assets/templates/email/i18n");
 
 const LOGO_URL = "https://npcarlos.co/artistsHive_mocks/logo.png";
 const APP_URL = process.env.FRONTEND_URL || "https://artist-hive.com";
@@ -30,13 +33,15 @@ class EmailChannel {
   renderBaseLayout({ subject, contentHtml, statusBanner, lang = "es" }) {
     const footer = t("footer", lang);
 
-    const statusBannerHtml = statusBanner ? `
+    const statusBannerHtml = statusBanner
+      ? `
           <tr>
             <td class="status-banner ${statusBanner.type}">
               <h2>${statusBanner.title}</h2>
               ${statusBanner.subtitle ? `<p>${statusBanner.subtitle}</p>` : ""}
             </td>
-          </tr>` : "";
+          </tr>`
+      : "";
 
     return `
 <!DOCTYPE html>
@@ -215,7 +220,7 @@ class EmailChannel {
   async send({ type, recipient, data }) {
     if (!recipient.email) {
       console.warn(
-        `[EmailChannel] ⚠️ Recipient ${recipient.id} no tiene email`
+        `[EmailChannel] ⚠️ Recipient ${recipient.id} no tiene email`,
       );
       return;
     }
@@ -235,7 +240,7 @@ class EmailChannel {
     });
 
     console.log(
-      `[EmailChannel] ✅ Email enviado a ${recipient.email} - ${type.name}`
+      `[EmailChannel] ✅ Email enviado a ${recipient.email} - ${type.name}`,
     );
   }
 
@@ -252,8 +257,10 @@ class EmailChannel {
       user_profile_role_updated: this.templateProfileRoleUpdated.bind(this),
       user_profile_removed: this.templateProfileRemoved.bind(this),
       user_profile_invitation: this.templateProfileInvitation.bind(this),
-      user_profile_invitation_accepted: this.templateProfileInvitationAccepted.bind(this),
-      user_profile_invitation_declined: this.templateProfileInvitationDeclined.bind(this),
+      user_profile_invitation_accepted:
+        this.templateProfileInvitationAccepted.bind(this),
+      user_profile_invitation_declined:
+        this.templateProfileInvitationDeclined.bind(this),
       test: this.templateTest.bind(this),
     };
 
@@ -280,6 +287,7 @@ class EmailChannel {
                 ${prebooking.event_name ? `<tr><td>${fields.eventType}</td><td><strong>${prebooking.event_name}</strong></td></tr>` : ""}
                 ${prebooking.requested_date_start ? `<tr><td>${fields.eventDate}</td><td>${prebooking.requested_date_start}</td></tr>` : ""}
                 ${prebooking.venue_name ? `<tr><td>${fields.location}</td><td>${prebooking.venue_name}</td></tr>` : ""}
+                <tr><td>Artistas</td><td>Artista 1, Artista 2</td></tr>
               </table>
 
               ${prebooking.notes ? `<div class="info-box"><p>${prebooking.notes}</p></div>` : ""}
@@ -287,6 +295,8 @@ class EmailChannel {
               <div class="btn-container">
                 <a href="${prebookingUrl}" class="btn btn-primary">${newReq.cta}</a>
               </div>
+
+              <br/>
 
               <div class="info-box security">
                 <h3>${security.title}</h3>
@@ -327,10 +337,14 @@ class EmailChannel {
               <p>${t("common.hi", lang)} <strong>${recipient.name}</strong>!</p>
               <p><strong>${participant.name}</strong> ${i.intro}</p>
 
-              ${prebooking.event_name ? `
+              ${
+                prebooking.event_name
+                  ? `
               <table class="details-table" role="presentation">
                 <tr><td>${fields.eventType}</td><td><strong>${prebooking.event_name}</strong></td></tr>
-              </table>` : ""}
+              </table>`
+                  : ""
+              }
 
               ${notes ? `<div class="info-box"><p>${notes}</p></div>` : ""}
 
@@ -364,10 +378,14 @@ class EmailChannel {
               <p>${t("common.hi", lang)} <strong>${recipient.name}</strong>,</p>
               <p>${i.intro}</p>
 
-              ${prebooking.event_name ? `
+              ${
+                prebooking.event_name
+                  ? `
               <table class="details-table" role="presentation">
                 <tr><td>${fields.eventType}</td><td><strong>${prebooking.event_name}</strong></td></tr>
-              </table>` : ""}
+              </table>`
+                  : ""
+              }
 
               <div class="btn-container">
                 <a href="${APP_URL}/explore" class="btn btn-secondary">${i.cta}</a>
@@ -402,14 +420,14 @@ class EmailChannel {
                     <h4>${feat.title}</h4>
                     <p>${feat.description}</p>
                   </div>
-                </div>`
+                </div>`,
       )
       .join("");
 
     const tipsHtml = i.tips.items
       .map(
         (tip) =>
-          `<div class="tip"><span style="color:#00C853;font-weight:bold;position:absolute;left:0">&rarr;</span>${tip}</div>`
+          `<div class="tip"><span style="color:#00C853;font-weight:bold;position:absolute;left:0">&rarr;</span>${tip}</div>`,
       )
       .join("");
 
@@ -434,7 +452,13 @@ class EmailChannel {
 
     return {
       subject: i.subject,
-      text: `${t("common.hi", lang)} ${recipient.name}!\n\n${i.intro}\n\n${i.whatCanYouDo}\n${Object.values(i.features).map((f) => `- ${f.title}: ${f.description}`).join("\n")}\n\n${i.tips.title}\n${i.tips.items.map((tip) => `→ ${tip}`).join("\n")}\n\n${i.cta}: ${APP_URL}/explore`,
+      text: `${t("common.hi", lang)} ${recipient.name}!\n\n${i.intro}\n\n${i.whatCanYouDo}\n${Object.values(
+        i.features,
+      )
+        .map((f) => `- ${f.title}: ${f.description}`)
+        .join(
+          "\n",
+        )}\n\n${i.tips.title}\n${i.tips.items.map((tip) => `→ ${tip}`).join("\n")}\n\n${i.cta}: ${APP_URL}/explore`,
       html: this.renderBaseLayout({ subject: i.subject, contentHtml, lang }),
     };
   }
