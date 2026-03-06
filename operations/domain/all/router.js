@@ -132,34 +132,70 @@ async function searchEntitiesDB(req, queryRQ) {
     const normalizedQuery = removeAccents(decodedQuery)
       .toLowerCase()
       .replace(/[^a-z0-9\s]/g, " ") // Reemplazar caracteres especiales por espacios
+      .replace(/\s+/g, " ") // Reemplazar múltiples espacios por uno solo
       .trim();
 
-    console.log("QUERY ", normalizedQuery);
-
     if (!activity) {
-      activity = ["active", "probably_active"];
+      activity = ["active", "probably_active", "unavailable"];
     }
-    // 2️⃣ Convertir la consulta en una expresión regular para buscar palabras que comiencen con la consulta
-    const regexPattern = `\\b${normalizedQuery}`;
-    const regex = new RegExp(regexPattern, "i");
 
-    const orMatch = [
-      { name: { $regex: regex } },
-      { username: { $regex: regex } },
-      { search_cache: { $regex: regex } },
-    ];
+    // 2️⃣ Separar la búsqueda en tokens (palabras individuales)
+    const searchTokens = normalizedQuery.split(" ").filter(token => token.length > 0);
 
-    // // 3️⃣ Construir filtros geográficos
+    console.log("QUERY normalizedQuery:", normalizedQuery);
+    console.log("QUERY searchTokens:", searchTokens);
+
+    // 3️⃣ Construir condiciones de búsqueda
+    // Estrategia: Usar $regex para flexibilidad (búsquedas parciales)
+    // - Separa en tokens y cada token debe aparecer en ALGÚN campo
+    // - Ejemplo 1: "cumbia" → encuentra "elcumbiahouse" porque "cumbia" está contenido en username
+    // - Ejemplo 2: "pop rhone alpes" → encuentra lugares con genre "pop" y location "rhone alpes"
+    //              porque "pop" aparece en genres.music.l1 y "rhone" + "alpes" en search_cache
+    //
+    // NOTA: $text search está disponible pero desactivado por defecto (pierde precisión en búsquedas parciales)
+    // Para activarlo: USE_TEXT_SEARCH=true (solo recomendado para palabras completas)
+    let searchCondition = {};
+    const USE_TEXT_SEARCH = process.env.USE_TEXT_SEARCH === "true"; // DESACTIVADO por defecto
+
+    if (searchTokens.length > 0) {
+      if (USE_TEXT_SEARCH && searchTokens.length >= 2) {
+        // Estrategia 1: $text search (más rápido pero menos flexible - solo palabras completas)
+        searchCondition = {
+          $text: { $search: normalizedQuery }
+        };
+      } else {
+        // Estrategia 2: $regex (más flexible - encuentra palabras parciales/contenidas)
+        const tokenConditions = searchTokens.map(token => {
+          return {
+            $or: [
+              { name: { $regex: token, $options: "i" } },
+              { username: { $regex: token, $options: "i" } },
+              { search_cache: { $regex: token, $options: "i" } },
+              { "genres.music.l1": { $regex: token, $options: "i" } },
+              { "genres.music.l2": { $regex: token, $options: "i" } },
+            ]
+          };
+        });
+
+        searchCondition = tokenConditions.length > 1
+          ? { $and: tokenConditions }
+          : tokenConditions[0];
+      }
+    }
+
+    console.log("QUERY searchCondition type:", USE_TEXT_SEARCH && searchTokens.length >= 2 ? "$text" : "$regex");
+
+    // // 4️⃣ Construir filtros geográficos
     // const geoFilters = buildGeoFilters(includedGeo, excludedGeo);
 
-    // 4️⃣ Construir condiciones base
+    // 5️⃣ Construir condiciones base
     const baseConditions = {
-      $or: orMatch,
+      ...searchCondition,
       ...(et && { entityType: et }),
       // ...(geoFilters.length > 0 && { $and: geoFilters }),
     };
 
-    // 5️⃣ Agregar filtro de activity solo si entityType es "Place"
+    // 6️⃣ Agregar filtro de activity solo si entityType es "Place"
     let matchCondition;
     if (activity && Array.isArray(activity) && activity.length > 0) {
       if (et === "Place") {
@@ -169,18 +205,26 @@ async function searchEntitiesDB(req, queryRQ) {
           activity: { $in: activity },
         };
       } else if (!et) {
-        // Si no se especifica entityType, usar $or para aplicar activity solo a Places
-        matchCondition = {
-          $or: orMatch,
-          $and: [
-            {
-              $or: [
-                { entityType: { $ne: "Place" } }, // No es Place, no importa activity
-                { entityType: "Place", activity: { $in: activity } }, // Es Place y cumple activity
-              ],
-            },
+        // Si no se especifica entityType, usar $and para combinar búsqueda + activity filter
+        const activityFilter = {
+          $or: [
+            { entityType: { $ne: "Place" } }, // No es Place, no importa activity
+            { entityType: "Place", activity: { $in: activity } }, // Es Place y cumple activity
           ],
         };
+
+        // Si hay searchCondition, combinar con activityFilter
+        if (Object.keys(searchCondition).length > 0) {
+          matchCondition = {
+            $and: [
+              searchCondition,
+              activityFilter,
+            ],
+          };
+        } else {
+          // Si no hay búsqueda, solo aplicar activityFilter
+          matchCondition = activityFilter;
+        }
 
         // Código anterior con geoFilters (comentado)
         // matchCondition = {
@@ -218,45 +262,61 @@ async function searchEntitiesDB(req, queryRQ) {
       matchCondition = baseConditions;
     }
 
-    console.log(matchCondition);
+    console.log(
+      "QUERY matchCondition:",
+      JSON.stringify(matchCondition, null, 2),
+    );
 
     const EntityDirectory = await getModel(
       req.serverEnvironment,
-      "EntityDirectory"
+      "EntityDirectory",
     );
 
     // 5️⃣ Buscar y agrupar por entityType
-    const results = await EntityDirectory.aggregate([
+    const isTextSearch = USE_TEXT_SEARCH && searchTokens.length >= 2;
+    const aggregationPipeline = [
       { $match: matchCondition },
-      {
-        $group: {
-          _id: "$entityType",
-          entities: { $push: "$$ROOT" },
-        },
+    ];
+
+    // Si usamos $text search, agregar el score de relevancia
+    if (isTextSearch) {
+      aggregationPipeline.push({
+        $addFields: { textScore: { $meta: "textScore" } }
+      });
+    }
+
+    // Agrupar por entityType
+    aggregationPipeline.push({
+      $group: {
+        _id: "$entityType",
+        entities: { $push: "$$ROOT" },
       },
-      {
-        $project: {
-          entityType: "$_id",
-          entities: {
-            $slice: [
-              {
-                $sortArray: {
-                  input: "$entities",
-                  sortBy: {
-                    verified_status: 1,
-                    profile_pic: 1,
-                    lastActivity: -1,
-                  },
-                },
+    });
+
+    // Proyectar y ordenar
+    aggregationPipeline.push({
+      $project: {
+        entityType: "$_id",
+        entities: {
+          $slice: [
+            {
+              $sortArray: {
+                input: "$entities",
+                sortBy: isTextSearch
+                  ? { textScore: -1, verified_status: 1, profile_pic: 1 }  // Ordenar por relevancia si usamos $text
+                  : { verified_status: 1, profile_pic: 1, lastActivity: -1 }, // Ordenar normal
               },
-              limit,
-            ],
-          },
-          _id: 0,
+            },
+            limit,
+          ],
         },
+        _id: 0,
       },
-      { $sort: { entityType: 1 } },
-    ]);
+    });
+
+    aggregationPipeline.push({ $sort: { entityType: 1 } });
+
+    const results = await EntityDirectory.aggregate(aggregationPipeline);
 
     // 6️⃣ Contar resultados
     const countResults = await EntityDirectory.aggregate([
@@ -353,7 +413,7 @@ const searchEntities = async ({
 
   const EntityDirectory = await getModel(
     req.serverEnvironment,
-    "EntityDirectory"
+    "EntityDirectory",
   );
   const artistQuery = EntityDirectory.find(combinedQuery)
     .skip((page - 1) * limit)
@@ -420,7 +480,8 @@ var router = express.Router({ mergeParams: true });
 
 // Middlewares centralizados
 const baseMiddlewares = helpers.getBaseMiddlewares();
-const actionContextMiddlewares = helpers.getActionContextMiddlewares("EntityDirectory");
+const actionContextMiddlewares =
+  helpers.getActionContextMiddlewares("EntityDirectory");
 const writeMiddlewares = helpers.getWriteMiddlewares();
 
 function fillRelationships(element, relationships = []) {
@@ -436,9 +497,9 @@ function fillResultWithFields(fields, result) {
       fields.find(
         (fieldName) =>
           fieldName !== "location_boundaries" &&
-          fieldName === relationship.field
-      )
-    )
+          fieldName === relationship.field,
+      ),
+    ),
   );
 
   // filled.events
@@ -509,7 +570,7 @@ function filterResultsByQuery(req) {
         artists = helpers.findMany(
           helpers.getEntityData("Artist"),
           req.query.q,
-          ["name"]
+          ["name"],
         );
 
         const filled = fillEventRelationships(helpers.getEntityData("Event"));
@@ -530,7 +591,7 @@ function filterResultsByQuery(req) {
         events = helpers.sortByDate(
           events || [],
           "timetable__initial_date",
-          "timetable__openning_doors"
+          "timetable__openning_doors",
         );
 
         places = helpers.findMany(helpers.getEntityData("Place"), req.query.q, [
@@ -601,54 +662,50 @@ function fillEventRelationships(element) {
 }
 
 module.exports = [
-  router.get(
-    RoutesConstants.search,
-    ...baseMiddlewares,
-    async (req, res) => {
-      try {
-        //   const { page = 1, limit = 50, fields } = req.query;
+  router.get(RoutesConstants.search, ...baseMiddlewares, async (req, res) => {
+    try {
+      //   const { page = 1, limit = 50, fields } = req.query;
 
-        // const modelFields = routesConstants.public_fields.join(",");
-        // const projection = (modelFields || fields || "")
-        //   .split(",")
-        //   .reduce((acc, field) => {
-        //     acc[field] = 1;
-        //     return acc;
-        //   }, {});
+      // const modelFields = routesConstants.public_fields.join(",");
+      // const projection = (modelFields || fields || "")
+      //   .split(",")
+      //   .reduce((acc, field) => {
+      //     acc[field] = 1;
+      //     return acc;
+      //   }, {});
 
-        // try {
-        //   const results = await model
-        //     .find({})
-        //     .select(projection)
-        //     .skip((page - 1) * limit)
-        //     .limit(Number(limit));
+      // try {
+      //   const results = await model
+      //     .find({})
+      //     .select(projection)
+      //     .skip((page - 1) * limit)
+      //     .limit(Number(limit));
 
-        //   res.json(
-        //     createPaginatedDataResponse(
-        //       results,
-        //       page,
-        //       Math.ceil(results.length / limit)
-        //     )
-        //   );
-        // } catch (err) {
-        //   res.status(500).json({ message: err.message });
-        // }
+      //   res.json(
+      //     createPaginatedDataResponse(
+      //       results,
+      //       page,
+      //       Math.ceil(results.length / limit)
+      //     )
+      //   );
+      // } catch (err) {
+      //   res.status(500).json({ message: err.message });
+      // }
 
-        const results = await searchEntitiesDB(req, {
-          ...req.query,
-          page: 1,
-          limit: 200,
-        });
-        // console.log(results);
-        return res.json(createPaginatedDataResponse(results));
-        const result = searchEntities(req.query);
-        return res.json(createPaginatedDataResponse(result));
-      } catch (error) {
-        console.log(error);
-        return res.status(500).json([]);
-      }
+      const results = await searchEntitiesDB(req, {
+        ...req.query,
+        page: 1,
+        limit: 200,
+      });
+      // console.log(results);
+      return res.json(createPaginatedDataResponse(results));
+      const result = searchEntities(req.query);
+      return res.json(createPaginatedDataResponse(result));
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json([]);
     }
-  ),
+  }),
   router.get(
     RoutesConstants.follow,
     ...actionContextMiddlewares,
@@ -671,7 +728,7 @@ module.exports = [
 
         const EntityDirectoryModel = await getModel(
           req.serverEnvironment,
-          "EntityDirectory"
+          "EntityDirectory",
         );
 
         const entityDirectory = await EntityDirectoryModel.findOne(query);
@@ -782,7 +839,7 @@ module.exports = [
                   },
                 },
               },
-            }
+            },
           );
         });
 
@@ -804,20 +861,20 @@ module.exports = [
                 ? Object.keys(entityDirectoryId).reduce((acc, key) => {
                     if (
                       routesConstants.appbase_public_fields.EntityDirectory.summary.includes(
-                        key
+                        key,
                       )
                     ) {
                       acc[key] = entityDirectoryId[key];
                     }
                     return acc;
                   }, {})
-                : null
+                : null,
             )
             .filter(Boolean);
 
         itemInfo.followed_by = cleanFollowData(itemInfo?.followed_by);
         itemInfo.followed_profiles = cleanFollowData(
-          itemInfo?.followed_profiles
+          itemInfo?.followed_profiles,
         );
 
         let followedEntityInfo;
@@ -849,6 +906,6 @@ module.exports = [
           .status(500)
           .json({ error: "Error al obtener seguidores", msg: error });
       }
-    }
+    },
   ),
 ];
