@@ -1,10 +1,14 @@
 var express = require("express");
 const apiHelperFunctions = require("../../../../helpers/apiHelperFunctions");
+const {
+  validateIfUserExists,
+  validateEnvironment,
+} = require("../../../../helpers");
 
 var router = express.Router({ mergeParams: true });
 
 module.exports = [
-  router.get("/", (req, res) => {
+  router.get("/", validateEnvironment, validateIfUserExists, (req, res) => {
     try {
       const versions = [
         {
@@ -30,13 +34,13 @@ module.exports = [
         return res.json(versions);
       } else {
         const versionObj = versions.find(
-          (versionObj) => versionObj.version === version
+          (versionObj) => versionObj.version === version,
         );
         if (versionObj) {
           const fs = require("fs");
           const policy = fs.readFileSync(
-            `./assets/mocks/app/policies/privacy/privacy.v${version}.md`,
-            { encoding: "utf8", flag: "r" }
+            `./assets/mocks/i18n/${req.lang}/app/policies/privacy/privacy.v${version}.md`,
+            { encoding: "utf8", flag: "r" },
           );
 
           return res.status(200).json(
@@ -45,7 +49,7 @@ module.exports = [
               lang: req.lang,
               version: 1,
               creationDate: 1,
-            })
+            }),
           );
         } else {
           return res.status(404).json({
