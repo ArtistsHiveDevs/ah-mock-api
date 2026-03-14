@@ -348,7 +348,7 @@ function loadRoutes() {
             // Normalizar el profile ID del usuario actual
             const ids = await normalizeProfileId(
               req.user.currentProfileIdentifier,
-              req.connection
+              req.dbConnection
             );
 
             console.log("IDS Prebooking: ", ids);
@@ -364,7 +364,7 @@ function loadRoutes() {
                 result,
                 ids.entity_id,
                 req.user.id,
-                req.connection
+                req.dbConnection
               );
 
               // Renombrar campos
@@ -410,7 +410,7 @@ function loadRoutes() {
             ]);
 
             // Enviar notificaciones a los recipients
-            await notifyPrebookingCreated(entity, req.connection, req.lang);
+            await notifyPrebookingCreated(entity, req.dbConnection, req.lang);
 
             return entity;
           },
@@ -419,7 +419,7 @@ function loadRoutes() {
               // Normalizar el profile ID del usuario actual
               const ids = await normalizeProfileId(
                 req.user.currentProfileIdentifier,
-                req.connection
+                req.dbConnection
               );
 
               // Actualizar el estado del participante

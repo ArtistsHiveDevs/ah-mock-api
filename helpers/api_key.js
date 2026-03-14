@@ -157,7 +157,7 @@ async function validateEnvironment(req, res, next) {
     }
 
     const connection = await connectToDatabase(req);
-    req.connection = connection;
+    req.dbConnection = connection;
 
     if (!req.serverEnvironment) {
       return res.status(400).send({
@@ -271,10 +271,10 @@ async function validateIfUserExists(req, res, next) {
       }
 
       // Verificar que la conexión esté lista
-      if (!req.connection || req.connection.readyState !== 1) {
+      if (!req.dbConnection || req.dbConnection.readyState !== 1) {
         console.error(
           "⚠️ MongoDB connection not ready en validateIfUserExists, readyState:",
-          req.connection?.readyState,
+          req.dbConnection?.readyState,
         );
         // Continuar sin usuario autenticado
         return next();
