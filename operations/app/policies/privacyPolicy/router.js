@@ -35,7 +35,7 @@ module.exports = [
         if (versionObj) {
           const fs = require("fs");
           const policy = fs.readFileSync(
-            `./assets/mocks/app/policies/privacy/privacy.v${version}.md`,
+            `./assets/mocks/i18n/${req.lang}/app/policies/privacy/privacy.v${version}.md`,
             { encoding: "utf8", flag: "r" }
           );
 
