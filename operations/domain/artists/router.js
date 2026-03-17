@@ -56,8 +56,8 @@ function fillResultWithFields(fields, result) {
   const filled = fillRelationships(
     result,
     relationships.filter((relationship) =>
-      fields.find((fieldName) => fieldName === relationship.field)
-    )
+      fields.find((fieldName) => fieldName === relationship.field),
+    ),
   );
 
   filled.forEach((artist) => {
@@ -66,7 +66,7 @@ function fillResultWithFields(fields, result) {
     const sortedEvents = helpers.sortByDate(
       artistsEvents,
       "timetable__initial_date",
-      "timetable__openning_doors"
+      "timetable__openning_doors",
     );
     artist["events"] = sortedEvents;
     const placesEvents =
@@ -86,13 +86,13 @@ function fillResultWithFields(fields, result) {
     });
 
     const joinedData = placesCities.map(
-      (city) => `${city.city}#${city.state}#${city.country}`
+      (city) => `${city.city}#${city.state}#${city.country}`,
     );
 
     const counts = {};
     artist["events"].forEach(function (event) {
       const place = places.find(
-        (place) => `${place.id}` === `${event.place_id}`
+        (place) => `${place.id}` === `${event.place_id}`,
       );
       const joinedDataOfPlace = `${place.city}#${place.state}#${place.country}`;
 
@@ -104,7 +104,7 @@ function fillResultWithFields(fields, result) {
     artist["cities"] = uniqueCities.map((uniqueCityJoinedName) => {
       const uniqueCity = placesCities.find(
         (city) =>
-          `${city.city}#${city.state}#${city.country}` === uniqueCityJoinedName
+          `${city.city}#${city.state}#${city.country}` === uniqueCityJoinedName,
       );
       uniqueCity["totalEvents"] = counts[uniqueCityJoinedName];
       return uniqueCity;
@@ -146,7 +146,7 @@ function fillResultWithFields(fields, result) {
     artist.arts = {};
 
     const albumsInfo = albums.find(
-      (artistInfo) => `${artistInfo.ah_id}` === `${artist.id}`
+      (artistInfo) => `${artistInfo.ah_id}` === `${artist.id}`,
     );
 
     if (albumsInfo?.total > 0) {
@@ -234,13 +234,13 @@ module.exports = [
           createPaginatedDataResponse(
             artists.slice(0, limit),
             page,
-            Math.ceil(artists.length / limit)
-          )
+            Math.ceil(artists.length / limit),
+          ),
         );
       } catch (err) {
         res.status(500).json({ message: err.message });
       }
-    }
+    },
   ),
 
   artistRouter.get(
@@ -333,7 +333,7 @@ module.exports = [
                   path: "country",
                   select:
                     routesConstants.parametric_public_fields.Country.summary.join(
-                      " "
+                      " ",
                     ),
                 },
               },
@@ -344,7 +344,7 @@ module.exports = [
                   path: "country",
                   select:
                     routesConstants.parametric_public_fields.Country.summary.join(
-                      " "
+                      " ",
                     ),
                 },
               },
@@ -382,9 +382,9 @@ module.exports = [
                     ]?.summary ??
                       routesConstants?.public_fields ?? ["name"]),
                   ]
-                : routesConstants?.parametric_public_fields?.[refModelName]
+                : (routesConstants?.parametric_public_fields?.[refModelName]
                     ?.summary ??
-                  routesConstants?.public_fields ?? ["name"];
+                  routesConstants?.public_fields ?? ["name"]);
 
               return {
                 path: field,
@@ -439,7 +439,7 @@ module.exports = [
 
           event.timetable__initial_date = helperFunctions.addMonthsToDate(
             event.timetable__initial_date,
-            5
+            5,
           );
         });
 
@@ -460,75 +460,77 @@ module.exports = [
               if (mongoose.Types.ObjectId.isValid(entityRole.id)) {
                 // Compara si los ObjectIds son iguales
                 return new mongoose.Types.ObjectId(entityRole.id).equals(
-                  artistInfo._id
+                  artistInfo._id,
                 );
               } else {
                 // Compara como strings si no es un ObjectId válido
                 return entityRole.id === artistInfo._id.toString();
               }
-            })
+            }),
         );
 
         if (!!artistInfo.spotify) {
           try {
             const AlbumModel = await getModel(req.serverEnvironment, "Album");
-            const albumsQuery = await AlbumModel.find({
-              idx: { $regex: artistInfo.spotify, $options: "i" },
-            });
+            if (!!AlbumModel) {
+              const albumsQuery = await AlbumModel.find({
+                idx: { $regex: artistInfo.spotify, $options: "i" },
+              });
 
-            // Resolver todas las promesas en paralelo para mejor performance
-            const albums = await Promise.all(
-              albumsQuery.map(async (album) => {
-                const decompressed = JSON.parse(
-                  (await decompressJSON(album.c)) || "{}"
-                );
-                const { n, img, rd, rdp, nt, t } = decompressed || {};
+              // Resolver todas las promesas en paralelo para mejor performance
+              const albums = await Promise.all(
+                albumsQuery.map(async (album) => {
+                  const decompressed = JSON.parse(
+                    (await decompressJSON(album.c)) || "{}",
+                  );
+                  const { n, img, rd, rdp, nt, t } = decompressed || {};
 
-                return {
-                  name: n,
-                  images: (img || []).map((image) => {
-                    return {
-                      url: `https://i.scdn.co/image/${image.url}`,
-                      height: image.s,
-                      width: image.s,
-                    };
-                  }),
-                  release_date: rd,
-                  release_date_precision: rdp,
-                  spotify: {
-                    id: album.aId,
-                    url: `https://open.spotify.com/album/${album.aId}`,
-                  },
-                  total_tracks: nt,
-                  tracks: (t || []).map((track) => {
-                    return {
-                      artists: (track.as || []).map((artist) => {
-                        return { name: artist.n, id: artist.id };
-                      }),
-                      disc_number: track.d_n,
-                      duration_ms: track.dur,
-                      // explicit: boolean;
-                      id: track.id,
-                      name: track.n,
-                      track_number: track.num,
-                    };
-                  }),
-                };
-              })
-            );
+                  return {
+                    name: n,
+                    images: (img || []).map((image) => {
+                      return {
+                        url: `https://i.scdn.co/image/${image.url}`,
+                        height: image.s,
+                        width: image.s,
+                      };
+                    }),
+                    release_date: rd,
+                    release_date_precision: rdp,
+                    spotify: {
+                      id: album.aId,
+                      url: `https://open.spotify.com/album/${album.aId}`,
+                    },
+                    total_tracks: nt,
+                    tracks: (t || []).map((track) => {
+                      return {
+                        artists: (track.as || []).map((artist) => {
+                          return { name: artist.n, id: artist.id };
+                        }),
+                        disc_number: track.d_n,
+                        duration_ms: track.dur,
+                        // explicit: boolean;
+                        id: track.id,
+                        name: track.n,
+                        track_number: track.num,
+                      };
+                    }),
+                  };
+                }),
+              );
 
-            // Ordenar álbumes por fecha de lanzamiento (más reciente primero)
-            const sortedAlbums = albums.sort((a, b) => {
-              // Manejar casos donde release_date puede no existir
-              if (!a.release_date && !b.release_date) return 0;
-              if (!a.release_date) return 1;  // a va al final
-              if (!b.release_date) return -1; // b va al final
+              // Ordenar álbumes por fecha de lanzamiento (más reciente primero)
+              const sortedAlbums = albums.sort((a, b) => {
+                // Manejar casos donde release_date puede no existir
+                if (!a.release_date && !b.release_date) return 0;
+                if (!a.release_date) return 1; // a va al final
+                if (!b.release_date) return -1; // b va al final
 
-              // Comparar fechas: más reciente primero (descendente)
-              return b.release_date.localeCompare(a.release_date);
-            });
+                // Comparar fechas: más reciente primero (descendente)
+                return b.release_date.localeCompare(a.release_date);
+              });
 
-            artistInfo.arts.music.albums = sortedAlbums;
+              artistInfo.arts.music.albums = sortedAlbums;
+            }
           } catch (error) {
             console.log("Error pidiendo álbumes: ", error);
           }
@@ -542,13 +544,13 @@ module.exports = [
               if (mongoose.Types.ObjectId.isValid(artistPermissions.id)) {
                 // Compara si los ObjectIds son iguales
                 return new mongoose.Types.ObjectId(artistPermissions.id).equals(
-                  artistInfo._id
+                  artistInfo._id,
                 );
               } else {
                 // Compara como strings si no es un ObjectId válido
                 return artistPermissions.id === artistInfo._id.toString();
               }
-            }
+            },
           );
 
           if ((rolesInArtist?.roles || []).includes("OWNER")) {
@@ -622,7 +624,7 @@ module.exports = [
 
         const ProfileClaimModel = await getModel(
           req.serverEnvironment,
-          "ProfileClaim"
+          "ProfileClaim",
         );
         let claimResult;
         try {
@@ -657,7 +659,7 @@ module.exports = [
         console.error(err);
         res.status(500).json({ message: err.message });
       }
-    }
+    },
   ),
 
   // Crear Artista
@@ -682,7 +684,7 @@ module.exports = [
         const UserModel = await getModel(req.serverEnvironment, "User");
         const ownerUser = await UserModel.findById(req.userId);
         let ownerRoles = (ownerUser.roles || []).find(
-          (role) => role.entityName === "Artist"
+          (role) => role.entityName === "Artist",
         );
         if (!ownerRoles) {
           ownerUser.roles.push({ entityName: "Artist", entityRoleMap: [] });
@@ -690,7 +692,7 @@ module.exports = [
         }
 
         let bandInfo = (ownerRoles.entityRoleMap || []).find(
-          (band) => band.id === newArtist._id
+          (band) => band.id === newArtist._id,
         );
         if (!bandInfo) {
           bandInfo = {
@@ -738,7 +740,7 @@ module.exports = [
       //     res.status(400).send(err);
       //   }
       // }
-    }
+    },
   ),
 
   artistRouter.put(
@@ -803,7 +805,7 @@ module.exports = [
           const hasRole = artist.entityRoleMap.some(
             (role) =>
               ["OWNER", "ADMIN"].includes(role.role) &&
-              role.ids.includes(userId)
+              role.ids.includes(userId),
           );
 
           if (hasRole) {
@@ -824,7 +826,7 @@ module.exports = [
                   ...newInfo,
                 },
               }, // Ejemplo: Actualizar el campo verified_status a 1
-              { new: true }
+              { new: true },
             );
 
             if (helpers.hasToUpdateUserRoleMap(newInfo)) {
@@ -835,7 +837,7 @@ module.exports = [
                   }
                   return result;
                 },
-                {}
+                {},
               );
 
               updatedArtist.entityRoleMap?.forEach((role) =>
@@ -854,7 +856,7 @@ module.exports = [
                   // Realizar la consulta de actualización solo para los campos presentes
                   const UserModel = await getModel(
                     req.serverEnvironment,
-                    "User"
+                    "User",
                   );
                   const roleMapUpdateResult = await UserModel.findOneAndUpdate(
                     {
@@ -871,9 +873,9 @@ module.exports = [
                         { "mapElement.id": entityRoleMapId },
                       ],
                       new: true,
-                    }
+                    },
                   );
-                })
+                }),
               );
             }
             return res
@@ -895,7 +897,7 @@ module.exports = [
       // return res
       //   .status(200)
       //   .json(items[Math.round(Math.random() * items.length)]);
-    }
+    },
   ),
 
   artistRouter.delete(
@@ -919,7 +921,7 @@ module.exports = [
             ],
           },
           req.body,
-          { new: true } // Retorna el documento actualizado
+          { new: true }, // Retorna el documento actualizado
         );
 
         if (!artist) {
@@ -930,6 +932,6 @@ module.exports = [
       } catch (err) {
         res.status(500).json({ message: err.message });
       }
-    }
+    },
   ),
 ];
