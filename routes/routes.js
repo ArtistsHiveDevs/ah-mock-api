@@ -180,14 +180,14 @@ function loadRoutes() {
                 result.timetable__initial_date =
                   helperFunctions.addMonthsToDate(
                     result.timetable__initial_date,
-                    5
+                    5,
                   );
               } catch (error) {}
               result.timetable__openning_doors = Number(
-                result.timetable__openning_doors?.replace(":", "") || 0
+                result.timetable__openning_doors?.replace(":", "") || 0,
               );
               result.timetable__main_artist_time = Number(
-                result.timetable__main_artist_time?.replace(":", "") || 0
+                result.timetable__main_artist_time?.replace(":", "") || 0,
               );
 
               result.price = 25000 + Math.floor(Math.random() * 10000) - 5000;
@@ -281,7 +281,7 @@ function loadRoutes() {
 
                 event.timetable__initial_date = helperFunctions.addMonthsToDate(
                   event.timetable__initial_date,
-                  5
+                  5,
                 );
               });
             });
@@ -348,14 +348,14 @@ function loadRoutes() {
             // Normalizar el profile ID del usuario actual
             const ids = await normalizeProfileId(
               req.user.currentProfileIdentifier,
-              req.dbConnection
+              req.dbConnection,
             );
 
             console.log("IDS Prebooking: ", ids);
 
             const PrebookingModel = await getModel(
               req.serverEnvironment,
-              "Prebooking"
+              "Prebooking",
             );
 
             const processResult = async (result) => {
@@ -364,7 +364,7 @@ function loadRoutes() {
                 result,
                 ids.entity_id,
                 req.user.id,
-                req.dbConnection
+                req.dbConnection,
               );
 
               // Renombrar campos
@@ -419,7 +419,7 @@ function loadRoutes() {
               // Normalizar el profile ID del usuario actual
               const ids = await normalizeProfileId(
                 req.user.currentProfileIdentifier,
-                req.dbConnection
+                req.dbConnection,
               );
 
               // Actualizar el estado del participante
@@ -427,14 +427,14 @@ function loadRoutes() {
               entity.updateParticipantStatus(
                 ids.entity_id,
                 body.status,
-                body.notes
+                body.notes,
               );
 
               console.log(
                 "[setStatus] Profile ID:",
                 ids.entity_id,
                 "| New status:",
-                body.status
+                body.status,
               );
 
               // Populate para las notificaciones
@@ -455,7 +455,7 @@ function loadRoutes() {
                 ids.entity_id,
                 body.status,
                 body.notes,
-                req.lang
+                req.lang,
               );
 
               // Retornar el entity modificado para que crud-routes lo guarde
