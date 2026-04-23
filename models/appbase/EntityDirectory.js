@@ -51,6 +51,31 @@ schema.virtual("identifier").get(function () {
 });
 
 /**
+ * Virtual para populate del modelo real (User/Artist/Place)
+ * Permite acceder a campos adicionales del modelo subyacente
+ */
+schema.virtual("entity", {
+  ref: function() {
+    return this.entityType; // Retorna dinámicamente 'User', 'Artist', 'Place', etc.
+  },
+  localField: "id",
+  foreignField: "_id",
+  justOne: true,
+});
+
+/**
+ * Virtual para obtener el email desde el modelo relacionado
+ * Requiere que 'entity' esté populado
+ */
+schema.virtual("email").get(function () {
+  return this.entity?.email || null;
+});
+
+// Incluye los virtuals en los resultados JSON
+schema.set("toObject", { virtuals: true });
+schema.set("toJSON", { virtuals: true });
+
+/**
  * Normaliza un profile_id (username, shortId o ObjectId) a ObjectId de EntityDirectory
  * @param {string|ObjectId} id - Identificador a normalizar (username, shortId o ObjectId)
  * @param {Connection} connection - Conexión de Mongoose a usar

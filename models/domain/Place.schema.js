@@ -101,6 +101,8 @@ const schema = new Schema({
   followed_by: { type: [FollowerSchema], default: [] },
 
   total_audience_capacity: { type: Number }
+}, {
+  timestamps: true
 });
 
 schema.virtual("events", {

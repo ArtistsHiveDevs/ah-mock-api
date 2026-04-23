@@ -586,6 +586,63 @@ schema.set("toObject", { virtuals: true });
 schema.set("toJSON", { virtuals: true });
 
 // ============================================================================
+// MIDDLEWARE - AUTO-POPULATE
+// ============================================================================
+
+/**
+ * Auto-populate de requester_profile_id y recipient_ids con el virtual 'entity'
+ * Esto asegura que siempre tengamos acceso al email sin tener que hacer populate manual
+ */
+function autoPopulate(next) {
+  this.populate([
+    {
+      path: "requester_profile_id",
+      populate: {
+        path: "entity",
+        select: "email", // Solo traer el email del modelo subyacente
+      },
+    },
+    {
+      path: "recipient_ids",
+      populate: {
+        path: "entity",
+        select: "email", // Solo traer el email del modelo subyacente
+      },
+    },
+  ]);
+  next();
+}
+
+// Aplicar auto-populate en find y findOne
+schema.pre("find", autoPopulate);
+schema.pre("findOne", autoPopulate);
+schema.pre("findOneAndUpdate", autoPopulate);
+
+/**
+ * Post-save middleware para auto-populate después de crear/actualizar
+ * Esto es necesario porque después de .save() el documento no tiene populate
+ */
+schema.post("save", async function (doc, next) {
+  await doc.populate([
+    {
+      path: "requester_profile_id",
+      populate: {
+        path: "entity",
+        select: "email",
+      },
+    },
+    {
+      path: "recipient_ids",
+      populate: {
+        path: "entity",
+        select: "email",
+      },
+    },
+  ]);
+  next();
+});
+
+// ============================================================================
 // EXPORTS
 // ============================================================================
 

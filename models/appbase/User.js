@@ -68,6 +68,8 @@ const schema = new mongoose.Schema({
   request_industry_member: Number,
   followed_profiles: { type: [FollowerSchema], default: [] },
   followed_by: { type: [FollowerSchema], default: [] },
+}, {
+  timestamps: true
 });
 
 schema.virtual("followersCount").get(function () {
