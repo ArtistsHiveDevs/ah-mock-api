@@ -397,17 +397,8 @@ function loadRoutes() {
           postCreateFunction: async (data) => {
             const { entity, req } = data || {};
 
-            // Populate requester y recipients para las notificaciones
-            await entity.populate([
-              {
-                path: "requester_profile_id",
-                select: ["name", "email"].join(" "),
-              },
-              {
-                path: "recipient_ids",
-                select: ["name", "email", "entity_type"].join(" "),
-              },
-            ]);
+            // Auto-populate ya está configurado en el schema de Prebooking
+            // requester_profile_id y recipient_ids ya incluyen el virtual 'entity' con email
 
             // Enviar notificaciones a los recipients
             await notifyPrebookingCreated(entity, req.dbConnection, req.lang);
@@ -437,17 +428,8 @@ function loadRoutes() {
                 body.status,
               );
 
-              // Populate para las notificaciones
-              await entity.populate([
-                {
-                  path: "requester_profile_id",
-                  select: ["name", "email"].join(" "),
-                },
-                {
-                  path: "recipient_ids",
-                  select: ["name", "email", "entity_type"].join(" "),
-                },
-              ]);
+              // Auto-populate ya está configurado en el schema de Prebooking
+              // requester_profile_id y recipient_ids ya incluyen el virtual 'entity' con email
 
               // Enviar notificación al requester sobre el cambio de estado
               await notifyPrebookingStatusChanged(

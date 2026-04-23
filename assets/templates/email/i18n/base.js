@@ -34,7 +34,8 @@ module.exports = {
     terms: "Terms of use",
     privacy: "Privacy policy",
     unsubscribe: "Unsubscribe",
-    autoMessage: "This is an automated message from Artist Hive®. Please do not reply directly to this email.",
+    autoMessage:
+      "This is an automated message from Artist Hive®. Please do not reply directly to this email.",
   },
 
   // ============================================
@@ -47,25 +48,35 @@ module.exports = {
     welcome: {
       subject: "Welcome to Artist Hive®",
       title: "Welcome to Artist Hive®!",
-      intro: "We're excited that you're part of the Artist Hive® community. You now have access to the platform that connects artists with event organizers throughout Latin America.",
+      intro:
+        "We're excited that you're part of the Artist Hive® community. You now have access to the platform that connects artists with event organizers throughout the music world.",
       whatCanYouDo: "What can you do now?",
       cta: "Explore artists",
       features: {
+        claim: {
+          title: "Claim your profile",
+          description:
+            "Claim your Music Industry Profile (Artist or Venue) to interact with other agents.",
+        },
         discover: {
           title: "Discover artists",
-          description: "Explore thousands of artists from all genres and find the perfect one for your event.",
+          description:
+            "Explore thousands of artists from all genres and find the perfect one for your event.",
         },
         book: {
           title: "Book easily",
-          description: "Send pre-bookings and manage all your bookings from one place.",
+          description:
+            "Send pre-bookings and manage all your bookings from one place.",
         },
         pay: {
           title: "Pay securely",
-          description: "Protected transactions and secure payments for you and the artist.",
+          description:
+            "Protected transactions and secure payments for you and the artist.",
         },
         rate: {
           title: "Rate and review",
-          description: "Share your experience and help others make better decisions.",
+          description:
+            "Share your experience and help others make better decisions.",
         },
       },
       tips: {
@@ -96,7 +107,8 @@ module.exports = {
 
       security: {
         title: "Protect your security",
-        message: "For security reasons, never share your personal data or payment information outside the Artist Hive® platform.",
+        message:
+          "For security reasons, never share your personal data or payment information outside the Artist Hive® platform.",
       },
 
       // ----------------------------------------
@@ -120,7 +132,8 @@ module.exports = {
       allAccepted: {
         subject: "All artists accepted! - Artist Hive®",
         title: "Great news! All artists accepted your pre-booking",
-        intro: "All the artists you contacted have accepted your pre-booking request. You can now proceed to the negotiation stage.",
+        intro:
+          "All the artists you contacted have accepted your pre-booking request. You can now proceed to the negotiation stage.",
         cta: "Start negotiation",
       },
 
@@ -130,7 +143,8 @@ module.exports = {
       partialAccepted: {
         subject: "Some artists responded to your pre-booking - Artist Hive®",
         title: "Some artists have responded",
-        intro: "Some of the artists you contacted have responded to your pre-booking request.",
+        intro:
+          "Some of the artists you contacted have responded to your pre-booking request.",
         accepted: "Accepted",
         rejected: "Not available",
         pending: "Pending response",
@@ -143,7 +157,8 @@ module.exports = {
       negotiationStarted: {
         subject: "Your pre-booking moved to negotiation - Artist Hive®",
         title: "Let's negotiate the details!",
-        intro: "Your pre-booking has moved to the negotiation stage. You can now discuss the details with the artist.",
+        intro:
+          "Your pre-booking has moved to the negotiation stage. You can now discuss the details with the artist.",
         cta: "Go to negotiation",
       },
 
@@ -153,7 +168,8 @@ module.exports = {
       artistRejected: {
         subject: "Update on your pre-booking - Artist Hive®",
         title: "The artist couldn't accept your request",
-        intro: "Unfortunately, the artist is not available for your event date. Don't worry, there are many other great artists on the platform!",
+        intro:
+          "Unfortunately, the artist is not available for your event date. Don't worry, there are many other great artists on the platform!",
         cta: "Explore other artists",
       },
 
@@ -163,7 +179,8 @@ module.exports = {
       expired: {
         subject: "Your pre-booking request expired - Artist Hive®",
         title: "Your pre-booking request has expired",
-        intro: "Unfortunately, the artist didn't respond within the allowed time. You can try contacting other artists or send a new request.",
+        intro:
+          "Unfortunately, the artist didn't respond within the allowed time. You can try contacting other artists or send a new request.",
         cta: "Create new pre-booking",
       },
 
@@ -173,7 +190,8 @@ module.exports = {
       noInterest: {
         subject: "Update on your pre-booking - Artist Hive®",
         title: "No response from the artist",
-        intro: "The artist hasn't shown interest in your pre-booking request. We recommend exploring other artists who might be a better fit.",
+        intro:
+          "The artist hasn't shown interest in your pre-booking request. We recommend exploring other artists who might be a better fit.",
         cta: "Explore other artists",
       },
 
@@ -183,7 +201,8 @@ module.exports = {
       cancelledByUser: {
         subject: "Pre-booking cancelled - Artist Hive®",
         title: "Your pre-booking has been cancelled",
-        intro: "You have successfully cancelled your pre-booking request. No charges were made.",
+        intro:
+          "You have successfully cancelled your pre-booking request. No charges were made.",
         cta: "Create new pre-booking",
       },
 
@@ -191,7 +210,7 @@ module.exports = {
       // Notification: New request (sent to artist)
       // ----------------------------------------
       newRequest: {
-        subject: "New pre-booking request - Artist Hive®",
+        subject: "New request from {requester} - Artist Hive®",
         title: "You have a new pre-booking request!",
         intro: "has sent you a new pre-booking request:",
         cta: "View request",
@@ -227,7 +246,8 @@ module.exports = {
       expiringReminder: {
         subject: "Your pre-booking is about to expire - Artist Hive®",
         title: "Your pre-booking is expiring soon!",
-        intro: "The response deadline for your pre-booking is approaching. If the artist doesn't respond in time, the request will expire automatically.",
+        intro:
+          "The response deadline for your pre-booking is approaching. If the artist doesn't respond in time, the request will expire automatically.",
         timeRemaining: "Time remaining",
         cta: "View pre-booking",
       },
@@ -238,7 +258,8 @@ module.exports = {
       pendingPayment: {
         subject: "Complete your payment - Artist Hive®",
         title: "Complete your payment to confirm",
-        intro: "The artist has accepted your pre-booking! Complete the payment to confirm and secure your booking.",
+        intro:
+          "The artist has accepted your pre-booking! Complete the payment to confirm and secure your booking.",
         cta: "Complete payment",
         deadline: "Payment deadline",
       },
@@ -249,7 +270,8 @@ module.exports = {
       confirmed: {
         subject: "Booking confirmed! - Artist Hive®",
         title: "Your booking is confirmed!",
-        intro: "Your payment has been received and your booking is now confirmed. The artist has been notified.",
+        intro:
+          "Your payment has been received and your booking is now confirmed. The artist has been notified.",
         cta: "View booking details",
       },
     },
@@ -275,7 +297,8 @@ module.exports = {
       passwordReset: {
         subject: "Reset your password - Artist Hive®",
         title: "Reset your password",
-        intro: "We received a request to reset your password. Click the button below to create a new password.",
+        intro:
+          "We received a request to reset your password. Click the button below to create a new password.",
         cta: "Reset password",
         expiry: "This link will expire in 24 hours.",
         ignore: "If you didn't request this, you can safely ignore this email.",
@@ -287,7 +310,8 @@ module.exports = {
       verification: {
         subject: "Verify your email - Artist Hive®",
         title: "Verify your email address",
-        intro: "Thanks for signing up! Please verify your email address to complete your registration.",
+        intro:
+          "Thanks for signing up! Please verify your email address to complete your registration.",
         cta: "Verify email",
         expiry: "This link will expire in 48 hours.",
       },
@@ -299,7 +323,8 @@ module.exports = {
         assigned: {
           subject: "You've been assigned to a profile - Artist Hive®",
           title: "You've been assigned to a profile!",
-          intro: "You have been assigned as a team member to the following profile:",
+          intro:
+            "You have been assigned as a team member to the following profile:",
           profileName: "Profile",
           profileType: "Type",
           role: "Your role",
@@ -328,7 +353,8 @@ module.exports = {
         invitation: {
           subject: "You've been invited to join a profile - Artist Hive®",
           title: "You've been invited to join a team!",
-          intro: "You have been invited to join the following profile as a team member:",
+          intro:
+            "You have been invited to join the following profile as a team member:",
           invitedBy: "Invited by",
           proposedRole: "Proposed role",
           ctaAccept: "Accept invitation",

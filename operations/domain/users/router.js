@@ -440,7 +440,10 @@ module.exports = [
         await entityDirectory.save();
 
         // Enviar notificación de bienvenida al nuevo usuario
-        await notifyUserWelcome(user, req.lang);
+        // Intentar obtener el idioma de: req.lang (si está autenticado) o req.headers['lang'] (header del cliente)
+        const lang = req.lang || req.headers["lang"] || user.user_language;
+        console.log(`[UserRouter] Idioma para notificación de bienvenida: ${lang} (req.lang: ${req.lang}, header: ${req.headers["lang"]}, user: ${user.user_language})`);
+        await notifyUserWelcome(user, lang);
 
         res.status(201).send(createPaginatedDataResponse(user));
       } catch (err) {

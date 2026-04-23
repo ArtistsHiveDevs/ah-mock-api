@@ -33,6 +33,10 @@ module.exports = {
       whatCanYouDo: "Was können Sie jetzt tun?",
       cta: "Künstler entdecken",
       features: {
+        claim: {
+          title: "Beanspruchen Sie Ihr Profil",
+          description: "Beanspruchen Sie Ihr Musikindustrie-Profil (Künstler oder Veranstaltungsort) als Ihres, um mit anderen Agenten zu interagieren.",
+        },
         discover: {
           title: "Künstler entdecken",
           description: "Entdecken Sie Tausende von Künstlern aller Genres und finden Sie den perfekten für Ihre Veranstaltung.",
@@ -162,6 +166,34 @@ module.exports = {
         title: "Ihre Buchung ist bestätigt!",
         intro: "Ihre Zahlung wurde empfangen und Ihre Buchung ist nun bestätigt. Der Künstler wurde benachrichtigt.",
         cta: "Buchungsdetails anzeigen",
+      },
+
+      newRequest: {
+        subject: "Neue Anfrage von {requester} - Artist Hive®",
+        title: "Sie haben eine neue Vorbuchungsanfrage!",
+        intro: "hat Ihnen eine neue Vorbuchungsanfrage gesendet:",
+        cta: "Anfrage anzeigen",
+      },
+
+      response: {
+        accepted: {
+          subject: "Ein Künstler hat Ihre Vorbuchung akzeptiert! - Artist Hive®",
+          title: "Großartige Neuigkeiten!",
+          intro: "hat Ihre Vorbuchungsanfrage akzeptiert für:",
+          cta: "Vorbuchung anzeigen",
+        },
+        rejected: {
+          subject: "Update zu Ihrer Vorbuchung - Artist Hive®",
+          title: "Update zu Ihrer Anfrage",
+          intro: "ist nicht verfügbar für Ihre Vorbuchung:",
+          cta: "Vorbuchung anzeigen",
+        },
+        viewed: {
+          subject: "Ihre Vorbuchung wurde angesehen - Artist Hive®",
+          title: "Ihre Anfrage wurde angesehen",
+          intro: "hat Ihre Vorbuchungsanfrage angesehen:",
+          cta: "Vorbuchung anzeigen",
+        },
       },
     },
 

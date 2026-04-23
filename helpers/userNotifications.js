@@ -11,7 +11,7 @@ const USE_TEST_EMAIL = process.env.USE_TEST_EMAIL === "true";
 /**
  * Enviar notificación de bienvenida cuando se crea un usuario
  * @param {Object} user - El usuario creado
- * @param {string} lang - Código de idioma (de req.lang)
+ * @param {string} lang - Código de idioma (de req.lang o req.headers['lang'])
  */
 async function notifyUserWelcome(user, lang) {
   try {
@@ -39,6 +39,15 @@ async function notifyUserWelcome(user, lang) {
       console.log(`[UserNotifications] Enviando a: ${emailTo}`);
     }
 
+    // Determinar el idioma: priorizar user_language, luego lang pasado, luego español
+    const userLang = user.user_language || lang || "es";
+    console.log(`[UserNotifications] Idioma detectado: ${userLang} (user.user_language: ${user.user_language}, lang param: ${lang})`);
+
+    // Determinar el nombre a mostrar: stage_name, given_names, username, o "Usuario"
+    const displayName = user.stage_name || user.given_names || user.username || "Usuario";
+
+    console.log(`[UserNotifications] Nombre para saludo: ${displayName} (stage_name: ${user.stage_name}, given_names: ${user.given_names}, username: ${user.username})`);
+
     // Enviar notificación
     console.log(`[UserNotifications] Llamando a notificationService.send() para ${emailTo}`);
     await notificationService.send({
@@ -46,13 +55,15 @@ async function notifyUserWelcome(user, lang) {
       recipient: {
         id: user._id?.toString() || user.id?.toString(),
         email: emailTo,
-        name: user.name || user.username || "Usuario",
+        name: displayName,
       },
       data: {
-        lang: lang || "en",
+        lang: userLang,
         user: {
           _id: user._id?.toString() || user.id,
-          name: user.name,
+          name: displayName,
+          stage_name: user.stage_name,
+          given_names: user.given_names,
           username: user.username,
           email: user.email,
         },
@@ -60,7 +71,7 @@ async function notifyUserWelcome(user, lang) {
     });
 
     console.log(
-      `[UserNotifications] ✅ Notificación de bienvenida encolada para ${emailTo}`
+      `[UserNotifications] ✅ Notificación de bienvenida encolada para ${emailTo} (idioma: ${userLang})`
     );
   } catch (error) {
     console.error(
@@ -90,6 +101,34 @@ function getTargetEmail(user) {
 }
 
 /**
+ * Helper para formatear nombre de usuario de forma simple
+ * @param {Object} user - Usuario
+ * @returns {string} Nombre formateado: stage_name, given_names, username, o "Usuario"
+ */
+function getDisplayName(user) {
+  return user.stage_name || user.given_names || user.username || "Usuario";
+}
+
+/**
+ * Helper para formatear nombre de usuario de forma informativa (con @username)
+ * @param {Object} user - Usuario
+ * @returns {string} Nombre formateado: "stage_name (@username)" o "given_names surnames (@username)" o "given_names (@username)" o "@username"
+ */
+function getInformativeName(user) {
+  if (user.stage_name) {
+    return user.username ? `${user.stage_name} (@${user.username})` : user.stage_name;
+  } else if (user.given_names && user.surnames) {
+    return user.username
+      ? `${user.given_names} ${user.surnames} (@${user.username})`
+      : `${user.given_names} ${user.surnames}`;
+  } else if (user.given_names) {
+    return user.username ? `${user.given_names} (@${user.username})` : user.given_names;
+  } else {
+    return user.username ? `@${user.username}` : "Usuario";
+  }
+}
+
+/**
  * Notificar cuando un usuario es asignado a un perfil
  * @param {Object} params
  * @param {Object} params.user - Usuario asignado
@@ -104,18 +143,21 @@ async function notifyProfileAssigned({ user, profile, role, assignedBy, lang }) 
     const emailTo = getTargetEmail(user);
     if (!emailTo) return;
 
+    const displayName = getDisplayName(user);
+    const assignedByName = getInformativeName(assignedBy);
+
     await notificationService.send({
       type: "user.profileAssignment.assigned",
       recipient: {
         id: user._id?.toString() || user.id?.toString(),
         email: emailTo,
-        name: user.name || user.username || "Usuario",
+        name: displayName,
       },
       data: {
         lang: lang || "en",
         user: {
           _id: user._id?.toString() || user.id,
-          name: user.name,
+          name: displayName,
           username: user.username,
           email: user.email,
         },
@@ -127,7 +169,7 @@ async function notifyProfileAssigned({ user, profile, role, assignedBy, lang }) 
         role,
         assignedBy: {
           id: assignedBy._id?.toString() || assignedBy.id,
-          name: assignedBy.name,
+          name: assignedByName,
         },
       },
     });
@@ -153,18 +195,20 @@ async function notifyProfileRoleUpdated({ user, profile, previousRole, newRole, 
     const emailTo = getTargetEmail(user);
     if (!emailTo) return;
 
+    const displayName = getDisplayName(user);
+
     await notificationService.send({
       type: "user.profileAssignment.roleUpdated",
       recipient: {
         id: user._id?.toString() || user.id?.toString(),
         email: emailTo,
-        name: user.name || user.username || "Usuario",
+        name: displayName,
       },
       data: {
         lang: lang || "en",
         user: {
           _id: user._id?.toString() || user.id,
-          name: user.name,
+          name: displayName,
           username: user.username,
           email: user.email,
         },
@@ -197,18 +241,20 @@ async function notifyProfileRemoved({ user, profile, lang }) {
     const emailTo = getTargetEmail(user);
     if (!emailTo) return;
 
+    const displayName = getDisplayName(user);
+
     await notificationService.send({
       type: "user.profileAssignment.removed",
       recipient: {
         id: user._id?.toString() || user.id?.toString(),
         email: emailTo,
-        name: user.name || user.username || "Usuario",
+        name: displayName,
       },
       data: {
         lang: lang || "en",
         user: {
           _id: user._id?.toString() || user.id,
-          name: user.name,
+          name: displayName,
           username: user.username,
           email: user.email,
         },
@@ -242,18 +288,21 @@ async function notifyProfileInvitation({ user, profile, proposedRole, invitedBy,
     const emailTo = getTargetEmail(user);
     if (!emailTo) return;
 
+    const displayName = getDisplayName(user);
+    const invitedByName = getInformativeName(invitedBy);
+
     await notificationService.send({
       type: "user.profileAssignment.invitation",
       recipient: {
         id: user._id?.toString() || user.id?.toString(),
         email: emailTo,
-        name: user.name || user.username || "Usuario",
+        name: displayName,
       },
       data: {
         lang: lang || "en",
         user: {
           _id: user._id?.toString() || user.id,
-          name: user.name,
+          name: displayName,
           username: user.username,
           email: user.email,
         },
@@ -265,7 +314,7 @@ async function notifyProfileInvitation({ user, profile, proposedRole, invitedBy,
         proposedRole,
         invitedBy: {
           id: invitedBy._id?.toString() || invitedBy.id,
-          name: invitedBy.name,
+          name: invitedByName,
         },
         invitationId,
       },
@@ -291,22 +340,25 @@ async function notifyProfileInvitationAccepted({ inviter, invitee, profile, lang
     const emailTo = getTargetEmail(inviter);
     if (!emailTo) return;
 
+    const inviterName = getDisplayName(inviter);
+    const inviteeName = getInformativeName(invitee);
+
     await notificationService.send({
       type: "user.profileAssignment.invitationAccepted",
       recipient: {
         id: inviter._id?.toString() || inviter.id?.toString(),
         email: emailTo,
-        name: inviter.name || inviter.username || "Usuario",
+        name: inviterName,
       },
       data: {
         lang: lang || "en",
         inviter: {
           _id: inviter._id?.toString() || inviter.id,
-          name: inviter.name,
+          name: inviterName,
         },
         invitee: {
           _id: invitee._id?.toString() || invitee.id,
-          name: invitee.name,
+          name: inviteeName,
           username: invitee.username,
         },
         profile: {
@@ -337,22 +389,25 @@ async function notifyProfileInvitationDeclined({ inviter, invitee, profile, lang
     const emailTo = getTargetEmail(inviter);
     if (!emailTo) return;
 
+    const inviterName = getDisplayName(inviter);
+    const inviteeName = getInformativeName(invitee);
+
     await notificationService.send({
       type: "user.profileAssignment.invitationDeclined",
       recipient: {
         id: inviter._id?.toString() || inviter.id?.toString(),
         email: emailTo,
-        name: inviter.name || inviter.username || "Usuario",
+        name: inviterName,
       },
       data: {
         lang: lang || "en",
         inviter: {
           _id: inviter._id?.toString() || inviter.id,
-          name: inviter.name,
+          name: inviterName,
         },
         invitee: {
           _id: invitee._id?.toString() || invitee.id,
-          name: invitee.name,
+          name: inviteeName,
           username: invitee.username,
         },
         profile: {

@@ -33,6 +33,10 @@ module.exports = {
       whatCanYouDo: "O que você pode fazer agora?",
       cta: "Explorar artistas",
       features: {
+        claim: {
+          title: "Reivindique seu perfil",
+          description: "Reivindique seu Perfil da Indústria Musical (Artista ou Local) como seu para interagir com outros agentes.",
+        },
         discover: {
           title: "Descubra artistas",
           description: "Explore milhares de artistas de todos os gêneros e encontre o perfeito para seu evento.",
@@ -162,6 +166,34 @@ module.exports = {
         title: "Sua reserva está confirmada!",
         intro: "Seu pagamento foi recebido e sua reserva está confirmada. O artista foi notificado.",
         cta: "Ver detalhes da reserva",
+      },
+
+      newRequest: {
+        subject: "Nova solicitação de {requester} - Artist Hive®",
+        title: "Você tem uma nova solicitação de pré-reserva!",
+        intro: "enviou uma nova solicitação de pré-reserva:",
+        cta: "Ver solicitação",
+      },
+
+      response: {
+        accepted: {
+          subject: "Um artista aceitou sua pré-reserva! - Artist Hive®",
+          title: "Ótimas notícias!",
+          intro: "aceitou sua solicitação de pré-reserva para:",
+          cta: "Ver pré-reserva",
+        },
+        rejected: {
+          subject: "Atualização da sua pré-reserva - Artist Hive®",
+          title: "Atualização da sua solicitação",
+          intro: "não está disponível para sua pré-reserva:",
+          cta: "Ver pré-reserva",
+        },
+        viewed: {
+          subject: "Sua pré-reserva foi visualizada - Artist Hive®",
+          title: "Sua solicitação foi visualizada",
+          intro: "visualizou sua solicitação de pré-reserva:",
+          cta: "Ver pré-reserva",
+        },
       },
     },
 

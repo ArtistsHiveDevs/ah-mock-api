@@ -19,6 +19,37 @@ class EmailChannel {
   }
 
   /**
+   * Reemplaza placeholders en un string con valores del objeto data
+   * Soporta placeholders en formato {key} o {obj.key}
+   * @param {string} template - String con placeholders (ej: "Hello {name}")
+   * @param {Object} data - Objeto con valores (ej: { name: "John" })
+   * @returns {string} String con placeholders reemplazados
+   *
+   * @example
+   * replacePlaceholders("New request from {requester}", { requester: "John" })
+   * // => "New request from John"
+   *
+   * replacePlaceholders("Hello {user.name}", { user: { name: "John" } })
+   * // => "Hello John"
+   */
+  replacePlaceholders(template, data) {
+    if (!template || typeof template !== "string") return template;
+
+    return template.replace(/\{([^}]+)\}/g, (match, path) => {
+      // Soportar acceso anidado: {user.name} => data.user.name
+      const keys = path.split(".");
+      let value = data;
+
+      for (const key of keys) {
+        value = value?.[key];
+        if (value === undefined) break;
+      }
+
+      return value !== undefined ? value : match; // Si no encuentra, deja el placeholder
+    });
+  }
+
+  /**
    * Genera el HTML base con estilos del design system de Artist Hive
    * @param {Object} options
    * @param {string} options.subject - Asunto del email (para <title>)
@@ -278,8 +309,16 @@ class EmailChannel {
     const security = t("emails.prebooking.security", lang);
     const prebookingUrl = `${APP_URL}/prebookings/${prebooking._id}`;
 
+    // Reemplazar placeholders en subject y title
+    const subject = this.replacePlaceholders(newReq.subject, {
+      requester: requester.name,
+    });
+    const title = this.replacePlaceholders(newReq.title, {
+      requester: requester.name,
+    });
+
     const contentHtml = `
-              <h1>${newReq.title}</h1>
+              <h1>${title}</h1>
               <p>${t("common.hi", lang)} <strong>${recipient.name}</strong>!</p>
               <p><strong>${requester.name}</strong> ${newReq.intro}</p>
 
@@ -304,12 +343,12 @@ class EmailChannel {
               </div>`;
 
     return {
-      subject: newReq.subject,
+      subject,
       text: `${t("common.hi", lang)} ${recipient.name}!\n\n${requester.name} ${newReq.intro}\n\n${prebooking.event_name ? `${fields.eventType}: ${prebooking.event_name}\n` : ""}${prebooking.requested_date_start ? `${fields.eventDate}: ${prebooking.requested_date_start}\n` : ""}${prebooking.venue_name ? `${fields.location}: ${prebooking.venue_name}\n` : ""}${prebooking.notes ? `\n${prebooking.notes}\n` : ""}\n${newReq.cta}: ${prebookingUrl}`,
       html: this.renderBaseLayout({
-        subject: newReq.subject,
+        subject,
         contentHtml,
-        statusBanner: { type: "info", title: newReq.title },
+        statusBanner: { type: "info", title },
         lang,
       }),
     };
@@ -332,8 +371,17 @@ class EmailChannel {
     const statusInfo = statusMap[status] || statusMap.viewed;
     const i = t(`emails.prebooking.response.${statusInfo.key}`, lang);
 
+    // Reemplazar placeholders en subject, title e intro
+    const subject = this.replacePlaceholders(i.subject, {
+      participant: participant.name,
+      event: prebooking.event_name,
+    });
+    const title = this.replacePlaceholders(i.title, {
+      participant: participant.name,
+    });
+
     const contentHtml = `
-              <h1>${i.title}</h1>
+              <h1>${title}</h1>
               <p>${t("common.hi", lang)} <strong>${recipient.name}</strong>!</p>
               <p><strong>${participant.name}</strong> ${i.intro}</p>
 
@@ -353,12 +401,12 @@ class EmailChannel {
               </div>`;
 
     return {
-      subject: i.subject,
+      subject,
       text: `${t("common.hi", lang)} ${recipient.name}!\n\n${participant.name} ${i.intro}\n${prebooking.event_name ? `${fields.eventType}: ${prebooking.event_name}\n` : ""}${notes ? `\n${notes}\n` : ""}\n${i.cta}: ${prebookingUrl}`,
       html: this.renderBaseLayout({
-        subject: i.subject,
+        subject,
         contentHtml,
-        statusBanner: { type: statusInfo.bannerType, title: i.title },
+        statusBanner: { type: statusInfo.bannerType, title },
         lang,
       }),
     };
@@ -409,7 +457,15 @@ class EmailChannel {
   templateUserWelcome({ recipient, data }) {
     const lang = data.lang || "es";
     const i = t("emails.welcome", lang);
-    const featureIcons = { discover: "🎤", book: "📅", pay: "🔒", rate: "⭐" };
+    const featureIcons = {
+      claim: "🛡️",
+      discover: "🎤",
+      book: "📅",
+      pay: "🔒",
+      rate: "⭐",
+    };
+
+    console.log(recipient);
 
     const featuresHtml = Object.entries(i.features)
       .map(
@@ -442,7 +498,7 @@ class EmailChannel {
               </div>
 
               <div class="btn-container">
-                <a href="${APP_URL}/explore" class="btn btn-primary">${i.cta}</a>
+                <a href="${APP_URL}" class="btn btn-primary">${i.cta}</a>
               </div>
 
               <div class="tips-section">
@@ -458,7 +514,7 @@ class EmailChannel {
         .map((f) => `- ${f.title}: ${f.description}`)
         .join(
           "\n",
-        )}\n\n${i.tips.title}\n${i.tips.items.map((tip) => `→ ${tip}`).join("\n")}\n\n${i.cta}: ${APP_URL}/explore`,
+        )}\n\n${i.tips.title}\n${i.tips.items.map((tip) => `→ ${tip}`).join("\n")}\n\n${i.cta}: ${APP_URL}/`,
       html: this.renderBaseLayout({ subject: i.subject, contentHtml, lang }),
     };
   }
@@ -474,7 +530,8 @@ class EmailChannel {
     const entityLabel = entityTypes[profile.type.toLowerCase()] || profile.type;
     const profileUrl = `${APP_URL}/${profile.type.toLowerCase()}s/${profile.id}`;
 
-    const contentHtml = `
+    const contentHtml =
+      `
               <h1>${i.title}</h1>
               <p>${t("common.hi", lang)} <strong>${recipient.name}</strong>!</p>
               <p>${i.intro}</p>
@@ -482,8 +539,9 @@ class EmailChannel {
               <table class="details-table" role="presentation">
                 <tr><td>${i.profileName}</td><td><strong>${profile.name}</strong></td></tr>
                 <tr><td>${i.profileType}</td><td>${entityLabel}</td></tr>
-                <tr><td>${i.role}</td><td>${role}</td></tr>
-                <tr><td>${i.assignedBy}</td><td>${assignedBy.name}</td></tr>
+                <tr><td>${i.role}</td><td>${role}</td></tr>` +
+      // <tr><td>${i.assignedBy}</td><td>${assignedBy.name}</td></tr>
+      `
               </table>
 
               <div class="info-box">

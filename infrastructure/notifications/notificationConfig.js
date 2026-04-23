@@ -13,7 +13,7 @@ const NOTIFICATION_CONFIG = {
     EMAIL: {
       enabled: process.env.NOTIFICATIONS_EMAIL_ENABLED !== "false",
       // Configuración específica de email
-      from: process.env.EMAIL_FROM || "noreply@artists-hive.com",
+      from: process.env.EMAIL_FROM || "noreply@artist-hive.com",
       replyTo: process.env.EMAIL_REPLY_TO || null,
     },
 

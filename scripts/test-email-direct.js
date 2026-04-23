@@ -23,7 +23,9 @@ async function testEmailDirect() {
   console.log("\n🧪 Testing Email Service (Direct)");
   console.log("===================================");
   console.log(`📧 Enviando email a: ${emailTo}`);
-  console.log(`📤 Desde: ${process.env.EMAIL_FROM || "noreply@artist-hive.com"}`);
+  console.log(
+    `📤 Desde: ${process.env.EMAIL_FROM || "noreply@artist-hive.com"}`,
+  );
   console.log(`🌎 Región AWS: ${process.env.AWS_REGION || "us-east-1"}`);
   console.log("");
 
@@ -112,7 +114,7 @@ async function testEmailDirect() {
       console.error("\n⚠️  PROBLEMA: Email no verificado en AWS SES");
       console.error("\nPara solucionar:");
       console.error("1. Ve a AWS SES Console");
-      console.error("2. Verifica el email: noreply@artists-hive.com");
+      console.error("2. Verifica el email: noreply@artist-hive.com");
       console.error("   O verifica todo el dominio: artists-hive.com");
       console.error("3. O cambia EMAIL_FROM en .env a un email ya verificado");
     }

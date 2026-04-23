@@ -5,11 +5,13 @@
 const notificationService = require("../infrastructure/notifications");
 
 // TEMPORAL: Email de prueba mientras se verifica el dominio en producción
-const TEMP_TEST_EMAIL = process.env.TEMP_NOTIFICATION_EMAIL || "admiprogramacion@gmail.com";
+const TEMP_TEST_EMAIL =
+  process.env.TEMP_NOTIFICATION_EMAIL || "admiprogramacion@gmail.com";
 const USE_TEST_EMAIL = process.env.USE_TEST_EMAIL === "true";
 
 // Email quemado para pruebas cuando el recipient no tiene email configurado
-const FALLBACK_TEST_EMAIL = process.env.FALLBACK_TEST_EMAIL || "test@artist-hive.com";
+const FALLBACK_TEST_EMAIL =
+  process.env.FALLBACK_TEST_EMAIL || "test@artist-hive.com";
 const USE_FALLBACK_TEST_EMAIL = process.env.USE_FALLBACK_TEST_EMAIL === "true";
 
 /**
@@ -19,26 +21,34 @@ const USE_FALLBACK_TEST_EMAIL = process.env.USE_FALLBACK_TEST_EMAIL === "true";
  */
 async function notifyPrebookingCreated(prebooking, connection, lang) {
   try {
-    console.log("[PrebookingNotifications] 📤 Iniciando notificación de prebooking creado");
+    console.log(
+      "[PrebookingNotifications] 📤 Iniciando notificación de prebooking creado",
+    );
     console.log(`[PrebookingNotifications] Prebooking ID: ${prebooking._id}`);
 
     // Obtener el requester (quien crea el prebooking)
     const requester = prebooking.requester_profile_id || prebooking.requester;
     const recipients = prebooking.recipient_ids || prebooking.recipients;
 
-    console.log(`[PrebookingNotifications] Requester: ${requester?.name || "N/A"} (${requester?.email || "N/A"})`);
-    console.log(`[PrebookingNotifications] Número de recipients: ${recipients?.length || 0}`);
+    console.log(
+      `[PrebookingNotifications] Requester: ${requester?.name || "N/A"} (${requester?.email || "N/A"})`,
+    );
+    console.log(
+      `[PrebookingNotifications] Número de recipients: ${recipients?.length || 0}`,
+    );
 
     if (!recipients || recipients.length === 0) {
       console.log(
-        "[PrebookingNotifications] ⚠️ No hay recipients para notificar"
+        "[PrebookingNotifications] ⚠️ No hay recipients para notificar",
       );
       return;
     }
 
     // Enviar notificación a cada recipient
     for (const recipient of recipients) {
-      console.log(`[PrebookingNotifications] Procesando recipient: ${recipient.name} (${recipient._id})`);
+      console.log(
+        `[PrebookingNotifications] Procesando recipient: ${recipient.name} (${recipient._id})`,
+      );
 
       // Determinar el email a usar
       let emailTo;
@@ -46,19 +56,21 @@ async function notifyPrebookingCreated(prebooking, connection, lang) {
       if (USE_TEST_EMAIL) {
         // En modo de prueba, siempre usar el email de prueba
         emailTo = TEMP_TEST_EMAIL;
-        console.log(`[PrebookingNotifications] 🧪 Modo de prueba activo: ${recipient.name} → ${emailTo}`);
+        console.log(
+          `[PrebookingNotifications] 🧪 Modo de prueba activo: ${recipient.name} → ${emailTo}`,
+        );
       } else if (!recipient.email) {
         // Si no hay email configurado
         if (USE_FALLBACK_TEST_EMAIL) {
           // Usar email quemado de prueba
           emailTo = FALLBACK_TEST_EMAIL;
           console.warn(
-            `[PrebookingNotifications] ⚠️ Recipient ${recipient._id || recipient.id} no tiene email configurado - usando email quemado: ${emailTo}`
+            `[PrebookingNotifications] ⚠️ Recipient ${recipient._id || recipient.id} no tiene email configurado - usando email quemado: ${emailTo}`,
           );
         } else {
           // Omitir este recipient
           console.warn(
-            `[PrebookingNotifications] ⚠️ Recipient ${recipient._id || recipient.id} no tiene email configurado - OMITIDO`
+            `[PrebookingNotifications] ⚠️ Recipient ${recipient._id || recipient.id} no tiene email configurado - OMITIDO`,
           );
           continue;
         }
@@ -69,7 +81,9 @@ async function notifyPrebookingCreated(prebooking, connection, lang) {
       }
 
       // Enviar notificación
-      console.log(`[PrebookingNotifications] Llamando a notificationService.send() para ${emailTo}`);
+      console.log(
+        `[PrebookingNotifications] Llamando a notificationService.send() para ${emailTo}`,
+      );
       await notificationService.send({
         type: "prebooking.created",
         recipient: {
@@ -78,7 +92,7 @@ async function notifyPrebookingCreated(prebooking, connection, lang) {
           name: recipient.name || "Usuario",
         },
         data: {
-          lang: lang || "en",
+          lang: lang || "es",
           prebooking: {
             _id: prebooking._id?.toString() || prebooking.id,
             event_name: prebooking.event_name,
@@ -93,15 +107,17 @@ async function notifyPrebookingCreated(prebooking, connection, lang) {
       });
 
       console.log(
-        `[PrebookingNotifications] ✅ Notificación de creación encolada para ${emailTo}`
+        `[PrebookingNotifications] ✅ Notificación de creación encolada para ${emailTo}`,
       );
     }
 
-    console.log(`[PrebookingNotifications] ✅ Proceso completado: ${recipients.length} notificaciones procesadas`);
+    console.log(
+      `[PrebookingNotifications] ✅ Proceso completado: ${recipients.length} notificaciones procesadas`,
+    );
   } catch (error) {
     console.error(
       "[PrebookingNotifications] ❌ Error enviando notificación de creación:",
-      error.message
+      error.message,
     );
     console.error("[PrebookingNotifications] Stack:", error.stack);
     // No lanzar el error para no afectar el flujo principal
@@ -120,22 +136,28 @@ async function notifyPrebookingStatusChanged(
   participantProfileId,
   newStatus,
   notes,
-  lang
+  lang,
 ) {
   try {
-    console.log("[PrebookingNotifications] 📤 Iniciando notificación de cambio de estado");
+    console.log(
+      "[PrebookingNotifications] 📤 Iniciando notificación de cambio de estado",
+    );
     console.log(`[PrebookingNotifications] Prebooking ID: ${prebooking._id}`);
     console.log(`[PrebookingNotifications] Nuevo estado: ${newStatus}`);
-    console.log(`[PrebookingNotifications] Participant ID: ${participantProfileId}`);
+    console.log(
+      `[PrebookingNotifications] Participant ID: ${participantProfileId}`,
+    );
 
     // Obtener el requester (quien debe recibir la notificación)
     const requester = prebooking.requester_profile_id || prebooking.requester;
 
-    console.log(`[PrebookingNotifications] Requester: ${requester?.name || "N/A"} (${requester?.email || "N/A"})`);
+    console.log(
+      `[PrebookingNotifications] Requester: ${requester?.name || "N/A"} (${requester?.email || "N/A"})`,
+    );
 
     if (!requester) {
       console.warn(
-        "[PrebookingNotifications] ⚠️ No se encontró el requester - CANCELADO"
+        "[PrebookingNotifications] ⚠️ No se encontró el requester - CANCELADO",
       );
       return;
     }
@@ -145,17 +167,19 @@ async function notifyPrebookingStatusChanged(
     const participant = recipients?.find(
       (r) =>
         r._id?.toString() === participantProfileId.toString() ||
-        r.id?.toString() === participantProfileId.toString()
+        r.id?.toString() === participantProfileId.toString(),
     );
 
     if (!participant) {
       console.warn(
-        "[PrebookingNotifications] ⚠️ No se encontró el participante que respondió - CANCELADO"
+        "[PrebookingNotifications] ⚠️ No se encontró el participante que respondió - CANCELADO",
       );
       return;
     }
 
-    console.log(`[PrebookingNotifications] Participant: ${participant.name} (${participant._id})`);
+    console.log(
+      `[PrebookingNotifications] Participant: ${participant.name} (${participant._id})`,
+    );
 
     // Mapear el status a un tipo de notificación
     let notificationType;
@@ -167,12 +191,14 @@ async function notifyPrebookingStatusChanged(
       notificationType = "prebooking.viewed";
     } else {
       console.log(
-        `[PrebookingNotifications] ⚠️ Status ${newStatus} no requiere notificación - OMITIDO`
+        `[PrebookingNotifications] ⚠️ Status ${newStatus} no requiere notificación - OMITIDO`,
       );
       return;
     }
 
-    console.log(`[PrebookingNotifications] Tipo de notificación: ${notificationType}`);
+    console.log(
+      `[PrebookingNotifications] Tipo de notificación: ${notificationType}`,
+    );
 
     // Determinar el email a usar
     let emailTo;
@@ -180,19 +206,21 @@ async function notifyPrebookingStatusChanged(
     if (USE_TEST_EMAIL) {
       // En modo de prueba, siempre usar el email de prueba
       emailTo = TEMP_TEST_EMAIL;
-      console.log(`[PrebookingNotifications] 🧪 Modo de prueba activo: ${requester.name} → ${emailTo}`);
+      console.log(
+        `[PrebookingNotifications] 🧪 Modo de prueba activo: ${requester.name} → ${emailTo}`,
+      );
     } else if (!requester.email) {
       // Si no hay email configurado
       if (USE_FALLBACK_TEST_EMAIL) {
         // Usar email quemado de prueba
         emailTo = FALLBACK_TEST_EMAIL;
         console.warn(
-          `[PrebookingNotifications] ⚠️ Requester ${requester._id || requester.id} no tiene email configurado - usando email quemado: ${emailTo}`
+          `[PrebookingNotifications] ⚠️ Requester ${requester._id || requester.id} no tiene email configurado - usando email quemado: ${emailTo}`,
         );
       } else {
         // Cancelar envío
         console.warn(
-          `[PrebookingNotifications] ⚠️ Requester ${requester._id || requester.id} no tiene email configurado - CANCELADO`
+          `[PrebookingNotifications] ⚠️ Requester ${requester._id || requester.id} no tiene email configurado - CANCELADO`,
         );
         return;
       }
@@ -203,7 +231,9 @@ async function notifyPrebookingStatusChanged(
     }
 
     // Enviar notificación al requester
-    console.log(`[PrebookingNotifications] Llamando a notificationService.send() para ${emailTo}`);
+    console.log(
+      `[PrebookingNotifications] Llamando a notificationService.send() para ${emailTo}`,
+    );
     await notificationService.send({
       type: notificationType,
       recipient: {
@@ -226,12 +256,12 @@ async function notifyPrebookingStatusChanged(
     });
 
     console.log(
-      `[PrebookingNotifications] ✅ Notificación de ${notificationType} encolada para ${emailTo}`
+      `[PrebookingNotifications] ✅ Notificación de ${notificationType} encolada para ${emailTo}`,
     );
   } catch (error) {
     console.error(
       "[PrebookingNotifications] ❌ Error enviando notificación de cambio de estado:",
-      error.message
+      error.message,
     );
     console.error("[PrebookingNotifications] Stack:", error.stack);
     // No lanzar el error para no afectar el flujo principal

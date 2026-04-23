@@ -33,6 +33,10 @@ module.exports = {
       whatCanYouDo: "Cosa puoi fare adesso?",
       cta: "Esplora artisti",
       features: {
+        claim: {
+          title: "Rivendica il tuo profilo",
+          description: "Rivendica il tuo Profilo dell'Industria Musicale (Artista o Locale) come tuo per interagire con altri agenti.",
+        },
         discover: {
           title: "Scopri artisti",
           description: "Esplora migliaia di artisti di tutti i generi e trova quello perfetto per il tuo evento.",
@@ -108,6 +112,34 @@ module.exports = {
         title: "La tua prenotazione è confermata!",
         intro: "Il tuo pagamento è stato ricevuto e la tua prenotazione è ora confermata. L'artista è stato notificato.",
         cta: "Vedi dettagli prenotazione",
+      },
+
+      newRequest: {
+        subject: "Nuova richiesta da {requester} - Artist Hive®",
+        title: "Hai una nuova richiesta di pre-prenotazione!",
+        intro: "ti ha inviato una nuova richiesta di pre-prenotazione:",
+        cta: "Vedi richiesta",
+      },
+
+      response: {
+        accepted: {
+          subject: "Un artista ha accettato la tua pre-prenotazione! - Artist Hive®",
+          title: "Ottime notizie!",
+          intro: "ha accettato la tua richiesta di pre-prenotazione per:",
+          cta: "Vedi pre-prenotazione",
+        },
+        rejected: {
+          subject: "Aggiornamento sulla tua pre-prenotazione - Artist Hive®",
+          title: "Aggiornamento sulla tua richiesta",
+          intro: "non è disponibile per la tua pre-prenotazione:",
+          cta: "Vedi pre-prenotazione",
+        },
+        viewed: {
+          subject: "La tua pre-prenotazione è stata vista - Artist Hive®",
+          title: "La tua richiesta è stata vista",
+          intro: "ha visto la tua richiesta di pre-prenotazione:",
+          cta: "Vedi pre-prenotazione",
+        },
       },
     },
 
