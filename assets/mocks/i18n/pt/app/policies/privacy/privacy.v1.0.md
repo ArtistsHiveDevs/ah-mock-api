@@ -8,13 +8,13 @@ _Em vigor desde: março de 2026_
 
 ## 1. Responsável pelo Tratamento
 
-|                |                          |
-| -------------- | ------------------------ |
-| **Empresa**    | Artist Hive S.A.S.       |
-| **NIT / CNPJ** | _[pendente]_             |
-| **Sede**       | Bogotá D.C., Colômbia    |
-| **Site**       | www.artisthive.co        |
-| **E-mail**     | privacidad@artisthive.co |
+|                |                            |
+| -------------- | -------------------------- |
+| **Empresa**    | Artist Hive S.A.S.         |
+| **NIT / CNPJ** | _[pendente]_               |
+| **Sede**       | Bogotá D.C., Colômbia      |
+| **Site**       | www.artisthive.co          |
+| **E-mail**     | privacidad@artist-hive.com |
 
 ---
 
@@ -56,7 +56,7 @@ Não vendemos dados pessoais a terceiros.
 
 Ao se cadastrar no Artist Hive e aceitar esta política, você autoriza expressamente o tratamento dos seus dados para as finalidades descritas. O uso contínuo da plataforma implica a aceitação dos termos vigentes em cada momento.
 
-Você pode revogar essa autorização a qualquer momento enviando um e-mail para privacidad@artisthive.co, sem efeito retroativo.
+Você pode revogar essa autorização a qualquer momento enviando um e-mail para privacidad@artist-hive.com, sem efeito retroativo.
 
 ---
 
@@ -75,7 +75,7 @@ Você tem direito a:
 
 ## 6. Como exercer seus direitos?
 
-Escreva-nos para **privacidad@artisthive.co** informando seu nome completo, número do documento de identidade, o direito que deseja exercer e uma descrição da sua solicitação.
+Escreva-nos para **privacidad@artist-hive.com** informando seu nome completo, número do documento de identidade, o direito que deseja exercer e uma descrição da sua solicitação.
 
 **Prazos de resposta:**
 

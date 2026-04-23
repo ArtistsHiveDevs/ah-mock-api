@@ -8,13 +8,13 @@ _Vigente desde: abril de 2022_
 
 ## 1. Responsable del Tratamiento
 
-|               |                          |
-| ------------- | ------------------------ |
-| **Empresa**   | Artist Hive S.A.S.       |
-| **NIT**       | _[pendiente]_            |
-| **Domicilio** | Bogotá D.C., Colombia    |
-| **Sitio web** | www.artisthive.co        |
-| **Correo**    | privacidad@artisthive.co |
+|               |                            |
+| ------------- | -------------------------- |
+| **Empresa**   | Artist Hive S.A.S.         |
+| **NIT**       | _[pendiente]_              |
+| **Domicilio** | Bogotá D.C., Colombia      |
+| **Sitio web** | www.artisthive.co          |
+| **Correo**    | privacidad@artist-hive.com |
 
 ---
 
@@ -56,7 +56,7 @@ No vendemos datos personales a terceros.
 
 Al registrarte en Artist Hive y aceptar esta política, autorizas expresamente el tratamiento de tus datos para las finalidades descritas. El uso continuado de la plataforma implica la aceptación de los términos vigentes en cada momento.
 
-Puedes revocar esta autorización en cualquier momento escribiéndonos a privacidad@artisthive.co, sin que ello tenga efectos retroactivos.
+Puedes revocar esta autorización en cualquier momento escribiéndonos a privacidad@artist-hive.com, sin que ello tenga efectos retroactivos.
 
 ---
 
@@ -75,7 +75,7 @@ Tienes derecho a:
 
 ## 6. ¿Cómo ejercer tus derechos?
 
-Escríbenos a **privacidad@artisthive.co** indicando tu nombre, número de documento, el derecho que deseas ejercer y una descripción de tu solicitud.
+Escríbenos a **privacidad@artist-hive.com** indicando tu nombre, número de documento, el derecho que deseas ejercer y una descripción de tu solicitud.
 
 **Tiempos de respuesta:**
 

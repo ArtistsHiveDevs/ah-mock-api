@@ -1,19 +1,20 @@
 # Personal Data Processing Policy
+
 **ARTIST HIVE S.A.S.**
 
-*Effective date: March 2026*
+_Effective date: March 2026_
 
 ---
 
 ## 1. Data Controller
 
-| | |
-|---|---|
-| **Company** | Artist Hive S.A.S. |
-| **Tax ID** | _[pending]_ |
-| **Registered address** | Bogotá D.C., Colombia |
-| **Website** | www.artisthive.co |
-| **Email** | privacidad@artisthive.co |
+|                        |                            |
+| ---------------------- | -------------------------- |
+| **Company**            | Artist Hive S.A.S.         |
+| **Tax ID**             | _[pending]_                |
+| **Registered address** | Bogotá D.C., Colombia      |
+| **Website**            | www.artisthive.co          |
+| **Email**              | privacidad@artist-hive.com |
 
 ---
 
@@ -55,7 +56,7 @@ We do not sell personal data to third parties.
 
 By registering on Artist Hive and accepting this policy, you expressly authorize the processing of your data for the purposes described. Continued use of the platform implies acceptance of the terms in force at any given time.
 
-You may withdraw this authorization at any time by writing to privacidad@artisthive.co, with no retroactive effect.
+You may withdraw this authorization at any time by writing to privacidad@artist-hive.com, with no retroactive effect.
 
 ---
 
@@ -74,9 +75,10 @@ You have the right to:
 
 ## 6. How to exercise your rights
 
-Write to us at **privacidad@artisthive.co** stating your full name, ID number, the right you wish to exercise and a description of your request.
+Write to us at **privacidad@artist-hive.com** stating your full name, ID number, the right you wish to exercise and a description of your request.
 
 **Response times:**
+
 - Information requests: maximum **10 business days**.
 - Claims (update, correction, deletion or withdrawal): maximum **15 business days**.
 
