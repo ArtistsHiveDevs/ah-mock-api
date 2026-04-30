@@ -593,24 +593,23 @@ schema.set("toJSON", { virtuals: true });
  * Auto-populate de requester_profile_id y recipient_ids con el virtual 'entity'
  * Esto asegura que siempre tengamos acceso al email sin tener que hacer populate manual
  */
-function autoPopulate(next) {
+async function autoPopulate() {
   this.populate([
     {
       path: "requester_profile_id",
       populate: {
         path: "entity",
-        select: "email", // Solo traer el email del modelo subyacente
+        select: "email",
       },
     },
     {
       path: "recipient_ids",
       populate: {
         path: "entity",
-        select: "email", // Solo traer el email del modelo subyacente
+        select: "email",
       },
     },
   ]);
-  next();
 }
 
 // Aplicar auto-populate en find y findOne
