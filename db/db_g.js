@@ -51,7 +51,7 @@ function decryptEnv(encryptedText) {
     const [env, date] = str.split("@");
     const today = new Date().toISOString().split("T")[0].replace(/-/g, "");
 
-    return env === "uat" || env === "prod" // && date === today
+    return env === "uat" || env === "prod" || env === "dev" // && date === today
       ? env
       : undefined;
   } catch (error) {
@@ -82,6 +82,8 @@ const connectToDatabase = async (req) => {
   const mongoURIs = {
     prod: process.env.MONGO_URI_PROD || "mongodb://localhost:27017/prod",
     uat: process.env.MONGO_URI_UAT || "mongodb://localhost:27017/test",
+    dev:
+      process.env.MONGO_URI_DEV || "mongodb://localhost:27017/artist_hive_dev",
   };
 
   if (!mongoURIs[env]) {
@@ -107,7 +109,7 @@ const connectToDatabase = async (req) => {
       connections[env] = connection;
 
       connection.on("error", (err) =>
-        console.error(`❌ Error en MongoDB (${env}):`, err)
+        console.error(`❌ Error en MongoDB (${env}):`, err),
       );
 
       // Esperar a que la conexión esté lista
@@ -144,7 +146,7 @@ const connectToDatabase = async (req) => {
 
       console.log(
         "Modelos registrados:",
-        Object.keys(connection.models).sort()
+        Object.keys(connection.models).sort(),
       );
     } catch (err) {
       console.error(`🚨 Error al conectar a MongoDB (${env}):`, err);
@@ -179,7 +181,7 @@ const connectToDatabaseByModel = async (model) => {
       connectionsByModel[model] = connection;
 
       connection.on("error", (err) =>
-        console.error(`❌ Error en MongoDB (${model}):`, err)
+        console.error(`❌ Error en MongoDB (${model}):`, err),
       );
 
       // Esperar a que la conexión esté lista
