@@ -63,7 +63,14 @@ app.use(bodyParser.json());
 
 // Ruta para generar una nueva API key
 app.post("/api/generate-key", helpers.validateEnvironment, async (req, res) => {
-  const { userId, password, username: usernameRQ, sub, email, identifier: identifierRQ } = req.body;
+  const {
+    userId,
+    password,
+    username: usernameRQ,
+    sub,
+    email,
+    identifier: identifierRQ,
+  } = req.body;
 
   // console.log("GENERATE KEY :::::::    ", req.body);
 
@@ -75,7 +82,8 @@ app.post("/api/generate-key", helpers.validateEnvironment, async (req, res) => {
   if (!isAWSlogin) {
     if (!identifier) {
       return res.status(400).send({
-        message: "User identifier is required (username, email, userId, or identifier).",
+        message:
+          "User identifier is required (username, email, userId, or identifier).",
         errorCode: ErrorCodes.AUTH_NO_USER_PROVIDED,
       });
     }
@@ -103,7 +111,7 @@ app.post("/api/generate-key", helpers.validateEnvironment, async (req, res) => {
       orConditions.push(
         { username: identifier },
         { shortID: identifier },
-        { email: identifier }
+        { email: identifier },
       );
 
       // _id si es ObjectId válido
@@ -113,7 +121,10 @@ app.post("/api/generate-key", helpers.validateEnvironment, async (req, res) => {
       }
 
       // sub si es UUID
-      const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(identifier);
+      const isUUID =
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
+          identifier,
+        );
       if (isUUID) {
         orConditions.push({ sub: identifier });
       }
@@ -133,13 +144,16 @@ app.post("/api/generate-key", helpers.validateEnvironment, async (req, res) => {
       // Para AWS login, validar que el sub coincida
       if (requestedUser.sub !== sub) {
         return res.status(401).send({
-          message: "Invalid credentials " + requestedUser.sub+" || "+sub,
+          message: "Invalid credentials " + requestedUser.sub + " || " + sub,
           errorCode: ErrorCodes.AUTH_INVALID_CREDENTIALS,
         });
       }
     } else {
       // Para login tradicional, validar password
-      const isValidPassword = await bcrypt.compare(password, requestedUser.password);
+      const isValidPassword = await bcrypt.compare(
+        password,
+        requestedUser.password,
+      );
       if (!isValidPassword) {
         return res.status(401).send({
           message: "Invalid password",
@@ -289,6 +303,10 @@ process.on("unhandledRejection", (reason, promise) => {
 //  Server Zone
 app.listen(port, function () {
   console.log(textConstants.runningServer, port);
+  console.log(new Date());
+  console.log();
+  console.log("=".repeat(20));
+  console.log();
   // sendEmail({
   //   to: "cnpiensadigital@gmail.com",
   //   subject: "Inicio de servidor",
