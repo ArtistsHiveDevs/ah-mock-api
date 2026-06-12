@@ -259,16 +259,18 @@ async function validateIfUserExists(req, res, next) {
     }
 
     try {
-      req.userId = decoded?.id; // Guarda el ID del usuario en la solicitud
-
-      // Verificar que serverEnvironment esté definido
-      if (!req.serverEnvironment) {
-        console.error(
-          "⚠️ req.serverEnvironment is undefined en validateIfUserExists",
-        );
-        // Intentar establecer un valor por defecto o saltar la validación
+      // Si no hay decoded (token inválido) o no hay serverEnvironment, continuar sin usuario
+      if (!decoded || !req.serverEnvironment) {
+        if (!req.serverEnvironment) {
+          console.error(
+            "⚠️ req.serverEnvironment is undefined en validateIfUserExists",
+          );
+        }
+        // Continuar sin usuario autenticado
         return next();
       }
+
+      req.userId = decoded.id;
 
       // Verificar que la conexión esté lista
       if (!req.dbConnection || req.dbConnection.readyState !== 1) {
@@ -281,7 +283,7 @@ async function validateIfUserExists(req, res, next) {
       }
 
       const UserModel = await getModel(req.serverEnvironment, "User");
-      const user = await UserModel.findById(decoded?.id);
+      const user = await UserModel.findById(decoded.id);
 
       if (user) {
         req.user = user;
