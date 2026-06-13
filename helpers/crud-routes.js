@@ -9,6 +9,7 @@ const EntityDirectory = require("../models/appbase/EntityDirectory");
 const createCRUDActions = require("./crud-actions");
 
 const modelActions = {};
+const autoSeeded = {}; // Track which models have been auto-seeded
 
 // Función genérica para crear rutas CRUD
 function createCRUDRoutes({ modelName, schema, options = {} }) {
@@ -27,6 +28,24 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
       ...baseMiddlewares,
       async (req, res) => {
         try {
+          // Auto-seed: insert mock data if collection is empty (runs once)
+          if (options.autoSeed && !autoSeeded[modelName]) {
+            try {
+              const { getModelWithSchema } = require("./getModel");
+              const Model = getModelWithSchema(req.serverEnvironment, modelName, schema);
+              const count = await Model.countDocuments();
+              if (count === 0) {
+                const fs = require("fs");
+                const mockData = JSON.parse(fs.readFileSync(options.autoSeed.dataFile));
+                await Model.insertMany(mockData);
+                console.log(`[${modelName}] Auto-seeded ${mockData.length} documents`);
+              }
+              autoSeeded[modelName] = true;
+            } catch (seedErr) {
+              console.log(`[${modelName}] Auto-seed skipped:`, seedErr.message);
+            }
+          }
+
           const modelActions = await createCRUDActions({
             modelName,
             schema,

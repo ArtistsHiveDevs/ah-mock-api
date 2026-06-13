@@ -24,7 +24,7 @@ const { getModel } = require("./helpers/getModel");
 // const { sendEmail } = require("./helpers/emailService");
 
 var app = express();
-var port = process.env.PORT || 8180;
+var port = process.env.PORT || 3001;
 
 // *****************************   CORS   ****************************
 // Leer orígenes permitidos desde variable de entorno
@@ -197,8 +197,9 @@ Promise.all(
     return { path: r.path, route: await r.route.router };
   }),
 )
-  .then((resolvedRoutes) => {
+  .then(async (resolvedRoutes) => {
     resolvedRoutes.forEach(({ path, route }) => app.use(path, route));
+
 
     // Obtiene las rutas declaradas de la API
     let listPathRoutes = [];

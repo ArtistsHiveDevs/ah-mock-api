@@ -14,6 +14,8 @@ function getModelSchema(modelName) {
     Place: require("../models/domain/Place.schema").schema,
     ProfileClaim: require("../models/domain/ProfileClaim.schema").schema,
     Follower: require("../models/domain/Follower.schema").schema,
+    OpenCall: require("../models/domain/OpenCall.schema").schema,
+    OpenCallApplication: require("../models/domain/OpenCallApplication.schema").schema,
   };
 
   return modelSchemas[modelName] || null;

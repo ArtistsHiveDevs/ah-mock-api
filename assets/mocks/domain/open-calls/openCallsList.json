@@ -1,0 +1,57 @@
+[
+  {
+    "event_name": "Festival Rock Independiente 2026",
+    "event_date": "2026-09-15",
+    "start_date": "2026-06-01",
+    "end_date": "2026-07-31",
+    "city": "Bogotá",
+    "status": "OPEN",
+    "description": "Festival de rock independiente buscando bandas emergentes de rock, indie y alternativo para un lineup de 3 días.",
+    "genres": ["rock", "indie", "alternativo"],
+    "applications_count": 12
+  },
+  {
+    "event_name": "Noche de Jazz & Blues",
+    "event_date": "2026-08-20",
+    "start_date": "2026-06-10",
+    "end_date": "2026-07-15",
+    "city": "Bogotá",
+    "status": "OPEN",
+    "description": "Buscamos artistas y agrupaciones de jazz y blues para una noche especial en La Sucursal Venue.",
+    "genres": ["jazz", "blues"],
+    "applications_count": 5
+  },
+  {
+    "event_name": "Ciclo de Música Emergente",
+    "event_date": "2026-10-05",
+    "start_date": "2026-07-01",
+    "end_date": "2026-08-15",
+    "city": "Bogotá",
+    "status": "OPEN",
+    "description": "Convocatoria para artistas emergentes de cualquier género que quieran presentarse en nuestro ciclo mensual de música en vivo.",
+    "genres": ["indie", "folk", "pop", "electronica"],
+    "applications_count": 8
+  },
+  {
+    "event_name": "Metal Fest Medellín",
+    "event_date": "2026-11-22",
+    "start_date": "2026-06-15",
+    "end_date": "2026-08-30",
+    "city": "Medellín",
+    "status": "OPEN",
+    "description": "Festival de metal buscando bandas de metal, punk y hardcore para un evento de dos días.",
+    "genres": ["metal", "punk"],
+    "applications_count": 15
+  },
+  {
+    "event_name": "Noche Latina Cali",
+    "event_date": "2026-07-04",
+    "start_date": "2026-03-01",
+    "end_date": "2026-05-30",
+    "city": "Cali",
+    "status": "CLOSED",
+    "description": "Convocatoria cerrada. Se buscaban artistas de salsa, cumbia y reggaetón.",
+    "genres": ["salsa", "cumbia", "reggaeton"],
+    "applications_count": 22
+  }
+]

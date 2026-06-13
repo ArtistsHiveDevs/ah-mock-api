@@ -18,6 +18,8 @@ const Place = require("../models/domain/Place.schema");
 const Event = require("../models/domain/Event.schema");
 const Prebooking = require("../models/domain/Prebooking.schema");
 const ProfileClaim = require("../models/domain/ProfileClaim.schema");
+const OpenCall = require("../models/domain/OpenCall.schema");
+const OpenCallApplication = require("../models/domain/OpenCallApplication.schema");
 const Currency = require("../models/parametrics/geo/Currency.schema");
 const Continent = require("../models/parametrics/geo/Continent.schema");
 const Country = require("../models/parametrics/geo/Country.schema");
@@ -444,6 +446,43 @@ function loadRoutes() {
               return entity;
             },
           },
+        },
+      }),
+    },
+    {
+      path: "/open-calls",
+      route: createCRUDRoutes({
+        modelName: "OpenCall",
+        schema: OpenCall.schema,
+        options: {
+          customPopulateFields: [
+            {
+              path: "place_id",
+              select: routesConstants.public_fields.join(" "),
+            },
+          ],
+          autoSeed: {
+            dataFile: "./assets/mocks/domain/open-calls/openCallsList.json",
+          },
+        },
+      }),
+    },
+    {
+      path: "/open-call-applications",
+      route: createCRUDRoutes({
+        modelName: "OpenCallApplication",
+        schema: OpenCallApplication.schema,
+        options: {
+          customPopulateFields: [
+            {
+              path: "open_call_id",
+              select: "event_name event_date city status",
+            },
+            {
+              path: "artist_id",
+              select: routesConstants.public_fields.join(" "),
+            },
+          ],
         },
       }),
     },

@@ -366,6 +366,12 @@ module.exports = {
     const academies = JSON.parse(
       fs.readFileSync(`./assets/mocks/domain/academies/academiesList.json`)
     );
+    const openCalls = JSON.parse(
+      fs.readFileSync(`./assets/mocks/domain/open-calls/openCallsList.json`)
+    );
+    const openCallApplications = JSON.parse(
+      fs.readFileSync(`./assets/mocks/domain/open-calls/openCallApplicationsList.json`)
+    );
 
     if (entityName === "Artist") {
       response = [...artists];
@@ -477,6 +483,10 @@ module.exports = {
       response = [...academies];
     } else if (entityName === "RehearsalRoom") {
       response = [...rehearsalRooms];
+    } else if (entityName === "OpenCall") {
+      response = [...openCalls];
+    } else if (entityName === "OpenCallApplication") {
+      response = [...openCallApplications];
     }
     if (randomize) {
       this.shuffle(response);
