@@ -325,6 +325,97 @@ app.get("/", async (req, res) => {
   });
 });
 
+// GET /share/test — ruta de PRUEBA estática, sin BD, solo para validar
+// que WhatsApp/Facebook leen bien las meta tags.
+app.get("/share/test", (req, res) => {
+  const title = "Artist Hive";
+  const description = "Descubre artistas, lugares y eventos en Artist Hive.";
+  const imageUrl = "https://artist-hive.com/img/logo.png";
+  const targetUrl = "https://artist-hive.com/search";
+
+  res.status(200).set("Content-Type", "text/html; charset=utf-8")
+    .send(`<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>${title}</title>
+  <meta name="description" content="${description}" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="${targetUrl}" />
+  <meta property="og:title" content="${title}" />
+  <meta property="og:description" content="${description}" />
+  <meta property="og:image" content="${imageUrl}" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="${title}" />
+  <meta name="twitter:description" content="${description}" />
+  <meta name="twitter:image" content="${imageUrl}" />
+
+  <meta http-equiv="refresh" content="0;url=${targetUrl}" />
+  <script>window.location.replace(${JSON.stringify(targetUrl)});</script>
+</head>
+<body>
+  Redirigiendo a <a href="${targetUrl}">${title}</a>…
+</body>
+</html>`);
+});
+
+// GET /share/perfil/:id  → endpoint de prueba para generar el preview de WhatsApp/Facebook
+app.get("/share/perfil/:id", async (req, res) => {
+  //   const { id } = req.params;
+  //   // TODO: reemplazar por el servicio/repositorio real que ya usan para traer el perfil
+  //   const profile = await getProfileById(id);
+  //   if (!profile) {
+  //     return res.status(404).send('Perfil no encontrado');
+  //   }
+  //   const title = escapeHtml(profile.name || 'Perfil en AH');
+  //   const description = escapeHtml(profile.bio || profile.description || 'Descubre más en AH');
+  //   const imageUrl = resolveImageUrl(profile.profile_pic); // ver nota abajo
+  //   const targetUrl = `${process.env.FRONTEND_URL}/artista/${profile.slug || profile.id}`; // URL real de la SPA
+  //   res.status(200).set('Content-Type', 'text/html; charset=utf-8').send(`<!DOCTYPE html>
+  // <html lang="es">
+  // <head>
+  //   <meta charset="utf-8" />
+  //   <title>${title}</title>
+  //   <meta name="description" content="${description}" />
+  //   <meta property="og:type" content="profile" />
+  //   <meta property="og:url" content="${targetUrl}" />
+  //   <meta property="og:title" content="${title}" />
+  //   <meta property="og:description" content="${description}" />
+  //   <meta property="og:image" content="${imageUrl}" />
+  //   <meta name="twitter:card" content="summary_large_image" />
+  //   <meta name="twitter:title" content="${title}" />
+  //   <meta name="twitter:description" content="${description}" />
+  //   <meta name="twitter:image" content="${imageUrl}" />
+  //   <meta http-equiv="refresh" content="0;url=${targetUrl}" />
+  //   <script>window.location.replace(${JSON.stringify(targetUrl)});</script>
+  // </head>
+  // <body>
+  //   Redirigiendo a <a href="${targetUrl}">${title}</a>…
+  // </body>
+  // </html>`);
+});
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function resolveImageUrl(profilePicKey) {
+  if (!profilePicKey) return `${process.env.FRONTEND_URL}/default-og-image.jpg`;
+  // Si profile_pic viene como "s3://bucket/key", conviértelo a la URL pública
+  // (el mismo criterio que ya usa avatarURL() en el front, ver model.ts:291)
+  return profilePicKey.replace(
+    "s3://public/",
+    `${process.env.PUBLIC_ASSETS_BASE_URL}/`,
+  );
+}
+
 // Middleware global para manejar errores de URIError (URLs malformadas)
 app.use((err, req, res, next) => {
   if (err instanceof URIError) {
