@@ -6,7 +6,9 @@ const bcrypt = require("bcryptjs");
 const _ = require("lodash");
 var { validateApiKey } = require("./helpers");
 const { User, schema: userSchema } = require("./models/appbase/User");
+const { normalizeProfileId } = require("./models/appbase/EntityDirectory");
 const { loadRoutes } = require("./routes/routes");
+const { connectToDatabase, decryptSharedLinkEnv } = require("./db/db_g");
 
 // Importar la conexión a la base de datos
 // const connectToDatabase = require("./db/db");
@@ -200,7 +202,6 @@ Promise.all(
   .then(async (resolvedRoutes) => {
     resolvedRoutes.forEach(({ path, route }) => app.use(path, route));
 
-
     // Obtiene las rutas declaradas de la API
     let listPathRoutes = [];
     let rutasRouter = _.filter(app._router.stack, function (rutaTmp) {
@@ -325,23 +326,117 @@ app.get("/", async (req, res) => {
   });
 });
 
-// GET /share/test — ruta de PRUEBA estática, sin BD, solo para validar
-// que WhatsApp/Facebook leen bien las meta tags.
-app.get("/share/test", (req, res) => {
-  const title = "Artist Hive";
-  const description = "Descubre artistas, lugares y eventos en Artist Hive.";
-  const imageUrl = "https://artist-hive.com/img/logo.png";
-  const targetUrl = "https://artist-hive.com/search";
+// GET /r/oc/:id → convocatoria (PRUEBA: usa el id del path directo, sin BD todavía)
+// Prefijo "/r/" (resource) genérico para cualquier entidad no-perfil: /r/oc/:id, /r/evento/:id, /r/lugar/:id...
+app.get("/r/:resourceType/:id", helpers.validateEnvironment, (req, res) => {
+  const { resourceType, resourceId } = req.params;
 
-  res.status(200).set("Content-Type", "text/html; charset=utf-8")
-    .send(`<!DOCTYPE html>
+  const tipoRecurso = resourceType.toUpperCase() || "oc";
+  const title = `${tipoRecurso} ${resourceId}`;
+  const description = `Detalles de la ${tipoRecurso} "${resourceId}" en Artist Hive.`;
+  const imageUrl =
+    resourceType === "oc"
+      ? "https://artist-hive.com/img/search.png"
+      : "https://artist-hive.com/img/artisthive_b.png";
+
+  const targetUrl = `https://artist-hive.com/${tipoRecurso}/${resourceId}`;
+
+  res
+    .status(200)
+    .set("Content-Type", "text/html; charset=utf-8")
+    .send(
+      buildShareHtml({
+        title,
+        description,
+        imageUrl,
+        targetUrl,
+        ogType: "article",
+      }),
+    );
+});
+
+// GET /@:username → perfil (PRUEBA: usa el username del path directo, sin BD todavía)
+app.get("/@:username", async (req, res) => {
+  const { username } = req.params;
+  const { a } = req.query;
+
+  const environment = decryptSharedLinkEnv(a);
+
+  console.log("SHARED environment: ", environment);
+  req.serverEnvironment = environment;
+  const connection = await connectToDatabase(req);
+
+  const usernameNormalization = !!username
+    ? await normalizeProfileId(username, connection)
+    : undefined;
+  // http://localhost:3001/@puertocandelaria
+  console.log("USERNAME: ", usernameNormalization);
+  if (usernameNormalization) {
+    const title = `${usernameNormalization.name} · Artist Hive`;
+    const description = `Perfil de ${usernameNormalization.name} (@${usernameNormalization.username}) en Artist Hive.`;
+    const imageUrl =
+      usernameNormalization.profile_pic ||
+      "https://artist-hive.com/img/artisthive_b.png";
+    const targetUrl = `https://artist-hive.com/${usernameNormalization.entityType.toLowerCase()}s/details/${username}`;
+
+    res
+      .status(200)
+      .set("Content-Type", "text/html; charset=utf-8")
+      .send(
+        buildShareHtml({
+          title,
+          description,
+          imageUrl,
+          targetUrl,
+          ogType: "profile",
+        }),
+      );
+  } else {
+    res
+      .status(200)
+      .set("Content-Type", "text/html; charset=utf-8")
+      .send(
+        `<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Artist Hive</title>
+  <meta name="description" content="Artist Hive" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://artist-hive.com" />
+  <meta property="og:title" content="Artist Hive" />
+  <meta property="og:description" content="La plataforma que conecta el ecosistema musical" />
+  <meta property="og:image" content="https://artist-hive.com/img/artisthive_b.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Artist Hive" />
+  <meta name="twitter:description" content="La plataforma que conecta el ecosistema musical" />
+  <meta name="twitter:image" content="https://artist-hive.com/img/artisthive_b.png" />
+
+  <meta http-equiv="refresh" content="0;url=https://artist-hive.com" />
+  <script>window.location.replace(${JSON.stringify("https://artist-hive.com")});</script>
+</head>
+<body>
+  Redirigiendo a <a href="https://artist-hive.com ">Artist Hive</a>
+</body>
+</html>`,
+      );
+  }
+});
+
+function buildShareHtml({ title, description, imageUrl, targetUrl, ogType }) {
+  title = escapeHtml(title);
+  description = escapeHtml(description);
+
+  return `<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
   <title>${title}</title>
   <meta name="description" content="${description}" />
 
-  <meta property="og:type" content="website" />
+  <meta property="og:type" content="${ogType}" />
   <meta property="og:url" content="${targetUrl}" />
   <meta property="og:title" content="${title}" />
   <meta property="og:description" content="${description}" />
@@ -351,51 +446,16 @@ app.get("/share/test", (req, res) => {
   <meta name="twitter:title" content="${title}" />
   <meta name="twitter:description" content="${description}" />
   <meta name="twitter:image" content="${imageUrl}" />
-
+  
   <meta http-equiv="refresh" content="0;url=${targetUrl}" />
   <script>window.location.replace(${JSON.stringify(targetUrl)});</script>
+
 </head>
 <body>
-  Redirigiendo a <a href="${targetUrl}">${title}</a>…
+  Redirigiendo a <a href="${targetUrl}">${title}</a>
 </body>
-</html>`);
-});
-
-// GET /share/perfil/:id  → endpoint de prueba para generar el preview de WhatsApp/Facebook
-app.get("/share/perfil/:id", async (req, res) => {
-  //   const { id } = req.params;
-  //   // TODO: reemplazar por el servicio/repositorio real que ya usan para traer el perfil
-  //   const profile = await getProfileById(id);
-  //   if (!profile) {
-  //     return res.status(404).send('Perfil no encontrado');
-  //   }
-  //   const title = escapeHtml(profile.name || 'Perfil en AH');
-  //   const description = escapeHtml(profile.bio || profile.description || 'Descubre más en AH');
-  //   const imageUrl = resolveImageUrl(profile.profile_pic); // ver nota abajo
-  //   const targetUrl = `${process.env.FRONTEND_URL}/artista/${profile.slug || profile.id}`; // URL real de la SPA
-  //   res.status(200).set('Content-Type', 'text/html; charset=utf-8').send(`<!DOCTYPE html>
-  // <html lang="es">
-  // <head>
-  //   <meta charset="utf-8" />
-  //   <title>${title}</title>
-  //   <meta name="description" content="${description}" />
-  //   <meta property="og:type" content="profile" />
-  //   <meta property="og:url" content="${targetUrl}" />
-  //   <meta property="og:title" content="${title}" />
-  //   <meta property="og:description" content="${description}" />
-  //   <meta property="og:image" content="${imageUrl}" />
-  //   <meta name="twitter:card" content="summary_large_image" />
-  //   <meta name="twitter:title" content="${title}" />
-  //   <meta name="twitter:description" content="${description}" />
-  //   <meta name="twitter:image" content="${imageUrl}" />
-  //   <meta http-equiv="refresh" content="0;url=${targetUrl}" />
-  //   <script>window.location.replace(${JSON.stringify(targetUrl)});</script>
-  // </head>
-  // <body>
-  //   Redirigiendo a <a href="${targetUrl}">${title}</a>…
-  // </body>
-  // </html>`);
-});
+</html>`;
+}
 
 function escapeHtml(str) {
   return String(str)
