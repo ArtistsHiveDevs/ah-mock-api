@@ -60,6 +60,14 @@ function decryptEnv(encryptedText) {
   }
 }
 
+function decryptSharedLinkEnv(encryptedText) {
+  if (encryptedText) {
+    return decryptEnv(encryptedText);
+  } else {
+    return "prod";
+  }
+}
+
 function countRelations(schema) {
   return Object.values(schema.paths).filter((path) => path.options.ref).length;
 }
@@ -203,4 +211,5 @@ module.exports = {
   connectionsByModel,
   decryptEnv,
   decryptText,
+  decryptSharedLinkEnv,
 };
