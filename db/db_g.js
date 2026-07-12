@@ -171,7 +171,7 @@ const connectToDatabaseByModel = async (model) => {
     return connectionsByModel[model];
   }
 
-  if (!!model && !connectionsByModel[model]) {
+  if (!!model && !connectionsByModel[model] && modelURIs[model]?.length > 0) {
     try {
       console.log(`🔄 Conectando a MongoDB (${model})`);
       const connection = mongoose.createConnection(modelURIs[model], {
