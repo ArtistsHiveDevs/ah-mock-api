@@ -158,7 +158,7 @@ const connectToDatabase = async (req) => {
 
 const connectToDatabaseByModel = async (model) => {
   const modelURIs = {
-    Album: process.env.MONGO_ALBUMS_URI,
+    Album: process.env.MONGO_ALBUMS_URI || '',
   };
 
   if (!modelURIs[model]) {

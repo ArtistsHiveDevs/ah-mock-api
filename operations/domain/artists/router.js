@@ -608,12 +608,8 @@ module.exports = [
 
         artistInfo = {
           ...artistInfo,
-          followed_by_count:
-            (followedByCount?.[0]?.followersCount || 0) +
-            Math.floor(Math.random() * 5000),
-          followed_profiles_count:
-            (followedProfilesCount?.[0]?.followedProfilesCount || 0) +
-            Math.floor(Math.random() * 2000),
+          followed_by_count: [...artistInfo?.followed_by]?.length  || 0,
+          followed_profiles_count: [...artistInfo?.followed_profiles]?.length || 0,
           isFollowedByCurrentProfile: !!followedEntityInfo,
         };
 
