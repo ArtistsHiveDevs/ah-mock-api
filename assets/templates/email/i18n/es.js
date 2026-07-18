@@ -198,6 +198,29 @@ module.exports = {
       },
     },
 
+    openCallApplication: {
+      fields: {
+        event: "Convocatoria",
+        eventDate: "Fecha del evento",
+        place: "Ciudad",
+      },
+
+      response: {
+        accepted: {
+          subject: "¡Tu aplicación fue aceptada! - Artist Hive®",
+          title: "¡Excelentes noticias!",
+          intro: "aceptó tu aplicación a la convocatoria:",
+          cta: "Ver convocatoria",
+        },
+        rejected: {
+          subject: "Actualización de tu aplicación - Artist Hive®",
+          title: "Actualización de tu aplicación",
+          intro: "no aceptó tu aplicación a la convocatoria:",
+          cta: "Ver convocatoria",
+        },
+      },
+    },
+
     eventReminder: {
       subject: "Recordatorio: Tu evento se acerca - Artist Hive®",
       title: "¡Tu evento se acerca!",

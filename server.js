@@ -192,7 +192,10 @@ app.post("/api/generate-key", helpers.validateEnvironment, async (req, res) => {
 //   });
 // })();
 
-Promise.all(
+// Promesa que resuelve cuando todas las rutas dinámicas quedaron montadas en `app`.
+// Se exporta junto con `app` para que un caller externo (ej. un test con supertest)
+// pueda esperar a que el registro asíncrono de rutas termine antes de hacer requests.
+const routesReady = Promise.all(
   loadRoutes().map(async (r) => {
     return { path: r.path, route: await r.route.router };
   }),
@@ -355,16 +358,23 @@ process.on("unhandledRejection", (reason, promise) => {
 });
 
 //  Server Zone
-app.listen(port, function () {
-  console.log(textConstants.runningServer, port);
-  console.log(new Date());
-  console.log();
-  console.log("=".repeat(20));
-  console.log();
-  // sendEmail({
-  //   to: "cnpiensadigital@gmail.com",
-  //   subject: "Inicio de servidor",
-  //   text: "El servidor ha iniciado correctamente",
-  //   html: "El servidor ha iniciado <b>correctamente</b> ",
-  // });
-});
+// Solo escucha en un puerto real cuando este archivo se ejecuta directamente
+// (ej. `node server.js` / `nodemon server.js`). Si otro módulo lo hace `require`
+// (ej. un test con supertest), `app` se usa sin abrir un socket TCP real.
+if (require.main === module) {
+  app.listen(port, function () {
+    console.log(textConstants.runningServer, port);
+    console.log(new Date());
+    console.log();
+    console.log("=".repeat(20));
+    console.log();
+    // sendEmail({
+    //   to: "cnpiensadigital@gmail.com",
+    //   subject: "Inicio de servidor",
+    //   text: "El servidor ha iniciado correctamente",
+    //   html: "El servidor ha iniciado <b>correctamente</b> ",
+    // });
+  });
+}
+
+module.exports = { app, routesReady };

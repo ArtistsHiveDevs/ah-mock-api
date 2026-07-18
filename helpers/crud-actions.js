@@ -864,6 +864,14 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       }
       const info = { ...body };
 
+      if (
+        options.validateCreate &&
+        typeof options.validateCreate === "function"
+      ) {
+        // A diferencia de postCreateFunction, un error acá SÍ debe abortar la creación.
+        await options.validateCreate({ userId, body: info, req });
+      }
+
       const hasPreConstructor =
         model.schema.statics.preConstruct &&
         typeof model.schema.statics.preConstruct === "function";
@@ -1065,6 +1073,21 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
     console.log(newInfo);
 
     if (hasRole) {
+      if (
+        options.validateUpdate &&
+        typeof options.validateUpdate === "function"
+      ) {
+        // Igual que validateCreate: corre ANTES de persistir y debe propagar el error para abortar el update.
+        // Necesario para revalidar ownership cuando el body reasigna una referencia a otra entidad
+        // (ej: cambiar place_id de una OpenCall a un Place que el usuario no posee).
+        await options.validateUpdate({
+          userId,
+          body: newInfo,
+          existingEntity: entityInfo,
+          req,
+        });
+      }
+
       const updatedEntity = await model.findOneAndUpdate(
         {
           _id: entityInfo._id,

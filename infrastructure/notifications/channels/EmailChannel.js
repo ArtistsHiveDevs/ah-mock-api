@@ -283,6 +283,8 @@ class EmailChannel {
       prebooking_created: this.templatePrebookingCreated.bind(this),
       prebooking_response: this.templatePrebookingResponse.bind(this),
       prebooking_cancelled: this.templatePrebookingCancelled.bind(this),
+      open_call_application_response:
+        this.templateOpenCallApplicationResponse.bind(this),
       user_welcome: this.templateUserWelcome.bind(this),
       user_profile_assigned: this.templateProfileAssigned.bind(this),
       user_profile_role_updated: this.templateProfileRoleUpdated.bind(this),
@@ -407,6 +409,54 @@ class EmailChannel {
         subject,
         contentHtml,
         statusBanner: { type: statusInfo.bannerType, title },
+        lang,
+      }),
+    };
+  }
+
+  /**
+   * Template: Respuesta a aplicación de Open Call (enviado al artista)
+   */
+  templateOpenCallApplicationResponse({ recipient, data }) {
+    const { openCall, status } = data;
+    const lang = data.lang || "es";
+    const fields = t("emails.openCallApplication.fields", lang);
+    const openCallUrl = `${APP_URL}/open-calls/${openCall?._id}`;
+
+    const statusMap = {
+      accepted: { bannerType: "success" },
+      rejected: { bannerType: "warning" },
+    };
+    const statusInfo = statusMap[status] || statusMap.rejected;
+    const i = t(`emails.openCallApplication.response.${status}`, lang);
+
+    const contentHtml = `
+              <h1>${i.title}</h1>
+              <p>${t("common.hi", lang)} <strong>${recipient.name}</strong>!</p>
+              <p>${i.intro}</p>
+
+              ${
+                openCall?.event_name
+                  ? `
+              <table class="details-table" role="presentation">
+                <tr><td>${fields.event}</td><td><strong>${openCall.event_name}</strong></td></tr>
+                ${openCall.event_date ? `<tr><td>${fields.eventDate}</td><td>${openCall.event_date}</td></tr>` : ""}
+                ${openCall.city ? `<tr><td>${fields.place}</td><td>${openCall.city}</td></tr>` : ""}
+              </table>`
+                  : ""
+              }
+
+              <div class="btn-container">
+                <a href="${openCallUrl}" class="btn btn-primary">${i.cta}</a>
+              </div>`;
+
+    return {
+      subject: i.subject,
+      text: `${t("common.hi", lang)} ${recipient.name}!\n\n${i.intro}\n${openCall?.event_name ? `${fields.event}: ${openCall.event_name}\n` : ""}\n${i.cta}: ${openCallUrl}`,
+      html: this.renderBaseLayout({
+        subject: i.subject,
+        contentHtml,
+        statusBanner: { type: statusInfo.bannerType, title: i.title },
         lang,
       }),
     };

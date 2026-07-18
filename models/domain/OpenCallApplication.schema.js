@@ -19,6 +19,12 @@ const schema = new Schema(
     },
     // Survey responses — stored as a flexible map to match the frontend config
     survey_responses: { type: Schema.Types.Mixed, default: {} },
+    entityRoleMap: [
+      {
+        ids: [mongoose.Types.ObjectId],
+        role: String,
+      },
+    ],
   },
   {
     timestamps: true,

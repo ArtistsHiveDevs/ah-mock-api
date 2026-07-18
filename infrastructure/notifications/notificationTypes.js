@@ -73,6 +73,33 @@ const NOTIFICATION_TYPES = {
     template: "prebooking_cancelled",
   },
 
+  // ============= OPEN CALL =============
+  OPEN_CALL_APPLICATION_ACCEPTED: {
+    key: "openCallApplication.accepted",
+    name: "Aplicación a Open Call Aceptada",
+    channels: {
+      email: true,
+      push: true,
+      sms: false,
+      websocket: true,
+    },
+    priority: "high",
+    template: "open_call_application_response",
+  },
+
+  OPEN_CALL_APPLICATION_REJECTED: {
+    key: "openCallApplication.rejected",
+    name: "Aplicación a Open Call Rechazada",
+    channels: {
+      email: true,
+      push: true,
+      sms: false,
+      websocket: true,
+    },
+    priority: "normal",
+    template: "open_call_application_response",
+  },
+
   // ============= BOOKING (futuro) =============
   BOOKING_CONFIRMED: {
     key: "booking.confirmed",

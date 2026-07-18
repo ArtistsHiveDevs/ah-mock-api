@@ -277,6 +277,33 @@ module.exports = {
     },
 
     // ========================================
+    // OPEN CALL APPLICATION
+    // ========================================
+    openCallApplication: {
+      // Common fields for all open call application emails
+      fields: {
+        event: "Open Call",
+        eventDate: "Event date",
+        place: "City",
+      },
+
+      response: {
+        accepted: {
+          subject: "Your application was accepted! - Artist Hive®",
+          title: "Great news!",
+          intro: "accepted your application for the open call:",
+          cta: "View open call",
+        },
+        rejected: {
+          subject: "Update on your application - Artist Hive®",
+          title: "Update on your application",
+          intro: "did not accept your application for the open call:",
+          cta: "View open call",
+        },
+      },
+    },
+
+    // ========================================
     // EVENT REMINDER
     // ========================================
     eventReminder: {
