@@ -467,6 +467,11 @@ module.exports = [
 
       const newInfo = { ...req.body };
 
+      // Igual que en el registro (POST /users): nunca persistir el password en texto plano.
+      if (newInfo.password) {
+        newInfo.password = await bcrypt.hash(newInfo.password, 10);
+      }
+
       if (newInfo.gender) {
         const genders = [
           { label: "Man", value: "male" },

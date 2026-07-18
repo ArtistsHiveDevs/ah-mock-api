@@ -112,6 +112,58 @@ async function validateArtistOwnership(artistId, req) {
   }
 }
 
+/**
+ * Query Mongo que restringe qué OpenCallApplication puede LISTAR el usuario actual:
+ * solo las suyas como Artist (OWNER/ADMIN de artist_id) o las que aplicaron a una
+ * OpenCall de un Place del que es OWNER/ADMIN (unión, no intersección).
+ * `survey_responses` es info que el artista llena pensando que solo el Place de esa
+ * convocatoria específica la verá, por eso este filtro es a nivel de REGISTRO, no de campo
+ * (public_fields solo controla qué campos se ven, no qué documentos matchea la query).
+ * Sin Place ni Artist propios el resultado es vacío, nunca "todo" (fail-closed).
+ */
+async function buildOpenCallApplicationsVisibilityFilter({ userId, req }) {
+  const noResultsFilter = { _id: { $in: [] } };
+
+  if (!userId) {
+    return noResultsFilter;
+  }
+
+  const PlaceModel = await getModel(req.serverEnvironment, "Place");
+  const ArtistModel = await getModel(req.serverEnvironment, "Artist");
+  const OpenCallModel = await getModel(req.serverEnvironment, "OpenCall");
+
+  const ownerAdminMatch = {
+    entityRoleMap: {
+      $elemMatch: { role: { $in: ["OWNER", "ADMIN"] }, ids: userId },
+    },
+  };
+
+  const [ownedPlaces, ownedArtists] = await Promise.all([
+    PlaceModel.find(ownerAdminMatch).select("_id"),
+    ArtistModel.find(ownerAdminMatch).select("_id"),
+  ]);
+
+  const ownedPlaceIds = ownedPlaces.map((place) => place._id);
+  const ownedArtistIds = ownedArtists.map((artist) => artist._id);
+
+  const ownedOpenCalls = ownedPlaceIds.length
+    ? await OpenCallModel.find({ place_id: { $in: ownedPlaceIds } }).select(
+        "_id",
+      )
+    : [];
+  const ownedOpenCallIds = ownedOpenCalls.map((openCall) => openCall._id);
+
+  const orConditions = [];
+  if (ownedArtistIds.length) {
+    orConditions.push({ artist_id: { $in: ownedArtistIds } });
+  }
+  if (ownedOpenCallIds.length) {
+    orConditions.push({ open_call_id: { $in: ownedOpenCallIds } });
+  }
+
+  return orConditions.length ? { $or: orConditions } : noResultsFilter;
+}
+
 function loadRoutes() {
   return [
     { path: "/", route: { router: allRouter } },
@@ -603,6 +655,7 @@ function loadRoutes() {
 
             await validateArtistOwnership(body.artist_id, req);
           },
+          listQueryFilter: buildOpenCallApplicationsVisibilityFilter,
           actions: {
             // Acción para que el OWNER/ADMIN del Place dueño de la Open Call acepte o
             // rechace una aplicación. El propio Artist NO puede ejecutar esta acción

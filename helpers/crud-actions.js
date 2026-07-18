@@ -316,6 +316,24 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         // console.log("⚠️ No custom filters to process");
       }
 
+      // Hook opt-in para restringir qué documentos puede LISTAR el usuario actual
+      // cuando la condición no es un simple "campo == perfil actual" (lo que cubre
+      // `filters`/processFilters) sino un OR entre condiciones de distinta naturaleza
+      // que requieren resolver joins contra otras colecciones antes de armar la query
+      // (ver options.listQueryFilter en /open-call-applications, routes/routes.js).
+      if (
+        options.listQueryFilter &&
+        typeof options.listQueryFilter === "function"
+      ) {
+        const extraQuery = await options.listQueryFilter({
+          userId: req?.userId,
+          req,
+        });
+        if (extraQuery) {
+          allFilters = { ...allFilters, ...extraQuery };
+        }
+      }
+
       // console.log("\n=== DEBUG: Final allFilters ===");
       // console.log(JSON.stringify(allFilters, null, 2));
 

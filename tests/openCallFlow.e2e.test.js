@@ -256,5 +256,101 @@ describe("Flujo de negocio: Open Call (Place publica, Artist aplica)", () => {
 
     expect(acceptApplicationRes.status).toBe(200);
     expect(acceptApplicationRes.body?.data?.status).toBe("accepted");
+
+    // --- i. Usuario D, con su propio Place y su propio Artist (sin relación con la
+    // convocatoria de A/B), NO ve la aplicación de B en el listado de /open-call-applications ---
+    const subD = `sub-outsider-${runId}`;
+    const registerD = await registerUser({
+      sub: subD,
+      username: `outsider_${runId}`,
+    });
+    expect(registerD.status).toBe(201);
+
+    const userDToken = await loginUser(subD);
+    expect(typeof userDToken).toBe("string");
+    expect(userDToken.length).toBeGreaterThan(0);
+
+    const createPlaceDRes = await request(app)
+      .post("/places")
+      .set(authHeaders(userDToken))
+      .send({ name: "Test Place D", genres: {} });
+    expect([200, 201]).toContain(createPlaceDRes.status);
+    expect(createPlaceDRes.body?.data?._id).toBeTruthy();
+
+    const createArtistDRes = await request(app)
+      .post("/artists")
+      .set(authHeaders(userDToken))
+      .send({ name: "Test Artist D" });
+    expect(createArtistDRes.status).toBe(201);
+    expect(createArtistDRes.body?.data?._id).toBeTruthy();
+
+    const listApplicationsAsDRes = await request(app)
+      .get("/open-call-applications")
+      .set(authHeaders(userDToken));
+
+    expect(listApplicationsAsDRes.status).toBe(200);
+    const applicationSeenByD = (
+      listApplicationsAsDRes.body?.data || []
+    ).find((application) => application._id === applicationId);
+    expect(applicationSeenByD).toBeFalsy();
+
+    // --- j. Usuario A (dueño del Place de la convocatoria) SÍ ve la aplicación de B ---
+    const listApplicationsAsARes = await request(app)
+      .get("/open-call-applications")
+      .set(authHeaders(userAToken));
+
+    expect(listApplicationsAsARes.status).toBe(200);
+    const applicationSeenByA = (
+      listApplicationsAsARes.body?.data || []
+    ).find((application) => application._id === applicationId);
+    expect(applicationSeenByA).toBeTruthy();
+
+    // --- k. Usuario B (el artista que aplicó) SÍ ve su propia aplicación ---
+    const listApplicationsAsBRes = await request(app)
+      .get("/open-call-applications")
+      .set(authHeaders(userBToken));
+
+    expect(listApplicationsAsBRes.status).toBe(200);
+    const applicationSeenByB = (
+      listApplicationsAsBRes.body?.data || []
+    ).find((application) => application._id === applicationId);
+    expect(applicationSeenByB).toBeTruthy();
+  });
+});
+
+describe("Fix de seguridad: PUT /users/:id no persiste el password en texto plano", () => {
+  test("actualizar el perfil con un password nuevo lo guarda hasheado, no en texto plano", async () => {
+    const bcrypt = require("bcryptjs");
+    const { getModel } = require("../helpers/getModel");
+
+    const runId = Date.now();
+    const sub = `sub-password-update-${runId}`;
+    const username = `password_update_${runId}`;
+
+    const registerRes = await registerUser({ sub, username });
+    expect(registerRes.status).toBe(201);
+    const userId = registerRes.body?.data?._id;
+    expect(userId).toBeTruthy();
+
+    const token = await loginUser(sub);
+    expect(typeof token).toBe("string");
+    expect(token.length).toBeGreaterThan(0);
+
+    const plainTextPassword = "SuperSecret123!";
+    const updateRes = await request(app)
+      .put(`/users/${userId}`)
+      .set(authHeaders(token))
+      .send({ password: plainTextPassword });
+
+    expect(updateRes.status).toBe(200);
+
+    const UserModel = await getModel(TEST_ENV, "User");
+    const storedUser = await UserModel.findById(userId).select("password");
+
+    expect(storedUser.password).toBeTruthy();
+    expect(storedUser.password).not.toBe(plainTextPassword);
+    await expect(
+      bcrypt.compare(plainTextPassword, storedUser.password),
+    ).resolves.toBe(true);
   });
 });
