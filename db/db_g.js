@@ -60,6 +60,14 @@ function decryptEnv(encryptedText) {
   }
 }
 
+function decryptSharedLinkEnv(encryptedText) {
+  if (encryptedText) {
+    return decryptEnv(encryptedText);
+  } else {
+    return "prod";
+  }
+}
+
 function countRelations(schema) {
   return Object.values(schema.paths).filter((path) => path.options.ref).length;
 }
@@ -171,7 +179,7 @@ const connectToDatabaseByModel = async (model) => {
     return connectionsByModel[model];
   }
 
-  if (!!model && !connectionsByModel[model]) {
+  if (!!model && !connectionsByModel[model] && modelURIs[model]?.length > 0) {
     try {
       console.log(`🔄 Conectando a MongoDB (${model})`);
       const connection = mongoose.createConnection(modelURIs[model], {
@@ -203,4 +211,5 @@ module.exports = {
   connectionsByModel,
   decryptEnv,
   decryptText,
+  decryptSharedLinkEnv,
 };
