@@ -33,6 +33,12 @@ const {
   notifyPrebookingCreated,
   notifyPrebookingStatusChanged,
 } = require("../helpers/prebookingNotifications");
+const {
+  notifyOpenCallApplicationStatusChanged,
+} = require("../helpers/openCallApplicationNotifications");
+
+// Estados válidos para OpenCallApplication.status (debe coincidir con el enum del schema)
+const OPEN_CALL_APPLICATION_STATUSES = ["pending", "accepted", "rejected"];
 
 // ============================================================================
 // HELPER FUNCTIONS
@@ -45,6 +51,65 @@ const {
  */
 function deleteFields(obj, fields) {
   fields.forEach((field) => delete obj[field]);
+}
+
+/**
+ * Verifica si un userId tiene alguno de los roles dados en el entityRoleMap de una entidad
+ * (mismo shape que usa el check de ownership genérico en crud-actions.js: entityRoleMap: [{ role, ids }])
+ * @param {Object} entity - Documento con campo entityRoleMap
+ * @param {string} userId
+ * @param {Array<string>} roles
+ */
+function hasEntityRole(entity, userId, roles = ["OWNER", "ADMIN"]) {
+  return (entity?.entityRoleMap || []).some(
+    (roleEntry) =>
+      roles.includes(roleEntry.role) &&
+      (roleEntry.ids || []).some((id) => id.toString() === userId?.toString()),
+  );
+}
+
+/**
+ * Verifica que el usuario sea OWNER/ADMIN del Place indicado.
+ * Usado tanto en la creación como en la edición de una OpenCall (para evitar que
+ * un update reasigne place_id a un Place ajeno).
+ * @param {string} placeId
+ * @param {Object} req
+ */
+async function validatePlaceOwnership(placeId, req) {
+  const PlaceModel = await getModel(req.serverEnvironment, "Place");
+  const place = await PlaceModel.findById(placeId);
+
+  if (!place) {
+    throw new Error(`Place '${placeId}' not found.`);
+  }
+
+  if (!hasEntityRole(place, req.userId)) {
+    throw new Error(
+      "Only the owner or admin of the Place can create or update an Open Call for it.",
+    );
+  }
+}
+
+/**
+ * Verifica que el usuario sea OWNER/ADMIN del Artist indicado.
+ * Usado tanto en la creación como en la edición de una OpenCallApplication (para evitar que
+ * un update reasigne artist_id a un Artist ajeno).
+ * @param {string} artistId
+ * @param {Object} req
+ */
+async function validateArtistOwnership(artistId, req) {
+  const ArtistModel = await getModel(req.serverEnvironment, "Artist");
+  const artist = await ArtistModel.findById(artistId);
+
+  if (!artist) {
+    throw new Error(`Artist '${artistId}' not found.`);
+  }
+
+  if (!hasEntityRole(artist, req.userId)) {
+    throw new Error(
+      "Only the owner or admin of the Artist profile can apply or update the application on its behalf.",
+    );
+  }
 }
 
 function loadRoutes() {
@@ -464,6 +529,22 @@ function loadRoutes() {
           autoSeed: {
             dataFile: "./assets/mocks/domain/open-calls/openCallsList.json",
           },
+          validateCreate: async ({ body, req }) => {
+            if (!body.place_id) {
+              throw new Error(
+                "place_id is required to create an Open Call.",
+              );
+            }
+
+            await validatePlaceOwnership(body.place_id, req);
+          },
+          // Revalida ownership del Place cuando el update reasigna place_id, evitando que el
+          // OWNER/ADMIN de una OpenCall existente la "mueva" a un Place ajeno.
+          validateUpdate: async ({ body, req }) => {
+            if (!body.place_id) return;
+
+            await validatePlaceOwnership(body.place_id, req);
+          },
         },
       }),
     },
@@ -473,6 +554,29 @@ function loadRoutes() {
         modelName: "OpenCallApplication",
         schema: OpenCallApplication.schema,
         options: {
+          // Sin public_fields, listEntities() cae a routesConstants.public_fields (campos de Artist).
+          public_fields: [
+            ...routesConstants.public_fields,
+            "open_call_id",
+            "artist_id",
+            "artist_name",
+            "artist_profile_pic",
+            "artist_city",
+            "status",
+            "survey_responses",
+            "createdAt",
+          ],
+          authenticated_fields: [
+            ...routesConstants.public_fields,
+            "open_call_id",
+            "artist_id",
+            "artist_name",
+            "artist_profile_pic",
+            "artist_city",
+            "status",
+            "survey_responses",
+            "createdAt",
+          ],
           customPopulateFields: [
             {
               path: "open_call_id",
@@ -483,6 +587,68 @@ function loadRoutes() {
               select: routesConstants.public_fields.join(" "),
             },
           ],
+          validateCreate: async ({ body, req }) => {
+            if (!body.artist_id) {
+              throw new Error(
+                "artist_id is required to apply to an Open Call.",
+              );
+            }
+
+            await validateArtistOwnership(body.artist_id, req);
+          },
+          // Revalida ownership del Artist cuando el update reasigna artist_id, evitando que el
+          // OWNER/ADMIN de una application existente la "transfiera" a un Artist ajeno.
+          validateUpdate: async ({ body, req }) => {
+            if (!body.artist_id) return;
+
+            await validateArtistOwnership(body.artist_id, req);
+          },
+          actions: {
+            // Acción para que el OWNER/ADMIN del Place dueño de la Open Call acepte o
+            // rechace una aplicación. El propio Artist NO puede ejecutar esta acción
+            // (ya puede editar su aplicación vía el update genérico de esta misma entidad).
+            setStatus: async (req, res, entity, body) => {
+              if (!OPEN_CALL_APPLICATION_STATUSES.includes(body.status)) {
+                throw new Error(
+                  `Invalid status '${body.status}'. Must be one of: ${OPEN_CALL_APPLICATION_STATUSES.join(", ")}.`,
+                );
+              }
+
+              // entity.open_call_id ya viene populado (customPopulateFields) pero solo con
+              // "event_name event_date city status", sin place_id: se re-consulta por id.
+              const openCallId = entity.open_call_id?._id || entity.open_call_id;
+              const OpenCallModel = await getModel(
+                req.serverEnvironment,
+                "OpenCall",
+              );
+              const openCall = await OpenCallModel.findById(openCallId);
+
+              if (!openCall) {
+                throw new Error(`Open Call '${openCallId}' not found.`);
+              }
+
+              const PlaceModel = await getModel(req.serverEnvironment, "Place");
+              const place = await PlaceModel.findById(openCall.place_id);
+
+              if (!place || !hasEntityRole(place, req.userId)) {
+                throw new Error(
+                  "Only the owner or admin of the Place that published the Open Call can accept or reject applications.",
+                );
+              }
+
+              entity.status = body.status;
+
+              // entity.artist_id y entity.open_call_id ya vienen populados por
+              // customPopulateFields (aplicado también en findEntityById con raw:true).
+              await notifyOpenCallApplicationStatusChanged(
+                entity,
+                body.status,
+                req.lang,
+              );
+
+              return entity;
+            },
+          },
         },
       }),
     },

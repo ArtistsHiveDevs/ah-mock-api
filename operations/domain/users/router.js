@@ -1,5 +1,6 @@
 var express = require("express");
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 var helpers = require("../../../helpers/index");
 var RoutesConstants = require("./constants/index");
 
@@ -413,7 +414,11 @@ module.exports = [
       //   .status(200)
       //   .json(items[Math.round(Math.random() * items.length)]);
       try {
-        req.body.password = "1234556768";
+        // Registro por AWS Cognito (`sub`) no manda password: se deja sin setear,
+        // el login por ese flujo no usa bcrypt.compare (ver server.js /api/generate-key).
+        if (req.body.password) {
+          req.body.password = await bcrypt.hash(req.body.password, 10);
+        }
 
         const UserModel = await getModel(req.serverEnvironment, "User");
         const user = new UserModel(req.body);
