@@ -126,7 +126,7 @@ const connectToDatabase = async (req) => {
 
       connection.model("EntityDirectory", EntityDirectorySchema);
       connection.model("User", userSchema);
-      connection.model("Artist", artistSchema);
+      // connection.model("Artist", artistSchema);
 
       const { loadRoutes } = require("../routes/routes");
       const schemas = loadRoutes()
