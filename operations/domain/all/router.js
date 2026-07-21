@@ -142,8 +142,8 @@ async function searchEntitiesDB(req, queryRQ) {
     // 2️⃣ Separar la búsqueda en tokens (palabras individuales)
     const searchTokens = normalizedQuery.split(" ").filter(token => token.length > 0);
 
-    console.log("QUERY normalizedQuery:", normalizedQuery);
-    console.log("QUERY searchTokens:", searchTokens);
+    // console.log("QUERY normalizedQuery:", normalizedQuery);
+    // console.log("QUERY searchTokens:", searchTokens);
 
     // 3️⃣ Construir condiciones de búsqueda
     // Estrategia: Usar $regex para flexibilidad (búsquedas parciales)
@@ -183,7 +183,7 @@ async function searchEntitiesDB(req, queryRQ) {
       }
     }
 
-    console.log("QUERY searchCondition type:", USE_TEXT_SEARCH && searchTokens.length >= 2 ? "$text" : "$regex");
+    // console.log("QUERY searchCondition type:", USE_TEXT_SEARCH && searchTokens.length >= 2 ? "$text" : "$regex");
 
     // // 4️⃣ Construir filtros geográficos
     // const geoFilters = buildGeoFilters(includedGeo, excludedGeo);
@@ -262,10 +262,10 @@ async function searchEntitiesDB(req, queryRQ) {
       matchCondition = baseConditions;
     }
 
-    console.log(
-      "QUERY matchCondition:",
-      JSON.stringify(matchCondition, null, 2),
-    );
+    // console.log(
+    //   "QUERY matchCondition:",
+    //   JSON.stringify(matchCondition, null, 2),
+    // );
 
     const EntityDirectory = await getModel(
       req.serverEnvironment,
