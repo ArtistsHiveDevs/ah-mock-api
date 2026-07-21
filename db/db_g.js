@@ -182,7 +182,7 @@ const connectToDatabaseByModel = async (model) => {
 
   if (!!model && !connectionsByModel[model] && modelURIs[model]?.length > 0) {
     try {
-      console.log(`🔄 Conectando a MongoDB (${model})`);
+      console.log(`🔄 Conectando a MongoDB (${model}) - ${modelURIs[model]}`);
       const connection = mongoose.createConnection(modelURIs[model], {
         serverSelectionTimeoutMS: 30000,
       });
@@ -196,6 +196,15 @@ const connectToDatabaseByModel = async (model) => {
       // Esperar a que la conexión esté lista
       await waitForConnection(connection, model);
       console.log(`✅ MongoDB (${model}) conectado`);
+
+      // Contar elementos en el modelo
+      try {
+        const Model = connection.model(model, require(`../models/domain/${model}.schema`).schema);
+        const count = await Model.countDocuments();
+        console.log(`📊 Total de documentos en ${model}: ${count}`);
+      } catch (countErr) {
+        console.warn(`⚠️ No se pudo contar documentos en ${model}:`, countErr.message);
+      }
     } catch (err) {
       console.error(`🚨 Error al conectar a MongoDB (${model}):`, err);
       throw err;
