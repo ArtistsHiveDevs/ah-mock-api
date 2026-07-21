@@ -19,7 +19,7 @@ const { schema: ArtistAlbum } = require("../models/domain/ArtistAlbum.schema");
 const SECRET_KEY = process.env.ENV_KEY || "d855f76d6fe2ac84f7c0e38a619c5810"; // Mismo de frontend
 const SECRET_IV = process.env.ENV_KEY_IV || "358e8a3a5474d65a"; // Mismo de frontend
 
-const modelsWithCustomConnections = ["Album"];
+const modelsWithCustomConnections = ["Album", "Artist"];
 
 /**
  * Desencripta texto genérico (sin validación de formato)
@@ -167,6 +167,7 @@ const connectToDatabase = async (req) => {
 const connectToDatabaseByModel = async (model) => {
   const modelURIs = {
     Album: process.env.MONGO_ALBUMS_URI,
+    Artist: process.env.MONGO_ARTIST_URI,
   };
 
   if (!modelURIs[model]) {
