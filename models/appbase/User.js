@@ -20,6 +20,7 @@ const roleSchema = new mongoose.Schema(
         username: String,
         subtitle: String,
         verified_status: Number,
+        approval_status: String,
         roles: [String],
       },
     ],
@@ -28,13 +29,16 @@ const roleSchema = new mongoose.Schema(
 );
 
 const schema = new mongoose.Schema({
-  sub: String,
+  // sparse: los Users de login tradicional (sin Cognito) no tienen `sub`, y
+  // viceversa no todos tienen `email` seteado en todo flujo; sparse permite
+  // múltiples documentos sin el campo sin violar el índice único.
+  sub: { type: String, unique: true, sparse: true },
   given_names: String,
   surnames: String,
   stage_name: String,
   username: String,
   currentProfileIdentifier: String,
-  email: String,
+  email: { type: String, unique: true, sparse: true },
   password: String,
   phone_number: String,
   access_token: String,
@@ -68,6 +72,8 @@ const schema = new mongoose.Schema({
   request_industry_member: Number,
   followed_profiles: { type: [FollowerSchema], default: [] },
   followed_by: { type: [FollowerSchema], default: [] },
+  // Se asigna manualmente en la base de datos por ahora, sin endpoint dedicado.
+  is_platform_admin: { type: Boolean, default: false },
 }, {
   timestamps: true
 });

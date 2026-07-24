@@ -100,39 +100,45 @@ app.post("/api/generate-key", helpers.validateEnvironment, async (req, res) => {
   try {
     const UserModel = await getModel(req.serverEnvironment, "User");
 
-    // Construir query con $or para buscar en una sola consulta
-    const orConditions = [];
+    let requestedUser;
 
-    // Si es login AWS, buscar por sub
-    if (sub) {
-      orConditions.push({ sub: sub });
-    }
+    if (isAWSlogin) {
+      // Cognito es la fuente de verdad de identidad: búsqueda exclusiva por
+      // sub, sin fallback a username/email/_id. Mezclarlo en un mismo $or
+      // permitía encontrar (y luego intentar autenticar) un User distinto al
+      // dueño real del sub por coincidencia de email, tapando un desajuste
+      // sub/email en vez de rechazarlo con 404.
+      requestedUser = await UserModel.findOne({ sub });
+    } else {
+      // Construir query con $or para buscar en una sola consulta
+      const orConditions = [];
 
-    if (identifier) {
-      // username, shortID, email
-      orConditions.push(
-        { username: identifier },
-        { shortID: identifier },
-        { email: identifier },
-      );
-
-      // _id si es ObjectId válido
-      const isObjectId = /^[0-9a-fA-F]{24}$/.test(identifier);
-      if (isObjectId) {
-        orConditions.push({ _id: identifier });
-      }
-
-      // sub si es UUID
-      const isUUID =
-        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
-          identifier,
+      if (identifier) {
+        // username, shortID, email
+        orConditions.push(
+          { username: identifier },
+          { shortID: identifier },
+          { email: identifier },
         );
-      if (isUUID) {
-        orConditions.push({ sub: identifier });
-      }
-    }
 
-    const requestedUser = await UserModel.findOne({ $or: orConditions });
+        // _id si es ObjectId válido
+        const isObjectId = /^[0-9a-fA-F]{24}$/.test(identifier);
+        if (isObjectId) {
+          orConditions.push({ _id: identifier });
+        }
+
+        // sub si es UUID
+        const isUUID =
+          /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
+            identifier,
+          );
+        if (isUUID) {
+          orConditions.push({ sub: identifier });
+        }
+      }
+
+      requestedUser = await UserModel.findOne({ $or: orConditions });
+    }
 
     if (!requestedUser) {
       return res.status(404).send({

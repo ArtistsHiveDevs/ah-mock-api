@@ -167,6 +167,14 @@ const schema = new mongoose.Schema(
 
     activity: String,
 
+    // Solo informativo por ahora: no filtra listados públicos ni bloquea acciones.
+    // Ver operations/domain/admin/pendingProfiles/router.js para la cola de revisión.
+    approval_status: {
+      type: String,
+      enum: ["pending", "approved", "rejected"],
+      default: "pending",
+    },
+
     entityRoleMap: [
       {
         ids: [mongoose.Types.ObjectId],

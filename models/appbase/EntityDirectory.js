@@ -43,6 +43,11 @@ const schema = new Schema(
   }
 );
 
+// El namespace de username es global y compartido entre User/Artist/Place
+// (ver normalizeProfileId). sparse evita bloquear documentos legacy sin
+// username mientras protege contra duplicados cuando sí está presente.
+schema.index({ username: 1 }, { unique: true, sparse: true });
+
 /**
  * Virtual para populate de recipients
  */
@@ -129,4 +134,84 @@ async function normalizeProfileId(id, connection) {
   throw new Error(`EntityDirectory not found for identifier: ${id}`);
 }
 
-module.exports = { schema, normalizeProfileId };
+/**
+ * Crea el registro EntityDirectory para una entidad recién creada (Artist/Place/User).
+ * Comparte la lógica de location/search_cache usada tanto por el createEntity genérico
+ * (helpers/crud-actions.js) como por rutas de creación manuales (ej. POST /artists) y
+ * por scripts de backfill.
+ * @param {Object} params
+ * @param {Object} params.entityInfo - { id, shortId, profile_pic, name, username, subtitle, verified_status, approval_status }
+ * @param {string} params.modelName - "Artist" | "Place" | "User"
+ * @param {Object} params.newEntity - Documento recién guardado del modelo (Artist/Place/User)
+ * @param {string} [params.countryName] - Nombre del país (no viene en el propio documento)
+ * @param {import("mongoose").Model} params.EntityDirectoryModel
+ * @returns {Promise<Object>} El documento EntityDirectory creado
+ */
+async function createEntityDirectoryRecord({
+  entityInfo,
+  modelName,
+  newEntity,
+  countryName,
+  EntityDirectoryModel,
+}) {
+  const { removeStringAccents } = require("../../helpers/helperFunctions");
+
+  const entityLocation = newEntity.location?.split(",");
+  const latitude =
+    entityLocation && entityLocation.length && !isNaN(Number(entityLocation[0]))
+      ? Number(entityLocation[0])
+      : null;
+
+  const longitude =
+    entityLocation && entityLocation.length && !isNaN(Number(entityLocation[1]))
+      ? Number(entityLocation[1])
+      : null;
+
+  let locationPrecision = undefined;
+  if (entityLocation && entityLocation.length) {
+    locationPrecision = "POINT";
+  } else if (newEntity.city) {
+    locationPrecision = "CITY";
+  } else if (newEntity.state) {
+    locationPrecision = "STATE";
+  } else if (newEntity.country_alpha2) {
+    locationPrecision = "COUNTRY";
+  }
+
+  const location = {
+    country_name: countryName,
+    country_alpha2: newEntity.country_alpha2,
+    country_alpha3: undefined,
+    state: newEntity.state,
+    city: newEntity.city,
+    address: newEntity.address,
+    latitude,
+    longitude,
+    locationPrecision,
+  };
+
+  const search_cache =
+    [
+      ...new Set(
+        [
+          entityInfo.name,
+          entityInfo.username,
+          entityInfo.subtitle,
+          location.country_name,
+          location.state,
+          location.city,
+        ].filter((v) => v !== undefined)
+      ),
+    ].join(" ") || "";
+
+  const entityDirectory = new EntityDirectoryModel({
+    ...entityInfo,
+    entityType: modelName,
+    search_cache: removeStringAccents(search_cache),
+    location: [location],
+  });
+  await entityDirectory.save();
+  return entityDirectory;
+}
+
+module.exports = { schema, normalizeProfileId, createEntityDirectoryRecord };

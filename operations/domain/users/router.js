@@ -3,6 +3,11 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 var helpers = require("../../../helpers/index");
 var RoutesConstants = require("./constants/index");
+const ErrorCodes = require("../../../constants/errors");
+const {
+  getCognitoEmailBySub,
+  CognitoUserNotFoundError,
+} = require("../../../helpers/cognitoService");
 
 const {
   generateTourOutlines,
@@ -421,6 +426,45 @@ module.exports = [
         }
 
         const UserModel = await getModel(req.serverEnvironment, "User");
+
+        if (req.body.sub) {
+          // Cognito es la única fuente de verdad del email en este flujo: nunca
+          // se guarda el que mande el body, aunque venga distinto o vacío.
+          try {
+            req.body.email = await getCognitoEmailBySub(req.body.sub);
+          } catch (cognitoErr) {
+            if (cognitoErr instanceof CognitoUserNotFoundError) {
+              return res.status(400).send({
+                message: "Cognito user not found for the given sub.",
+                errorCode: ErrorCodes.AUTH_COGNITO_USER_NOT_FOUND,
+              });
+            }
+            console.error("[UserRouter] Error consultando Cognito:", cognitoErr);
+            return res.status(503).send({
+              message: "Could not verify Cognito identity, try again.",
+              errorCode: ErrorCodes.AUTH_COGNITO_UNAVAILABLE,
+            });
+          }
+
+          const existingBySub = await UserModel.findOne({ sub: req.body.sub });
+          if (existingBySub) {
+            return res.status(409).send({
+              message: "A user with this sub is already registered.",
+              errorCode: ErrorCodes.AUTH_SUB_ALREADY_REGISTERED,
+            });
+          }
+        }
+
+        if (req.body.email) {
+          const existingByEmail = await UserModel.findOne({ email: req.body.email });
+          if (existingByEmail) {
+            return res.status(409).send({
+              message: "A user with this email is already registered.",
+              errorCode: ErrorCodes.AUTH_EMAIL_ALREADY_REGISTERED,
+            });
+          }
+        }
+
         const user = new UserModel(req.body);
 
         await user.save();

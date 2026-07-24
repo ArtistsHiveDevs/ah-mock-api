@@ -11,6 +11,10 @@ const ErrorCodes = {
   AUTH_TOKEN_EXPIRED: "AUTH_TOKEN_EXPIRED",
   AUTH_TOKEN_INVALID: "AUTH_TOKEN_INVALID",
   AUTH_PERMISSION_DENIED: "AUTH_PERMISSION_DENIED",
+  AUTH_EMAIL_ALREADY_REGISTERED: "AUTH_EMAIL_ALREADY_REGISTERED", // email ya asociado a otro User (mismo Cognito sub distinto, o registro tradicional)
+  AUTH_SUB_ALREADY_REGISTERED: "AUTH_SUB_ALREADY_REGISTERED", // ese Cognito sub ya tiene un User creado
+  AUTH_COGNITO_USER_NOT_FOUND: "AUTH_COGNITO_USER_NOT_FOUND", // el sub no existe en el User Pool de Cognito
+  AUTH_COGNITO_UNAVAILABLE: "AUTH_COGNITO_UNAVAILABLE", // Cognito no respondió al verificar el email del sub
 
   // Errores de Red
   NETWORK_ERROR: "NETWORK_ERROR",
@@ -22,6 +26,8 @@ const ErrorCodes = {
   VALIDATION_PASSWORD_WEAK: "VALIDATION_PASSWORD_WEAK",
   VALIDATION_FIELD_REQUIRED: "VALIDATION_FIELD_REQUIRED",
   VALIDATION_USERNAME_TAKEN: "VALIDATION_USERNAME_TAKEN",
+  VALIDATION_ERROR: "VALIDATION_ERROR", // Mongoose ValidationError genérico (required, cast, minlength, etc.)
+  VALIDATION_DUPLICATE_KEY: "VALIDATION_DUPLICATE_KEY", // MongoDB E11000 (índice único repetido: username u otro campo)
 
   // Errores de Usuario
   USER_PROFILE_NOT_FOUND: "USER_PROFILE_NOT_FOUND",

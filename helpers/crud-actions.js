@@ -209,15 +209,51 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
     public_fields,
     postScriptFunction,
   }) {
-    const currentProfileIdNormalization = !!user?.currentProfileIdentifier
-      ? await EntityDirectory.normalizeProfileId(
-          user?.currentProfileIdentifier,
+    let currentProfileIdNormalization;
+    let profileNormalizationFailed = false;
+    if (user?.currentProfileIdentifier) {
+      try {
+        currentProfileIdNormalization = await EntityDirectory.normalizeProfileId(
+          user.currentProfileIdentifier,
           connection
-        )
-      : undefined;
-    const currentUserIdNormalization = !!user?.id
-      ? await EntityDirectory.normalizeProfileId(user?.id, connection)
-      : undefined;
+        );
+      } catch (err) {
+        console.warn(
+          `[listEntities:${modelName}] normalizeProfileId falló para currentProfileIdentifier="${user.currentProfileIdentifier}": ${err.message}`
+        );
+        profileNormalizationFailed = true;
+      }
+    }
+
+    let currentUserIdNormalization;
+    let userNormalizationFailed = false;
+    if (user?.id) {
+      try {
+        currentUserIdNormalization = await EntityDirectory.normalizeProfileId(
+          user.id,
+          connection
+        );
+      } catch (err) {
+        console.warn(
+          `[listEntities:${modelName}] normalizeProfileId falló para user.id="${user.id}": ${err.message}`
+        );
+        userNormalizationFailed = true;
+      }
+    }
+
+    // Fail-closed: si algún filtro depende de "sameProfile"/"sameUser" y esa normalización
+    // falló, no hay forma segura de acotar la query por identidad — devolvemos vacío en vez
+    // de listar sin ese filtro (evita exponer datos de otros perfiles/usuarios).
+    const needsFailedProfileFilter =
+      profileNormalizationFailed &&
+      (filters || []).some((filter) => filter.compareWith === "sameProfile");
+    const needsFailedUserFilter =
+      userNormalizationFailed &&
+      (filters || []).some((filter) => filter.compareWith === "sameUser");
+
+    if (needsFailedProfileFilter || needsFailedUserFilter) {
+      return apiHelperFunctions.createPaginatedDataResponse([], page, 0);
+    }
 
     try {
       // Obtener campos de proyección de la configuración
@@ -636,11 +672,15 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       };
     }
 
-    // Obtener campos de proyección de la configuración
-    const projectionFields = routesConstants?.parametric_public_fields?.[
-      modelName
-    ]?.summary ??
-      routesConstants?.authenticated_fields ?? ["name"];
+    // Obtener campos de proyección de la configuración. Si la entidad no define
+    // public_fields propios ni tiene entrada en parametric_public_fields, NO se
+    // restringe la proyección (se listan todos los campos reales del schema) en
+    // vez de caer en los campos de Artist (routesConstants es siempre el de Artist),
+    // que casi nunca coinciden con los de la entidad real consultada.
+    const projectionFields =
+      public_fields ??
+      routesConstants?.parametric_public_fields?.[modelName]?.summary ??
+      Object.keys(model.schema.tree);
 
     // Crear proyección para select()
     const modelFields = model.schema.paths.i18n
@@ -659,18 +699,17 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       ...modelFields
         .filter((field) => {
           const fieldType = model.schema.paths[field];
+          // Requiere `ref` explícito, no solo tipo ObjectId: "_id" es ObjectId
+          // pero no referencia otra colección (y no tiene `.caster`, propio de arrays).
           return (
             fieldType &&
-            (fieldType.instance.toLowerCase() === "objectid" ||
-              (fieldType.instance.toLowerCase() === "array" &&
-                fieldType.caster &&
-                fieldType.caster?.instance?.toLowerCase() === "objectid"))
+            !!(fieldType.options?.ref || fieldType.caster?.options?.ref)
           );
         })
         .map((field) => {
           const refModelName =
-            model.schema.paths[field].options.ref ||
-            model.schema.paths[field].caster.options.ref;
+            model.schema.paths[field].options?.ref ||
+            model.schema.paths[field].caster?.options?.ref;
 
           // Obtener el modelo de referencia dinámicamente
           const refModel = connection.model(refModelName);
@@ -941,69 +980,17 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
             username: newEntity.username,
             subtitle: newEntity.subtitle,
             verified_status: newEntity.verified_status,
+            approval_status: newEntity.approval_status,
             roles: ["OWNER"],
           };
           if (modelRequiresEntityIndex(modelName)) {
-            const entityLocation = newEntity.location?.split(",");
-            const latitude =
-              entityLocation &&
-              entityLocation.length &&
-              !isNaN(Number(entityLocation[0]))
-                ? Number(entityLocation[0])
-                : null;
-
-            const longitude =
-              entityLocation &&
-              entityLocation.length &&
-              !isNaN(Number(entityLocation[1]))
-                ? Number(entityLocation[1])
-                : null;
-
-            let locationPrecision = undefined;
-            if (entityLocation && entityLocation.length) {
-              locationPrecision = "POINT";
-            } else if (newEntity.city) {
-              locationPrecision = "CITY";
-            } else if (newEntity.state) {
-              locationPrecision = "STATE";
-            } else if (newEntity.country_alpha2) {
-              locationPrecision = "COUNTRY";
-            }
-
-            const location = {
-              country_name: info.country_name,
-              country_alpha2: newEntity.country_alpha2,
-              country_alpha3: undefined,
-              state: newEntity.state,
-              city: newEntity.city,
-              address: newEntity.address,
-              latitude,
-              longitude,
-              locationPrecision,
-            };
-
-            const search_cache =
-              [
-                ...new Set(
-                  [
-                    entityInfo.name,
-                    entityInfo.username,
-                    entityInfo.subtitle,
-                    location.country_name,
-                    location.state,
-                    location.city,
-                  ].filter((v) => v !== undefined)
-                ),
-              ].join(" ") || "";
-
-            const entityDirectory = new EntityDirectoryModel({
-              ...entityInfo,
-              entityType: modelName,
-              search_cache: helpers.removeStringAccents(search_cache),
-              location: [location],
-              // main_date: [location],
+            await EntityDirectory.createEntityDirectoryRecord({
+              entityInfo,
+              modelName,
+              newEntity,
+              countryName: info.country_name,
+              EntityDirectoryModel,
             });
-            await entityDirectory.save();
           }
           ownerRoles.entityRoleMap.push(entityInfo);
           entityInfo.roles.push("OWNER");
@@ -1119,6 +1106,18 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         { $set: newInfo },
         { new: true }
       );
+
+      if (
+        modelRequiresEntityIndex(modelName) &&
+        helpers.hasToUpdateUserRoleMap(newInfo)
+      ) {
+        await helpers.syncEntityRoleMapUserSnapshots({
+          entityName: modelName,
+          updatedEntity,
+          newInfo,
+          UserModel,
+        });
+      }
 
       return apiHelperFunctions.createPaginatedDataResponse(updatedEntity);
     } else {

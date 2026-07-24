@@ -447,12 +447,31 @@ function getWriteMiddlewares() {
   return [...getBaseMiddlewares(), validateAuthenticatedUser];
 }
 
+/**
+ * Middleware que restringe el acceso a usuarios con is_platform_admin === true.
+ * Requiere ejecutarse después de validateAuthenticatedUser (necesita req.user).
+ * A diferencia del ownership de entidad (OWNER/ADMIN en entityRoleMap), esto es
+ * un rol de plataforma: el dueño de un Artist/Place NO puede autoaprobarse.
+ */
+function requirePlatformAdmin(req, res, next) {
+  if (!req.user?.is_platform_admin) {
+    // Mismo status/errorCode que el resto de los chequeos de permiso ya
+    // existentes en el repo (ver PUT /artists/:id en operations/domain/artists/router.js).
+    return res.status(401).send({
+      message: "Requires platform admin privileges.",
+      errorCode: ErrorCodes.AUTH_PERMISSION_DENIED,
+    });
+  }
+  next();
+}
+
 module.exports = {
   validateApiKey,
   validateAuthenticatedUser,
   // validateOwnerRole,
   validateIfUserExists,
   validateEnvironment,
+  requirePlatformAdmin,
   // Helper functions
   modelRequiresAuth,
   getBaseMiddlewares,
