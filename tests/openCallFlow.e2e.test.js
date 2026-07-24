@@ -15,6 +15,30 @@
  */
 
 const crypto = require("crypto");
+const mongoose = require("mongoose");
+
+// Mock de helpers/cognitoService: en test no hay cognito-local corriendo.
+// Por default resuelve un email determinístico distinto por sub; los tests
+// que necesitan simular un email específico (o un sub que Cognito desconoce)
+// lo configuran con __setMockCognitoEmail/__setMockCognitoNotFound.
+jest.mock("../helpers/cognitoService", () => {
+  const emailsBySub = new Map();
+  const notFoundSubs = new Set();
+
+  class CognitoUserNotFoundError extends Error {}
+
+  return {
+    CognitoUserNotFoundError,
+    getCognitoEmailBySub: jest.fn(async (sub) => {
+      if (notFoundSubs.has(sub)) {
+        throw new CognitoUserNotFoundError(`mock: sub ${sub} not found`);
+      }
+      return emailsBySub.get(sub) || `${sub}@cognito.test`;
+    }),
+    __setMockCognitoEmail: (sub, email) => emailsBySub.set(sub, email),
+    __setMockCognitoNotFound: (sub) => notFoundSubs.add(sub),
+  };
+});
 
 // Claves de cifrado del header `x-env`. Se fijan ANTES de requerir cualquier
 // módulo de la app para que dotenv no las sobreescriba con las reales del .env,
@@ -23,6 +47,11 @@ process.env.ENV_KEY = "a".repeat(32);
 process.env.ENV_KEY_IV = "b".repeat(16);
 
 const TEST_ENV = "dev";
+
+// Place.country solo valida que sea un ObjectId con forma válida (no hay
+// constraint de FK en Mongoose), así que un id no persistido alcanza para
+// satisfacer `required: true` sin necesitar seedear un Country real.
+const FAKE_COUNTRY_ID = new mongoose.Types.ObjectId().toString();
 
 let request;
 let mongoServer;
@@ -119,7 +148,14 @@ describe("Flujo de negocio: Open Call (Place publica, Artist aplica)", () => {
     const createPlaceRes = await request(app)
       .post("/places")
       .set(authHeaders(userAToken))
-      .send({ name: "Test Place A", genres: {} });
+      .send({
+        username: `test_place_a_${runId}`,
+        name: "Test Place A",
+        place_type: "Bar",
+        city: "Bogotá",
+        country: FAKE_COUNTRY_ID,
+        genres: {},
+      });
 
     expect([200, 201]).toContain(createPlaceRes.status);
     const placeAId = createPlaceRes.body?.data?._id;
@@ -273,7 +309,14 @@ describe("Flujo de negocio: Open Call (Place publica, Artist aplica)", () => {
     const createPlaceDRes = await request(app)
       .post("/places")
       .set(authHeaders(userDToken))
-      .send({ name: "Test Place D", genres: {} });
+      .send({
+        username: `test_place_d_${runId}`,
+        name: "Test Place D",
+        place_type: "Bar",
+        city: "Bogotá",
+        country: FAKE_COUNTRY_ID,
+        genres: {},
+      });
     expect([200, 201]).toContain(createPlaceDRes.status);
     expect(createPlaceDRes.body?.data?._id).toBeTruthy();
 
@@ -318,6 +361,239 @@ describe("Flujo de negocio: Open Call (Place publica, Artist aplica)", () => {
   });
 });
 
+describe("Fix: POST /places exige username, name, place_type, city y country", () => {
+  const validPlacePayload = {
+    username: "test_place_required_fields",
+    name: "Test Place Required Fields",
+    place_type: "Bar",
+    city: "Bogotá",
+    country: FAKE_COUNTRY_ID,
+  };
+
+  test.each([
+    ["username", { ...validPlacePayload, username: undefined }],
+    ["name", { ...validPlacePayload, name: undefined }],
+    ["place_type", { ...validPlacePayload, place_type: undefined }],
+    ["city", { ...validPlacePayload, city: undefined }],
+    ["country", { ...validPlacePayload, country: undefined }],
+  ])(
+    "rechaza la creación sin '%s' en vez de responder 200/201",
+    async (_missingField, payload) => {
+      const runId = Date.now();
+      const sub = `sub-place-required-${_missingField}-${runId}`;
+      const registerRes = await registerUser({
+        sub,
+        username: `place_required_${_missingField}_${runId}`,
+      });
+      expect(registerRes.status).toBe(201);
+
+      const token = await loginUser(sub);
+
+      const createPlaceRes = await request(app)
+        .post("/places")
+        .set(authHeaders(token))
+        .send(payload);
+
+      expect(createPlaceRes.status).toBe(400);
+      expect(createPlaceRes.body?.errorCode).toBe("VALIDATION_ERROR");
+    },
+  );
+
+  test("crea el Place cuando vienen los 5 campos requeridos", async () => {
+    const runId = Date.now();
+    const sub = `sub-place-required-ok-${runId}`;
+    const registerRes = await registerUser({
+      sub,
+      username: `place_required_ok_${runId}`,
+    });
+    expect(registerRes.status).toBe(201);
+
+    const token = await loginUser(sub);
+
+    const createPlaceRes = await request(app)
+      .post("/places")
+      .set(authHeaders(token))
+      .send(validPlacePayload);
+
+    expect([200, 201]).toContain(createPlaceRes.status);
+    expect(createPlaceRes.body?.data?._id).toBeTruthy();
+  });
+});
+
+describe("Fix de seguridad: POST /places rechaza username duplicado", () => {
+  test("el segundo Place con el mismo username que uno ya existente falla (no 200/201)", async () => {
+    const runId = Date.now();
+    const sharedUsername = `duplicate_place_username_${runId}`;
+
+    const subOwner1 = `sub-place-dup-owner1-${runId}`;
+    const registerOwner1 = await registerUser({
+      sub: subOwner1,
+      username: `place_dup_owner1_${runId}`,
+    });
+    expect(registerOwner1.status).toBe(201);
+    const owner1Token = await loginUser(subOwner1);
+
+    const firstPlaceRes = await request(app)
+      .post("/places")
+      .set(authHeaders(owner1Token))
+      .send({
+        username: sharedUsername,
+        name: "Duplicate Username Place 1",
+        place_type: "Bar",
+        city: "Bogotá",
+        country: FAKE_COUNTRY_ID,
+      });
+    expect([200, 201]).toContain(firstPlaceRes.status);
+    expect(firstPlaceRes.body?.data?._id).toBeTruthy();
+
+    const subOwner2 = `sub-place-dup-owner2-${runId}`;
+    const registerOwner2 = await registerUser({
+      sub: subOwner2,
+      username: `place_dup_owner2_${runId}`,
+    });
+    expect(registerOwner2.status).toBe(201);
+    const owner2Token = await loginUser(subOwner2);
+
+    const secondPlaceRes = await request(app)
+      .post("/places")
+      .set(authHeaders(owner2Token))
+      .send({
+        username: sharedUsername,
+        name: "Duplicate Username Place 2",
+        place_type: "Bar",
+        city: "Bogotá",
+        country: FAKE_COUNTRY_ID,
+      });
+
+    expect(secondPlaceRes.status).toBe(409);
+    expect(secondPlaceRes.body?.errorCode).toBe("VALIDATION_DUPLICATE_KEY");
+    expect(secondPlaceRes.body?.message).toMatch(/username/i);
+  });
+});
+
+describe("Fix: GET /places/:id devuelve los campos reales de Place (no los de Artist)", () => {
+  test("el detalle de un Place recién creado incluye place_type, country, city y entityRoleMap", async () => {
+    const { getModel } = require("../helpers/getModel");
+    const CountryModel = await getModel(TEST_ENV, "Country");
+
+    // País real (a diferencia de FAKE_COUNTRY_ID) para poder verificar que
+    // findEntityById también popula la referencia, no solo que exista la key.
+    const country = await CountryModel.create({
+      name: "Testlandia",
+      native: "Testlandia",
+      phone: [999],
+      official_name: "República de Testlandia",
+    });
+
+    const runId = Date.now();
+    const sub = `sub-place-detail-${runId}`;
+    const registerRes = await registerUser({
+      sub,
+      username: `place_detail_${runId}`,
+    });
+    expect(registerRes.status).toBe(201);
+
+    const token = await loginUser(sub);
+
+    const createPlaceRes = await request(app)
+      .post("/places")
+      .set(authHeaders(token))
+      .send({
+        username: `test_place_detail_${runId}`,
+        name: "Test Place Detail",
+        place_type: "Bar",
+        city: "Bogotá",
+        country: country._id.toString(),
+        genres: { rock: ["indie"] },
+      });
+
+    expect([200, 201]).toContain(createPlaceRes.status);
+    const placeId = createPlaceRes.body?.data?._id;
+    expect(placeId).toBeTruthy();
+
+    const getPlaceRes = await request(app)
+      .get(`/places/${placeId}`)
+      .set(authHeaders(token));
+
+    expect(getPlaceRes.status).toBe(200);
+    const place = getPlaceRes.body?.data;
+    expect(place).toBeTruthy();
+    expect(place.place_type).toBe("Bar");
+    expect(place.country).toBeTruthy();
+    expect(place.country.name).toBe("Testlandia");
+    expect(place.city).toBe("Bogotá");
+    expect(place.entityRoleMap).toBeTruthy();
+    expect(place.entityRoleMap.length).toBeGreaterThan(0);
+  });
+});
+
+describe("Fix: GET /open-calls (listado) devuelve los campos reales de OpenCall (no los de Artist)", () => {
+  test("una OpenCall completa recién creada aparece en el listado con event_name, status y place_id", async () => {
+    const runId = Date.now();
+    const sub = `sub-opencall-list-${runId}`;
+    const registerRes = await registerUser({
+      sub,
+      username: `opencall_list_${runId}`,
+    });
+    expect(registerRes.status).toBe(201);
+
+    const token = await loginUser(sub);
+
+    const createPlaceRes = await request(app)
+      .post("/places")
+      .set(authHeaders(token))
+      .send({
+        username: `test_place_opencall_list_${runId}`,
+        name: "Test Place Open Call List",
+        place_type: "Bar",
+        city: "Bogotá",
+        country: FAKE_COUNTRY_ID,
+        genres: {},
+      });
+    expect([200, 201]).toContain(createPlaceRes.status);
+    const placeId = createPlaceRes.body?.data?._id;
+    expect(placeId).toBeTruthy();
+
+    const createOpenCallRes = await request(app)
+      .post("/open-calls")
+      .set(authHeaders(token))
+      .send({
+        place_id: placeId,
+        event_name: "Convocatoria completa de prueba",
+        event_date: "2026-09-01",
+        start_date: "2026-09-01",
+        end_date: "2026-09-02",
+        city: "Bogotá",
+        status: "OPEN",
+        description: "Descripción de prueba",
+        genres: ["rock"],
+        max_applications: 10,
+        fee_currency: "USD",
+        fee_amount: 100,
+      });
+    expect([200, 201]).toContain(createOpenCallRes.status);
+    const openCallId = createOpenCallRes.body?.data?._id;
+    expect(openCallId).toBeTruthy();
+    expect(createOpenCallRes.body?.data?.event_name).toBe(
+      "Convocatoria completa de prueba",
+    );
+
+    const listOpenCallsRes = await request(app)
+      .get("/open-calls")
+      .set(authHeaders(token));
+
+    expect(listOpenCallsRes.status).toBe(200);
+    const listedOpenCall = (listOpenCallsRes.body?.data || []).find(
+      (openCall) => openCall._id === openCallId,
+    );
+    expect(listedOpenCall).toBeTruthy();
+    expect(listedOpenCall.event_name).toBe("Convocatoria completa de prueba");
+    expect(listedOpenCall.status).toBe("OPEN");
+    expect(listedOpenCall.place_id).toBeTruthy();
+    expect(listedOpenCall.fee_amount).toBe(100);
+  });
+});
+
 describe("Fix de seguridad: PUT /users/:id no persiste el password en texto plano", () => {
   test("actualizar el perfil con un password nuevo lo guarda hasheado, no en texto plano", async () => {
     const bcrypt = require("bcryptjs");
@@ -352,5 +628,232 @@ describe("Fix de seguridad: PUT /users/:id no persiste el password en texto plan
     await expect(
       bcrypt.compare(plainTextPassword, storedUser.password),
     ).resolves.toBe(true);
+  });
+});
+
+describe("Fix: PUT /places/:id resincroniza el snapshot en User.roles[].entityRoleMap", () => {
+  test("cambiar el username de un Place actualiza el snapshot en el User owner, no solo el Place", async () => {
+    const { getModel } = require("../helpers/getModel");
+
+    const runId = Date.now();
+    const sub = `sub-place-username-sync-${runId}`;
+    const oldUsername = `test_place_sync_old_${runId}`;
+    const newUsername = `test_place_sync_new_${runId}`;
+
+    const registerRes = await registerUser({
+      sub,
+      username: `place_sync_owner_${runId}`,
+    });
+    expect(registerRes.status).toBe(201);
+    const userId = registerRes.body?.data?._id;
+    expect(userId).toBeTruthy();
+
+    const token = await loginUser(sub);
+
+    const createPlaceRes = await request(app)
+      .post("/places")
+      .set(authHeaders(token))
+      .send({
+        username: oldUsername,
+        name: "Test Place Sync",
+        place_type: "Bar",
+        city: "Bogotá",
+        country: FAKE_COUNTRY_ID,
+        genres: {},
+      });
+    expect([200, 201]).toContain(createPlaceRes.status);
+    const placeId = createPlaceRes.body?.data?._id;
+    expect(placeId).toBeTruthy();
+
+    const updatePlaceRes = await request(app)
+      .put(`/places/${placeId}`)
+      .set(authHeaders(token))
+      .send({ username: newUsername });
+
+    expect(updatePlaceRes.status).toBe(200);
+    expect(updatePlaceRes.body?.data?.username).toBe(newUsername);
+
+    const UserModel = await getModel(TEST_ENV, "User");
+    const storedUser = await UserModel.findById(userId);
+
+    const placeRole = storedUser.roles.find(
+      (role) => role.entityName === "Place",
+    );
+    expect(placeRole).toBeTruthy();
+
+    const roleMapEntry = placeRole.entityRoleMap.find(
+      (entry) => entry.id === placeId,
+    );
+    expect(roleMapEntry).toBeTruthy();
+    expect(roleMapEntry.username).toBe(newUsername);
+    expect(roleMapEntry.username).not.toBe(oldUsername);
+  });
+});
+
+describe("Fix de seguridad: registro Cognito toma el email real de Cognito y rechaza duplicados", () => {
+  test("el email guardado es el que devuelve Cognito por sub, no el que manda el body", async () => {
+    const { __setMockCognitoEmail } = require("../helpers/cognitoService");
+    const { getModel } = require("../helpers/getModel");
+
+    const runId = Date.now();
+    const sub = `sub-cognito-real-email-${runId}`;
+    const realCognitoEmail = `real_${runId}@cognito.test`;
+    __setMockCognitoEmail(sub, realCognitoEmail);
+
+    const registerRes = await request(app)
+      .post("/users")
+      .set(preAuthHeaders("user_signup"))
+      .send({
+        sub,
+        username: `cognito_real_email_${runId}`,
+        given_names: "Test",
+        surnames: "User",
+        // Email divergente armado por el cliente: no debe persistirse.
+        email: `wrong_${runId}@fake-client-payload.test`,
+      });
+
+    expect(registerRes.status).toBe(201);
+    expect(registerRes.body?.data?.email).toBe(realCognitoEmail);
+
+    const UserModel = await getModel(TEST_ENV, "User");
+    const storedUser = await UserModel.findOne({ sub });
+    expect(storedUser.email).toBe(realCognitoEmail);
+  });
+
+  test("un sub nuevo cuyo email de Cognito coincide con el de una cuenta existente (sub distinto) es rechazado, sin crear un segundo User", async () => {
+    const { __setMockCognitoEmail } = require("../helpers/cognitoService");
+    const { getModel } = require("../helpers/getModel");
+
+    const runId = Date.now();
+    const sharedEmail = `shared_${runId}@example.com`;
+
+    const subOriginal = `sub-cognito-dup-original-${runId}`;
+    __setMockCognitoEmail(subOriginal, sharedEmail);
+    const registerOriginal = await registerUser({
+      sub: subOriginal,
+      username: `cognito_dup_original_${runId}`,
+    });
+    expect(registerOriginal.status).toBe(201);
+
+    // Caso real de hoy: un sub distinto cuyo email (según Cognito) coincide
+    // con uno ya registrado -- se rechaza en vez de crear un segundo User
+    // con el mismo email apuntando a otra identidad de Cognito.
+    const subDivergent = `sub-cognito-dup-divergent-${runId}`;
+    __setMockCognitoEmail(subDivergent, sharedEmail);
+    const registerDivergent = await registerUser({
+      sub: subDivergent,
+      username: `cognito_dup_divergent_${runId}`,
+    });
+
+    expect(registerDivergent.status).toBe(409);
+    expect(registerDivergent.body?.errorCode).toBe(
+      "AUTH_EMAIL_ALREADY_REGISTERED",
+    );
+
+    const UserModel = await getModel(TEST_ENV, "User");
+    const usersWithEmail = await UserModel.find({ email: sharedEmail });
+    expect(usersWithEmail).toHaveLength(1);
+    expect(usersWithEmail[0].sub).toBe(subOriginal);
+  });
+
+  test("registrar dos veces el mismo email por la vía tradicional (sin sub) es rechazado en el segundo intento", async () => {
+    const runId = Date.now();
+    const email = `traditional_dup_${runId}@example.com`;
+
+    const firstRegister = await request(app)
+      .post("/users")
+      .set(preAuthHeaders("user_signup"))
+      .send({
+        email,
+        password: "SuperSecret123!",
+        username: `traditional_dup_1_${runId}`,
+        given_names: "Test",
+        surnames: "User",
+      });
+    expect(firstRegister.status).toBe(201);
+
+    const secondRegister = await request(app)
+      .post("/users")
+      .set(preAuthHeaders("user_signup"))
+      .send({
+        email,
+        password: "OtherSecret123!",
+        username: `traditional_dup_2_${runId}`,
+        given_names: "Test",
+        surnames: "User",
+      });
+
+    expect(secondRegister.status).toBe(409);
+    expect(secondRegister.body?.errorCode).toBe(
+      "AUTH_EMAIL_ALREADY_REGISTERED",
+    );
+  });
+
+  test("un sub que no existe en Cognito es rechazado sin crear el User", async () => {
+    const { __setMockCognitoNotFound } = require("../helpers/cognitoService");
+    const { getModel } = require("../helpers/getModel");
+
+    const runId = Date.now();
+    const sub = `sub-cognito-unknown-${runId}`;
+    __setMockCognitoNotFound(sub);
+
+    const registerRes = await request(app)
+      .post("/users")
+      .set(preAuthHeaders("user_signup"))
+      .send({ sub, username: `cognito_unknown_${runId}` });
+
+    expect(registerRes.status).toBe(400);
+    expect(registerRes.body?.errorCode).toBe("AUTH_COGNITO_USER_NOT_FOUND");
+
+    const UserModel = await getModel(TEST_ENV, "User");
+    expect(await UserModel.findOne({ sub })).toBeNull();
+  });
+});
+
+describe("Fix de seguridad: login Cognito busca exclusivamente por sub, sin fallback a email", () => {
+  test("el mismo bug de hoy: un sub sin registrar no loguea encontrando por email una cuenta de otro sub", async () => {
+    const { __setMockCognitoEmail } = require("../helpers/cognitoService");
+
+    const runId = Date.now();
+    const sharedEmail = `login_shared_${runId}@example.com`;
+
+    const subA = `sub-login-owner-${runId}`;
+    __setMockCognitoEmail(subA, sharedEmail);
+    const registerA = await registerUser({
+      sub: subA,
+      username: `login_owner_${runId}`,
+    });
+    expect(registerA.status).toBe(201);
+
+    const tokenA = await loginUser(subA);
+    expect(typeof tokenA).toBe("string");
+    expect(tokenA.length).toBeGreaterThan(0);
+
+    // subB nunca se registró. Antes del fix, un $or que mezclaba sub y email
+    // podía encontrar al User de A por el email compartido y fallar recién
+    // en el chequeo posterior de sub -- acá debe ser 404 directo, sin
+    // encontrar ninguna cuenta.
+    const subB = `sub-login-intruder-${runId}`;
+    const loginBRes = await request(app)
+      .post("/api/generate-key")
+      .set(envHeaders())
+      .send({ sub: subB, email: sharedEmail });
+
+    expect(loginBRes.status).toBe(404);
+    expect(loginBRes.body?.errorCode).toBe("AUTH_USER_NOT_FOUND");
+  });
+
+  test("login Cognito con el sub correcto sigue funcionando (caso feliz no roto por el fix)", async () => {
+    const runId = Date.now();
+    const sub = `sub-login-happy-${runId}`;
+    const registerRes = await registerUser({
+      sub,
+      username: `login_happy_${runId}`,
+    });
+    expect(registerRes.status).toBe(201);
+
+    const token = await loginUser(sub);
+    expect(typeof token).toBe("string");
+    expect(token.length).toBeGreaterThan(0);
   });
 });

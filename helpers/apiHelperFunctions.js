@@ -1,3 +1,5 @@
+const ErrorCodes = require("../constants/errors");
+
 module.exports = {
   createPaginatedDataResponse(data, currentPage = 1, totalPages = 1) {
     return {
@@ -11,6 +13,48 @@ module.exports = {
   },
   sendError(response, errorContent) {
     response.status(errorContent?.errorCode || 500).json(errorContent);
+  },
+
+  // Traduce un error atrapado en un handler del CRUD genérico (helpers/crud-routes.js)
+  // a { status, body } diferenciando validación (Mongoose ValidationError),
+  // duplicado (MongoDB E11000) y cualquier otro error, que sigue cayendo en 500
+  // con el mismo shape que antes para no romper contratos existentes.
+  mapDatabaseErrorToResponse(err) {
+    if (err?.name === "ValidationError") {
+      const fieldMessages = Object.values(err.errors || {}).map(
+        (fieldError) => fieldError.message
+      );
+      return {
+        status: 400,
+        body: this.createAPIErrorResponse(
+          fieldMessages.length ? fieldMessages.join(" ") : err.message,
+          ErrorCodes.VALIDATION_ERROR
+        ),
+      };
+    }
+
+    if (err?.code === 11000) {
+      // Mongo expone el campo duplicado en keyValue/keyPattern; si el driver no los
+      // provee, se intenta extraer del nombre del índice en el mensaje crudo (ej. "username_1").
+      const duplicatedField =
+        Object.keys(err.keyValue || err.keyPattern || {})[0] ||
+        err.message?.match(/index:\s*(\w+?)(?:_\d+)?\s/)?.[1];
+
+      return {
+        status: 409,
+        body: this.createAPIErrorResponse(
+          duplicatedField
+            ? `El valor de '${duplicatedField}' ya está en uso.`
+            : "Ya existe un registro con ese valor único.",
+          ErrorCodes.VALIDATION_DUPLICATE_KEY
+        ),
+      };
+    }
+
+    return {
+      status: 500,
+      body: { message: err.message },
+    };
   },
 
   translateDBResults({ results, lang }) {

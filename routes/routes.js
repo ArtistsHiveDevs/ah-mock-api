@@ -13,6 +13,7 @@ var termsAndConditionsRouter = require("../operations/app/policies/termsAndCondi
 var privacyRouter = require("../operations/app/policies/privacyPolicy/router");
 var faqRouter = require("../operations/app/faq/router");
 var notificationsRouter = require("../operations/system/notifications/router");
+var pendingProfilesRouter = require("../operations/domain/admin/pendingProfiles/router");
 const createCRUDRoutes = require("../helpers/crud-routes");
 const Place = require("../models/domain/Place.schema");
 const Event = require("../models/domain/Event.schema");
@@ -343,6 +344,43 @@ function loadRoutes() {
         schema: Place.schema,
         options: {
           randomizeGetAll: true,
+          public_fields: [
+            "_id",
+            "id",
+            "username",
+            "name",
+            "place_type",
+            "music_genre",
+            "country",
+            "country_alpha2",
+            "state",
+            "city",
+            "address",
+            "location",
+            "email",
+            "phone",
+            "public_private",
+            "spoken_languages",
+            "stage_languages",
+            "facebook",
+            "instagram",
+            "twitter",
+            "website",
+            "promoter",
+            "tiktok",
+            "subtitle",
+            "profile_pic",
+            "verified_status",
+            "image_gallery",
+            "activity",
+            "has_open_mic",
+            "genres",
+            "stats",
+            "entityRoleMap",
+            "total_audience_capacity",
+            "followed_profiles",
+            "followed_by",
+          ],
           customPopulateFields: [
             {
               path: "events",
@@ -572,6 +610,85 @@ function loadRoutes() {
         modelName: "OpenCall",
         schema: OpenCall.schema,
         options: {
+          // Campos reales de OpenCall.schema.js. Sin esto, listEntities() cae a
+          // routesConstants.public_fields (los campos de Artist, importado al tope
+          // de crud-actions.js), y el listado devuelve casi todo vacío.
+          public_fields: [
+            "_id",
+            "event_name",
+            "event_date",
+            "start_date",
+            "end_date",
+            "place_id",
+            "city",
+            "status",
+            "description",
+            "genres",
+            "event_location",
+            "country",
+            "accepted_project_types",
+            "max_applications",
+            "requirements_description",
+            "stage_type",
+            "stage_dimensions",
+            "set_duration_min",
+            "set_duration_max",
+            "available_slots",
+            "expected_audience",
+            "provided_sound",
+            "provided_backline",
+            "provided_lighting",
+            "technical_notes",
+            "fee_currency",
+            "fee_amount",
+            "travel_support",
+            "accommodation_provided",
+            "meals_provided",
+            "additional_notes",
+            "applications_count",
+            "created_by",
+            "entityRoleMap",
+            "createdAt",
+            "updatedAt",
+          ],
+          authenticated_fields: [
+            "_id",
+            "event_name",
+            "event_date",
+            "start_date",
+            "end_date",
+            "place_id",
+            "city",
+            "status",
+            "description",
+            "genres",
+            "event_location",
+            "country",
+            "accepted_project_types",
+            "max_applications",
+            "requirements_description",
+            "stage_type",
+            "stage_dimensions",
+            "set_duration_min",
+            "set_duration_max",
+            "available_slots",
+            "expected_audience",
+            "provided_sound",
+            "provided_backline",
+            "provided_lighting",
+            "technical_notes",
+            "fee_currency",
+            "fee_amount",
+            "travel_support",
+            "accommodation_provided",
+            "meals_provided",
+            "additional_notes",
+            "applications_count",
+            "created_by",
+            "entityRoleMap",
+            "createdAt",
+            "updatedAt",
+          ],
           customPopulateFields: [
             {
               path: "place_id",
@@ -655,6 +772,19 @@ function loadRoutes() {
 
             await validateArtistOwnership(body.artist_id, req);
           },
+          // `applications_count` es un contador denormalizado en OpenCall (usado por el listado
+          // de Places). No se actualiza solo: hay que incrementarlo cada vez que se crea una
+          // application. Si en algún momento se agrega DELETE para OpenCallApplication, hace
+          // falta un decremento equivalente ahí (hoy no existe postDeleteFunction).
+          postCreateFunction: async ({ entity, req }) => {
+            const OpenCallModel = await getModel(
+              req.connection.environment,
+              "OpenCall",
+            );
+            await OpenCallModel.findByIdAndUpdate(entity.open_call_id, {
+              $inc: { applications_count: 1 },
+            });
+          },
           listQueryFilter: buildOpenCallApplicationsVisibilityFilter,
           actions: {
             // Acción para que el OWNER/ADMIN del Place dueño de la Open Call acepte o
@@ -723,6 +853,10 @@ function loadRoutes() {
     { path: "/privacy", route: { router: privacyRouter } },
     { path: "/faq", route: { router: faqRouter } },
     { path: "/notifications", route: { router: notificationsRouter } },
+    {
+      path: "/admin/pending-profiles",
+      route: { router: pendingProfilesRouter },
+    },
   ];
 }
 

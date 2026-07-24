@@ -5,6 +5,7 @@ const userRoleMapFields = [
   "username",
   "subtitle",
   "verified_status",
+  "approval_status",
   "roles",
 ];
 module.exports = {
@@ -534,6 +535,66 @@ module.exports = {
   hasToUpdateUserRoleMap(updateInfo) {
     return Object.keys(updateInfo).some((updateKey) =>
       userRoleMapFields.includes(updateKey)
+    );
+  },
+  // Resincroniza el snapshot denormalizado en User.roles[].entityRoleMap (name,
+  // username, etc.) luego de actualizar la entidad dueña de esos datos, para
+  // todo usuario relacionado (cualquier role, no solo OWNER/ADMIN) vía
+  // entityRoleMap.ids de la entidad. Ver mismo patrón (no reutilizado, para no
+  // tocar código ya funcionando) en operations/domain/artists/router.js.
+  async syncEntityRoleMapUserSnapshots({
+    entityName,
+    updatedEntity,
+    newInfo,
+    UserModel,
+  }) {
+    if (!updatedEntity?.entityRoleMap) return;
+
+    const roleMapNewInfo = userRoleMapFields.reduce((result, key) => {
+      if (newInfo.hasOwnProperty(key)) {
+        result[key] = newInfo[key];
+      }
+      return result;
+    }, {});
+
+    if (Object.keys(roleMapNewInfo).length === 0) return;
+
+    const mongoose = require("mongoose");
+    const entityRoleMapId = updatedEntity._id;
+
+    const updateFields = {};
+    Object.keys(roleMapNewInfo).forEach((key) => {
+      updateFields[
+        `roles.$[roleElement].entityRoleMap.$[mapElement].${key}`
+      ] = roleMapNewInfo[key];
+    });
+
+    const relatedUserIds = [
+      ...new Set(
+        updatedEntity.entityRoleMap.flatMap((role) =>
+          (role.ids || []).map((relatedId) => relatedId.toString())
+        )
+      ),
+    ];
+
+    await Promise.all(
+      relatedUserIds.map((relatedId) =>
+        UserModel.findOneAndUpdate(
+          {
+            _id: new mongoose.Types.ObjectId(relatedId),
+            "roles.entityName": entityName,
+            "roles.entityRoleMap.id": entityRoleMapId,
+          },
+          { $set: updateFields },
+          {
+            arrayFilters: [
+              { "roleElement.entityName": entityName },
+              { "mapElement.id": entityRoleMapId },
+            ],
+            new: true,
+          }
+        )
+      )
     );
   },
   flattenObject: function flattenObject(
