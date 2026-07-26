@@ -5,7 +5,7 @@ const apiHelperFunctions = require("./apiHelperFunctions");
 const helpers = require("./helperFunctions");
 const routesConstants = require("../operations/domain/artists/constants/routes.constants");
 
-const { connections, connectToDatabase } = require("../db/db_g");
+const { connections, connectToDatabase, modelsWithCustomConnections } = require("../db/db_g");
 const { getModel } = require("./getModel");
 
 function modelRequiresAuth(modelName) {
@@ -375,6 +375,11 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         .skip((page - 1) * limit)
         .limit(Number(limit));
 
+      // Para modelos con custom connections, agregar serverEnvironment para cross-DB populate
+      if (modelsWithCustomConnections.includes(modelName)) {
+        query = query.setOptions({ serverEnvironment: connection.environment });
+      }
+
       // console.log("\n=== DEBUG: Applying populates ===");
       // console.log("populateFields:", JSON.stringify(populateFields, null, 2));
       // console.log("filterPopulateFields:", filterPopulateFields);
@@ -686,6 +691,11 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       ? model.findOne(query)
       : model.findOne(query).select(projection);
 
+    // Para modelos con custom connections, agregar serverEnvironment para cross-DB populate
+    if (modelsWithCustomConnections.includes(modelName)) {
+      queryResult = queryResult.setOptions({ serverEnvironment: connection.environment });
+    }
+
     // console.log(modelName, " Populate ", populateFields);
     // Aplicar `populate` a los campos correspondientes
     if (populateFields.length > 0) {
@@ -736,7 +746,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
     if (modelRequiresEntityIndex(modelName)) {
       let followedEntityInfo;
       if (req.currentProfileInfo && req.currentProfileEntity) {
-        followedEntityInfo = await model
+        let followedQuery = model
           .findOne({
             ...query,
             ["followed_by"]: {
@@ -748,6 +758,13 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
             },
           })
           .select("_id");
+
+        // Para modelos con custom connections, agregar serverEnvironment
+        if (modelsWithCustomConnections.includes(modelName)) {
+          followedQuery = followedQuery.setOptions({ serverEnvironment: connection.environment });
+        }
+
+        followedEntityInfo = await followedQuery;
       }
 
       entityInfo = {
