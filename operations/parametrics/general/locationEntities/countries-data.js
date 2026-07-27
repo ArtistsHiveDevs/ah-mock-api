@@ -1334,30 +1334,263 @@ const countries = [
     id: "66d61975a546e02c6ce659eb",
     states: [
       {
+        label: "Ciudad Autónoma de Buenos Aires",
+        value: "CABA",
+        cities: [{ label: "Ciudad Autónoma de Buenos Aires", value: "CABA01" }],
+      },
+      {
         label: "Buenos Aires",
         value: "BA",
-        cities: [{ label: "BsAs", value: "BsAs", districts: [] }],
+        cities: [
+          { label: "La Plata", value: "BA001" },
+          { label: "Mar del Plata", value: "BA002" },
+          { label: "Bahía Blanca", value: "BA003" },
+          { label: "San Isidro", value: "BA004" },
+          { label: "Quilmes", value: "BA005" },
+          { label: "Avellaneda", value: "BA006" },
+          { label: "Lanús", value: "BA007" },
+          { label: "San Miguel", value: "BA008" },
+          { label: "Morón", value: "BA009" },
+          { label: "Lomas de Zamora", value: "BA010" },
+          { label: "Tandil", value: "BA011" },
+          { label: "Olavarría", value: "BA012" },
+          { label: "Pergamino", value: "BA013" },
+          { label: "Junín", value: "BA014" },
+          { label: "Azul", value: "BA015" },
+        ],
       },
       {
-        label: "Córdoba Provincia",
-        value: "CB Provincia",
-        cities: [{ label: "Córdoba Ciudad", value: "cb", districts: [] }],
+        label: "Catamarca",
+        value: "CA",
+        cities: [
+          { label: "San Fernando del Valle de Catamarca", value: "CA001" },
+          { label: "Andalgalá", value: "CA002" },
+          { label: "Belén", value: "CA003" },
+          { label: "Tinogasta", value: "CA004" },
+        ],
       },
       {
-        label: "Salta Provincia",
-        value: "SA Provincia",
-        cities: [{ label: "Salta Ciudad", value: "ST", districts: [] }],
+        label: "Chaco",
+        value: "CH",
+        cities: [
+          { label: "Resistencia", value: "CH001" },
+          { label: "Presidencia Roque Sáenz Peña", value: "CH002" },
+          { label: "Villa Ángela", value: "CH003" },
+          { label: "Barranqueras", value: "CH004" },
+        ],
       },
       {
-        label: "Entre ríos",
+        label: "Chubut",
+        value: "CT",
+        cities: [
+          { label: "Rawson", value: "CT001" },
+          { label: "Comodoro Rivadavia", value: "CT002" },
+          { label: "Puerto Madryn", value: "CT003" },
+          { label: "Trelew", value: "CT004" },
+          { label: "Esquel", value: "CT005" },
+        ],
+      },
+      {
+        label: "Córdoba",
+        value: "CB",
+        cities: [
+          { label: "Córdoba", value: "CB001" },
+          { label: "Río Cuarto", value: "CB002" },
+          { label: "Villa María", value: "CB003" },
+          { label: "Villa Carlos Paz", value: "CB004" },
+          { label: "San Francisco", value: "CB005" },
+          { label: "Alta Gracia", value: "CB006" },
+          { label: "Río Tercero", value: "CB007" },
+          { label: "Bell Ville", value: "CB008" },
+          { label: "Jesús María", value: "CB009" },
+        ],
+      },
+      {
+        label: "Corrientes",
+        value: "CR",
+        cities: [
+          { label: "Corrientes", value: "CR001" },
+          { label: "Goya", value: "CR002" },
+          { label: "Paso de los Libres", value: "CR003" },
+          { label: "Curuzú Cuatiá", value: "CR004" },
+          { label: "Mercedes", value: "CR005" },
+        ],
+      },
+      {
+        label: "Entre Ríos",
         value: "ER",
-        cities: [{ label: "Paraná", value: "PN", districts: [] }],
+        cities: [
+          { label: "Paraná", value: "ER001" },
+          { label: "Concordia", value: "ER002" },
+          { label: "Gualeguaychú", value: "ER003" },
+          { label: "Concepción del Uruguay", value: "ER004" },
+          { label: "Gualeguay", value: "ER005" },
+        ],
+      },
+      {
+        label: "Formosa",
+        value: "FO",
+        cities: [
+          { label: "Formosa", value: "FO001" },
+          { label: "Clorinda", value: "FO002" },
+          { label: "Pirané", value: "FO003" },
+          { label: "El Colorado", value: "FO004" },
+        ],
+      },
+      {
+        label: "Jujuy",
+        value: "JY",
+        cities: [
+          { label: "San Salvador de Jujuy", value: "JY001" },
+          { label: "San Pedro de Jujuy", value: "JY002" },
+          { label: "Libertador General San Martín", value: "JY003" },
+          { label: "Palpalá", value: "JY004" },
+        ],
+      },
+      {
+        label: "La Pampa",
+        value: "LP",
+        cities: [
+          { label: "Santa Rosa", value: "LP001" },
+          { label: "General Pico", value: "LP002" },
+          { label: "General Acha", value: "LP003" },
+        ],
+      },
+      {
+        label: "La Rioja",
+        value: "LR",
+        cities: [
+          { label: "La Rioja", value: "LR001" },
+          { label: "Chilecito", value: "LR002" },
+          { label: "Aimogasta", value: "LR003" },
+        ],
+      },
+      {
+        label: "Mendoza",
+        value: "MZ",
+        cities: [
+          { label: "Mendoza", value: "MZ001" },
+          { label: "San Rafael", value: "MZ002" },
+          { label: "Godoy Cruz", value: "MZ003" },
+          { label: "Las Heras", value: "MZ004" },
+          { label: "Luján de Cuyo", value: "MZ005" },
+          { label: "Maipú", value: "MZ006" },
+          { label: "San Martín", value: "MZ007" },
+        ],
+      },
+      {
+        label: "Misiones",
+        value: "MI",
+        cities: [
+          { label: "Posadas", value: "MI001" },
+          { label: "Oberá", value: "MI002" },
+          { label: "Eldorado", value: "MI003" },
+          { label: "Puerto Iguazú", value: "MI004" },
+          { label: "Apóstoles", value: "MI005" },
+        ],
+      },
+      {
+        label: "Neuquén",
+        value: "NQ",
+        cities: [
+          { label: "Neuquén", value: "NQ001" },
+          { label: "San Martín de los Andes", value: "NQ002" },
+          { label: "Cutral Có", value: "NQ003" },
+          { label: "Zapala", value: "NQ004" },
+          { label: "Plottier", value: "NQ005" },
+        ],
+      },
+      {
+        label: "Río Negro",
+        value: "RN",
+        cities: [
+          { label: "Viedma", value: "RN001" },
+          { label: "San Carlos de Bariloche", value: "RN002" },
+          { label: "General Roca", value: "RN003" },
+          { label: "Cipolletti", value: "RN004" },
+          { label: "El Bolsón", value: "RN005" },
+        ],
+      },
+      {
+        label: "Salta",
+        value: "SA",
+        cities: [
+          { label: "Salta", value: "SA001" },
+          { label: "San Ramón de la Nueva Orán", value: "SA002" },
+          { label: "Tartagal", value: "SA003" },
+          { label: "Metán", value: "SA004" },
+          { label: "Cafayate", value: "SA005" },
+        ],
+      },
+      {
+        label: "San Juan",
+        value: "SJ",
+        cities: [
+          { label: "San Juan", value: "SJ001" },
+          { label: "Rawson", value: "SJ002" },
+          { label: "Chimbas", value: "SJ003" },
+          { label: "Caucete", value: "SJ004" },
+        ],
+      },
+      {
+        label: "San Luis",
+        value: "SL",
+        cities: [
+          { label: "San Luis", value: "SL001" },
+          { label: "Villa Mercedes", value: "SL002" },
+          { label: "Merlo", value: "SL003" },
+        ],
       },
       {
         label: "Santa Cruz",
         value: "SC",
         cities: [
-          { label: "Río Gallegos", value: "Río Gallegos", districts: [] },
+          { label: "Río Gallegos", value: "SC001" },
+          { label: "Caleta Olivia", value: "SC002" },
+          { label: "Puerto Deseado", value: "SC003" },
+          { label: "El Calafate", value: "SC004" },
+        ],
+      },
+      {
+        label: "Santa Fe",
+        value: "SF",
+        cities: [
+          { label: "Santa Fe", value: "SF001" },
+          { label: "Rosario", value: "SF002" },
+          { label: "Rafaela", value: "SF003" },
+          { label: "Venado Tuerto", value: "SF004" },
+          { label: "Reconquista", value: "SF005" },
+          { label: "Santo Tomé", value: "SF006" },
+        ],
+      },
+      {
+        label: "Santiago del Estero",
+        value: "SE",
+        cities: [
+          { label: "Santiago del Estero", value: "SE001" },
+          { label: "La Banda", value: "SE002" },
+          { label: "Termas de Río Hondo", value: "SE003" },
+          { label: "Frías", value: "SE004" },
+        ],
+      },
+      {
+        label: "Tierra del Fuego",
+        value: "TF",
+        cities: [
+          { label: "Ushuaia", value: "TF001" },
+          { label: "Río Grande", value: "TF002" },
+          { label: "Tolhuin", value: "TF003" },
+        ],
+      },
+      {
+        label: "Tucumán",
+        value: "TU",
+        cities: [
+          { label: "San Miguel de Tucumán", value: "TU001" },
+          { label: "Yerba Buena", value: "TU002" },
+          { label: "Tafí Viejo", value: "TU003" },
+          { label: "Concepción", value: "TU004" },
+          { label: "Monteros", value: "TU005" },
         ],
       },
     ],
@@ -1368,33 +1601,305 @@ const countries = [
     id: "66d61985a546e02c6ce65b11",
     states: [
       {
-        label: "Ciudad de México",
-        value: "CDMX",
-        cities: [{ label: "CDMX", value: "CDMX", districts: [] }],
+        label: "Aguascalientes",
+        value: "AGS",
+        cities: [
+          { label: "Aguascalientes", value: "AGS001" },
+          { label: "Calvillo", value: "AGS002" },
+        ],
       },
       {
-        label: "Morelos",
-        value: "MO",
+        label: "Baja California",
+        value: "BC",
         cities: [
-          { label: "Cuernavaca", value: "CV", districts: [] },
-          { label: "Miacatlán", value: "MT", districts: [] },
+          { label: "Mexicali", value: "BC001" },
+          { label: "Tijuana", value: "BC002" },
+          { label: "Ensenada", value: "BC003" },
+          { label: "Tecate", value: "BC004" },
+          { label: "Playas de Rosarito", value: "BC005" },
+        ],
+      },
+      {
+        label: "Baja California Sur",
+        value: "BCS",
+        cities: [
+          { label: "La Paz", value: "BCS001" },
+          { label: "Los Cabos", value: "BCS002" },
+          { label: "Cabo San Lucas", value: "BCS003" },
+          { label: "San José del Cabo", value: "BCS004" },
+        ],
+      },
+      {
+        label: "Campeche",
+        value: "CAM",
+        cities: [
+          { label: "Campeche", value: "CAM001" },
+          { label: "Ciudad del Carmen", value: "CAM002" },
         ],
       },
       {
         label: "Chiapas",
-        value: "CS",
-        cities: [{ label: "Tuxla Gutiérrez", value: "TG", districts: [] }],
+        value: "CHIS",
+        cities: [
+          { label: "Tuxtla Gutiérrez", value: "CHIS001" },
+          { label: "Tapachula", value: "CHIS002" },
+          { label: "San Cristóbal de las Casas", value: "CHIS003" },
+          { label: "Comitán", value: "CHIS004" },
+        ],
+      },
+      {
+        label: "Chihuahua",
+        value: "CHIH",
+        cities: [
+          { label: "Chihuahua", value: "CHIH001" },
+          { label: "Ciudad Juárez", value: "CHIH002" },
+          { label: "Cuauhtémoc", value: "CHIH003" },
+          { label: "Delicias", value: "CHIH004" },
+        ],
+      },
+      {
+        label: "Ciudad de México",
+        value: "CDMX",
+        cities: [{ label: "Ciudad de México", value: "CDMX001" }],
+      },
+      {
+        label: "Coahuila",
+        value: "COAH",
+        cities: [
+          { label: "Saltillo", value: "COAH001" },
+          { label: "Torreón", value: "COAH002" },
+          { label: "Monclova", value: "COAH003" },
+          { label: "Piedras Negras", value: "COAH004" },
+        ],
+      },
+      {
+        label: "Colima",
+        value: "COL",
+        cities: [
+          { label: "Colima", value: "COL001" },
+          { label: "Manzanillo", value: "COL002" },
+          { label: "Tecomán", value: "COL003" },
+        ],
+      },
+      {
+        label: "Durango",
+        value: "DGO",
+        cities: [
+          { label: "Durango", value: "DGO001" },
+          { label: "Gómez Palacio", value: "DGO002" },
+          { label: "Lerdo", value: "DGO003" },
+        ],
+      },
+      {
+        label: "Estado de México",
+        value: "MEX",
+        cities: [
+          { label: "Toluca", value: "MEX001" },
+          { label: "Ecatepec", value: "MEX002" },
+          { label: "Naucalpan", value: "MEX003" },
+          { label: "Nezahualcóyotl", value: "MEX004" },
+          { label: "Tlalnepantla", value: "MEX005" },
+          { label: "Cuautitlán Izcalli", value: "MEX006" },
+        ],
+      },
+      {
+        label: "Guanajuato",
+        value: "GTO",
+        cities: [
+          { label: "Guanajuato", value: "GTO001" },
+          { label: "León", value: "GTO002" },
+          { label: "Irapuato", value: "GTO003" },
+          { label: "Celaya", value: "GTO004" },
+          { label: "Salamanca", value: "GTO005" },
+        ],
+      },
+      {
+        label: "Guerrero",
+        value: "GRO",
+        cities: [
+          { label: "Chilpancingo", value: "GRO001" },
+          { label: "Acapulco", value: "GRO002" },
+          { label: "Zihuatanejo", value: "GRO003" },
+          { label: "Iguala", value: "GRO004" },
+        ],
+      },
+      {
+        label: "Hidalgo",
+        value: "HGO",
+        cities: [
+          { label: "Pachuca", value: "HGO001" },
+          { label: "Tulancingo", value: "HGO002" },
+          { label: "Tula", value: "HGO003" },
+        ],
+      },
+      {
+        label: "Jalisco",
+        value: "JAL",
+        cities: [
+          { label: "Guadalajara", value: "JAL001" },
+          { label: "Zapopan", value: "JAL002" },
+          { label: "Tlaquepaque", value: "JAL003" },
+          { label: "Tonalá", value: "JAL004" },
+          { label: "Puerto Vallarta", value: "JAL005" },
+        ],
+      },
+      {
+        label: "Michoacán",
+        value: "MICH",
+        cities: [
+          { label: "Morelia", value: "MICH001" },
+          { label: "Uruapan", value: "MICH002" },
+          { label: "Zamora", value: "MICH003" },
+          { label: "Lázaro Cárdenas", value: "MICH004" },
+        ],
+      },
+      {
+        label: "Morelos",
+        value: "MOR",
+        cities: [
+          { label: "Cuernavaca", value: "MOR001" },
+          { label: "Cuautla", value: "MOR002" },
+          { label: "Jiutepec", value: "MOR003" },
+        ],
+      },
+      {
+        label: "Nayarit",
+        value: "NAY",
+        cities: [
+          { label: "Tepic", value: "NAY001" },
+          { label: "Xalisco", value: "NAY002" },
+        ],
+      },
+      {
+        label: "Nuevo León",
+        value: "NL",
+        cities: [
+          { label: "Monterrey", value: "NL001" },
+          { label: "San Nicolás de los Garza", value: "NL002" },
+          { label: "Guadalupe", value: "NL003" },
+          { label: "Apodaca", value: "NL004" },
+          { label: "San Pedro Garza García", value: "NL005" },
+        ],
       },
       {
         label: "Oaxaca",
-        value: "OA",
-        cities: [{ label: "Oaxaca de Juárez", value: "OX", districts: [] }],
+        value: "OAX",
+        cities: [
+          { label: "Oaxaca de Juárez", value: "OAX001" },
+          { label: "San Juan Bautista Tuxtepec", value: "OAX002" },
+          { label: "Salina Cruz", value: "OAX003" },
+        ],
       },
       {
         label: "Puebla",
-        value: "PU",
+        value: "PUE",
         cities: [
-          { label: "Puebla de Zaragoza", value: "PZG", districts: [] },
+          { label: "Puebla de Zaragoza", value: "PUE001" },
+          { label: "Tehuacán", value: "PUE002" },
+          { label: "San Martín Texmelucan", value: "PUE003" },
+        ],
+      },
+      {
+        label: "Querétaro",
+        value: "QRO",
+        cities: [
+          { label: "Santiago de Querétaro", value: "QRO001" },
+          { label: "San Juan del Río", value: "QRO002" },
+        ],
+      },
+      {
+        label: "Quintana Roo",
+        value: "QROO",
+        cities: [
+          { label: "Chetumal", value: "QROO001" },
+          { label: "Cancún", value: "QROO002" },
+          { label: "Playa del Carmen", value: "QROO003" },
+          { label: "Cozumel", value: "QROO004" },
+        ],
+      },
+      {
+        label: "San Luis Potosí",
+        value: "SLP",
+        cities: [
+          { label: "San Luis Potosí", value: "SLP001" },
+          { label: "Soledad de Graciano Sánchez", value: "SLP002" },
+          { label: "Ciudad Valles", value: "SLP003" },
+        ],
+      },
+      {
+        label: "Sinaloa",
+        value: "SIN",
+        cities: [
+          { label: "Culiacán", value: "SIN001" },
+          { label: "Mazatlán", value: "SIN002" },
+          { label: "Los Mochis", value: "SIN003" },
+          { label: "Guasave", value: "SIN004" },
+        ],
+      },
+      {
+        label: "Sonora",
+        value: "SON",
+        cities: [
+          { label: "Hermosillo", value: "SON001" },
+          { label: "Ciudad Obregón", value: "SON002" },
+          { label: "Nogales", value: "SON003" },
+          { label: "San Luis Río Colorado", value: "SON004" },
+        ],
+      },
+      {
+        label: "Tabasco",
+        value: "TAB",
+        cities: [
+          { label: "Villahermosa", value: "TAB001" },
+          { label: "Cárdenas", value: "TAB002" },
+          { label: "Comalcalco", value: "TAB003" },
+        ],
+      },
+      {
+        label: "Tamaulipas",
+        value: "TAMPS",
+        cities: [
+          { label: "Ciudad Victoria", value: "TAMPS001" },
+          { label: "Reynosa", value: "TAMPS002" },
+          { label: "Matamoros", value: "TAMPS003" },
+          { label: "Tampico", value: "TAMPS004" },
+          { label: "Nuevo Laredo", value: "TAMPS005" },
+        ],
+      },
+      {
+        label: "Tlaxcala",
+        value: "TLAX",
+        cities: [
+          { label: "Tlaxcala", value: "TLAX001" },
+          { label: "Apizaco", value: "TLAX002" },
+        ],
+      },
+      {
+        label: "Veracruz",
+        value: "VER",
+        cities: [
+          { label: "Xalapa", value: "VER001" },
+          { label: "Veracruz", value: "VER002" },
+          { label: "Coatzacoalcos", value: "VER003" },
+          { label: "Poza Rica", value: "VER004" },
+          { label: "Córdoba", value: "VER005" },
+        ],
+      },
+      {
+        label: "Yucatán",
+        value: "YUC",
+        cities: [
+          { label: "Mérida", value: "YUC001" },
+          { label: "Valladolid", value: "YUC002" },
+          { label: "Tizimín", value: "YUC003" },
+        ],
+      },
+      {
+        label: "Zacatecas",
+        value: "ZAC",
+        cities: [
+          { label: "Zacatecas", value: "ZAC001" },
+          { label: "Fresnillo", value: "ZAC002" },
         ],
       },
     ],
@@ -1425,22 +1930,227 @@ const countries = [
       {
         label: "Ica Estado",
         value: "ICA Estado",
-        cities: [
-          { label: "Ica Ciudad", value: "Ica Ciudad", districts: [] },
-        ],
+        cities: [{ label: "Ica Ciudad", value: "Ica Ciudad", districts: [] }],
       },
       {
         label: "Lima Metropolitana  Estado",
         value: "Lima Estado",
-        cities: [
-          { label: "Lima Ciudad", value: "Lima Ciudad", districts: [] },
-        ],
+        cities: [{ label: "Lima Ciudad", value: "Lima Ciudad", districts: [] }],
       },
       {
         label: "Loreto Estado",
         value: "Lo Estado",
         cities: [
           { label: "Iquitos Ciudad", value: "IQ Ciudad", districts: [] },
+        ],
+      },
+    ],
+  },
+  {
+    label: "España",
+    value: "ES",
+    id: "66d6197ba546e02c6ce65a5f",
+    states: [
+      {
+        label: "Andalucía",
+        value: "AN",
+        cities: [
+          { label: "Sevilla", value: "AN001" },
+          { label: "Málaga", value: "AN002" },
+          { label: "Córdoba", value: "AN003" },
+          { label: "Granada", value: "AN004" },
+          { label: "Almería", value: "AN005" },
+          { label: "Cádiz", value: "AN006" },
+          { label: "Huelva", value: "AN007" },
+          { label: "Jaén", value: "AN008" },
+          { label: "Marbella", value: "AN009" },
+          { label: "Jerez de la Frontera", value: "AN010" },
+        ],
+      },
+      {
+        label: "Aragón",
+        value: "AR",
+        cities: [
+          { label: "Zaragoza", value: "AR001" },
+          { label: "Huesca", value: "AR002" },
+          { label: "Teruel", value: "AR003" },
+        ],
+      },
+      {
+        label: "Principado de Asturias",
+        value: "AS",
+        cities: [
+          { label: "Oviedo", value: "AS001" },
+          { label: "Gijón", value: "AS002" },
+          { label: "Avilés", value: "AS003" },
+        ],
+      },
+      {
+        label: "Islas Baleares",
+        value: "IB",
+        cities: [
+          { label: "Palma de Mallorca", value: "IB001" },
+          { label: "Ibiza", value: "IB002" },
+          { label: "Mahón", value: "IB003" },
+        ],
+      },
+      {
+        label: "Canarias",
+        value: "CN",
+        cities: [
+          { label: "Santa Cruz de Tenerife", value: "CN001" },
+          { label: "Las Palmas de Gran Canaria", value: "CN002" },
+          { label: "San Cristóbal de La Laguna", value: "CN003" },
+          { label: "Telde", value: "CN004" },
+          { label: "Arona", value: "CN005" },
+        ],
+      },
+      {
+        label: "Cantabria",
+        value: "CB",
+        cities: [
+          { label: "Santander", value: "CB001" },
+          { label: "Torrelavega", value: "CB002" },
+        ],
+      },
+      {
+        label: "Castilla-La Mancha",
+        value: "CM",
+        cities: [
+          { label: "Toledo", value: "CM001" },
+          { label: "Albacete", value: "CM002" },
+          { label: "Guadalajara", value: "CM003" },
+          { label: "Ciudad Real", value: "CM004" },
+          { label: "Cuenca", value: "CM005" },
+          { label: "Talavera de la Reina", value: "CM006" },
+        ],
+      },
+      {
+        label: "Castilla y León",
+        value: "CL",
+        cities: [
+          { label: "Valladolid", value: "CL001" },
+          { label: "Burgos", value: "CL002" },
+          { label: "Salamanca", value: "CL003" },
+          { label: "León", value: "CL004" },
+          { label: "Palencia", value: "CL005" },
+          { label: "Zamora", value: "CL006" },
+          { label: "Ávila", value: "CL007" },
+          { label: "Segovia", value: "CL008" },
+          { label: "Soria", value: "CL009" },
+        ],
+      },
+      {
+        label: "Cataluña",
+        value: "CT",
+        cities: [
+          { label: "Barcelona", value: "CT001" },
+          { label: "L'Hospitalet de Llobregat", value: "CT002" },
+          { label: "Badalona", value: "CT003" },
+          { label: "Terrassa", value: "CT004" },
+          { label: "Sabadell", value: "CT005" },
+          { label: "Tarragona", value: "CT006" },
+          { label: "Lleida", value: "CT007" },
+          { label: "Girona", value: "CT008" },
+        ],
+      },
+      {
+        label: "Comunidad Valenciana",
+        value: "VC",
+        cities: [
+          { label: "Valencia", value: "VC001" },
+          { label: "Alicante", value: "VC002" },
+          { label: "Elche", value: "VC003" },
+          { label: "Castellón de la Plana", value: "VC004" },
+          { label: "Torrevieja", value: "VC005" },
+          { label: "Gandía", value: "VC006" },
+        ],
+      },
+      {
+        label: "Extremadura",
+        value: "EX",
+        cities: [
+          { label: "Badajoz", value: "EX001" },
+          { label: "Cáceres", value: "EX002" },
+          { label: "Mérida", value: "EX003" },
+          { label: "Plasencia", value: "EX004" },
+        ],
+      },
+      {
+        label: "Galicia",
+        value: "GA",
+        cities: [
+          { label: "Vigo", value: "GA001" },
+          { label: "A Coruña", value: "GA002" },
+          { label: "Ourense", value: "GA003" },
+          { label: "Lugo", value: "GA004" },
+          { label: "Santiago de Compostela", value: "GA005" },
+          { label: "Pontevedra", value: "GA006" },
+        ],
+      },
+      {
+        label: "Comunidad de Madrid",
+        value: "MD",
+        cities: [
+          { label: "Madrid", value: "MD001" },
+          { label: "Móstoles", value: "MD002" },
+          { label: "Alcalá de Henares", value: "MD003" },
+          { label: "Fuenlabrada", value: "MD004" },
+          { label: "Leganés", value: "MD005" },
+          { label: "Getafe", value: "MD006" },
+        ],
+      },
+      {
+        label: "Región de Murcia",
+        value: "MC",
+        cities: [
+          { label: "Murcia", value: "MC001" },
+          { label: "Cartagena", value: "MC002" },
+          { label: "Lorca", value: "MC003" },
+          { label: "Molina de Segura", value: "MC004" },
+        ],
+      },
+      {
+        label: "Comunidad Foral de Navarra",
+        value: "NC",
+        cities: [
+          { label: "Pamplona", value: "NC001" },
+          { label: "Tudela", value: "NC002" },
+          { label: "Barañáin", value: "NC003" },
+        ],
+      },
+      {
+        label: "País Vasco",
+        value: "PV",
+        cities: [
+          { label: "Bilbao", value: "PV001" },
+          { label: "Vitoria-Gasteiz", value: "PV002" },
+          { label: "San Sebastián", value: "PV003" },
+          { label: "Barakaldo", value: "PV004" },
+          { label: "Getxo", value: "PV005" },
+        ],
+      },
+      {
+        label: "La Rioja",
+        value: "RI",
+        cities: [
+          { label: "Logroño", value: "RI001" },
+          { label: "Calahorra", value: "RI002" },
+          { label: "Arnedo", value: "RI003" },
+        ],
+      },
+      {
+        label: "Ceuta",
+        value: "CE",
+        cities: [
+          { label: "Ceuta", value: "CE001" },
+        ],
+      },
+      {
+        label: "Melilla",
+        value: "ML",
+        cities: [
+          { label: "Melilla", value: "ML001" },
         ],
       },
     ],
@@ -1464,7 +2174,9 @@ function findLocationByPath(pathIds, returnChildren = false) {
 
   // Buscar el país (primer nivel)
   const countryId = pathIds[0];
-  let currentNode = countries.find((c) => c.value === countryId || c.id === countryId);
+  let currentNode = countries.find(
+    (c) => c.value === countryId || c.id === countryId,
+  );
 
   if (!currentNode) {
     return null;
@@ -1490,14 +2202,23 @@ function findLocationByPath(pathIds, returnChildren = false) {
     if (i === pathIds.length - 1) {
       if (returnChildren) {
         // Retornar hijos según el nivel
-        return currentNode.cities || currentNode.districts || currentNode.neighborhoods || [];
+        return (
+          currentNode.cities ||
+          currentNode.districts ||
+          currentNode.neighborhoods ||
+          []
+        );
       } else {
         return currentNode;
       }
     }
 
     // Avanzar al siguiente nivel
-    currentLevel = currentNode.cities || currentNode.districts || currentNode.neighborhoods || [];
+    currentLevel =
+      currentNode.cities ||
+      currentNode.districts ||
+      currentNode.neighborhoods ||
+      [];
 
     if (currentLevel.length === 0) {
       // No hay más niveles disponibles
