@@ -11,7 +11,7 @@ module.exports = [
   userRouter.get("/", validateEnvironment, validateIfUserExists, (req, res) => {
     const { role: entityRole } = req.query;
 
-    const lang = req.lang || "es";
+    const lang = req.lang || req.query.lang || "en"; // Fallback a 'en' si no hay idioma
     try {
       if (entityRole) {
         const fs = require("fs");
@@ -36,7 +36,7 @@ module.exports = [
       console.log(error);
       if (error.code === "ENOENT") {
         return res.status(404).json({
-          message: `The role "${entityRole}" to get its offer`,
+          message: `Industry Offer file not found for role "${entityRole}" and language "${lang}"`,
         });
       } else {
         return res.status(500).json([]);

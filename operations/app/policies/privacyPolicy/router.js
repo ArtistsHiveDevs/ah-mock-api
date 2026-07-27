@@ -38,15 +38,16 @@ module.exports = [
         );
         if (versionObj) {
           const fs = require("fs");
+          const lang = req.lang || req.query.lang || 'en'; // Fallback a 'en' si no hay idioma
           const policy = fs.readFileSync(
-            `./assets/mocks/i18n/${req.lang}/app/policies/privacy/privacy.v${version}.md`,
+            `./assets/mocks/i18n/${lang}/app/policies/privacy/privacy.v${version}.md`,
             { encoding: "utf8", flag: "r" },
           );
 
           return res.status(200).json(
             apiHelperFunctions.createPaginatedDataResponse({
               content: policy,
-              lang: req.lang,
+              lang: lang,
               version: 1,
               creationDate: 1,
             }),
@@ -60,6 +61,12 @@ module.exports = [
       // return res.json(filterResultsByQuery(req, helpers.getEntityData("User")));
     } catch (error) {
       console.log(error);
+      if (error.code === 'ENOENT') {
+        const lang = req.lang || req.query.lang || 'en';
+        return res.status(404).json({
+          message: `Privacy Policy file not found for language "${lang}" and version "${req.query.v || 'latest'}"`,
+        });
+      }
       return res.status(500).json([]);
     }
   }),
