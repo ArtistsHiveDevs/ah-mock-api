@@ -23,12 +23,172 @@ const {
 var userRouter = express.Router({ mergeParams: true });
 
 /**
+ * Actualiza el entityRoleMap de una entidad específica
+ * @param {Object} serverEnvironment - Entorno del servidor
+ * @param {string} entityName - Nombre del modelo de la entidad (ej: "Artist", "Place")
+ * @param {string} entityId - ID de la entidad a actualizar
+ * @param {string} userId - ID del usuario
+ * @param {string} action - Acción a realizar: "add", "update", "remove"
+ * @param {Array<string>} roles - Array de roles (solo para "add" y "update")
+ */
+async function updateEntityRoleMap(
+  serverEnvironment,
+  entityName,
+  entityId,
+  userId,
+  action,
+  roles = [],
+) {
+  try {
+    const EntityModel = await getModel(serverEnvironment, entityName);
+    const userObjectId = new mongoose.Types.ObjectId(userId);
+
+    // Verificar si la entidad existe y tiene entityRoleMap inicializado
+    const entity = await EntityModel.findById(entityId);
+    if (!entity) {
+      console.warn(`[EntityRoleMap] Entidad ${entityName}/${entityId} no encontrada`);
+      return;
+    }
+
+    // Si entityRoleMap no existe, inicializarlo como array vacío
+    if (!entity.entityRoleMap || !Array.isArray(entity.entityRoleMap)) {
+      await EntityModel.updateOne(
+        { _id: entityId },
+        { $set: { entityRoleMap: [] } }
+      );
+      console.log(`[EntityRoleMap] Inicializado entityRoleMap en ${entityName}/${entityId}`);
+    }
+
+    switch (action) {
+      case "add":
+        // Agregar el usuario a cada rol especificado
+        for (const role of roles) {
+          // Verificar si el rol ya existe en entityRoleMap
+          const roleExists = await EntityModel.findOne({
+            _id: entityId,
+            "entityRoleMap.role": role,
+          });
+
+          if (!roleExists) {
+            // Si el rol no existe, crear la entrada
+            await EntityModel.updateOne(
+              { _id: entityId },
+              {
+                $push: {
+                  entityRoleMap: { role: role, ids: [userObjectId] },
+                },
+              }
+            );
+          } else {
+            // Si el rol existe, agregar el usuario al array de ids
+            await EntityModel.updateOne(
+              { _id: entityId },
+              {
+                $addToSet: {
+                  "entityRoleMap.$[elem].ids": userObjectId,
+                },
+              },
+              {
+                arrayFilters: [{ "elem.role": role }],
+              }
+            );
+          }
+        }
+        console.log(
+          `[EntityRoleMap] Usuario ${userId} agregado con roles [${roles.join(", ")}] en ${entityName}/${entityId}`,
+        );
+        break;
+
+      case "update":
+        // Primero, remover el usuario de todos los roles
+        await EntityModel.updateOne(
+          { _id: entityId },
+          {
+            $pull: {
+              "entityRoleMap.$[].ids": userObjectId,
+            },
+          }
+        );
+
+        // Luego, agregar el usuario a los nuevos roles
+        for (const role of roles) {
+          // Verificar si el rol ya existe en entityRoleMap
+          const roleExists = await EntityModel.findOne({
+            _id: entityId,
+            "entityRoleMap.role": role,
+          });
+
+          if (!roleExists) {
+            // Si el rol no existe, crear la entrada
+            await EntityModel.updateOne(
+              { _id: entityId },
+              {
+                $push: {
+                  entityRoleMap: { role: role, ids: [userObjectId] },
+                },
+              }
+            );
+          } else {
+            // Si el rol existe, agregar el usuario al array de ids
+            await EntityModel.updateOne(
+              { _id: entityId },
+              {
+                $addToSet: {
+                  "entityRoleMap.$[elem].ids": userObjectId,
+                },
+              },
+              {
+                arrayFilters: [{ "elem.role": role }],
+              }
+            );
+          }
+        }
+        console.log(
+          `[EntityRoleMap] Roles del usuario ${userId} actualizados a [${roles.join(", ")}] en ${entityName}/${entityId}`,
+        );
+        break;
+
+      case "remove":
+        // Remover el usuario de todos los roles de la entidad
+        await EntityModel.updateOne(
+          { _id: entityId },
+          {
+            $pull: {
+              "entityRoleMap.$[].ids": userObjectId,
+            },
+          }
+        );
+        console.log(
+          `[EntityRoleMap] Usuario ${userId} removido de ${entityName}/${entityId}`,
+        );
+        break;
+
+      default:
+        console.warn(`[EntityRoleMap] Acción desconocida: ${action}`);
+    }
+  } catch (error) {
+    console.error(
+      `[EntityRoleMap] Error al actualizar ${entityName}/${entityId}:`,
+      error,
+    );
+    throw error;
+  }
+}
+
+/**
  * Detecta cambios en los roles de un usuario y envía notificaciones
+ * @param {Object} serverEnvironment - Entorno del servidor
  * @param {Object} currentUser - Usuario actual antes de la actualización
  * @param {Object} newRoles - Nuevos roles del usuario
  * @param {Object} updatedBy - Usuario que realiza los cambios
  */
-async function detectAndNotifyRoleChanges(currentUser, newRoles, updatedBy, lang) {
+async function detectAndNotifyRoleChanges(
+  serverEnvironment,
+  currentUser,
+  newRoles,
+  updatedBy,
+  lang,
+) {
   if (!newRoles || !Array.isArray(newRoles)) return;
 
   const currentRoles = currentUser.roles || [];
@@ -78,7 +238,17 @@ async function detectAndNotifyRoleChanges(currentUser, newRoles, updatedBy, lang
 
       if (!currentEntry) {
         // Nueva asignación
-        console.log(`[RoleChanges] Nueva asignación: ${entityName}/${entityId}`);
+        await updateEntityRoleMap(
+          serverEnvironment,
+          entityName,
+          entityId,
+          currentUser._id,
+          "add",
+          newEntry.roles,
+        );
+        console.log(
+          `[RoleChanges] Nueva asignación: ${entityName}/${entityId}`,
+        );
         await notifyProfileAssigned({
           user: currentUser,
           profile,
@@ -93,7 +263,17 @@ async function detectAndNotifyRoleChanges(currentUser, newRoles, updatedBy, lang
           JSON.stringify(newEntry.roles.sort());
 
         if (rolesChanged) {
-          console.log(`[RoleChanges] Rol actualizado: ${entityName}/${entityId}`);
+          await updateEntityRoleMap(
+            serverEnvironment,
+            entityName,
+            entityId,
+            currentUser._id,
+            "update",
+            newEntry.roles,
+          );
+          console.log(
+            `[RoleChanges] Rol actualizado: ${entityName}/${entityId}`,
+          );
           await notifyProfileRoleUpdated({
             user: currentUser,
             profile,
@@ -113,6 +293,13 @@ async function detectAndNotifyRoleChanges(currentUser, newRoles, updatedBy, lang
 
       if (!existsInNew) {
         const currentEntry = currentRolesMap[entityName][entityId];
+        await updateEntityRoleMap(
+          serverEnvironment,
+          entityName,
+          entityId,
+          currentUser._id,
+          "remove",
+        );
         console.log(`[RoleChanges] Rol removido: ${entityName}/${entityId}`);
         await notifyProfileRemoved({
           user: currentUser,
@@ -442,7 +629,9 @@ module.exports = [
         // Enviar notificación de bienvenida al nuevo usuario
         // Intentar obtener el idioma de: req.lang (si está autenticado) o req.headers['lang'] (header del cliente)
         const lang = req.lang || req.headers["lang"] || user.user_language;
-        console.log(`[UserRouter] Idioma para notificación de bienvenida: ${lang} (req.lang: ${req.lang}, header: ${req.headers["lang"]}, user: ${user.user_language})`);
+        console.log(
+          `[UserRouter] Idioma para notificación de bienvenida: ${lang} (req.lang: ${req.lang}, header: ${req.headers["lang"]}, user: ${user.user_language})`,
+        );
         await notifyUserWelcome(user, lang);
 
         res.status(201).send(createPaginatedDataResponse(user));
@@ -519,7 +708,13 @@ module.exports = [
             _id: req.userId,
             name: req.currentProfileInfo?.name || "Sistema",
           };
-          await detectAndNotifyRoleChanges(currentUser, newInfo.roles, updatedBy, req.lang);
+          await detectAndNotifyRoleChanges(
+            req.serverEnvironment,
+            currentUser,
+            newInfo.roles,
+            updatedBy,
+            req.lang,
+          );
         }
 
         // Update de los campos en EntityDirectory
