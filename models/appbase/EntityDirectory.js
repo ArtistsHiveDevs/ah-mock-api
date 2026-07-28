@@ -27,6 +27,9 @@ const schema = new Schema(
     shortId: String,
     profile_pic: String,
     name: String,
+    // Espejo del username ya validado (match /^[a-z0-9_.]{3,24}$/) en el schema
+    // de la entidad origen (User/Artist/Place) al momento de crear este registro
+    // vía createEntityDirectoryRecord(); no se duplica el `match` acá.
     username: String,
     subtitle: String,
     verified_status: Number,

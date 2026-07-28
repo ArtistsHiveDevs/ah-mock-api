@@ -41,7 +41,12 @@ const SocialNetworkStatsSchema = new Schema(
 );
 
 const schema = new Schema({
-  username: { type: String, required: true, unique: true },
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+    match: [/^[a-z0-9_.]{3,24}$/, "username debe tener 3-24 caracteres y solo minúsculas, números, '_' o '.'"],
+  },
   name: { type: String, required: true },
   place_type: { type: String, required: true },
   music_genre: { type: String },

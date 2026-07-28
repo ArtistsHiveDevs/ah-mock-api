@@ -36,7 +36,10 @@ const schema = new mongoose.Schema({
   given_names: String,
   surnames: String,
   stage_name: String,
-  username: String,
+  username: {
+    type: String,
+    match: [/^[a-z0-9_.]{3,24}$/, "username debe tener 3-24 caracteres y solo minúsculas, números, '_' o '.'"],
+  },
   currentProfileIdentifier: String,
   email: { type: String, unique: true, sparse: true },
   password: String,
