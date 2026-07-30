@@ -13,6 +13,7 @@ function getModelSchema(modelName) {
     Album: require("../models/domain/ArtistAlbum.schema").schema,
     Place: require("../models/domain/Place.schema").schema,
     ProfileClaim: require("../models/domain/ProfileClaim.schema").schema,
+    ReportClaim: require("../models/domain/ReportClaim.schema").schema,
     Follower: require("../models/domain/Follower.schema").schema,
     OpenCall: require("../models/domain/OpenCall.schema").schema,
     OpenCallApplication: require("../models/domain/OpenCallApplication.schema")

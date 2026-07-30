@@ -14,6 +14,7 @@ var privacyRouter = require("../operations/app/policies/privacyPolicy/router");
 var faqRouter = require("../operations/app/faq/router");
 var notificationsRouter = require("../operations/system/notifications/router");
 var pendingProfilesRouter = require("../operations/domain/admin/pendingProfiles/router");
+var reportClaimsRouter = require("../operations/domain/reportClaims/router");
 const createCRUDRoutes = require("../helpers/crud-routes");
 const Place = require("../models/domain/Place.schema");
 const Event = require("../models/domain/Event.schema");
@@ -857,6 +858,7 @@ function loadRoutes() {
       path: "/admin/pending-profiles",
       route: { router: pendingProfilesRouter },
     },
+    { path: "/reportclaims", route: { router: reportClaimsRouter } },
   ];
 }
 
