@@ -46,7 +46,9 @@ async function updateEntityRoleMap(
     // Verificar si la entidad existe y tiene entityRoleMap inicializado
     const entity = await EntityModel.findById(entityId);
     if (!entity) {
-      console.warn(`[EntityRoleMap] Entidad ${entityName}/${entityId} no encontrada`);
+      console.warn(
+        `[EntityRoleMap] Entidad ${entityName}/${entityId} no encontrada`,
+      );
       return;
     }
 
@@ -54,9 +56,11 @@ async function updateEntityRoleMap(
     if (!entity.entityRoleMap || !Array.isArray(entity.entityRoleMap)) {
       await EntityModel.updateOne(
         { _id: entityId },
-        { $set: { entityRoleMap: [] } }
+        { $set: { entityRoleMap: [] } },
       );
-      console.log(`[EntityRoleMap] Inicializado entityRoleMap en ${entityName}/${entityId}`);
+      console.log(
+        `[EntityRoleMap] Inicializado entityRoleMap en ${entityName}/${entityId}`,
+      );
     }
 
     switch (action) {
@@ -77,7 +81,7 @@ async function updateEntityRoleMap(
                 $push: {
                   entityRoleMap: { role: role, ids: [userObjectId] },
                 },
-              }
+              },
             );
           } else {
             // Si el rol existe, agregar el usuario al array de ids
@@ -90,7 +94,7 @@ async function updateEntityRoleMap(
               },
               {
                 arrayFilters: [{ "elem.role": role }],
-              }
+              },
             );
           }
         }
@@ -107,7 +111,7 @@ async function updateEntityRoleMap(
             $pull: {
               "entityRoleMap.$[].ids": userObjectId,
             },
-          }
+          },
         );
 
         // Luego, agregar el usuario a los nuevos roles
@@ -126,7 +130,7 @@ async function updateEntityRoleMap(
                 $push: {
                   entityRoleMap: { role: role, ids: [userObjectId] },
                 },
-              }
+              },
             );
           } else {
             // Si el rol existe, agregar el usuario al array de ids
@@ -139,7 +143,7 @@ async function updateEntityRoleMap(
               },
               {
                 arrayFilters: [{ "elem.role": role }],
-              }
+              },
             );
           }
         }
@@ -156,7 +160,7 @@ async function updateEntityRoleMap(
             $pull: {
               "entityRoleMap.$[].ids": userObjectId,
             },
-          }
+          },
         );
         console.log(
           `[EntityRoleMap] Usuario ${userId} removido de ${entityName}/${entityId}`,
@@ -600,7 +604,19 @@ module.exports = [
       //   .status(200)
       //   .json(items[Math.round(Math.random() * items.length)]);
       try {
-        req.body.password = "1234556768";
+        // El índice de entitydirectories.username es sparse: solo excluye documentos
+        // donde el campo no existe, no donde vale null. Si se persiste `username: null`
+        // explícito (ej. signup por Cognito sin preferred_username), el campo queda
+        // presente y choca contra cualquier otro registro sin username (E11000).
+        if (req.body.username === null || req.body.username === "") {
+          delete req.body.username;
+        }
+
+        // Registro por AWS Cognito (`sub`) no manda password: se deja sin setear,
+        // el login por ese flujo no usa bcrypt.compare (ver server.js /api/generate-key).
+        if (req.body.password) {
+          req.body.password = await bcrypt.hash(req.body.password, 10);
+        }
 
         const UserModel = await getModel(req.serverEnvironment, "User");
         const user = new UserModel(req.body);
