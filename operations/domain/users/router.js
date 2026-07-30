@@ -419,6 +419,14 @@ module.exports = [
       //   .status(200)
       //   .json(items[Math.round(Math.random() * items.length)]);
       try {
+        // El índice de entitydirectories.username es sparse: solo excluye documentos
+        // donde el campo no existe, no donde vale null. Si se persiste `username: null`
+        // explícito (ej. signup por Cognito sin preferred_username), el campo queda
+        // presente y choca contra cualquier otro registro sin username (E11000).
+        if (req.body.username === null || req.body.username === "") {
+          delete req.body.username;
+        }
+
         // Registro por AWS Cognito (`sub`) no manda password: se deja sin setear,
         // el login por ese flujo no usa bcrypt.compare (ver server.js /api/generate-key).
         if (req.body.password) {
