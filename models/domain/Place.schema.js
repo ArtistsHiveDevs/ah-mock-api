@@ -40,23 +40,20 @@ const SocialNetworkStatsSchema = new Schema(
   { _id: false }
 );
 
-const GenreLevelsSchema = new Schema(
-  {
-    l1: [String],
-    l2: [String],
-  },
-  { _id: false }
-);
-
 const schema = new Schema({
-  username: { type: String },
-  name: { type: String },
-  place_type: { type: String },
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+    match: [/^[a-z0-9_.]{3,24}$/, "username debe tener 3-24 caracteres y solo minúsculas, números, '_' o '.'"],
+  },
+  name: { type: String, required: true },
+  place_type: { type: String, required: true },
   music_genre: { type: String },
-  country: { type: Schema.Types.ObjectId, ref: "Country" },
+  country: { type: Schema.Types.ObjectId, ref: "Country", required: true },
   country_alpha2: { type: String },
   state: { type: String },
-  city: { type: String },
+  city: { type: String, required: true },
   address: { type: String },
   location: { type: String },
   email: { type: String },
@@ -77,12 +74,19 @@ const schema = new Schema({
 
   activity: String,
 
+  // Solo informativo por ahora: no filtra listados públicos ni bloquea acciones.
+  // Ver operations/domain/admin/pendingProfiles/router.js para la cola de revisión.
+  approval_status: {
+    type: String,
+    enum: ["pending", "approved", "rejected"],
+    default: "pending",
+  },
+
   has_open_mic: { type: Boolean },
 
   genres: {
     type: Map,
-    of: GenreLevelsSchema,
-    required: true,
+    of: [String],
   },
 
   stats: {

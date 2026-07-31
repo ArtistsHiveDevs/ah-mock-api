@@ -73,7 +73,10 @@ const schema = new mongoose.Schema(
   {
     artistType: { type: String },
     name: { type: String, required: true },
-    username: { type: String },
+    username: {
+      type: String,
+      match: [/^[a-z0-9_.]{3,24}$/, "username debe tener 3-24 caracteres y solo minúsculas, números, '_' o '.'"],
+    },
     subtitle: { type: String },
     verified_status: { type: Number, default: 0 },
     profile_pic: { type: String },
@@ -166,6 +169,14 @@ const schema = new mongoose.Schema(
     },
 
     activity: String,
+
+    // Solo informativo por ahora: no filtra listados públicos ni bloquea acciones.
+    // Ver operations/domain/admin/pendingProfiles/router.js para la cola de revisión.
+    approval_status: {
+      type: String,
+      enum: ["pending", "approved", "rejected"],
+      default: "pending",
+    },
 
     entityRoleMap: [
       {

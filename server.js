@@ -100,39 +100,45 @@ app.post("/api/generate-key", helpers.validateEnvironment, async (req, res) => {
   try {
     const UserModel = await getModel(req.serverEnvironment, "User");
 
-    // Construir query con $or para buscar en una sola consulta
-    const orConditions = [];
+    let requestedUser;
 
-    // Si es login AWS, buscar por sub
-    if (sub) {
-      orConditions.push({ sub: sub });
-    }
+    if (isAWSlogin) {
+      // Cognito es la fuente de verdad de identidad: búsqueda exclusiva por
+      // sub, sin fallback a username/email/_id. Mezclarlo en un mismo $or
+      // permitía encontrar (y luego intentar autenticar) un User distinto al
+      // dueño real del sub por coincidencia de email, tapando un desajuste
+      // sub/email en vez de rechazarlo con 404.
+      requestedUser = await UserModel.findOne({ sub });
+    } else {
+      // Construir query con $or para buscar en una sola consulta
+      const orConditions = [];
 
-    if (identifier) {
-      // username, shortID, email
-      orConditions.push(
-        { username: identifier },
-        { shortID: identifier },
-        { email: identifier },
-      );
-
-      // _id si es ObjectId válido
-      const isObjectId = /^[0-9a-fA-F]{24}$/.test(identifier);
-      if (isObjectId) {
-        orConditions.push({ _id: identifier });
-      }
-
-      // sub si es UUID
-      const isUUID =
-        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
-          identifier,
+      if (identifier) {
+        // username, shortID, email
+        orConditions.push(
+          { username: identifier },
+          { shortID: identifier },
+          { email: identifier },
         );
-      if (isUUID) {
-        orConditions.push({ sub: identifier });
-      }
-    }
 
-    const requestedUser = await UserModel.findOne({ $or: orConditions });
+        // _id si es ObjectId válido
+        const isObjectId = /^[0-9a-fA-F]{24}$/.test(identifier);
+        if (isObjectId) {
+          orConditions.push({ _id: identifier });
+        }
+
+        // sub si es UUID
+        const isUUID =
+          /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
+            identifier,
+          );
+        if (isUUID) {
+          orConditions.push({ sub: identifier });
+        }
+      }
+
+      requestedUser = await UserModel.findOne({ $or: orConditions });
+    }
 
     if (!requestedUser) {
       return res.status(404).send({
@@ -194,7 +200,10 @@ app.post("/api/generate-key", helpers.validateEnvironment, async (req, res) => {
 //   });
 // })();
 
-Promise.all(
+// Promesa que resuelve cuando todas las rutas dinámicas quedaron montadas en `app`.
+// Se exporta junto con `app` para que un caller externo (ej. un test con supertest)
+// pueda esperar a que el registro asíncrono de rutas termine antes de hacer requests.
+const routesReady = Promise.all(
   loadRoutes().map(async (r) => {
     return { path: r.path, route: await r.route.router };
   }),
@@ -506,16 +515,23 @@ process.on("unhandledRejection", (reason, promise) => {
 });
 
 //  Server Zone
-app.listen(port, function () {
-  console.log(textConstants.runningServer, port);
-  console.log(new Date());
-  console.log();
-  console.log("=".repeat(20));
-  console.log();
-  // sendEmail({
-  //   to: "cnpiensadigital@gmail.com",
-  //   subject: "Inicio de servidor",
-  //   text: "El servidor ha iniciado correctamente",
-  //   html: "El servidor ha iniciado <b>correctamente</b> ",
-  // });
-});
+// Solo escucha en un puerto real cuando este archivo se ejecuta directamente
+// (ej. `node server.js` / `nodemon server.js`). Si otro módulo lo hace `require`
+// (ej. un test con supertest), `app` se usa sin abrir un socket TCP real.
+if (require.main === module) {
+  app.listen(port, function () {
+    console.log(textConstants.runningServer, port);
+    console.log(new Date());
+    console.log();
+    console.log("=".repeat(20));
+    console.log();
+    // sendEmail({
+    //   to: "cnpiensadigital@gmail.com",
+    //   subject: "Inicio de servidor",
+    //   text: "El servidor ha iniciado correctamente",
+    //   html: "El servidor ha iniciado <b>correctamente</b> ",
+    // });
+  });
+}
+
+module.exports = { app, routesReady };

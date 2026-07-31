@@ -67,7 +67,8 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
           res.json(response);
         } catch (err) {
           console.error(err);
-          res.status(500).json({ message: err.message });
+          const { status, body } = apiHelperFunctions.mapDatabaseErrorToResponse(err);
+          res.status(status).json(body);
         }
       }
     );
@@ -92,12 +93,14 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             userId: req.userId,
             lang: req.lang,
             idFields: ["alpha2", "alpha3", "ISO_4217_key", "key"],
+            public_fields: options.public_fields,
             postScriptFunction: options.postScriptFunction,
           });
           res.json(response);
         } catch (err) {
           console.error(err);
-          res.status(500).json({ message: err.message });
+          const { status, body } = apiHelperFunctions.mapDatabaseErrorToResponse(err);
+          res.status(status).json(body);
         }
       }
     );
@@ -123,7 +126,8 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
         } catch (err) {
           console.error(`[${modelName}] Error creating entity:`, err.message);
           console.error("Stack trace:", err.stack);
-          res.status(500).json({ message: err.message });
+          const { status, body } = apiHelperFunctions.mapDatabaseErrorToResponse(err);
+          res.status(status).json(body);
         }
       }
     );
@@ -149,7 +153,8 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
           });
           res.json(response);
         } catch (err) {
-          res.status(500).json({ message: err.message });
+          const { status, body } = apiHelperFunctions.mapDatabaseErrorToResponse(err);
+          res.status(status).json(body);
         }
       }
     );
@@ -175,7 +180,8 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
           res.json(response);
         } catch (err) {
           console.error(`[${modelName}] Error deleting entity:`, err.message);
-          res.status(500).json({ message: err.message });
+          const { status, body } = apiHelperFunctions.mapDatabaseErrorToResponse(err);
+          res.status(status).json(body);
         }
       }
     );
@@ -247,7 +253,8 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             res.json(apiHelperFunctions.createPaginatedDataResponse(result));
           } catch (err) {
             console.error(err);
-            res.status(500).json({ message: err.message });
+            const { status, body } = apiHelperFunctions.mapDatabaseErrorToResponse(err);
+            res.status(status).json(body);
           }
         }
       );

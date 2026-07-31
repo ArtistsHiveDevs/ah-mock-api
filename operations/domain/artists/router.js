@@ -702,8 +702,23 @@ module.exports = [
             username: newArtist.username,
             subtitle: newArtist.subtitle,
             verified_status: newArtist.verified_status,
+            approval_status: newArtist.approval_status,
             roles: ["OWNER"],
           };
+
+          const EntityDirectoryHelpers = require("../../../models/appbase/EntityDirectory");
+          const EntityDirectoryModel = await getModel(
+            req.serverEnvironment,
+            "EntityDirectory",
+          );
+          await EntityDirectoryHelpers.createEntityDirectoryRecord({
+            entityInfo: bandInfo,
+            modelName: "Artist",
+            newEntity: newArtist,
+            countryName: info.country_name,
+            EntityDirectoryModel,
+          });
+
           ownerRoles.entityRoleMap.push(bandInfo);
         }
 
