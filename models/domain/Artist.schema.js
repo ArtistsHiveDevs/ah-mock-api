@@ -227,6 +227,33 @@ schema.virtual("followedProfilesCount").get(function () {
 schema.set("toObject", { virtuals: true });
 schema.set("toJSON", { virtuals: true });
 
+// Cross-DB populate hook - Solo para modelos con conexiones personalizadas
+// Usar setImmediate para evitar dependencia circular con db_g.js
+setImmediate(() => {
+  try {
+    const { modelsWithCustomConnections } = require("../../db/db_g");
+
+    if (modelsWithCustomConnections && modelsWithCustomConnections.includes("Artist")) {
+      const { addCrossDBPopulateHook } = require("../../db/crossDBPopulate");
+
+      // Configurar populate automático entre DBs
+      // Usar función para detectar el ambiente dinámicamente
+      addCrossDBPopulateHook(schema, (query) => {
+        // Intentar obtener el ambiente del contexto del query
+        // Por defecto usar 'prod'
+        return query?.options?.serverEnvironment || process.env.NODE_ENV || 'prod';
+      }, [
+        { path: 'country', model: 'Country' },
+        { path: 'spoken_languages', model: 'Language' },
+        { path: 'stage_languages', model: 'Language' },
+        { path: 'arts_languages', model: 'Language' },
+      ]);
+    }
+  } catch (err) {
+    console.warn('⚠️ No se pudo configurar cross-DB populate para Artist:', err.message);
+  }
+});
+
 // const Artist = mongoose.model("Artist", ArtistSchema);
 
 // module.exports = Artist;

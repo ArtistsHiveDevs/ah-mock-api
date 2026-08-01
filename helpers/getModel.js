@@ -15,7 +15,8 @@ function getModelSchema(modelName) {
     ProfileClaim: require("../models/domain/ProfileClaim.schema").schema,
     Follower: require("../models/domain/Follower.schema").schema,
     OpenCall: require("../models/domain/OpenCall.schema").schema,
-    OpenCallApplication: require("../models/domain/OpenCallApplication.schema").schema,
+    OpenCallApplication: require("../models/domain/OpenCallApplication.schema")
+      .schema,
   };
 
   return modelSchemas[modelName] || null;
@@ -23,12 +24,18 @@ function getModelSchema(modelName) {
 
 function getModelWithSchema(env, modelName, schema) {
   if (!env) {
-    console.error(`⚠️ Environment (env) is undefined or null para el modelo ${modelName}`);
-    throw new Error(`Environment no definido para el modelo ${modelName}. Verifica que req.serverEnvironment esté configurado.`);
+    console.error(
+      `⚠️ Environment (env) is undefined or null para el modelo ${modelName}`,
+    );
+    throw new Error(
+      `Environment no definido para el modelo ${modelName}. Verifica que req.serverEnvironment esté configurado.`,
+    );
   }
 
   if (!connections[env]) {
-    console.error(`⚠️ No hay conexión establecida para env: "${env}", modelo: "${modelName}"`);
+    console.error(
+      `⚠️ No hay conexión establecida para env: "${env}", modelo: "${modelName}"`,
+    );
     throw new Error(`No hay conexión establecida para ${env}, ${modelName}`);
   }
 
@@ -40,6 +47,7 @@ async function getModel(conn, modelName) {
   const schema = getModelSchema(modelName);
 
   if (modelsWithCustomConnections.includes(modelName)) {
+    console.log(`Buscando conexión personalizada de ${modelName}...`);
     const modelConnection = await connectToDatabaseByModel(modelName);
     return (
       modelConnection.models[modelName] ||

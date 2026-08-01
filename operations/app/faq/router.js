@@ -11,15 +11,16 @@ module.exports = [
   userRouter.get("/", validateEnvironment, validateIfUserExists, (req, res) => {
     try {
       const fs = require("fs");
+      const lang = req.lang || req.query.lang || 'en'; // Fallback a 'en' si no hay idioma
 
       const content = fs.readFileSync(
-        `./assets/mocks/i18n/${req.lang}/app/faq/faq.md`,
+        `./assets/mocks/i18n/${lang}/app/faq/faq.md`,
         { encoding: "utf8", flag: "r" },
       );
       return res.status(200).json(
         apiHelperFunctions.createPaginatedDataResponse({
           content,
-          lang: req.lang,
+          lang: lang,
           version: 1,
           creationDate: 1,
         }),
@@ -27,8 +28,9 @@ module.exports = [
     } catch (error) {
       console.log(error.code);
       if (error.code === "ENOENT") {
+        const lang = req.lang || req.query.lang || 'en';
         return res.status(404).json({
-          message: `The role "${entityRole}" to get its offer`,
+          message: `FAQ file not found for language "${lang}"`,
         });
       } else {
         return res.status(500).json([]);

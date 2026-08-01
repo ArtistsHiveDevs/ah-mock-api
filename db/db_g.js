@@ -19,7 +19,18 @@ const { schema: ArtistAlbum } = require("../models/domain/ArtistAlbum.schema");
 const SECRET_KEY = process.env.ENV_KEY || "d855f76d6fe2ac84f7c0e38a619c5810"; // Mismo de frontend
 const SECRET_IV = process.env.ENV_KEY_IV || "358e8a3a5474d65a"; // Mismo de frontend
 
-const modelsWithCustomConnections = ["Album"];
+// Modelos con conexiones personalizadas - configurable desde environment
+// Formato: "Album,Artist" o vacío para desactivar
+const modelsWithCustomConnections = process.env.MODELS_CUSTOM_CONNECTIONS
+  ? process.env.MODELS_CUSTOM_CONNECTIONS.split(',').map(m => m.trim()).filter(Boolean)
+  : [];
+
+// Log de configuración
+if (modelsWithCustomConnections.length > 0) {
+  console.log(`🔧 Modelos con conexiones personalizadas: ${modelsWithCustomConnections.join(', ')}`);
+} else {
+  console.log(`🔧 No hay modelos con conexiones personalizadas configurados`);
+}
 
 /**
  * Desencripta texto genérico (sin validación de formato)
@@ -57,6 +68,14 @@ function decryptEnv(encryptedText) {
   } catch (error) {
     console.error("❌ Error al descifrar env:", encryptedText, error.message);
     return null;
+  }
+}
+
+function decryptSharedLinkEnv(encryptedText) {
+  if (encryptedText) {
+    return decryptEnv(encryptedText);
+  } else {
+    return "prod";
   }
 }
 
@@ -118,7 +137,7 @@ const connectToDatabase = async (req) => {
 
       connection.model("EntityDirectory", EntityDirectorySchema);
       connection.model("User", userSchema);
-      connection.model("Artist", artistSchema);
+      // connection.model("Artist", artistSchema);
 
       const { loadRoutes } = require("../routes/routes");
       const schemas = loadRoutes()
@@ -158,7 +177,8 @@ const connectToDatabase = async (req) => {
 
 const connectToDatabaseByModel = async (model) => {
   const modelURIs = {
-    Album: process.env.MONGO_ALBUMS_URI || '',
+    Album: process.env.MONGO_ALBUMS_URI,
+    Artist: process.env.MONGO_ARTIST_URI,
   };
 
   if (!modelURIs[model]) {
@@ -187,6 +207,49 @@ const connectToDatabaseByModel = async (model) => {
       // Esperar a que la conexión esté lista
       await waitForConnection(connection, model);
       console.log(`✅ MongoDB (${model}) conectado`);
+
+      // Registrar modelos referenciados necesarios para populate
+      if (model === "Artist") {
+        try {
+          // Cargar y registrar modelos que Artist referencia
+          const {
+            schema: countrySchema,
+          } = require("../models/parametrics/geo/Country.schema");
+          const {
+            schema: languageSchema,
+          } = require("../models/parametrics/geo/Language.schema");
+          const {
+            schema: eventSchema,
+          } = require("../models/domain/Event.schema");
+
+          connection.model("Country", countrySchema);
+          connection.model("Language", languageSchema);
+          connection.model("Event", eventSchema);
+          console.log(
+            `📦 Modelos referenciados registrados para ${model}: Country, Language, Event`,
+          );
+        } catch (refErr) {
+          console.warn(
+            `⚠️ No se pudieron registrar modelos referenciados:`,
+            refErr.message,
+          );
+        }
+      }
+
+      // Contar elementos en el modelo
+      try {
+        const Model = connection.model(
+          model,
+          require(`../models/domain/${model}.schema`).schema,
+        );
+        const count = await Model.countDocuments();
+        console.log(`📊 Total de documentos en ${model}: ${count}`);
+      } catch (countErr) {
+        console.warn(
+          `⚠️ No se pudo contar documentos en ${model}:`,
+          countErr.message,
+        );
+      }
     } catch (err) {
       console.error(`🚨 Error al conectar a MongoDB (${model}):`, err);
       throw err;
@@ -203,4 +266,5 @@ module.exports = {
   connectionsByModel,
   decryptEnv,
   decryptText,
+  decryptSharedLinkEnv,
 };

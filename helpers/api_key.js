@@ -194,6 +194,8 @@ async function validateIfUserExists(req, res, next) {
   const token = req.headers["x-api-key"];
   const reqContext = req.headers["x-req-ctx"];
 
+  registerLang(req);
+
   // IMPORTANTE: Los headers x-api-key y x-req-ctx son mutuamente excluyentes
   // Si ambos están presentes, es un intento de bypass de seguridad
   if (token && reqContext) {

@@ -119,6 +119,9 @@ async function normalizeProfileId(id, connection) {
       identifier: entity.identifier,
       entity_id: entity.id,
       username: entity.username,
+      name: entity.name,
+      profile_pic: entity.profile_pic,
+      entityType: entity.entityType,
     };
   }
 
