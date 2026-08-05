@@ -3,6 +3,7 @@ const { Schema } = mongoose;
 
 const { connections } = require("../../db/db_g");
 const { schema: FollowerSchema } = require("./Follower.schema");
+const { schema: FileSchema } = require("./File.schema");
 
 const ArtistInTrackSchema = new mongoose.Schema({
   // external_urls: {
@@ -186,6 +187,11 @@ const schema = new mongoose.Schema(
     ],
     followed_profiles: { type: [FollowerSchema], default: [] },
     followed_by: { type: [FollowerSchema], default: [] },
+    image_members: { type: [FileSchema], default: [] },
+    image_live_gallery: { type: [FileSchema], default: [] },
+    technical_epk: { type: [FileSchema], default: [] },
+    technical_rider: { type: [FileSchema], default: [] },
+    stage_plot: { type: [FileSchema], default: [] },
   },
   {
     timestamps: true,
