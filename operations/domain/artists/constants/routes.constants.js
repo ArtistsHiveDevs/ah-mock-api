@@ -53,7 +53,12 @@ module.exports = {
     "activity",
     "genres",
     "has_open_mic",
-    "total_audience_capacity"
+    "total_audience_capacity",
+    "image_live_gallery",
+    "image_members",
+    "technical_epk",
+    "technical_rider",
+    "stage_plot",
   ],
   authenticated_fields: [
     // "artistType",
@@ -105,9 +110,15 @@ module.exports = {
 
     "isClaimedProfile",
     "activity",
-    
+
     "has_open_mic",
-    "total_audience_capacity"
+    "total_audience_capacity",
+
+    "image_live_gallery",
+    "image_members",
+    "technical_epk",
+    "technical_rider",
+    "stage_plot",
   ],
   appbase_public_fields: {
     EntityDirectory: {
