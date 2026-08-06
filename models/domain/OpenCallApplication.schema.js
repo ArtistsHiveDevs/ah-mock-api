@@ -31,4 +31,15 @@ const schema = new Schema(
   }
 );
 
+// Un Artist solo puede aplicar una vez a la misma convocatoria. `artist_id` no es
+// required, así que el índice se restringe a los documentos que sí lo tienen: sin el
+// partialFilterExpression, todos los documentos sin artist_id colisionarían entre sí.
+schema.index(
+  { open_call_id: 1, artist_id: 1 },
+  {
+    unique: true,
+    partialFilterExpression: { artist_id: { $type: "objectId" } },
+  }
+);
+
 module.exports = { schema };
