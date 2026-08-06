@@ -936,7 +936,14 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
             modelName
         );
       }
-      const info = { ...body };
+      // Hook opt-in para que el servidor arme el payload real a persistir: se usa
+      // cuando hay campos que el cliente no puede setear porque dependen del
+      // contexto del request (ver options.buildCreatePayload en /activities).
+      const info =
+        options.buildCreatePayload &&
+        typeof options.buildCreatePayload === "function"
+          ? await options.buildCreatePayload({ body: { ...body }, req, userId })
+          : { ...body };
 
       if (
         options.validateCreate &&
@@ -1209,6 +1216,19 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
     );
 
     if (!modelRequiresOwnership(modelName) || hasRole) {
+      if (
+        options.validateDelete &&
+        typeof options.validateDelete === "function"
+      ) {
+        // Espejo de validateUpdate: corre ANTES de borrar y debe propagar el error
+        // para abortar cuando el ownership no se agota en entityRoleMap.
+        await options.validateDelete({
+          userId,
+          existingEntity: entityInfo,
+          req,
+        });
+      }
+
       // Construir query de eliminación según si el modelo requiere ownership o no
       let deleteQuery = { _id: entityInfo._id };
 
