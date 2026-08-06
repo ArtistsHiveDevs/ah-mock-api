@@ -175,38 +175,66 @@ const connectToDatabase = async (req) => {
   return connections[env];
 };
 
-const connectToDatabaseByModel = async (model) => {
+const connectToDatabaseByModel = async (model, env = null) => {
   const modelURIs = {
-    Album: process.env.MONGO_ALBUMS_URI,
-    Artist: process.env.MONGO_ARTIST_URI,
+    Album: {
+      prod: process.env.MONGO_ALBUMS_URI_PROD,
+      uat: process.env.MONGO_ALBUMS_URI_UAT,
+      default: process.env.MONGO_ALBUMS_URI,
+    },
+    Artist: {
+      prod: process.env.MONGO_ARTIST_URI_PROD,
+      uat: process.env.MONGO_ARTIST_URI_UAT,
+      default: process.env.MONGO_ARTIST_URI,
+    },
   };
 
-  if (!modelURIs[model]) {
-    console.warn(`No se encuentra la URI del modelo solicitado: ${model}`);
+  // Determinar la URI a usar
+  let uri;
+  let effectiveEnv = env;
+
+  if (env && modelURIs[model]?.[env]) {
+    // Si se especifica ambiente y existe la URI, usarla
+    uri = modelURIs[model][env];
+  } else if (!env && modelURIs[model]?.default) {
+    // Si no se especifica ambiente, buscar la URI sin sufijo
+    uri = modelURIs[model].default;
+    effectiveEnv = 'default';
+  } else if (!env) {
+    // Si no hay ambiente ni URI default, usar la primera disponible
+    uri = modelURIs[model]?.prod || modelURIs[model]?.uat;
+    effectiveEnv = modelURIs[model]?.prod ? 'prod' : 'uat';
   }
+
+  if (!uri) {
+    console.warn(`No se encuentra la URI del modelo ${model}${env ? ` para el ambiente ${env}` : ''}`);
+  }
+
+  // Crear una clave única por modelo y ambiente
+  const connectionKey = `${model}_${effectiveEnv}`;
 
   // Si ya existe una conexión, esperar a que esté lista
-  if (connectionsByModel[model]) {
-    await waitForConnection(connectionsByModel[model], model);
-    return connectionsByModel[model];
+  if (connectionsByModel[connectionKey]) {
+    await waitForConnection(connectionsByModel[connectionKey], connectionKey);
+    return connectionsByModel[connectionKey];
   }
 
-  if (!!model && !connectionsByModel[model] && modelURIs[model]?.length > 0) {
+  if (!!model && !connectionsByModel[connectionKey] && uri?.length > 0) {
     try {
-      console.log(`🔄 Conectando a MongoDB (${model})`);
-      const connection = mongoose.createConnection(modelURIs[model], {
+      console.log(`🔄 Conectando a MongoDB (${model}${effectiveEnv ? ` - ${effectiveEnv}` : ''})`);
+      const connection = mongoose.createConnection(uri, {
         serverSelectionTimeoutMS: 30000,
       });
 
-      connectionsByModel[model] = connection;
+      connectionsByModel[connectionKey] = connection;
 
       connection.on("error", (err) =>
-        console.error(`❌ Error en MongoDB (${model}):`, err),
+        console.error(`❌ Error en MongoDB (${model}${effectiveEnv ? ` - ${effectiveEnv}` : ''}):`, err),
       );
 
       // Esperar a que la conexión esté lista
-      await waitForConnection(connection, model);
-      console.log(`✅ MongoDB (${model}) conectado`);
+      await waitForConnection(connection, connectionKey);
+      console.log(`✅ MongoDB (${model}${effectiveEnv ? ` - ${effectiveEnv}` : ''}) conectado`);
 
       // Registrar modelos referenciados necesarios para populate
       if (model === "Artist") {
@@ -255,7 +283,7 @@ const connectToDatabaseByModel = async (model) => {
       throw err;
     }
   }
-  return connectionsByModel[model];
+  return connectionsByModel[connectionKey];
 };
 
 module.exports = {
