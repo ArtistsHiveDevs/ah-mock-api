@@ -18,6 +18,10 @@ const {
 const apiHelperFunctions = require("../../../helpers/apiHelperFunctions");
 const { followProfile } = require("../../../helpers/following");
 const { getModel } = require("../../../helpers/getModel");
+const {
+  normalizeProfileId,
+} = require("../../../models/appbase/EntityDirectory");
+const { connectToDatabase } = require("../../../db/db_g");
 const routesConstants = require("../artists/constants/routes.constants");
 const {
   notifyUserWelcome,
@@ -27,6 +31,40 @@ const {
 } = require("../../../helpers/userNotifications");
 
 var userRouter = express.Router({ mergeParams: true });
+
+// Campos del User que deben sincronizarse con EntityDirectory
+const ENTITY_DIRECTORY_SYNC_FIELDS = [
+  "shortId",
+  "profile_pic",
+  "name",
+  "given_names",
+  "surnames",
+  "stage_name",
+  "username",
+  "subtitle",
+  "verified_status",
+];
+
+/**
+ * Construye el objeto entityInfo para EntityDirectory desde un User
+ * @param {Object} user - Documento de User
+ * @returns {Object} Objeto con los campos para EntityDirectory
+ */
+function buildEntityInfoFromUser(user) {
+  const entityInfo = {
+    id: user._id,
+    entityType: "User",
+  };
+
+  // Agregar solo los campos que existen en el user
+  ENTITY_DIRECTORY_SYNC_FIELDS.forEach((field) => {
+    if (user[field] !== undefined) {
+      entityInfo[field] = user[field];
+    }
+  });
+
+  return entityInfo;
+}
 
 /**
  * Actualiza el entityRoleMap de una entidad específica
@@ -670,16 +708,8 @@ module.exports = [
 
         await user.save();
 
-        entityInfo = {
-          id: user._id,
-          shortId: user.shortId,
-          profile_pic: user.profile_pic,
-          name: user.name,
-          username: user.username,
-          subtitle: user.subtitle,
-          verified_status: user.verified_status,
-          entityType: "User",
-        };
+        // Construir entityInfo usando la función helper
+        entityInfo = buildEntityInfoFromUser(user);
 
         const EntityDirectoryModel = await getModel(
           req.serverEnvironment,
@@ -791,21 +821,9 @@ module.exports = [
           "EntityDirectory",
         );
 
-        // Obtener los campos del schema de EntityDirectory
-        const entityDirectoryFields = Object.keys(
-          EntityDirectoryModel.schema.paths,
-        ).filter(
-          (field) =>
-            !["_id", "id", "entityType", "createdAt", "updatedAt"].includes(
-              field,
-            ),
-        );
-
-        // Filtrar los campos que están en EntityDirectory
+        // Filtrar solo los campos que fueron actualizados y que deben sincronizarse
         const entityDirectoryUpdates = Object.keys(updateFields)
-          .filter((key) =>
-            entityDirectoryFields.some((field) => key.startsWith(field)),
-          )
+          .filter((key) => ENTITY_DIRECTORY_SYNC_FIELDS.includes(key))
           .reduce((acc, key) => {
             acc[key] = updateFields[key];
             return acc;
@@ -834,16 +852,46 @@ module.exports = [
     async (req, res) => {
       const { action, id, identifier, username, entity } = req.body;
 
-      const EntityDirectoryModel = await getModel(
-        req.serverEnvironment,
-        "EntityDirectory",
-      );
-      const requestID = await EntityDirectoryModel.findOne({
-        id: id,
-        entityType: entity,
-      }).select("_id");
+      const connection = await connectToDatabase(req);
 
-      entityDirectoryIdFollowed = requestID?._id;
+      // Buscar el EntityDirectory del follower (perfil actual)
+      let entityDirectoryIdFollower;
+      let followerEntityType;
+      try {
+        const followerIdentifier =
+          req.currentProfileInfo.username ||
+          req.currentProfileInfo.identifier ||
+          req.currentProfileInfo.id;
+        const followerEntityDirectoryInfo = await normalizeProfileId(
+          followerIdentifier,
+          connection,
+        );
+        entityDirectoryIdFollower = followerEntityDirectoryInfo._id;
+        followerEntityType = followerEntityDirectoryInfo.entityType;
+      } catch (err) {
+        console.warn(
+          `EntityDirectory not found for follower: ${req.currentProfileInfo.username || req.currentProfileInfo.id}`,
+          err.message,
+        );
+      }
+
+      // Buscar el EntityDirectory de la entidad seguida
+      let entityDirectoryIdFollowed;
+      let followedEntityType;
+      try {
+        const followedIdentifier = id || username || identifier;
+        const followedEntityDirectoryInfo = await normalizeProfileId(
+          followedIdentifier,
+          connection,
+        );
+        entityDirectoryIdFollowed = followedEntityDirectoryInfo._id;
+        followedEntityType = followedEntityDirectoryInfo.entityType;
+      } catch (err) {
+        console.warn(
+          `EntityDirectory not found for followed: ${id || username || identifier}`,
+          err.message,
+        );
+      }
 
       let response;
       switch (action) {
@@ -851,11 +899,11 @@ module.exports = [
         case "unfollow":
           try {
             const followerInfo = {
-              entityDirectoryId: req.currentProfileEntityDirectory,
+              entityDirectoryId: entityDirectoryIdFollower,
               id: req.currentProfileInfo.id,
               identifier: req.currentProfileInfo.identifier,
               username: req.currentProfileInfo.username,
-              entity: req.currentProfileEntity,
+              entity: followerEntityType,
             };
 
             const followedInfo = {
@@ -863,7 +911,7 @@ module.exports = [
               id,
               identifier,
               username,
-              entity,
+              entity: followedEntityType || entity,
             };
 
             await followProfile(

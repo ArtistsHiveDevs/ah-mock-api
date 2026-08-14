@@ -20,12 +20,11 @@ const schema = new mongoose.Schema(
     isFollowing: {
       type: Boolean,
       default: true,
-      select: false,
     },
   },
   { timestamps: true }
 );
 
-schema.index({ entityId: 1, entityType: 1 }, { unique: true, sparse: true });
+// NOTA: No usamos índice unique aquí porque en arrays embebidos, el índice unique
 
 module.exports = { schema };

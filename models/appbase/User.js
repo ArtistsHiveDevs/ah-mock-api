@@ -117,6 +117,18 @@ schema.virtual("followedProfilesCount").get(function () {
   };
 });
 
+schema.virtual("fullname").get(function () {
+  return `${this.given_names || ''} ${this.surnames || ''}`.trim();
+});
+
+schema.virtual("nameKnownAs").get(function () {
+  return this.stage_name || this.fullname;
+});
+
+// Incluye los virtuals en los resultados de JSON
+schema.set("toObject", { virtuals: true });
+schema.set("toJSON", { virtuals: true });
+
 const User = mongoose.model("User", schema);
 
 module.exports = { User, schema };

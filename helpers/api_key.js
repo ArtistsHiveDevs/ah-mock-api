@@ -4,6 +4,7 @@ const { schema: userSchema } = require("../models/appbase/User");
 const { getAvailableTranslation } = require("./lang");
 const { connectToDatabase, decryptEnv } = require("../db/db_g");
 const { getModel } = require("./getModel");
+const { normalizeProfileId } = require("../models/appbase/EntityDirectory");
 const {
   appbase_public_fields,
   parametric_public_fields,
@@ -342,17 +343,35 @@ async function registerUserProfile(req, user) {
     req.currentProfileInfo = template;
     req.currentProfileEntity = currentProfileEntity;
 
-    if (!!req.currentProfileInfo && !!req.currentProfileEntity) {
-      const EntityDirectoryModel = await getModel(
-        req.serverEnvironment,
-        "EntityDirectory",
-      );
-      const requestID = await EntityDirectoryModel.findOne({
-        id: req.currentProfileInfo.id,
-        entityType: currentProfileEntity,
-      }).select("_id");
+    // Buscar el EntityDirectory para el perfil actual
+    if (!!req.currentProfileInfo) {
+      try {
+        // Usar normalizeProfileId para buscar el EntityDirectory
+        // Priorizar username/identifier sobre id, porque id puede ser el EntityDirectory._id
+        const identifier =
+          req.currentProfileInfo.username ||
+          req.currentProfileInfo.identifier ||
+          req.currentProfileInfo.id;
 
-      req.currentProfileEntityDirectory = requestID?._id;
+        const connection = await connectToDatabase(req);
+        const entityDirectoryInfo = await normalizeProfileId(
+          identifier,
+          connection,
+        );
+
+        req.currentProfileEntityDirectory = entityDirectoryInfo._id;
+
+        // Corregir el id para que apunte al _id de la entidad real (Place/Artist/User), no al EntityDirectory
+        if (entityDirectoryInfo.entity_id) {
+          req.currentProfileInfo.id = entityDirectoryInfo.entity_id;
+        }
+      } catch (err) {
+        // Si no se encuentra el EntityDirectory, dejar req.currentProfileEntityDirectory como undefined
+        console.warn(
+          `EntityDirectory not found for profile: ${req.currentProfileInfo.username || req.currentProfileInfo.id}`,
+          err.message,
+        );
+      }
     }
   }
 }

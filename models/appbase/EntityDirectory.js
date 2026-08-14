@@ -13,7 +13,7 @@ const LocationSchema = new Schema(
     longitude: Number,
     locationPrecision: String,
   },
-  { _id: false }
+  { _id: false },
 );
 // Definir el esquema para EventTemplate
 const schema = new Schema(
@@ -39,11 +39,15 @@ const schema = new Schema(
     lastActivity: { type: Date, default: new Date() },
     lastSession: { type: Date, default: new Date() },
     main_date: { type: Date, default: null },
+    // Campos de nombre para Users
+    given_names: String,
+    surnames: String,
+    stage_name: String,
     // lang
   },
   {
     timestamps: true, // Agrega createdAt y updatedAt automáticamente
-  }
+  },
 );
 
 // El namespace de username es global y compartido entre User/Artist/Place
@@ -63,7 +67,7 @@ schema.virtual("identifier").get(function () {
  * Permite acceder a campos adicionales del modelo subyacente
  */
 schema.virtual("entity", {
-  ref: function() {
+  ref: function () {
     return this.entityType; // Retorna dinámicamente 'User', 'Artist', 'Place', etc.
   },
   localField: "id",
@@ -77,6 +81,29 @@ schema.virtual("entity", {
  */
 schema.virtual("email").get(function () {
   return this.entity?.email || null;
+});
+
+/**
+ * Virtual para obtener el nombre completo (given_names + surnames)
+ */
+schema.virtual("fullname").get(function () {
+  return `${this.given_names || ""} ${this.surnames || ""}`.trim();
+});
+
+/**
+ * Virtual para obtener el nombre conocido (stage_name o fullname)
+ */
+schema.virtual("nameKnownAs").get(function () {
+  return this.stage_name || this.fullname;
+});
+
+/**
+ * Virtual para obtener el nombre de la entidad (nameKnownAs o name)
+ * Para Users: retorna stage_name > fullname
+ * Para Artists/Places: retorna name
+ */
+schema.virtual("entityName").get(function () {
+  return this.nameKnownAs || this.name;
 });
 
 // Incluye los virtuals en los resultados JSON
@@ -127,7 +154,10 @@ async function normalizeProfileId(id, connection) {
       identifier: entity.identifier,
       entity_id: entity.id,
       username: entity.username,
-      name: entity.name,
+      name:
+        entity.name ||
+        entity.stage_name ||
+        `${entity.given_names || ""} ${entity.surnames || ""}`.trim(),
       profile_pic: entity.profile_pic,
       entityType: entity.entityType,
     };
@@ -203,15 +233,24 @@ async function createEntityDirectoryRecord({
           location.country_name,
           location.state,
           location.city,
-        ].filter((v) => v !== undefined)
+        ].filter((v) => v !== undefined),
       ),
     ].join(" ") || "";
+
+  // Campos adicionales para Users
+  const nameFields = {};
+  if (modelName === "User" && newEntity) {
+    if (newEntity.given_names) nameFields.given_names = newEntity.given_names;
+    if (newEntity.surnames) nameFields.surnames = newEntity.surnames;
+    if (newEntity.stage_name) nameFields.stage_name = newEntity.stage_name;
+  }
 
   const entityDirectory = new EntityDirectoryModel({
     ...entityInfo,
     entityType: modelName,
     search_cache: removeStringAccents(search_cache),
     location: [location],
+    ...nameFields,
   });
   await entityDirectory.save();
   return entityDirectory;
