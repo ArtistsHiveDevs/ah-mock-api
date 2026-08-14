@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 const { connections } = require("../../db/db_g");
 const { schema: FollowerSchema } = require("./Follower.schema");
 const { schema: FileSchema } = require("./File.schema");
+const { schema: MemberSchema } = require("./Member.schema");
 
 const ArtistInTrackSchema = new mongoose.Schema({
   // external_urls: {
@@ -192,6 +193,7 @@ const schema = new mongoose.Schema(
     technical_epk: { type: [FileSchema], default: [] },
     technical_rider: { type: [FileSchema], default: [] },
     stage_plot: { type: [FileSchema], default: [] },
+    music_performance: { type: [MemberSchema], default: [] },
   },
   {
     timestamps: true,
