@@ -606,14 +606,15 @@ module.exports = [
             .select("_id");
         }
 
+        const isProd = true || req.serverEnvironment === 'prod';
         artistInfo = {
           ...artistInfo,
           followed_by_count:
             (followedByCount?.[0]?.followersCount || 0) +
-            Math.floor(Math.random() * 5000),
+            (isProd ? 0 : Math.floor(Math.random() * 5000)),
           followed_profiles_count:
             (followedProfilesCount?.[0]?.followedProfilesCount || 0) +
-            Math.floor(Math.random() * 2000),
+            (isProd ? 0 : Math.floor(Math.random() * 2000)),
           isFollowedByCurrentProfile: !!followedEntityInfo,
         };
 
