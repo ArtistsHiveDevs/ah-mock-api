@@ -179,6 +179,7 @@ module.exports = {
         "blood_group",
         "agrees_to_a_blood_transfusion",
         "spoken_languages",
+        "allergies",
         "dietary_restrictions",
         // "followed_by",
         // "followed_profiles",

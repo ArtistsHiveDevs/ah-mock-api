@@ -63,6 +63,7 @@ const schema = new mongoose.Schema({
   home_address: String,
   // spoken_languages: [{ type: Schema.Types.ObjectId, ref: "Language" }],
   spoken_languages: [String],
+  allergies: [{ type: Schema.Types.ObjectId, ref: "Allergy" }],
   dietary_restrictions: String,
   latlng: String,
   profile_pic: String,
