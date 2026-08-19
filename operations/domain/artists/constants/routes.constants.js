@@ -240,8 +240,8 @@ module.exports = {
     },
     Currency: ["ISO_4217_key", "name", "symbol", "decimals"],
     Language: {
-      summary: ["key", "name", "main_flag_2", "main_flag_3"],
-      detail: ["key", "name", "main_flag_2", "main_flag_3"],
+      summary: ["key", "name", "native", "main_flag_2", "main_flag_3"],
+      detail: ["key", "name", "native", "main_flag_2", "main_flag_3"],
     },
   },
 };
