@@ -15,11 +15,28 @@ module.exports = {
     response.status(errorContent?.errorCode || 500).json(errorContent);
   },
 
+  // Error de negocio que declara explícitamente con qué status y errorCode debe
+  // responder la API, para que un hook de validación (validateCreate/validateUpdate)
+  // no caiga en el 500 genérico.
+  createApiError(message, errorCode, status) {
+    const error = new Error(message);
+    error.errorCode = errorCode;
+    error.status = status;
+    return error;
+  },
+
   // Traduce un error atrapado en un handler del CRUD genérico (helpers/crud-routes.js)
-  // a { status, body } diferenciando validación (Mongoose ValidationError),
-  // duplicado (MongoDB E11000) y cualquier otro error, que sigue cayendo en 500
-  // con el mismo shape que antes para no romper contratos existentes.
+  // a { status, body } diferenciando error de negocio con status declarado, validación
+  // (Mongoose ValidationError), duplicado (MongoDB E11000) y cualquier otro error, que
+  // sigue cayendo en 500 con el mismo shape que antes para no romper contratos existentes.
   mapDatabaseErrorToResponse(err) {
+    if (err?.status && err?.errorCode) {
+      return {
+        status: err.status,
+        body: this.createAPIErrorResponse(err.message, err.errorCode),
+      };
+    }
+
     if (err?.name === "ValidationError") {
       const fieldMessages = Object.values(err.errors || {}).map(
         (fieldError) => fieldError.message

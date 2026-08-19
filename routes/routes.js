@@ -15,8 +15,10 @@ var faqRouter = require("../operations/app/faq/router");
 var notificationsRouter = require("../operations/system/notifications/router");
 var pendingProfilesRouter = require("../operations/domain/admin/pendingProfiles/router");
 var reportClaimsRouter = require("../operations/domain/reportClaims/router");
+var allEventsRouter = require("../operations/domain/allEvents/router");
 const createCRUDRoutes = require("../helpers/crud-routes");
 const Place = require("../models/domain/Place.schema");
+const Activity = require("../models/domain/Activity.schema");
 const Event = require("../models/domain/Event.schema");
 const Prebooking = require("../models/domain/Prebooking.schema");
 const ProfileClaim = require("../models/domain/ProfileClaim.schema");
@@ -31,6 +33,8 @@ const routesConstants = require("../operations/domain/artists/constants/routes.c
 const helperFunctions = require("../helpers/helperFunctions");
 const { normalizeProfileId } = require("../models/appbase/EntityDirectory");
 const { getModel } = require("../helpers/getModel");
+const apiHelperFunctions = require("../helpers/apiHelperFunctions");
+const ErrorCodes = require("../constants/errors");
 const {
   notifyPrebookingCreated,
   notifyPrebookingStatusChanged,
@@ -38,6 +42,11 @@ const {
 const {
   notifyOpenCallApplicationStatusChanged,
 } = require("../helpers/openCallApplicationNotifications");
+const {
+  buildActivityCreatePayload,
+  buildActivityVisibilityFilter,
+  assertActivityBelongsToActiveProfile,
+} = require("../helpers/activityOwnership");
 
 // Estados válidos para OpenCallApplication.status (debe coincidir con el enum del schema)
 const OPEN_CALL_APPLICATION_STATUSES = ["pending", "accepted", "rejected"];
@@ -114,6 +123,83 @@ async function validateArtistOwnership(artistId, req) {
   // }
 }
 
+const APPLICABLE_OPEN_CALL_STATUS = "OPEN";
+
+function startOfToday() {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return today;
+}
+
+/**
+ * Verifica que la convocatoria exista, esté publicada y no haya vencido.
+ * @param {string} openCallId
+ * @param {Object} req
+ */
+async function validateOpenCallAcceptsApplications(openCallId, req) {
+  const OpenCallModel = await getModel(req.serverEnvironment, "OpenCall");
+  const openCall = await OpenCallModel.findById(openCallId).select(
+    "status end_date",
+  );
+
+  if (!openCall) {
+    throw apiHelperFunctions.createApiError(
+      `Open Call '${openCallId}' not found.`,
+      ErrorCodes.CONTENT_NOT_FOUND,
+      404,
+    );
+  }
+
+  if (openCall.status !== APPLICABLE_OPEN_CALL_STATUS) {
+    throw apiHelperFunctions.createApiError(
+      `Open Call '${openCallId}' is not accepting applications (status '${openCall.status}').`,
+      ErrorCodes.VALIDATION_ERROR,
+      400,
+    );
+  }
+
+  // `end_date` está tipado como String con formato de fecha suelta ("2024-08-24"):
+  // compararlo sin parsear sería una comparación lexicográfica (mismo criterio que
+  // helpers/calendarCollectors.js).
+  const deadline = new Date(openCall.end_date);
+  const hasParseableDeadline = !Number.isNaN(deadline.getTime());
+
+  if (hasParseableDeadline && deadline < startOfToday()) {
+    throw apiHelperFunctions.createApiError(
+      `Open Call '${openCallId}' closed on ${openCall.end_date}.`,
+      ErrorCodes.VALIDATION_ERROR,
+      400,
+    );
+  }
+}
+
+/**
+ * Rechaza una segunda aplicación del mismo Artist a la misma convocatoria.
+ * La garantía real es el índice único de OpenCallApplication.schema.js (cubre dos
+ * peticiones simultáneas); este chequeo solo existe para responder con un mensaje
+ * legible en vez del error crudo de clave duplicada.
+ * @param {Object} application - { open_call_id, artist_id }
+ * @param {Object} req
+ */
+async function validateArtistHasNotApplied({ open_call_id, artist_id }, req) {
+  const OpenCallApplicationModel = await getModel(
+    req.serverEnvironment,
+    "OpenCallApplication",
+  );
+  const existingApplication = await OpenCallApplicationModel.findOne({
+    open_call_id,
+    artist_id,
+  }).select("_id");
+
+  if (existingApplication) {
+    throw apiHelperFunctions.createApiError(
+      "This Artist has already applied to this Open Call.",
+      ErrorCodes.VALIDATION_DUPLICATE_KEY,
+      409,
+    );
+  }
+}
+
 /**
  * Query Mongo que restringe qué OpenCallApplication puede LISTAR el usuario actual:
  * solo las suyas como Artist (OWNER/ADMIN de artist_id) o las que aplicaron a una
@@ -169,6 +255,50 @@ async function buildOpenCallApplicationsVisibilityFilter({ userId, req }) {
 function loadRoutes() {
   return [
     { path: "/", route: { router: allRouter } },
+    // Debe quedar montado antes del CRUD de "/events": ese router resuelve
+    // GET "/:artistId", que si no capturaría "/all_events" como un id.
+    { path: "/events", route: { router: allEventsRouter } },
+    {
+      path: "/activities",
+      route: createCRUDRoutes({
+        modelName: "Activity",
+        schema: Activity.schema,
+        options: {
+          public_fields: [
+            "_id",
+            "title",
+            "type",
+            "start",
+            "end",
+            "allDay",
+            "notes",
+            "entityRoleMap",
+            "owner_profile_id",
+            "owner_profile_entity",
+            "createdAt",
+            "updatedAt",
+          ],
+          authenticated_fields: [
+            "_id",
+            "title",
+            "type",
+            "start",
+            "end",
+            "allDay",
+            "notes",
+            "entityRoleMap",
+            "owner_profile_id",
+            "owner_profile_entity",
+            "createdAt",
+            "updatedAt",
+          ],
+          buildCreatePayload: buildActivityCreatePayload,
+          listQueryFilter: buildActivityVisibilityFilter,
+          validateUpdate: assertActivityBelongsToActiveProfile,
+          validateDelete: assertActivityBelongsToActiveProfile,
+        },
+      }),
+    },
     { path: "/academies", route: { router: academyRouter } },
     {
       path: "/allergies",
@@ -775,7 +905,14 @@ function loadRoutes() {
               );
             }
 
-            // await validateArtistOwnership(body.artist_id, req);
+            await validateArtistOwnership(body.artist_id, req);
+
+            // Sin open_call_id no hay nada que validar acá: el `required` del schema
+            // resuelve el caso como ValidationError.
+            if (!body.open_call_id) return;
+
+            await validateOpenCallAcceptsApplications(body.open_call_id, req);
+            await validateArtistHasNotApplied(body, req);
           },
           // Revalida ownership del Artist cuando el update reasigna artist_id, evitando que el
           // OWNER/ADMIN de una application existente la "transfiera" a un Artist ajeno.
