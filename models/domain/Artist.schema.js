@@ -3,6 +3,8 @@ const { Schema } = mongoose;
 
 const { connections } = require("../../db/db_g");
 const { schema: FollowerSchema } = require("./Follower.schema");
+const { schema: FileSchema } = require("./File.schema");
+const { schema: MemberSchema } = require("./Member.schema");
 
 const ArtistInTrackSchema = new mongoose.Schema({
   // external_urls: {
@@ -69,6 +71,17 @@ const TopTrackSchema = new mongoose.Schema({
   type: { type: String, required: true },
 });
 
+const MemberWithouthAccountSchema = new mongoose.Schema({
+  internal_id: {type: String, required: true},
+  names: {type: String, required: true},
+  surnames: {type: String, required: true},
+  stage_name: {type: String, required: false},
+  email: {type: String, required: true},
+  gender: {type: String, required: true},
+  member_role: {type: String, required: true},
+  member_instrument: {type: String, required: true},
+});
+
 const schema = new mongoose.Schema(
   {
     artistType: { type: String },
@@ -86,7 +99,9 @@ const schema = new mongoose.Schema(
     home_city: { type: String },
     country_alpha2: { type: String },
     country: { type: Schema.Types.ObjectId, ref: "Country" },
+    state: { type: String },
     city: { type: String },
+    categories: { type: String },
     genres: {
       music: [String],
     },
@@ -95,16 +110,21 @@ const schema = new mongoose.Schema(
     arts_languages: [{ type: Schema.Types.ObjectId, ref: "Language" }],
     website: { type: String },
     email: { type: String },
+    phone: { type: String },
     mobile_phone: { type: String },
     whatsapp: { type: String },
     facebook: { type: String },
+    twitter: { type: String },
     tiktok: { type: String },
     twitch: { type: String },
     instagram: { type: String },
     spotify: { type: String },
     soundcloud: { type: String },
+    sound_cloud: { type: String },
     youtube: { type: String },
     youtube_widget_id: { type: String },
+    wikipedia: { type: String },
+    cd_baby: { type: String },
     chartmetric: { type: Number, default: -1 },
     spotify_data: {
       followers: { type: Number, default: -1 },
@@ -186,6 +206,12 @@ const schema = new mongoose.Schema(
     ],
     followed_profiles: { type: [FollowerSchema], default: [] },
     followed_by: { type: [FollowerSchema], default: [] },
+    image_members: { type: [FileSchema], default: [] },
+    image_live_gallery: { type: [FileSchema], default: [] },
+    technical_epk: { type: [FileSchema], default: [] },
+    technical_rider: { type: [FileSchema], default: [] },
+    stage_plot: { type: [FileSchema], default: [] },
+    music_performance: { type: [MemberWithouthAccountSchema], default: [] },
   },
   {
     timestamps: true,

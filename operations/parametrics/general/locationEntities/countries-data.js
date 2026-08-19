@@ -1,6 +1,10 @@
 /**
  * Lista de países con sus estados y ciudades
  * Estructura jerárquica: countries > states > cities > districts > neighborhoods
+ *
+ * Los códigos utilizados siguen los estándares oficiales de cada país:
+ * - ISO 3166-2: Códigos internacionales de subdivisión
+ * - Códigos nacionales: Sistemas específicos de cada instituto estadístico
  */
 
 const countries = [
@@ -8,6 +12,13 @@ const countries = [
     label: "Colombia",
     value: "CO",
     id: "66d61979a546e02c6ce65a39",
+    // DANE (Departamento Administrativo Nacional de Estadística)
+    // Sistema: DIVIPOLA (Codificación de la División Política Administrativa)
+    // Niveles: Departamentos → Municipios
+    // Código: 5 dígitos (2 departamento + 3 municipio)
+    statisticalInstitute: "DANE",
+    codingSystem: "DIVIPOLA",
+    adminLevels: ["Departamento", "Municipio"],
     states: [
       {
         label: "Antioquia",
@@ -1332,32 +1343,272 @@ const countries = [
     label: "Argentina",
     value: "AR",
     id: "66d61975a546e02c6ce659eb",
+    // INDEC (Instituto Nacional de Estadística y Censos)
+    // Sistema: Código de unidades geoestadísticas
+    // Niveles: Provincias → Departamentos/Partidos
+    // Código: 5 dígitos (2 provincia + 3 departamento)
+    statisticalInstitute: "INDEC",
+    codingSystem: "Unidades Geoestadísticas",
+    adminLevels: ["Provincia", "Departamento/Partido"],
     states: [
+      {
+        label: "Ciudad Autónoma de Buenos Aires",
+        value: "CABA",
+        cities: [{ label: "Ciudad Autónoma de Buenos Aires", value: "CABA01" }],
+      },
       {
         label: "Buenos Aires",
         value: "BA",
-        cities: [{ label: "BsAs", value: "BsAs", districts: [] }],
+        cities: [
+          { label: "La Plata", value: "BA001" },
+          { label: "Mar del Plata", value: "BA002" },
+          { label: "Bahía Blanca", value: "BA003" },
+          { label: "San Isidro", value: "BA004" },
+          { label: "Quilmes", value: "BA005" },
+          { label: "Avellaneda", value: "BA006" },
+          { label: "Lanús", value: "BA007" },
+          { label: "San Miguel", value: "BA008" },
+          { label: "Morón", value: "BA009" },
+          { label: "Lomas de Zamora", value: "BA010" },
+          { label: "Tandil", value: "BA011" },
+          { label: "Olavarría", value: "BA012" },
+          { label: "Pergamino", value: "BA013" },
+          { label: "Junín", value: "BA014" },
+          { label: "Azul", value: "BA015" },
+        ],
       },
       {
-        label: "Córdoba Provincia",
-        value: "CB Provincia",
-        cities: [{ label: "Córdoba Ciudad", value: "cb", districts: [] }],
+        label: "Catamarca",
+        value: "CA",
+        cities: [
+          { label: "San Fernando del Valle de Catamarca", value: "CA001" },
+          { label: "Andalgalá", value: "CA002" },
+          { label: "Belén", value: "CA003" },
+          { label: "Tinogasta", value: "CA004" },
+        ],
       },
       {
-        label: "Salta Provincia",
-        value: "SA Provincia",
-        cities: [{ label: "Salta Ciudad", value: "ST", districts: [] }],
+        label: "Chaco",
+        value: "CH",
+        cities: [
+          { label: "Resistencia", value: "CH001" },
+          { label: "Presidencia Roque Sáenz Peña", value: "CH002" },
+          { label: "Villa Ángela", value: "CH003" },
+          { label: "Barranqueras", value: "CH004" },
+        ],
       },
       {
-        label: "Entre ríos",
+        label: "Chubut",
+        value: "CT",
+        cities: [
+          { label: "Rawson", value: "CT001" },
+          { label: "Comodoro Rivadavia", value: "CT002" },
+          { label: "Puerto Madryn", value: "CT003" },
+          { label: "Trelew", value: "CT004" },
+          { label: "Esquel", value: "CT005" },
+        ],
+      },
+      {
+        label: "Córdoba",
+        value: "CB",
+        cities: [
+          { label: "Córdoba", value: "CB001" },
+          { label: "Río Cuarto", value: "CB002" },
+          { label: "Villa María", value: "CB003" },
+          { label: "Villa Carlos Paz", value: "CB004" },
+          { label: "San Francisco", value: "CB005" },
+          { label: "Alta Gracia", value: "CB006" },
+          { label: "Río Tercero", value: "CB007" },
+          { label: "Bell Ville", value: "CB008" },
+          { label: "Jesús María", value: "CB009" },
+        ],
+      },
+      {
+        label: "Corrientes",
+        value: "CR",
+        cities: [
+          { label: "Corrientes", value: "CR001" },
+          { label: "Goya", value: "CR002" },
+          { label: "Paso de los Libres", value: "CR003" },
+          { label: "Curuzú Cuatiá", value: "CR004" },
+          { label: "Mercedes", value: "CR005" },
+        ],
+      },
+      {
+        label: "Entre Ríos",
         value: "ER",
-        cities: [{ label: "Paraná", value: "PN", districts: [] }],
+        cities: [
+          { label: "Paraná", value: "ER001" },
+          { label: "Concordia", value: "ER002" },
+          { label: "Gualeguaychú", value: "ER003" },
+          { label: "Concepción del Uruguay", value: "ER004" },
+          { label: "Gualeguay", value: "ER005" },
+        ],
+      },
+      {
+        label: "Formosa",
+        value: "FO",
+        cities: [
+          { label: "Formosa", value: "FO001" },
+          { label: "Clorinda", value: "FO002" },
+          { label: "Pirané", value: "FO003" },
+          { label: "El Colorado", value: "FO004" },
+        ],
+      },
+      {
+        label: "Jujuy",
+        value: "JY",
+        cities: [
+          { label: "San Salvador de Jujuy", value: "JY001" },
+          { label: "San Pedro de Jujuy", value: "JY002" },
+          { label: "Libertador General San Martín", value: "JY003" },
+          { label: "Palpalá", value: "JY004" },
+        ],
+      },
+      {
+        label: "La Pampa",
+        value: "LP",
+        cities: [
+          { label: "Santa Rosa", value: "LP001" },
+          { label: "General Pico", value: "LP002" },
+          { label: "General Acha", value: "LP003" },
+        ],
+      },
+      {
+        label: "La Rioja",
+        value: "LR",
+        cities: [
+          { label: "La Rioja", value: "LR001" },
+          { label: "Chilecito", value: "LR002" },
+          { label: "Aimogasta", value: "LR003" },
+        ],
+      },
+      {
+        label: "Mendoza",
+        value: "MZ",
+        cities: [
+          { label: "Mendoza", value: "MZ001" },
+          { label: "San Rafael", value: "MZ002" },
+          { label: "Godoy Cruz", value: "MZ003" },
+          { label: "Las Heras", value: "MZ004" },
+          { label: "Luján de Cuyo", value: "MZ005" },
+          { label: "Maipú", value: "MZ006" },
+          { label: "San Martín", value: "MZ007" },
+        ],
+      },
+      {
+        label: "Misiones",
+        value: "MI",
+        cities: [
+          { label: "Posadas", value: "MI001" },
+          { label: "Oberá", value: "MI002" },
+          { label: "Eldorado", value: "MI003" },
+          { label: "Puerto Iguazú", value: "MI004" },
+          { label: "Apóstoles", value: "MI005" },
+        ],
+      },
+      {
+        label: "Neuquén",
+        value: "NQ",
+        cities: [
+          { label: "Neuquén", value: "NQ001" },
+          { label: "San Martín de los Andes", value: "NQ002" },
+          { label: "Cutral Có", value: "NQ003" },
+          { label: "Zapala", value: "NQ004" },
+          { label: "Plottier", value: "NQ005" },
+        ],
+      },
+      {
+        label: "Río Negro",
+        value: "RN",
+        cities: [
+          { label: "Viedma", value: "RN001" },
+          { label: "San Carlos de Bariloche", value: "RN002" },
+          { label: "General Roca", value: "RN003" },
+          { label: "Cipolletti", value: "RN004" },
+          { label: "El Bolsón", value: "RN005" },
+        ],
+      },
+      {
+        label: "Salta",
+        value: "SA",
+        cities: [
+          { label: "Salta", value: "SA001" },
+          { label: "San Ramón de la Nueva Orán", value: "SA002" },
+          { label: "Tartagal", value: "SA003" },
+          { label: "Metán", value: "SA004" },
+          { label: "Cafayate", value: "SA005" },
+        ],
+      },
+      {
+        label: "San Juan",
+        value: "SJ",
+        cities: [
+          { label: "San Juan", value: "SJ001" },
+          { label: "Rawson", value: "SJ002" },
+          { label: "Chimbas", value: "SJ003" },
+          { label: "Caucete", value: "SJ004" },
+        ],
+      },
+      {
+        label: "San Luis",
+        value: "SL",
+        cities: [
+          { label: "San Luis", value: "SL001" },
+          { label: "Villa Mercedes", value: "SL002" },
+          { label: "Merlo", value: "SL003" },
+        ],
       },
       {
         label: "Santa Cruz",
         value: "SC",
         cities: [
-          { label: "Río Gallegos", value: "Río Gallegos", districts: [] },
+          { label: "Río Gallegos", value: "SC001" },
+          { label: "Caleta Olivia", value: "SC002" },
+          { label: "Puerto Deseado", value: "SC003" },
+          { label: "El Calafate", value: "SC004" },
+        ],
+      },
+      {
+        label: "Santa Fe",
+        value: "SF",
+        cities: [
+          { label: "Santa Fe", value: "SF001" },
+          { label: "Rosario", value: "SF002" },
+          { label: "Rafaela", value: "SF003" },
+          { label: "Venado Tuerto", value: "SF004" },
+          { label: "Reconquista", value: "SF005" },
+          { label: "Santo Tomé", value: "SF006" },
+        ],
+      },
+      {
+        label: "Santiago del Estero",
+        value: "SE",
+        cities: [
+          { label: "Santiago del Estero", value: "SE001" },
+          { label: "La Banda", value: "SE002" },
+          { label: "Termas de Río Hondo", value: "SE003" },
+          { label: "Frías", value: "SE004" },
+        ],
+      },
+      {
+        label: "Tierra del Fuego",
+        value: "TF",
+        cities: [
+          { label: "Ushuaia", value: "TF001" },
+          { label: "Río Grande", value: "TF002" },
+          { label: "Tolhuin", value: "TF003" },
+        ],
+      },
+      {
+        label: "Tucumán",
+        value: "TU",
+        cities: [
+          { label: "San Miguel de Tucumán", value: "TU001" },
+          { label: "Yerba Buena", value: "TU002" },
+          { label: "Tafí Viejo", value: "TU003" },
+          { label: "Concepción", value: "TU004" },
+          { label: "Monteros", value: "TU005" },
         ],
       },
     ],
@@ -1366,35 +1617,314 @@ const countries = [
     label: "México",
     value: "MX",
     id: "66d61985a546e02c6ce65b11",
+    // INEGI (Instituto Nacional de Estadística, Geografía e Informática)
+    // Sistema: Clave geoestadística
+    // Niveles: Estados → Municipios → Localidades
+    // Código: Variable (2 estado + 3 municipio)
+    statisticalInstitute: "INEGI",
+    codingSystem: "Clave Geoestadística",
+    adminLevels: ["Estado", "Municipio"],
     states: [
       {
-        label: "Ciudad de México",
-        value: "CDMX",
-        cities: [{ label: "CDMX", value: "CDMX", districts: [] }],
+        label: "Aguascalientes",
+        value: "AGS",
+        cities: [
+          { label: "Aguascalientes", value: "AGS001" },
+          { label: "Calvillo", value: "AGS002" },
+        ],
       },
       {
-        label: "Morelos",
-        value: "MO",
+        label: "Baja California",
+        value: "BC",
         cities: [
-          { label: "Cuernavaca", value: "CV", districts: [] },
-          { label: "Miacatlán", value: "MT", districts: [] },
+          { label: "Mexicali", value: "BC001" },
+          { label: "Tijuana", value: "BC002" },
+          { label: "Ensenada", value: "BC003" },
+          { label: "Tecate", value: "BC004" },
+          { label: "Playas de Rosarito", value: "BC005" },
+        ],
+      },
+      {
+        label: "Baja California Sur",
+        value: "BCS",
+        cities: [
+          { label: "La Paz", value: "BCS001" },
+          { label: "Los Cabos", value: "BCS002" },
+          { label: "Cabo San Lucas", value: "BCS003" },
+          { label: "San José del Cabo", value: "BCS004" },
+        ],
+      },
+      {
+        label: "Campeche",
+        value: "CAM",
+        cities: [
+          { label: "Campeche", value: "CAM001" },
+          { label: "Ciudad del Carmen", value: "CAM002" },
         ],
       },
       {
         label: "Chiapas",
-        value: "CS",
-        cities: [{ label: "Tuxla Gutiérrez", value: "TG", districts: [] }],
+        value: "CHIS",
+        cities: [
+          { label: "Tuxtla Gutiérrez", value: "CHIS001" },
+          { label: "Tapachula", value: "CHIS002" },
+          { label: "San Cristóbal de las Casas", value: "CHIS003" },
+          { label: "Comitán", value: "CHIS004" },
+        ],
+      },
+      {
+        label: "Chihuahua",
+        value: "CHIH",
+        cities: [
+          { label: "Chihuahua", value: "CHIH001" },
+          { label: "Ciudad Juárez", value: "CHIH002" },
+          { label: "Cuauhtémoc", value: "CHIH003" },
+          { label: "Delicias", value: "CHIH004" },
+        ],
+      },
+      {
+        label: "Ciudad de México",
+        value: "CDMX",
+        cities: [{ label: "Ciudad de México", value: "CDMX001" }],
+      },
+      {
+        label: "Coahuila",
+        value: "COAH",
+        cities: [
+          { label: "Saltillo", value: "COAH001" },
+          { label: "Torreón", value: "COAH002" },
+          { label: "Monclova", value: "COAH003" },
+          { label: "Piedras Negras", value: "COAH004" },
+        ],
+      },
+      {
+        label: "Colima",
+        value: "COL",
+        cities: [
+          { label: "Colima", value: "COL001" },
+          { label: "Manzanillo", value: "COL002" },
+          { label: "Tecomán", value: "COL003" },
+        ],
+      },
+      {
+        label: "Durango",
+        value: "DGO",
+        cities: [
+          { label: "Durango", value: "DGO001" },
+          { label: "Gómez Palacio", value: "DGO002" },
+          { label: "Lerdo", value: "DGO003" },
+        ],
+      },
+      {
+        label: "Estado de México",
+        value: "MEX",
+        cities: [
+          { label: "Toluca", value: "MEX001" },
+          { label: "Ecatepec", value: "MEX002" },
+          { label: "Naucalpan", value: "MEX003" },
+          { label: "Nezahualcóyotl", value: "MEX004" },
+          { label: "Tlalnepantla", value: "MEX005" },
+          { label: "Cuautitlán Izcalli", value: "MEX006" },
+        ],
+      },
+      {
+        label: "Guanajuato",
+        value: "GTO",
+        cities: [
+          { label: "Guanajuato", value: "GTO001" },
+          { label: "León", value: "GTO002" },
+          { label: "Irapuato", value: "GTO003" },
+          { label: "Celaya", value: "GTO004" },
+          { label: "Salamanca", value: "GTO005" },
+        ],
+      },
+      {
+        label: "Guerrero",
+        value: "GRO",
+        cities: [
+          { label: "Chilpancingo", value: "GRO001" },
+          { label: "Acapulco", value: "GRO002" },
+          { label: "Zihuatanejo", value: "GRO003" },
+          { label: "Iguala", value: "GRO004" },
+        ],
+      },
+      {
+        label: "Hidalgo",
+        value: "HGO",
+        cities: [
+          { label: "Pachuca", value: "HGO001" },
+          { label: "Tulancingo", value: "HGO002" },
+          { label: "Tula", value: "HGO003" },
+        ],
+      },
+      {
+        label: "Jalisco",
+        value: "JAL",
+        cities: [
+          { label: "Guadalajara", value: "JAL001" },
+          { label: "Zapopan", value: "JAL002" },
+          { label: "Tlaquepaque", value: "JAL003" },
+          { label: "Tonalá", value: "JAL004" },
+          { label: "Puerto Vallarta", value: "JAL005" },
+        ],
+      },
+      {
+        label: "Michoacán",
+        value: "MICH",
+        cities: [
+          { label: "Morelia", value: "MICH001" },
+          { label: "Uruapan", value: "MICH002" },
+          { label: "Zamora", value: "MICH003" },
+          { label: "Lázaro Cárdenas", value: "MICH004" },
+        ],
+      },
+      {
+        label: "Morelos",
+        value: "MOR",
+        cities: [
+          { label: "Cuernavaca", value: "MOR001" },
+          { label: "Cuautla", value: "MOR002" },
+          { label: "Jiutepec", value: "MOR003" },
+        ],
+      },
+      {
+        label: "Nayarit",
+        value: "NAY",
+        cities: [
+          { label: "Tepic", value: "NAY001" },
+          { label: "Xalisco", value: "NAY002" },
+        ],
+      },
+      {
+        label: "Nuevo León",
+        value: "NL",
+        cities: [
+          { label: "Monterrey", value: "NL001" },
+          { label: "San Nicolás de los Garza", value: "NL002" },
+          { label: "Guadalupe", value: "NL003" },
+          { label: "Apodaca", value: "NL004" },
+          { label: "San Pedro Garza García", value: "NL005" },
+        ],
       },
       {
         label: "Oaxaca",
-        value: "OA",
-        cities: [{ label: "Oaxaca de Juárez", value: "OX", districts: [] }],
+        value: "OAX",
+        cities: [
+          { label: "Oaxaca de Juárez", value: "OAX001" },
+          { label: "San Juan Bautista Tuxtepec", value: "OAX002" },
+          { label: "Salina Cruz", value: "OAX003" },
+        ],
       },
       {
         label: "Puebla",
-        value: "PU",
+        value: "PUE",
         cities: [
-          { label: "Puebla de Zaragoza", value: "PZG", districts: [] },
+          { label: "Puebla de Zaragoza", value: "PUE001" },
+          { label: "Tehuacán", value: "PUE002" },
+          { label: "San Martín Texmelucan", value: "PUE003" },
+        ],
+      },
+      {
+        label: "Querétaro",
+        value: "QRO",
+        cities: [
+          { label: "Santiago de Querétaro", value: "QRO001" },
+          { label: "San Juan del Río", value: "QRO002" },
+        ],
+      },
+      {
+        label: "Quintana Roo",
+        value: "QROO",
+        cities: [
+          { label: "Chetumal", value: "QROO001" },
+          { label: "Cancún", value: "QROO002" },
+          { label: "Playa del Carmen", value: "QROO003" },
+          { label: "Cozumel", value: "QROO004" },
+        ],
+      },
+      {
+        label: "San Luis Potosí",
+        value: "SLP",
+        cities: [
+          { label: "San Luis Potosí", value: "SLP001" },
+          { label: "Soledad de Graciano Sánchez", value: "SLP002" },
+          { label: "Ciudad Valles", value: "SLP003" },
+        ],
+      },
+      {
+        label: "Sinaloa",
+        value: "SIN",
+        cities: [
+          { label: "Culiacán", value: "SIN001" },
+          { label: "Mazatlán", value: "SIN002" },
+          { label: "Los Mochis", value: "SIN003" },
+          { label: "Guasave", value: "SIN004" },
+        ],
+      },
+      {
+        label: "Sonora",
+        value: "SON",
+        cities: [
+          { label: "Hermosillo", value: "SON001" },
+          { label: "Ciudad Obregón", value: "SON002" },
+          { label: "Nogales", value: "SON003" },
+          { label: "San Luis Río Colorado", value: "SON004" },
+        ],
+      },
+      {
+        label: "Tabasco",
+        value: "TAB",
+        cities: [
+          { label: "Villahermosa", value: "TAB001" },
+          { label: "Cárdenas", value: "TAB002" },
+          { label: "Comalcalco", value: "TAB003" },
+        ],
+      },
+      {
+        label: "Tamaulipas",
+        value: "TAMPS",
+        cities: [
+          { label: "Ciudad Victoria", value: "TAMPS001" },
+          { label: "Reynosa", value: "TAMPS002" },
+          { label: "Matamoros", value: "TAMPS003" },
+          { label: "Tampico", value: "TAMPS004" },
+          { label: "Nuevo Laredo", value: "TAMPS005" },
+        ],
+      },
+      {
+        label: "Tlaxcala",
+        value: "TLAX",
+        cities: [
+          { label: "Tlaxcala", value: "TLAX001" },
+          { label: "Apizaco", value: "TLAX002" },
+        ],
+      },
+      {
+        label: "Veracruz",
+        value: "VER",
+        cities: [
+          { label: "Xalapa", value: "VER001" },
+          { label: "Veracruz", value: "VER002" },
+          { label: "Coatzacoalcos", value: "VER003" },
+          { label: "Poza Rica", value: "VER004" },
+          { label: "Córdoba", value: "VER005" },
+        ],
+      },
+      {
+        label: "Yucatán",
+        value: "YUC",
+        cities: [
+          { label: "Mérida", value: "YUC001" },
+          { label: "Valladolid", value: "YUC002" },
+          { label: "Tizimín", value: "YUC003" },
+        ],
+      },
+      {
+        label: "Zacatecas",
+        value: "ZAC",
+        cities: [
+          { label: "Zacatecas", value: "ZAC001" },
+          { label: "Fresnillo", value: "ZAC002" },
         ],
       },
     ],
@@ -1403,6 +1933,13 @@ const countries = [
     label: "Perú",
     value: "PE",
     id: "66d61987a546e02c6ce65b33",
+    // INEI (Instituto Nacional de Estadística e Informática)
+    // Sistema: UBIGEO (Ubicación Geográfica)
+    // Niveles: Departamentos → Provincias → Distritos
+    // Código: 6 dígitos (2+2+2)
+    statisticalInstitute: "INEI",
+    codingSystem: "UBIGEO",
+    adminLevels: ["Departamento", "Provincia", "Distrito"],
     states: [
       {
         label: "Arequipa Estado",
@@ -1425,22 +1962,709 @@ const countries = [
       {
         label: "Ica Estado",
         value: "ICA Estado",
-        cities: [
-          { label: "Ica Ciudad", value: "Ica Ciudad", districts: [] },
-        ],
+        cities: [{ label: "Ica Ciudad", value: "Ica Ciudad", districts: [] }],
       },
       {
         label: "Lima Metropolitana  Estado",
         value: "Lima Estado",
-        cities: [
-          { label: "Lima Ciudad", value: "Lima Ciudad", districts: [] },
-        ],
+        cities: [{ label: "Lima Ciudad", value: "Lima Ciudad", districts: [] }],
       },
       {
         label: "Loreto Estado",
         value: "Lo Estado",
         cities: [
           { label: "Iquitos Ciudad", value: "IQ Ciudad", districts: [] },
+        ],
+      },
+    ],
+  },
+  {
+    label: "España",
+    value: "ES",
+    id: "66d6197ba546e02c6ce65a5f",
+    // INE (Instituto Nacional de Estadística)
+    // Sistema: Códigos INE
+    // Niveles: Provincias → Municipios
+    // Código: 5 dígitos para municipios (2 provincia + 3 municipio)
+    // Nota: states representa provincias (no comunidades autónomas)
+    statisticalInstitute: "INE",
+    codingSystem: "Códigos INE",
+    adminLevels: ["Provincia", "Municipio"],
+    states: [
+      // Andalucía
+      {
+        label: "Almería",
+        value: "04",
+        comunidadAutonoma: { nombre: "Andalucía", codigo: "01" },
+        cities: [
+          { label: "Almería", value: "04013" },
+          { label: "Roquetas de Mar", value: "04079" },
+          { label: "El Ejido", value: "04902" },
+          { label: "Níjar", value: "04066" },
+          { label: "Vícar", value: "04102" },
+          { label: "Adra", value: "04003" },
+          { label: "Vera", value: "04100" },
+          { label: "Huércal de Almería", value: "04043" },
+        ],
+      },
+      {
+        label: "Cádiz",
+        value: "11",
+        comunidadAutonoma: { nombre: "Andalucía", codigo: "01" },
+        cities: [
+          { label: "Cádiz", value: "11012" },
+          { label: "Jerez de la Frontera", value: "11020" },
+          { label: "Algeciras", value: "11004" },
+          { label: "San Fernando", value: "11031" },
+          { label: "El Puerto de Santa María", value: "11027" },
+          { label: "Chiclana de la Frontera", value: "11015" },
+          { label: "La Línea de la Concepción", value: "11022" },
+          { label: "Sanlúcar de Barrameda", value: "11032" },
+          { label: "Arcos de la Frontera", value: "11006" },
+          { label: "Puerto Real", value: "11028" },
+        ],
+      },
+      {
+        label: "Córdoba",
+        value: "14",
+        comunidadAutonoma: { nombre: "Andalucía", codigo: "01" },
+        cities: [
+          { label: "Córdoba", value: "14021" },
+          { label: "Lucena", value: "14038" },
+          { label: "Puente Genil", value: "14054" },
+          { label: "Montilla", value: "14044" },
+          { label: "Priego de Córdoba", value: "14053" },
+          { label: "Cabra", value: "14013" },
+          { label: "Baena", value: "14005" },
+          { label: "Palma del Río", value: "14050" },
+        ],
+      },
+      {
+        label: "Granada",
+        value: "18",
+        comunidadAutonoma: { nombre: "Andalucía", codigo: "01" },
+        cities: [
+          { label: "Granada", value: "18087" },
+          { label: "Motril", value: "18140" },
+          { label: "Almuñécar", value: "18014" },
+          { label: "Loja", value: "18122" },
+          { label: "Baza", value: "18022" },
+          { label: "Guadix", value: "18089" },
+          { label: "Armilla", value: "18018" },
+          { label: "Maracena", value: "18127" },
+        ],
+      },
+      {
+        label: "Huelva",
+        value: "21",
+        comunidadAutonoma: { nombre: "Andalucía", codigo: "01" },
+        cities: [
+          { label: "Huelva", value: "21041" },
+          { label: "Lepe", value: "21044" },
+          { label: "Almonte", value: "21004" },
+          { label: "Moguer", value: "21051" },
+          { label: "Isla Cristina", value: "21042" },
+          { label: "Ayamonte", value: "21007" },
+          { label: "Cartaya", value: "21019" },
+        ],
+      },
+      {
+        label: "Jaén",
+        value: "23",
+        comunidadAutonoma: { nombre: "Andalucía", codigo: "01" },
+        cities: [
+          { label: "Jaén", value: "23050" },
+          { label: "Linares", value: "23055" },
+          { label: "Andújar", value: "23003" },
+          { label: "Úbeda", value: "23092" },
+          { label: "Martos", value: "23060" },
+          { label: "Alcalá la Real", value: "23002" },
+          { label: "Villacarrillo", value: "23095" },
+          { label: "Baeza", value: "23009" },
+        ],
+      },
+      {
+        label: "Málaga",
+        value: "29",
+        comunidadAutonoma: { nombre: "Andalucía", codigo: "01" },
+        cities: [
+          { label: "Málaga", value: "29067" },
+          { label: "Marbella", value: "29069" },
+          { label: "Mijas", value: "29070" },
+          { label: "Vélez-Málaga", value: "29094" },
+          { label: "Fuengirola", value: "29054" },
+          { label: "Torremolinos", value: "29088" },
+          { label: "Estepona", value: "29051" },
+          { label: "Benalmádena", value: "29019" },
+          { label: "Rincón de la Victoria", value: "29075" },
+          { label: "Antequera", value: "29015" },
+          { label: "Ronda", value: "29084" },
+        ],
+      },
+      {
+        label: "Sevilla",
+        value: "41",
+        comunidadAutonoma: { nombre: "Andalucía", codigo: "01" },
+        cities: [
+          { label: "Sevilla", value: "41091" },
+          { label: "Dos Hermanas", value: "41038" },
+          { label: "Alcalá de Guadaíra", value: "41004" },
+          { label: "Utrera", value: "41095" },
+          { label: "Mairena del Aljarafe", value: "41056" },
+          { label: "La Rinconada", value: "41079" },
+          { label: "Écija", value: "41039" },
+          { label: "Los Palacios y Villafranca", value: "41075" },
+          { label: "Camas", value: "41020" },
+          { label: "Carmona", value: "41024" },
+        ],
+      },
+      // Aragón
+      {
+        label: "Huesca",
+        value: "22",
+        comunidadAutonoma: { nombre: "Aragón", codigo: "02" },
+        cities: [
+          { label: "Huesca", value: "22125" },
+          { label: "Monzón", value: "22139" },
+          { label: "Barbastro", value: "22044" },
+          { label: "Jaca", value: "22130" },
+          { label: "Fraga", value: "22113" },
+          { label: "Sabiñánigo", value: "22208" },
+        ],
+      },
+      {
+        label: "Teruel",
+        value: "44",
+        comunidadAutonoma: { nombre: "Aragón", codigo: "02" },
+        cities: [
+          { label: "Teruel", value: "44216" },
+          { label: "Alcañiz", value: "44015" },
+          { label: "Andorra", value: "44024" },
+          { label: "Calamocha", value: "44054" },
+        ],
+      },
+      {
+        label: "Zaragoza",
+        value: "50",
+        comunidadAutonoma: { nombre: "Aragón", codigo: "02" },
+        cities: [
+          { label: "Zaragoza", value: "50297" },
+          { label: "Calatayud", value: "50059" },
+          { label: "Utebo", value: "50281" },
+          { label: "Ejea de los Caballeros", value: "50096" },
+          { label: "Cuarte de Huerva", value: "50090" },
+          { label: "Tarazona", value: "50250" },
+          { label: "Caspe", value: "50083" },
+        ],
+      },
+      // Asturias
+      {
+        label: "Asturias",
+        value: "33",
+        comunidadAutonoma: { nombre: "Asturias, Principado de", codigo: "03" },
+        cities: [
+          { label: "Oviedo", value: "33044" },
+          { label: "Gijón", value: "33024" },
+          { label: "Avilés", value: "33004" },
+          { label: "Siero", value: "33066" },
+          { label: "Langreo", value: "33031" },
+          { label: "Mieres", value: "33037" },
+          { label: "Castrillón", value: "33012" },
+          { label: "Llanera", value: "33033" },
+        ],
+      },
+      // Islas Baleares
+      {
+        label: "Balears, Illes",
+        value: "07",
+        comunidadAutonoma: { nombre: "Balears, Illes", codigo: "04" },
+        cities: [
+          { label: "Palma", value: "07040" },
+          { label: "Calvià", value: "07011" },
+          { label: "Manacor", value: "07031" },
+          { label: "Eivissa", value: "07026" },
+          { label: "Inca", value: "07027" },
+          { label: "Llucmajor", value: "07030" },
+          { label: "Marratxí", value: "07032" },
+          { label: "Sant Antoni de Portmany", value: "07046" },
+        ],
+      },
+      // Canarias
+      {
+        label: "Las Palmas",
+        value: "35",
+        comunidadAutonoma: { nombre: "Canarias", codigo: "05" },
+        cities: [
+          { label: "Las Palmas de Gran Canaria", value: "35016" },
+          { label: "Telde", value: "35025" },
+          { label: "Arucas", value: "35004" },
+          { label: "Santa Lucía de Tirajana", value: "35023" },
+          { label: "San Bartolomé de Tirajana", value: "35019" },
+          { label: "Agüimes", value: "35002" },
+          { label: "Ingenio", value: "35011" },
+        ],
+      },
+      {
+        label: "Santa Cruz de Tenerife",
+        value: "38",
+        comunidadAutonoma: { nombre: "Canarias", codigo: "05" },
+        cities: [
+          { label: "Santa Cruz de Tenerife", value: "38038" },
+          { label: "San Cristóbal de La Laguna", value: "38023" },
+          { label: "Arona", value: "38006" },
+          { label: "Adeje", value: "38001" },
+          { label: "Granadilla de Abona", value: "38017" },
+          { label: "Puerto de la Cruz", value: "38028" },
+          { label: "Los Realejos", value: "38031" },
+          { label: "San Miguel de Abona", value: "38025" },
+        ],
+      },
+      // Cantabria
+      {
+        label: "Cantabria",
+        value: "39",
+        comunidadAutonoma: { nombre: "Cantabria", codigo: "06" },
+        cities: [
+          { label: "Santander", value: "39075" },
+          { label: "Torrelavega", value: "39087" },
+          { label: "Camargo", value: "39020" },
+          { label: "Piélagos", value: "39055" },
+          { label: "El Astillero", value: "39010" },
+          { label: "Castro-Urdiales", value: "39023" },
+          { label: "Laredo", value: "39035" },
+        ],
+      },
+      // Castilla-La Mancha
+      {
+        label: "Albacete",
+        value: "02",
+        comunidadAutonoma: { nombre: "Castilla-La Mancha", codigo: "08" },
+        cities: [
+          { label: "Albacete", value: "02003" },
+          { label: "Hellín", value: "02038" },
+          { label: "Villarrobledo", value: "02086" },
+          { label: "Almansa", value: "02005" },
+          { label: "La Roda", value: "02065" },
+        ],
+      },
+      {
+        label: "Ciudad Real",
+        value: "13",
+        comunidadAutonoma: { nombre: "Castilla-La Mancha", codigo: "08" },
+        cities: [
+          { label: "Ciudad Real", value: "13034" },
+          { label: "Puertollano", value: "13068" },
+          { label: "Tomelloso", value: "13078" },
+          { label: "Alcázar de San Juan", value: "13007" },
+          { label: "Valdepeñas", value: "13086" },
+        ],
+      },
+      {
+        label: "Cuenca",
+        value: "16",
+        comunidadAutonoma: { nombre: "Castilla-La Mancha", codigo: "08" },
+        cities: [
+          { label: "Cuenca", value: "16078" },
+          { label: "Tarancón", value: "16200" },
+          { label: "Quintanar del Rey", value: "16178" },
+        ],
+      },
+      {
+        label: "Guadalajara",
+        value: "19",
+        comunidadAutonoma: { nombre: "Castilla-La Mancha", codigo: "08" },
+        cities: [
+          { label: "Guadalajara", value: "19130" },
+          { label: "Azuqueca de Henares", value: "19055" },
+          { label: "Alovera", value: "19024" },
+          { label: "Cabanillas del Campo", value: "19068" },
+        ],
+      },
+      {
+        label: "Toledo",
+        value: "45",
+        comunidadAutonoma: { nombre: "Castilla-La Mancha", codigo: "08" },
+        cities: [
+          { label: "Toledo", value: "45168" },
+          { label: "Talavera de la Reina", value: "45165" },
+          { label: "Seseña", value: "45161" },
+          { label: "Illescas", value: "45091" },
+          { label: "Torrijos", value: "45180" },
+        ],
+      },
+      // Castilla y León
+      {
+        label: "Ávila",
+        value: "05",
+        comunidadAutonoma: { nombre: "Castilla y León", codigo: "07" },
+        cities: [
+          { label: "Ávila", value: "05019" },
+          { label: "Arévalo", value: "05013" },
+        ],
+      },
+      {
+        label: "Burgos",
+        value: "09",
+        comunidadAutonoma: { nombre: "Castilla y León", codigo: "07" },
+        cities: [
+          { label: "Burgos", value: "09059" },
+          { label: "Miranda de Ebro", value: "09207" },
+          { label: "Aranda de Duero", value: "09018" },
+        ],
+      },
+      {
+        label: "León",
+        value: "24",
+        comunidadAutonoma: { nombre: "Castilla y León", codigo: "07" },
+        cities: [
+          { label: "León", value: "24089" },
+          { label: "Ponferrada", value: "24115" },
+          { label: "San Andrés del Rabanedo", value: "24153" },
+          { label: "Villaquilambre", value: "24214" },
+        ],
+      },
+      {
+        label: "Palencia",
+        value: "34",
+        comunidadAutonoma: { nombre: "Castilla y León", codigo: "07" },
+        cities: [
+          { label: "Palencia", value: "34120" },
+          { label: "Aguilar de Campoo", value: "34003" },
+        ],
+      },
+      {
+        label: "Salamanca",
+        value: "37",
+        comunidadAutonoma: { nombre: "Castilla y León", codigo: "07" },
+        cities: [
+          { label: "Salamanca", value: "37274" },
+          { label: "Béjar", value: "37045" },
+          { label: "Ciudad Rodrigo", value: "37100" },
+        ],
+      },
+      {
+        label: "Segovia",
+        value: "40",
+        comunidadAutonoma: { nombre: "Castilla y León", codigo: "07" },
+        cities: [
+          { label: "Segovia", value: "40194" },
+          { label: "Cuéllar", value: "40069" },
+        ],
+      },
+      {
+        label: "Soria",
+        value: "42",
+        comunidadAutonoma: { nombre: "Castilla y León", codigo: "07" },
+        cities: [
+          { label: "Soria", value: "42173" },
+          { label: "El Burgo de Osma-Ciudad de Osma", value: "42046" },
+        ],
+      },
+      {
+        label: "Valladolid",
+        value: "47",
+        comunidadAutonoma: { nombre: "Castilla y León", codigo: "07" },
+        cities: [
+          { label: "Valladolid", value: "47186" },
+          { label: "Medina del Campo", value: "47085" },
+          { label: "Laguna de Duero", value: "47074" },
+          { label: "Arroyo de la Encomienda", value: "47009" },
+        ],
+      },
+      {
+        label: "Zamora",
+        value: "49",
+        comunidadAutonoma: { nombre: "Castilla y León", codigo: "07" },
+        cities: [
+          { label: "Zamora", value: "49275" },
+          { label: "Benavente", value: "49023" },
+          { label: "Toro", value: "49230" },
+        ],
+      },
+      // Cataluña
+      {
+        label: "Barcelona",
+        value: "08",
+        comunidadAutonoma: { nombre: "Cataluña", codigo: "09" },
+        cities: [
+          { label: "Barcelona", value: "08019" },
+          { label: "L'Hospitalet de Llobregat", value: "08101" },
+          { label: "Badalona", value: "08015" },
+          { label: "Terrassa", value: "08279" },
+          { label: "Sabadell", value: "08187" },
+          { label: "Mataró", value: "08121" },
+          { label: "Santa Coloma de Gramenet", value: "08245" },
+          { label: "Cornellà de Llobregat", value: "08073" },
+          { label: "Sant Boi de Llobregat", value: "08266" },
+          { label: "Manresa", value: "08113" },
+          { label: "Rubí", value: "08184" },
+          { label: "Vilanova i la Geltrú", value: "08307" },
+        ],
+      },
+      {
+        label: "Girona",
+        value: "17",
+        comunidadAutonoma: { nombre: "Cataluña", codigo: "09" },
+        cities: [
+          { label: "Girona", value: "17079" },
+          { label: "Figueres", value: "17066" },
+          { label: "Blanes", value: "17019" },
+          { label: "Lloret de Mar", value: "17102" },
+          { label: "Olot", value: "17114" },
+        ],
+      },
+      {
+        label: "Lleida",
+        value: "25",
+        comunidadAutonoma: { nombre: "Cataluña", codigo: "09" },
+        cities: [
+          { label: "Lleida", value: "25120" },
+          { label: "Tàrrega", value: "25217" },
+          { label: "Balaguer", value: "25033" },
+        ],
+      },
+      {
+        label: "Tarragona",
+        value: "43",
+        comunidadAutonoma: { nombre: "Cataluña", codigo: "09" },
+        cities: [
+          { label: "Tarragona", value: "43148" },
+          { label: "Reus", value: "43123" },
+          { label: "Tortosa", value: "43155" },
+          { label: "El Vendrell", value: "43163" },
+          { label: "Cambrils", value: "43038" },
+        ],
+      },
+      // Comunidad Valenciana
+      {
+        label: "Alicante/Alacant",
+        value: "03",
+        comunidadAutonoma: { nombre: "Comunitat Valenciana", codigo: "10" },
+        cities: [
+          { label: "Alicante/Alacant", value: "03014" },
+          { label: "Elche/Elx", value: "03065" },
+          { label: "Torrevieja", value: "03133" },
+          { label: "Orihuela", value: "03099" },
+          { label: "Benidorm", value: "03031" },
+          { label: "Alcoy/Alcoi", value: "03009" },
+          { label: "Sant Vicent del Raspeig", value: "03122" },
+          { label: "Elda", value: "03063" },
+          { label: "Dénia", value: "03059" },
+        ],
+      },
+      {
+        label: "Castellón/Castelló",
+        value: "12",
+        comunidadAutonoma: { nombre: "Comunitat Valenciana", codigo: "10" },
+        cities: [
+          { label: "Castellón de la Plana", value: "12040" },
+          { label: "Vila-real", value: "12135" },
+          { label: "Burriana", value: "12032" },
+          { label: "Onda", value: "12073" },
+          { label: "Vinaròs", value: "12140" },
+        ],
+      },
+      {
+        label: "Valencia/València",
+        value: "46",
+        comunidadAutonoma: { nombre: "Comunitat Valenciana", codigo: "10" },
+        cities: [
+          { label: "Valencia", value: "46250" },
+          { label: "Gandía", value: "46131" },
+          { label: "Torrent", value: "46244" },
+          { label: "Paterna", value: "46190" },
+          { label: "Mislata", value: "46173" },
+          { label: "Sagunto/Sagunt", value: "46219" },
+          { label: "Burjassot", value: "46065" },
+          { label: "Alzira", value: "46026" },
+        ],
+      },
+      // Extremadura
+      {
+        label: "Badajoz",
+        value: "06",
+        comunidadAutonoma: { nombre: "Extremadura", codigo: "11" },
+        cities: [
+          { label: "Badajoz", value: "06015" },
+          { label: "Mérida", value: "06083" },
+          { label: "Don Benito", value: "06043" },
+          { label: "Almendralejo", value: "06006" },
+          { label: "Villanueva de la Serena", value: "06155" },
+        ],
+      },
+      {
+        label: "Cáceres",
+        value: "10",
+        comunidadAutonoma: { nombre: "Extremadura", codigo: "11" },
+        cities: [
+          { label: "Cáceres", value: "10037" },
+          { label: "Plasencia", value: "10149" },
+          { label: "Navalmoral de la Mata", value: "10132" },
+          { label: "Coria", value: "10066" },
+        ],
+      },
+      // Galicia
+      {
+        label: "A Coruña",
+        value: "15",
+        comunidadAutonoma: { nombre: "Galicia", codigo: "12" },
+        cities: [
+          { label: "A Coruña", value: "15030" },
+          { label: "Santiago de Compostela", value: "15078" },
+          { label: "Ferrol", value: "15036" },
+          { label: "Oleiros", value: "15058" },
+          { label: "Arteixo", value: "15004" },
+          { label: "Culleredo", value: "15031" },
+        ],
+      },
+      {
+        label: "Lugo",
+        value: "27",
+        comunidadAutonoma: { nombre: "Galicia", codigo: "12" },
+        cities: [
+          { label: "Lugo", value: "27028" },
+          { label: "Monforte de Lemos", value: "27029" },
+          { label: "Viveiro", value: "27066" },
+        ],
+      },
+      {
+        label: "Ourense",
+        value: "32",
+        comunidadAutonoma: { nombre: "Galicia", codigo: "12" },
+        cities: [
+          { label: "Ourense", value: "32054" },
+          { label: "Verín", value: "32083" },
+          { label: "O Carballiño", value: "32019" },
+        ],
+      },
+      {
+        label: "Pontevedra",
+        value: "36",
+        comunidadAutonoma: { nombre: "Galicia", codigo: "12" },
+        cities: [
+          { label: "Vigo", value: "36057" },
+          { label: "Pontevedra", value: "36038" },
+          { label: "Vilagarcía de Arousa", value: "3661" },
+          { label: "Redondela", value: "36045" },
+          { label: "Cangas", value: "36008" },
+        ],
+      },
+      // Comunidad de Madrid
+      {
+        label: "Madrid",
+        value: "28",
+        comunidadAutonoma: { nombre: "Madrid, Comunidad de", codigo: "13" },
+        cities: [
+          { label: "Madrid", value: "28079" },
+          { label: "Móstoles", value: "28092" },
+          { label: "Alcalá de Henares", value: "28005" },
+          { label: "Fuenlabrada", value: "28058" },
+          { label: "Leganés", value: "28074" },
+          { label: "Getafe", value: "28065" },
+          { label: "Alcorcón", value: "28007" },
+          { label: "Torrejón de Ardoz", value: "28148" },
+          { label: "Parla", value: "28106" },
+          { label: "Alcobendas", value: "28006" },
+          { label: "Las Rozas de Madrid", value: "28127" },
+          { label: "San Sebastián de los Reyes", value: "28130" },
+          { label: "Pozuelo de Alarcón", value: "28115" },
+          { label: "Rivas-Vaciamadrid", value: "28123" },
+        ],
+      },
+      // Región de Murcia
+      {
+        label: "Murcia",
+        value: "30",
+        comunidadAutonoma: { nombre: "Murcia, Región de", codigo: "14" },
+        cities: [
+          { label: "Murcia", value: "30030" },
+          { label: "Cartagena", value: "30016" },
+          { label: "Lorca", value: "30024" },
+          { label: "Molina de Segura", value: "30026" },
+          { label: "Alcantarilla", value: "30004" },
+          { label: "Mazarrón", value: "30025" },
+          { label: "Águilas", value: "30003" },
+          { label: "Cieza", value: "30019" },
+        ],
+      },
+      // Navarra
+      {
+        label: "Navarra",
+        value: "31",
+        comunidadAutonoma: { nombre: "Navarra, Comunidad Foral de", codigo: "15" },
+        cities: [
+          { label: "Pamplona/Iruña", value: "31201" },
+          { label: "Tudela", value: "31258" },
+          { label: "Barañáin", value: "31050" },
+          { label: "Burlada/Burlata", value: "31064" },
+          { label: "Zizur Mayor", value: "31272" },
+          { label: "Estella-Lizarra", value: "31091" },
+        ],
+      },
+      // País Vasco
+      {
+        label: "Araba/Álava",
+        value: "01",
+        comunidadAutonoma: { nombre: "País Vasco", codigo: "16" },
+        cities: [
+          { label: "Vitoria-Gasteiz", value: "01059" },
+          { label: "Llodio", value: "01036" },
+        ],
+      },
+      {
+        label: "Bizkaia",
+        value: "48",
+        comunidadAutonoma: { nombre: "País Vasco", codigo: "16" },
+        cities: [
+          { label: "Bilbao", value: "48020" },
+          { label: "Barakaldo", value: "48015" },
+          { label: "Getxo", value: "48044" },
+          { label: "Portugalete", value: "48078" },
+          { label: "Santurtzi", value: "48082" },
+          { label: "Basauri", value: "48016" },
+          { label: "Leioa", value: "48059" },
+          { label: "Durango", value: "48034" },
+        ],
+      },
+      {
+        label: "Gipuzkoa",
+        value: "20",
+        comunidadAutonoma: { nombre: "País Vasco", codigo: "16" },
+        cities: [
+          { label: "Donostia-San Sebastián", value: "20069" },
+          { label: "Irun", value: "20055" },
+          { label: "Errenteria", value: "20053" },
+          { label: "Eibar", value: "20029" },
+          { label: "Zarautz", value: "20079" },
+        ],
+      },
+      // La Rioja
+      {
+        label: "La Rioja",
+        value: "26",
+        comunidadAutonoma: { nombre: "Rioja, La", codigo: "17" },
+        cities: [
+          { label: "Logroño", value: "26089" },
+          { label: "Calahorra", value: "26036" },
+          { label: "Arnedo", value: "26015" },
+          { label: "Haro", value: "26075" },
+        ],
+      },
+      // Ceuta y Melilla
+      {
+        label: "Ceuta",
+        value: "51",
+        comunidadAutonoma: { nombre: "Ceuta", codigo: "18" },
+        cities: [
+          { label: "Ceuta", value: "51001" },
+        ],
+      },
+      {
+        label: "Melilla",
+        value: "52",
+        comunidadAutonoma: { nombre: "Melilla", codigo: "19" },
+        cities: [
+          { label: "Melilla", value: "52001" },
         ],
       },
     ],
@@ -1464,7 +2688,9 @@ function findLocationByPath(pathIds, returnChildren = false) {
 
   // Buscar el país (primer nivel)
   const countryId = pathIds[0];
-  let currentNode = countries.find((c) => c.value === countryId || c.id === countryId);
+  let currentNode = countries.find(
+    (c) => c.value === countryId || c.id === countryId,
+  );
 
   if (!currentNode) {
     return null;
@@ -1490,14 +2716,23 @@ function findLocationByPath(pathIds, returnChildren = false) {
     if (i === pathIds.length - 1) {
       if (returnChildren) {
         // Retornar hijos según el nivel
-        return currentNode.cities || currentNode.districts || currentNode.neighborhoods || [];
+        return (
+          currentNode.cities ||
+          currentNode.districts ||
+          currentNode.neighborhoods ||
+          []
+        );
       } else {
         return currentNode;
       }
     }
 
     // Avanzar al siguiente nivel
-    currentLevel = currentNode.cities || currentNode.districts || currentNode.neighborhoods || [];
+    currentLevel =
+      currentNode.cities ||
+      currentNode.districts ||
+      currentNode.neighborhoods ||
+      [];
 
     if (currentLevel.length === 0) {
       // No hay más niveles disponibles

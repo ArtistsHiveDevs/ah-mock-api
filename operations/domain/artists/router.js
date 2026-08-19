@@ -356,18 +356,24 @@ module.exports = [
           ...modelFields
             .filter((field) => {
               const fieldType = model.schema.paths[field];
+              // Mongoose 9
+              const arrayItemType =
+                fieldType?.caster || fieldType?.embeddedSchemaType;
               return (
                 fieldType &&
                 (fieldType.instance?.toLowerCase() === "objectid" ||
                   (fieldType.instance?.toLowerCase() === "array" &&
-                    fieldType.caster &&
-                    fieldType.caster.instance?.toLowerCase() === "objectid"))
+                    arrayItemType &&
+                    arrayItemType.instance?.toLowerCase() === "objectid"))
               );
             })
             .map((field) => {
+              const arrayItemType =
+                model.schema.paths[field].caster ||
+                model.schema.paths[field].embeddedSchemaType;
               const refModelName =
                 model.schema.paths[field].options.ref ||
-                model.schema.paths[field].caster.options.ref;
+                arrayItemType.options.ref;
 
               // Obtener el modelo de referencia dinámicamente
               const refModel =
@@ -606,14 +612,15 @@ module.exports = [
             .select("_id");
         }
 
+        const isProd = true || req.serverEnvironment === "prod";
         artistInfo = {
           ...artistInfo,
           followed_by_count:
             (followedByCount?.[0]?.followersCount || 0) +
-            Math.floor(Math.random() * 5000),
+            (isProd ? 0 : Math.floor(Math.random() * 5000)),
           followed_profiles_count:
             (followedProfilesCount?.[0]?.followedProfilesCount || 0) +
-            Math.floor(Math.random() * 2000),
+            (isProd ? 0 : Math.floor(Math.random() * 2000)),
           isFollowedByCurrentProfile: !!followedEntityInfo,
         };
 

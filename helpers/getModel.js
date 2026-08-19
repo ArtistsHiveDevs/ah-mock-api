@@ -45,18 +45,30 @@ function getModelWithSchema(env, modelName, schema) {
   return conn.models[modelName] || conn.model(modelName, schema);
 }
 
-async function getModel(conn, modelName) {
+async function getModel(connOrEnv, modelName) {
   const schema = getModelSchema(modelName);
+
+  // Determinar si el primer parámetro es una conexión o un string de ambiente
+  let env, conn;
+  if (typeof connOrEnv === 'string') {
+    // Si es un string, es el ambiente
+    env = connOrEnv;
+    conn = connections[env];
+  } else {
+    // Si es un objeto, es la conexión
+    conn = connOrEnv;
+    env = conn?.environment;
+  }
 
   if (modelsWithCustomConnections.includes(modelName)) {
     console.log(`Buscando conexión personalizada de ${modelName}...`);
-    const modelConnection = await connectToDatabaseByModel(modelName);
+    const modelConnection = await connectToDatabaseByModel(modelName, env);
     return (
       modelConnection.models[modelName] ||
       modelConnection.model(modelName, schema)
     );
   } else {
-    return getModelWithSchema(conn, modelName, schema);
+    return getModelWithSchema(env, modelName, schema);
   }
 }
 module.exports = { getModelSchema, getModel, getModelWithSchema };

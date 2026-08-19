@@ -30,7 +30,7 @@ const schema = new mongoose.Schema(
       default: "PENDING",
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = { schema, REPORT_CLAIM_REASONS, REPORT_CLAIM_STATUSES };

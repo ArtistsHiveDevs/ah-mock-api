@@ -5,7 +5,11 @@ const apiHelperFunctions = require("./apiHelperFunctions");
 const helpers = require("./helperFunctions");
 const routesConstants = require("../operations/domain/artists/constants/routes.constants");
 
-const { connections, connectToDatabase, modelsWithCustomConnections } = require("../db/db_g");
+const {
+  connections,
+  connectToDatabase,
+  modelsWithCustomConnections,
+} = require("../db/db_g");
 const { getModel } = require("./getModel");
 
 function modelRequiresAuth(modelName) {
@@ -65,7 +69,7 @@ async function processFilters(
   user,
   currentProfileIdNormalization,
   currentUserIdNormalization,
-  connection
+  connection,
 ) {
   // console.log("\n=== DEBUG: processFilters START ===");
   // console.log("filters:", JSON.stringify(filters, null, 2));
@@ -114,18 +118,18 @@ async function processFilters(
         compareValue = currentProfileIdNormalization[compareField];
         console.log(
           `compareWith: sameProfile, compareField: ${compareField}, value:`,
-          compareValue
+          compareValue,
         );
       } else if (compareWith === "sameUser" && currentUserIdNormalization) {
         compareValue = currentUserIdNormalization[compareField];
         console.log(
           `compareWith: sameUser, compareField: ${compareField}, value:`,
-          compareValue
+          compareValue,
         );
       } else {
         console.log(
           "⚠️ Skipping filter - compareWith not recognized:",
-          compareWith
+          compareWith,
         );
         continue;
       }
@@ -139,7 +143,7 @@ async function processFilters(
       mongoQuery[arrayPath] = elemMatchQuery;
       console.log(
         "Built $elemMatch query:",
-        JSON.stringify({ [arrayPath]: elemMatchQuery }, null, 2)
+        JSON.stringify({ [arrayPath]: elemMatchQuery }, null, 2),
       );
     } else {
       // No es array: query directo
@@ -149,18 +153,18 @@ async function processFilters(
         compareValue = currentProfileIdNormalization[compareField];
         console.log(
           `compareWith: sameProfile, compareField: ${compareField}, value:`,
-          compareValue
+          compareValue,
         );
       } else if (compareWith === "sameUser" && currentUserIdNormalization) {
         compareValue = currentUserIdNormalization[compareField];
         console.log(
           `compareWith: sameUser, compareField: ${compareField}, value:`,
-          compareValue
+          compareValue,
         );
       } else {
         console.log(
           "⚠️ Skipping filter - compareWith not recognized:",
-          compareWith
+          compareWith,
         );
         continue;
       }
@@ -168,7 +172,7 @@ async function processFilters(
       mongoQuery[field] = compareValue;
       console.log(
         "Built direct query:",
-        JSON.stringify({ [field]: compareValue }, null, 2)
+        JSON.stringify({ [field]: compareValue }, null, 2),
       );
     }
   }
@@ -192,7 +196,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
   const UserModel = await getModel(connection.environment, "User");
   const EntityDirectoryModel = await getModel(
     connection.environment,
-    "EntityDirectory"
+    "EntityDirectory",
   );
   const model = await getModel(connection.environment, modelName);
 
@@ -213,13 +217,14 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
     let profileNormalizationFailed = false;
     if (user?.currentProfileIdentifier) {
       try {
-        currentProfileIdNormalization = await EntityDirectory.normalizeProfileId(
-          user.currentProfileIdentifier,
-          connection
-        );
+        currentProfileIdNormalization =
+          await EntityDirectory.normalizeProfileId(
+            user.currentProfileIdentifier,
+            connection,
+          );
       } catch (err) {
         console.warn(
-          `[listEntities:${modelName}] normalizeProfileId falló para currentProfileIdentifier="${user.currentProfileIdentifier}": ${err.message}`
+          `[listEntities:${modelName}] normalizeProfileId falló para currentProfileIdentifier="${user.currentProfileIdentifier}": ${err.message}`,
         );
         profileNormalizationFailed = true;
       }
@@ -231,11 +236,11 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       try {
         currentUserIdNormalization = await EntityDirectory.normalizeProfileId(
           user.id,
-          connection
+          connection,
         );
       } catch (err) {
         console.warn(
-          `[listEntities:${modelName}] normalizeProfileId falló para user.id="${user.id}": ${err.message}`
+          `[listEntities:${modelName}] normalizeProfileId falló para user.id="${user.id}": ${err.message}`,
         );
         userNormalizationFailed = true;
       }
@@ -278,18 +283,25 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         ...modelFields
           .filter((field) => {
             const fieldType = model.schema.paths[field];
+            // Mongoose 9
+            const arrayItemType =
+              fieldType?.caster || fieldType?.embeddedSchemaType;
+
             return (
               fieldType &&
               (fieldType.instance.toLowerCase() === "objectid" ||
                 (fieldType.instance.toLowerCase() === "array" &&
-                  fieldType.caster &&
-                  fieldType?.caster?.instance?.toLowerCase() === "objectid"))
+                  arrayItemType &&
+                  arrayItemType?.instance?.toLowerCase() === "objectid"))
             );
           })
           .map((field) => {
+            const arrayItemType =
+              model.schema.paths[field].caster ||
+              model.schema.paths[field].embeddedSchemaType;
             const refModel =
               model.schema.paths[field].options?.ref ||
-              model.schema.paths[field].caster?.options.ref;
+              arrayItemType?.options?.ref;
             const refModelFields = model.schema.paths.i18n
               ? [
                   `i18n.${lang}`,
@@ -298,10 +310,10 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
                       ?.summary ??
                     routesConstants?.public_fields ?? ["name"]),
                 ]
-              : public_fields ??
+              : (public_fields ??
                 routesConstants?.parametric_public_fields?.[refModel]
                   ?.summary ??
-                routesConstants?.public_fields ?? ["name"];
+                routesConstants?.public_fields ?? ["name"]);
 
             return {
               path: field,
@@ -342,7 +354,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
           user,
           currentProfileIdNormalization,
           currentUserIdNormalization,
-          connection
+          connection,
         );
         // Combinar los filtros procesados con los existentes
         allFilters = { ...allFilters, ...processed.mongoQuery };
@@ -426,6 +438,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       let query = model
         .find({ ...allFilters })
         .select(projection)
+        .sort({ _id: 1 })
         .skip((page - 1) * limit)
         .limit(Number(limit));
 
@@ -454,7 +467,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         filterPopulateFields.forEach((fieldPath) => {
           // Solo popular si no está ya en populateFields
           const alreadyPopulated = populateFields.some(
-            (pop) => pop.path === fieldPath || pop === fieldPath
+            (pop) => pop.path === fieldPath || pop === fieldPath,
           );
           if (!alreadyPopulated) {
             console.log(`  - Populating: ${fieldPath}`);
@@ -497,7 +510,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       return apiHelperFunctions.createPaginatedDataResponse(
         results,
         page,
-        Math.ceil(results.length / limit)
+        Math.ceil(results.length / limit),
       );
     } catch (error) {
       console.error(error);
@@ -704,17 +717,21 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       ...modelFields
         .filter((field) => {
           const fieldType = model.schema.paths[field];
-          // Requiere `ref` explícito, no solo tipo ObjectId: "_id" es ObjectId
-          // pero no referencia otra colección (y no tiene `.caster`, propio de arrays).
+          // Requiere `ref` explícito: "_id" es ObjectId pero no referencia otra colección.
+          const arrayItemType =
+            fieldType?.caster || fieldType?.embeddedSchemaType;
           return (
             fieldType &&
-            !!(fieldType.options?.ref || fieldType.caster?.options?.ref)
+            !!(fieldType.options?.ref || arrayItemType?.options?.ref)
           );
         })
         .map((field) => {
+          const arrayItemType =
+            model.schema.paths[field].caster ||
+            model.schema.paths[field].embeddedSchemaType;
           const refModelName =
             model.schema.paths[field].options?.ref ||
-            model.schema.paths[field].caster?.options?.ref;
+            arrayItemType?.options?.ref;
 
           // Obtener el modelo de referencia dinámicamente
           const refModel = connection.model(refModelName);
@@ -728,10 +745,10 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
                     ?.summary ??
                   routesConstants?.public_fields ?? ["name"]),
               ]
-            : public_fields ??
+            : (public_fields ??
               routesConstants?.parametric_public_fields?.[refModelName]
                 ?.summary ??
-              routesConstants?.public_fields ?? ["name"];
+              routesConstants?.public_fields ?? ["name"]);
 
           return {
             path: field,
@@ -750,7 +767,9 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
     // Para modelos con custom connections, agregar serverEnvironment para cross-DB populate
     if (modelsWithCustomConnections.includes(modelName)) {
-      queryResult = queryResult.setOptions({ serverEnvironment: connection.environment });
+      queryResult = queryResult.setOptions({
+        serverEnvironment: connection.environment,
+      });
     }
 
     // console.log(modelName, " Populate ", populateFields);
@@ -818,7 +837,9 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
         // Para modelos con custom connections, agregar serverEnvironment
         if (modelsWithCustomConnections.includes(modelName)) {
-          followedQuery = followedQuery.setOptions({ serverEnvironment: connection.environment });
+          followedQuery = followedQuery.setOptions({
+            serverEnvironment: connection.environment,
+          });
         }
 
         followedEntityInfo = await followedQuery;
@@ -848,7 +869,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
     if (modelRequiresEntityIndex(modelName)) {
       const ProfileClaimModel = await getModel(
         req.serverEnvironment,
-        "ProfileClaim"
+        "ProfileClaim",
       );
       let claimResult;
       try {
@@ -878,9 +899,9 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         role.entityName === modelName &&
         role.entityRoleMap.some((entityRole) => {
           return new mongoose.Types.ObjectId(entityRole.id).equals(
-            entityInfo._id
+            entityInfo._id,
           );
-        })
+        }),
     );
 
     let currentUserIsOwner = false;
@@ -888,9 +909,9 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       const rolesInEntity = roleAsEntity.entityRoleMap.find(
         (entityPermissions) => {
           return new mongoose.Types.ObjectId(entityPermissions.id).equals(
-            entityInfo._id
+            entityInfo._id,
           );
-        }
+        },
       );
 
       if ((rolesInEntity?.roles || []).includes("OWNER")) {
@@ -933,7 +954,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       if (modelRequiresAuth(modelName) && !userId) {
         throw new Error(
           "Unauthorized operation. To execute this operation you require a valid session in app server. Model: " +
-            modelName
+            modelName,
         );
       }
       // Hook opt-in para que el servidor arme el payload real a persistir: se usa
@@ -974,7 +995,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       // Para modelos con pre-procesamiento especial antes de construcción
       // Llamar al método estático preConstruct si existe en el schema
       if (hasPreConstructor) {
-        console.log("Create Entity     ", hasPreConstructor, ownerUser, info)
+        console.log("Create Entity     ", hasPreConstructor, ownerUser, info);
         await model.schema.statics.preConstruct(connection, ownerUser, info);
       }
 
@@ -983,7 +1004,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
       if (modelRequiresAuth(modelName)) {
         let ownerRoles = ownerUser.roles.find(
-          (role) => role.entityName === modelName
+          (role) => role.entityName === modelName,
         );
 
         if (!ownerRoles) {
@@ -992,7 +1013,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         }
 
         let entityInfo = ownerRoles.entityRoleMap.find(
-          (entity) => entity.id === newEntity._id
+          (entity) => entity.id === newEntity._id,
         );
 
         if (!entityInfo) {
@@ -1031,12 +1052,15 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
             {
               new: true, // Para obtener el documento actualizado como resultado
               runValidators: true, // Para que se apliquen las validaciones del esquema
-            }
+            },
           );
         }
       }
       // Llamar a postCreateFunction si existe en options
-      if (options.postCreateFunction && typeof options.postCreateFunction === "function") {
+      if (
+        options.postCreateFunction &&
+        typeof options.postCreateFunction === "function"
+      ) {
         try {
           await options.postCreateFunction({
             entity: newEntity,
@@ -1045,7 +1069,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         } catch (postCreateError) {
           console.error(
             `[${modelName}] Error en postCreateFunction:`,
-            postCreateError.message
+            postCreateError.message,
           );
           console.error(`[${modelName}] Stack:`, postCreateError.stack);
           // No lanzar el error para no afectar la creación
@@ -1063,7 +1087,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
   async function updateEntity({ id, userId, body }) {
     if (!userId) {
       throw new Error(
-        "Unauthorized operation. To execute this operation you require a valid session"
+        "Unauthorized operation. To execute this operation you require a valid session",
       );
     }
 
@@ -1095,7 +1119,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
     if (entityInfo.entityRoleMap) {
       hasRole = entityInfo.entityRoleMap.some(
         (role) =>
-          ["OWNER", "ADMIN"].includes(role.role) && role.ids.includes(userId)
+          ["OWNER", "ADMIN"].includes(role.role) && role.ids.includes(userId),
       );
     }
 
@@ -1128,7 +1152,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
           },
         },
         { $set: newInfo },
-        { new: true }
+        { new: true },
       );
 
       if (
@@ -1157,7 +1181,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
     if (!userId) {
       throw new Error(
-        "Unauthorized operation. To execute this operation you require a valid session"
+        "Unauthorized operation. To execute this operation you require a valid session",
       );
     }
 
@@ -1203,7 +1227,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
       hasRole = entityInfo.entityRoleMap.some(
         (role) =>
-          ["OWNER", "ADMIN"].includes(role.role) && role.ids.includes(userId)
+          ["OWNER", "ADMIN"].includes(role.role) && role.ids.includes(userId),
       );
     } else {
       console.log(`[${modelName}] - No entityRoleMap found`);
@@ -1212,7 +1236,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
     console.log(`[${modelName}] - hasRole:`, hasRole);
     console.log(
       `[${modelName}] - modelRequiresOwnership:`,
-      modelRequiresOwnership(modelName)
+      modelRequiresOwnership(modelName),
     );
 
     if (!modelRequiresOwnership(modelName) || hasRole) {
@@ -1253,14 +1277,14 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
       console.log(
         `[${modelName}] - Entity deleted successfully:`,
-        deletedEntity._id
+        deletedEntity._id,
       );
 
       // Si el modelo requiere EntityDirectory, también eliminarlo
       if (modelRequiresEntityIndex(modelName)) {
         const EntityDirectoryModel = await getModel(
           connection.environment || connection.name,
-          "EntityDirectory"
+          "EntityDirectory",
         );
 
         await EntityDirectoryModel.findOneAndDelete({
@@ -1269,7 +1293,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         });
 
         console.log(
-          `[${modelName}] Deleted EntityDirectory entry for entity ${deletedEntity._id}`
+          `[${modelName}] Deleted EntityDirectory entry for entity ${deletedEntity._id}`,
         );
       }
 

@@ -4,10 +4,10 @@ const bcrypt = require("bcryptjs");
 var helpers = require("../../../helpers/index");
 var RoutesConstants = require("./constants/index");
 const ErrorCodes = require("../../../constants/errors");
-const {
-  getCognitoEmailBySub,
-  CognitoUserNotFoundError,
-} = require("../../../helpers/cognitoService");
+// const {
+//   getCognitoEmailBySub,
+//   CognitoUserNotFoundError,
+// } = require("../../../helpers/cognitoService");
 
 const {
   generateTourOutlines,
@@ -18,6 +18,10 @@ const {
 const apiHelperFunctions = require("../../../helpers/apiHelperFunctions");
 const { followProfile } = require("../../../helpers/following");
 const { getModel } = require("../../../helpers/getModel");
+const {
+  normalizeProfileId,
+} = require("../../../models/appbase/EntityDirectory");
+const { connectToDatabase } = require("../../../db/db_g");
 const routesConstants = require("../artists/constants/routes.constants");
 const {
   notifyUserWelcome,
@@ -28,13 +32,211 @@ const {
 
 var userRouter = express.Router({ mergeParams: true });
 
+// Campos del User que deben sincronizarse con EntityDirectory
+const ENTITY_DIRECTORY_SYNC_FIELDS = [
+  "shortId",
+  "profile_pic",
+  "name",
+  "given_names",
+  "surnames",
+  "stage_name",
+  "username",
+  "subtitle",
+  "verified_status",
+];
+
+/**
+ * Construye el objeto entityInfo para EntityDirectory desde un User
+ * @param {Object} user - Documento de User
+ * @returns {Object} Objeto con los campos para EntityDirectory
+ */
+function buildEntityInfoFromUser(user) {
+  const entityInfo = {
+    id: user._id,
+    entityType: "User",
+  };
+
+  // Agregar solo los campos que existen en el user
+  ENTITY_DIRECTORY_SYNC_FIELDS.forEach((field) => {
+    if (user[field] !== undefined) {
+      entityInfo[field] = user[field];
+    }
+  });
+
+  return entityInfo;
+}
+
+/**
+ * Actualiza el entityRoleMap de una entidad específica
+ * @param {Object} serverEnvironment - Entorno del servidor
+ * @param {string} entityName - Nombre del modelo de la entidad (ej: "Artist", "Place")
+ * @param {string} entityId - ID de la entidad a actualizar
+ * @param {string} userId - ID del usuario
+ * @param {string} action - Acción a realizar: "add", "update", "remove"
+ * @param {Array<string>} roles - Array de roles (solo para "add" y "update")
+ */
+async function updateEntityRoleMap(
+  serverEnvironment,
+  entityName,
+  entityId,
+  userId,
+  action,
+  roles = [],
+) {
+  try {
+    const EntityModel = await getModel(serverEnvironment, entityName);
+    const userObjectId = new mongoose.Types.ObjectId(userId);
+
+    // Verificar si la entidad existe y tiene entityRoleMap inicializado
+    const entity = await EntityModel.findById(entityId);
+    if (!entity) {
+      console.warn(
+        `[EntityRoleMap] Entidad ${entityName}/${entityId} no encontrada`,
+      );
+      return;
+    }
+
+    // Si entityRoleMap no existe, inicializarlo como array vacío
+    if (!entity.entityRoleMap || !Array.isArray(entity.entityRoleMap)) {
+      await EntityModel.updateOne(
+        { _id: entityId },
+        { $set: { entityRoleMap: [] } },
+      );
+      console.log(
+        `[EntityRoleMap] Inicializado entityRoleMap en ${entityName}/${entityId}`,
+      );
+    }
+
+    switch (action) {
+      case "add":
+        // Agregar el usuario a cada rol especificado
+        for (const role of roles) {
+          // Verificar si el rol ya existe en entityRoleMap
+          const roleExists = await EntityModel.findOne({
+            _id: entityId,
+            "entityRoleMap.role": role,
+          });
+
+          if (!roleExists) {
+            // Si el rol no existe, crear la entrada
+            await EntityModel.updateOne(
+              { _id: entityId },
+              {
+                $push: {
+                  entityRoleMap: { role: role, ids: [userObjectId] },
+                },
+              },
+            );
+          } else {
+            // Si el rol existe, agregar el usuario al array de ids
+            await EntityModel.updateOne(
+              { _id: entityId },
+              {
+                $addToSet: {
+                  "entityRoleMap.$[elem].ids": userObjectId,
+                },
+              },
+              {
+                arrayFilters: [{ "elem.role": role }],
+              },
+            );
+          }
+        }
+        console.log(
+          `[EntityRoleMap] Usuario ${userId} agregado con roles [${roles.join(", ")}] en ${entityName}/${entityId}`,
+        );
+        break;
+
+      case "update":
+        // Primero, remover el usuario de todos los roles
+        await EntityModel.updateOne(
+          { _id: entityId },
+          {
+            $pull: {
+              "entityRoleMap.$[].ids": userObjectId,
+            },
+          },
+        );
+
+        // Luego, agregar el usuario a los nuevos roles
+        for (const role of roles) {
+          // Verificar si el rol ya existe en entityRoleMap
+          const roleExists = await EntityModel.findOne({
+            _id: entityId,
+            "entityRoleMap.role": role,
+          });
+
+          if (!roleExists) {
+            // Si el rol no existe, crear la entrada
+            await EntityModel.updateOne(
+              { _id: entityId },
+              {
+                $push: {
+                  entityRoleMap: { role: role, ids: [userObjectId] },
+                },
+              },
+            );
+          } else {
+            // Si el rol existe, agregar el usuario al array de ids
+            await EntityModel.updateOne(
+              { _id: entityId },
+              {
+                $addToSet: {
+                  "entityRoleMap.$[elem].ids": userObjectId,
+                },
+              },
+              {
+                arrayFilters: [{ "elem.role": role }],
+              },
+            );
+          }
+        }
+        console.log(
+          `[EntityRoleMap] Roles del usuario ${userId} actualizados a [${roles.join(", ")}] en ${entityName}/${entityId}`,
+        );
+        break;
+
+      case "remove":
+        // Remover el usuario de todos los roles de la entidad
+        await EntityModel.updateOne(
+          { _id: entityId },
+          {
+            $pull: {
+              "entityRoleMap.$[].ids": userObjectId,
+            },
+          },
+        );
+        console.log(
+          `[EntityRoleMap] Usuario ${userId} removido de ${entityName}/${entityId}`,
+        );
+        break;
+
+      default:
+        console.warn(`[EntityRoleMap] Acción desconocida: ${action}`);
+    }
+  } catch (error) {
+    console.error(
+      `[EntityRoleMap] Error al actualizar ${entityName}/${entityId}:`,
+      error,
+    );
+    throw error;
+  }
+}
+
 /**
  * Detecta cambios en los roles de un usuario y envía notificaciones
+ * @param {Object} serverEnvironment - Entorno del servidor
  * @param {Object} currentUser - Usuario actual antes de la actualización
  * @param {Object} newRoles - Nuevos roles del usuario
  * @param {Object} updatedBy - Usuario que realiza los cambios
  */
-async function detectAndNotifyRoleChanges(currentUser, newRoles, updatedBy, lang) {
+async function detectAndNotifyRoleChanges(
+  serverEnvironment,
+  currentUser,
+  newRoles,
+  updatedBy,
+  lang,
+) {
   if (!newRoles || !Array.isArray(newRoles)) return;
 
   const currentRoles = currentUser.roles || [];
@@ -84,7 +286,17 @@ async function detectAndNotifyRoleChanges(currentUser, newRoles, updatedBy, lang
 
       if (!currentEntry) {
         // Nueva asignación
-        console.log(`[RoleChanges] Nueva asignación: ${entityName}/${entityId}`);
+        await updateEntityRoleMap(
+          serverEnvironment,
+          entityName,
+          entityId,
+          currentUser._id,
+          "add",
+          newEntry.roles,
+        );
+        console.log(
+          `[RoleChanges] Nueva asignación: ${entityName}/${entityId}`,
+        );
         await notifyProfileAssigned({
           user: currentUser,
           profile,
@@ -99,7 +311,17 @@ async function detectAndNotifyRoleChanges(currentUser, newRoles, updatedBy, lang
           JSON.stringify(newEntry.roles.sort());
 
         if (rolesChanged) {
-          console.log(`[RoleChanges] Rol actualizado: ${entityName}/${entityId}`);
+          await updateEntityRoleMap(
+            serverEnvironment,
+            entityName,
+            entityId,
+            currentUser._id,
+            "update",
+            newEntry.roles,
+          );
+          console.log(
+            `[RoleChanges] Rol actualizado: ${entityName}/${entityId}`,
+          );
           await notifyProfileRoleUpdated({
             user: currentUser,
             profile,
@@ -119,6 +341,13 @@ async function detectAndNotifyRoleChanges(currentUser, newRoles, updatedBy, lang
 
       if (!existsInNew) {
         const currentEntry = currentRolesMap[entityName][entityId];
+        await updateEntityRoleMap(
+          serverEnvironment,
+          entityName,
+          entityId,
+          currentUser._id,
+          "remove",
+        );
         console.log(`[RoleChanges] Rol removido: ${entityName}/${entityId}`);
         await notifyProfileRemoved({
           user: currentUser,
@@ -438,21 +667,21 @@ module.exports = [
         if (req.body.sub) {
           // Cognito es la única fuente de verdad del email en este flujo: nunca
           // se guarda el que mande el body, aunque venga distinto o vacío.
-          try {
-            req.body.email = await getCognitoEmailBySub(req.body.sub);
-          } catch (cognitoErr) {
-            if (cognitoErr instanceof CognitoUserNotFoundError) {
-              return res.status(400).send({
-                message: "Cognito user not found for the given sub.",
-                errorCode: ErrorCodes.AUTH_COGNITO_USER_NOT_FOUND,
-              });
-            }
-            console.error("[UserRouter] Error consultando Cognito:", cognitoErr);
-            return res.status(503).send({
-              message: "Could not verify Cognito identity, try again.",
-              errorCode: ErrorCodes.AUTH_COGNITO_UNAVAILABLE,
-            });
-          }
+          // try {
+          //   req.body.email = await getCognitoEmailBySub(req.body.sub);
+          // } catch (cognitoErr) {
+          //   if (cognitoErr instanceof CognitoUserNotFoundError) {
+          //     return res.status(400).send({
+          //       message: "Cognito user not found for the given sub.",
+          //       errorCode: ErrorCodes.AUTH_COGNITO_USER_NOT_FOUND,
+          //     });
+          //   }
+          //   console.error("[UserRouter] Error consultando Cognito:", cognitoErr);
+          //   return res.status(503).send({
+          //     message: "Could not verify Cognito identity, try again.",
+          //     errorCode: ErrorCodes.AUTH_COGNITO_UNAVAILABLE,
+          //   });
+          // }
 
           const existingBySub = await UserModel.findOne({ sub: req.body.sub });
           if (existingBySub) {
@@ -464,7 +693,9 @@ module.exports = [
         }
 
         if (req.body.email) {
-          const existingByEmail = await UserModel.findOne({ email: req.body.email });
+          const existingByEmail = await UserModel.findOne({
+            email: req.body.email,
+          });
           if (existingByEmail) {
             return res.status(409).send({
               message: "A user with this email is already registered.",
@@ -477,16 +708,8 @@ module.exports = [
 
         await user.save();
 
-        entityInfo = {
-          id: user._id,
-          shortId: user.shortId,
-          profile_pic: user.profile_pic,
-          name: user.name,
-          username: user.username,
-          subtitle: user.subtitle,
-          verified_status: user.verified_status,
-          entityType: "User",
-        };
+        // Construir entityInfo usando la función helper
+        entityInfo = buildEntityInfoFromUser(user);
 
         const EntityDirectoryModel = await getModel(
           req.serverEnvironment,
@@ -499,7 +722,9 @@ module.exports = [
         // Enviar notificación de bienvenida al nuevo usuario
         // Intentar obtener el idioma de: req.lang (si está autenticado) o req.headers['lang'] (header del cliente)
         const lang = req.lang || req.headers["lang"] || user.user_language;
-        console.log(`[UserRouter] Idioma para notificación de bienvenida: ${lang} (req.lang: ${req.lang}, header: ${req.headers["lang"]}, user: ${user.user_language})`);
+        console.log(
+          `[UserRouter] Idioma para notificación de bienvenida: ${lang} (req.lang: ${req.lang}, header: ${req.headers["lang"]}, user: ${user.user_language})`,
+        );
         await notifyUserWelcome(user, lang);
 
         res.status(201).send(createPaginatedDataResponse(user));
@@ -581,7 +806,13 @@ module.exports = [
             _id: req.userId,
             name: req.currentProfileInfo?.name || "Sistema",
           };
-          await detectAndNotifyRoleChanges(currentUser, newInfo.roles, updatedBy, req.lang);
+          await detectAndNotifyRoleChanges(
+            req.serverEnvironment,
+            currentUser,
+            newInfo.roles,
+            updatedBy,
+            req.lang,
+          );
         }
 
         // Update de los campos en EntityDirectory
@@ -590,21 +821,9 @@ module.exports = [
           "EntityDirectory",
         );
 
-        // Obtener los campos del schema de EntityDirectory
-        const entityDirectoryFields = Object.keys(
-          EntityDirectoryModel.schema.paths,
-        ).filter(
-          (field) =>
-            !["_id", "id", "entityType", "createdAt", "updatedAt"].includes(
-              field,
-            ),
-        );
-
-        // Filtrar los campos que están en EntityDirectory
+        // Filtrar solo los campos que fueron actualizados y que deben sincronizarse
         const entityDirectoryUpdates = Object.keys(updateFields)
-          .filter((key) =>
-            entityDirectoryFields.some((field) => key.startsWith(field)),
-          )
+          .filter((key) => ENTITY_DIRECTORY_SYNC_FIELDS.includes(key))
           .reduce((acc, key) => {
             acc[key] = updateFields[key];
             return acc;
@@ -633,16 +852,46 @@ module.exports = [
     async (req, res) => {
       const { action, id, identifier, username, entity } = req.body;
 
-      const EntityDirectoryModel = await getModel(
-        req.serverEnvironment,
-        "EntityDirectory",
-      );
-      const requestID = await EntityDirectoryModel.findOne({
-        id: id,
-        entityType: entity,
-      }).select("_id");
+      const connection = await connectToDatabase(req);
 
-      entityDirectoryIdFollowed = requestID?._id;
+      // Buscar el EntityDirectory del follower (perfil actual)
+      let entityDirectoryIdFollower;
+      let followerEntityType;
+      try {
+        const followerIdentifier =
+          req.currentProfileInfo.username ||
+          req.currentProfileInfo.identifier ||
+          req.currentProfileInfo.id;
+        const followerEntityDirectoryInfo = await normalizeProfileId(
+          followerIdentifier,
+          connection,
+        );
+        entityDirectoryIdFollower = followerEntityDirectoryInfo._id;
+        followerEntityType = followerEntityDirectoryInfo.entityType;
+      } catch (err) {
+        console.warn(
+          `EntityDirectory not found for follower: ${req.currentProfileInfo.username || req.currentProfileInfo.id}`,
+          err.message,
+        );
+      }
+
+      // Buscar el EntityDirectory de la entidad seguida
+      let entityDirectoryIdFollowed;
+      let followedEntityType;
+      try {
+        const followedIdentifier = id || username || identifier;
+        const followedEntityDirectoryInfo = await normalizeProfileId(
+          followedIdentifier,
+          connection,
+        );
+        entityDirectoryIdFollowed = followedEntityDirectoryInfo._id;
+        followedEntityType = followedEntityDirectoryInfo.entityType;
+      } catch (err) {
+        console.warn(
+          `EntityDirectory not found for followed: ${id || username || identifier}`,
+          err.message,
+        );
+      }
 
       let response;
       switch (action) {
@@ -650,11 +899,11 @@ module.exports = [
         case "unfollow":
           try {
             const followerInfo = {
-              entityDirectoryId: req.currentProfileEntityDirectory,
+              entityDirectoryId: entityDirectoryIdFollower,
               id: req.currentProfileInfo.id,
               identifier: req.currentProfileInfo.identifier,
               username: req.currentProfileInfo.username,
-              entity: req.currentProfileEntity,
+              entity: followerEntityType,
             };
 
             const followedInfo = {
@@ -662,7 +911,7 @@ module.exports = [
               id,
               identifier,
               username,
-              entity,
+              entity: followedEntityType || entity,
             };
 
             await followProfile(

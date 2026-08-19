@@ -63,6 +63,7 @@ const schema = new mongoose.Schema({
   home_address: String,
   // spoken_languages: [{ type: Schema.Types.ObjectId, ref: "Language" }],
   spoken_languages: [String],
+  allergies: [{ type: Schema.Types.ObjectId, ref: "Allergy" }],
   dietary_restrictions: String,
   latlng: String,
   profile_pic: String,
@@ -116,6 +117,18 @@ schema.virtual("followedProfilesCount").get(function () {
     return count.length > 0 ? count[0].total : 0;
   };
 });
+
+schema.virtual("fullname").get(function () {
+  return `${this.given_names || ''} ${this.surnames || ''}`.trim();
+});
+
+schema.virtual("nameKnownAs").get(function () {
+  return this.stage_name || this.fullname;
+});
+
+// Incluye los virtuals en los resultados de JSON
+schema.set("toObject", { virtuals: true });
+schema.set("toJSON", { virtuals: true });
 
 const User = mongoose.model("User", schema);
 
