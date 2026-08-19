@@ -71,6 +71,17 @@ const TopTrackSchema = new mongoose.Schema({
   type: { type: String, required: true },
 });
 
+const MemberWithouthAccountSchema = new mongoose.Schema({
+  internal_id: {type: String, required: true},
+  names: {type: String, required: true},
+  surnames: {type: String, required: true},
+  stage_name: {type: String, required: false},
+  email: {type: String, required: true},
+  gender: {type: String, required: true},
+  member_role: {type: String, required: true},
+  member_instrument: {type: String, required: true},
+});
+
 const schema = new mongoose.Schema(
   {
     artistType: { type: String },
@@ -193,7 +204,7 @@ const schema = new mongoose.Schema(
     technical_epk: { type: [FileSchema], default: [] },
     technical_rider: { type: [FileSchema], default: [] },
     stage_plot: { type: [FileSchema], default: [] },
-    music_performance: { type: [MemberSchema], default: [] },
+    music_performance: { type: [MemberWithouthAccountSchema], default: [] },
   },
   {
     timestamps: true,
