@@ -1,5 +1,5 @@
 {
-  "watch": ["src", "server.js"],
+  "watch": ["server.js", "constants", "db", "helpers", "infrastructure", "models", "operations", "rehearsal_rooms", "routes"],
   "ext": "js,ts,json",
   "legacyWatch": true,
   "delay": 1000
