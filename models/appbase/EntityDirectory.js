@@ -55,6 +55,11 @@ const schema = new Schema(
 // username mientras protege contra duplicados cuando sí está presente.
 schema.index({ username: 1 }, { unique: true, sparse: true });
 
+// Espejo del shortId generado en el schema de la entidad origen (User/Artist/Place)
+// al momento de crear este registro; sparse porque las entidades creadas antes
+// de introducir shortId no lo tienen.
+schema.index({ shortId: 1 }, { unique: true, sparse: true });
+
 /**
  * Virtual para populate de recipients
  */

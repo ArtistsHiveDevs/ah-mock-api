@@ -10,6 +10,7 @@ module.exports = {
     "_id",
     "id",
     "identifier",
+    "shortId",
     "name",
     "username",
     // "subtitle",
@@ -67,6 +68,7 @@ module.exports = {
   authenticated_fields: [
     // "artistType",
     "id",
+    "shortId",
     "name",
     "username",
     "subtitle",
@@ -129,6 +131,7 @@ module.exports = {
       summary: [
         "id",
         "identifier",
+        "shortId",
         "entityType",
         "profile_pic",
         "name",
@@ -145,6 +148,7 @@ module.exports = {
       detail: [
         "id",
         "identifier",
+        "shortId",
         "entityType",
         "location",
         "profile_pic",
@@ -164,6 +168,7 @@ module.exports = {
       summary: [],
       detail: [
         "_id",
+        "shortId",
         "sub",
         "username",
         "email",

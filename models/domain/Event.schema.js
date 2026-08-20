@@ -1,9 +1,17 @@
 const mongoose = require("mongoose");
+const { generateShortId } = require("../../helpers/shortId");
 const { Schema } = mongoose;
 
 // Definir el esquema para EventTemplate
 const schema = new Schema(
   {
+    // Identificador corto alternativo al _id, generado al crear.
+    shortId: {
+      type: String,
+      default: generateShortId,
+      unique: true,
+      sparse: true,
+    },
     verified_status: {
       type: Number,
     },

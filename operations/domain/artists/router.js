@@ -704,6 +704,7 @@ module.exports = [
         if (!bandInfo) {
           bandInfo = {
             id: newArtist._id,
+            shortId: newArtist.shortId,
             profile_pic: newArtist.profile_pic,
             name: newArtist.name,
             username: newArtist.username,

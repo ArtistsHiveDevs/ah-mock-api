@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const { normalizeProfileId } = require("../appbase/EntityDirectory");
+const { generateShortId } = require("../../helpers/shortId");
 
 // ============================================================================
 // ENUMS (Referencia TypeScript)
@@ -100,6 +101,14 @@ const ParticipantNoteSchema = new mongoose.Schema(
 
 const schema = new Schema(
   {
+    // Identificador corto alternativo al _id, generado al crear.
+    shortId: {
+      type: String,
+      default: generateShortId,
+      unique: true,
+      sparse: true,
+    },
+
     // ========================================================================
     // PARTICIPANTES (Multi-party support)
     // ========================================================================
