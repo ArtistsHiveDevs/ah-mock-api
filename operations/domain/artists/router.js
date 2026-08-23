@@ -972,19 +972,27 @@ module.exports = [
       //   return res
       //     .status(200)
       //     .json(items[Math.round(Math.random() * items.length)]);
-      const { identifier } = req.params;
+      // La ruta es "/:id" (routesConstants.deleteById): el param se llama "id",
+      // no "identifier". Con el nombre equivocado este valor siempre llegaba
+      // undefined, Mongo descartaba las tres condiciones del $or, y
+      // findOneAndDelete borraba el primer documento que encontraba en la
+      // colección sin importar cuál se hubiera pedido.
+      const { id: searchValue } = req.params;
 
       try {
         const Artist = await getModel(req.serverEnvironment, "Artist");
         const artist = await Artist.findOneAndDelete(
           {
+            // Sin "name": no es un identificador confiable para una operación
+            // destructiva (puede repetirse entre artistas distintos).
             $or: [
-              { id: identifier },
-              { sID: identifier },
-              { username: identifier },
-            ],
+              mongoose.Types.ObjectId.isValid(searchValue)
+                ? { _id: searchValue }
+                : null,
+              { sID: searchValue },
+              { username: searchValue },
+            ].filter(Boolean),
           },
-          req.body,
           { new: true }, // Retorna el documento actualizado
         );
 
