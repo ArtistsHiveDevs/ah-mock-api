@@ -4,6 +4,7 @@ var RoutesConstants = require("./constants/index");
 const mongoose = require("mongoose");
 const {
   schema: EntityDirectorySchema,
+  PARAMETRIC_ENTITY_TYPES,
 } = require("../../../models/appbase/EntityDirectory");
 const {
   createPaginatedDataResponse,
@@ -189,9 +190,16 @@ async function searchEntitiesDB(req, queryRQ) {
     // const geoFilters = buildGeoFilters(includedGeo, excludedGeo);
 
     // 5️⃣ Construir condiciones base
+    // Este es el buscador global de PERFILES (User/Artist/Place). Los catálogos
+    // paramétricos (Country/Language/Continent/Currency/Allergy) comparten la
+    // colección EntityDirectory solo para reservar su sID globalmente, no son
+    // perfiles navegables: si no se pide un entityType explícito, se excluyen
+    // para no colarse mezclados en resultados de búsqueda de usuarios/artistas.
     const baseConditions = {
       ...searchCondition,
-      ...(et && { entityType: et }),
+      ...(et
+        ? { entityType: et }
+        : { entityType: { $nin: PARAMETRIC_ENTITY_TYPES } }),
       // ...(geoFilters.length > 0 && { $and: geoFilters }),
     };
 
@@ -213,17 +221,27 @@ async function searchEntitiesDB(req, queryRQ) {
           ],
         };
 
+        // Esta rama reconstruye matchCondition desde cero (no reusa baseConditions),
+        // así que hay que repetir acá la exclusión de catálogos paramétricos o se
+        // cuelan en la búsqueda global de perfiles (ver baseConditions más arriba).
+        const parametricExclusion = {
+          entityType: { $nin: PARAMETRIC_ENTITY_TYPES },
+        };
+
         // Si hay searchCondition, combinar con activityFilter
         if (Object.keys(searchCondition).length > 0) {
           matchCondition = {
             $and: [
               searchCondition,
               activityFilter,
+              parametricExclusion,
             ],
           };
         } else {
-          // Si no hay búsqueda, solo aplicar activityFilter
-          matchCondition = activityFilter;
+          // Si no hay búsqueda, solo aplicar activityFilter + exclusión de paramétricos
+          matchCondition = {
+            $and: [activityFilter, parametricExclusion],
+          };
         }
 
         // Código anterior con geoFilters (comentado)
@@ -374,7 +392,7 @@ const searchEntities = async ({
     const regex = new RegExp(q, "i"); // 'i' para búsqueda case-insensitive
     searchQuery = {
       $or: [
-        { shortId: regex },
+        { sID: regex },
         { name: regex },
         { username: regex },
         { subtitle: regex },

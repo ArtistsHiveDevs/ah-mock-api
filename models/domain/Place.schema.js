@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const { schema: FollowerSchema } = require("./Follower.schema");
-const { generateShortId } = require("../../helpers/shortId");
+const { generateSID } = require("../../helpers/sID");
 const { Schema } = mongoose;
 
 const imageSchema = new mongoose.Schema(
@@ -43,8 +43,8 @@ const SocialNetworkStatsSchema = new Schema(
 
 const schema = new Schema({
   // Identificador corto alternativo al _id, generado al crear. Unicidad
-  // global (compartida con User/Artist) se garantiza en EntityDirectory.shortId.
-  shortId: { type: String, default: generateShortId },
+  // global (compartida con User/Artist) se garantiza en EntityDirectory.sID.
+  sID: { type: String, default: generateSID },
   username: {
     type: String,
     required: true,

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const { normalizeProfileId } = require("../appbase/EntityDirectory");
-const { generateShortId } = require("../../helpers/shortId");
+const { generateSID } = require("../../helpers/sID");
 
 // ============================================================================
 // ENUMS (Referencia TypeScript)
@@ -102,9 +102,9 @@ const ParticipantNoteSchema = new mongoose.Schema(
 const schema = new Schema(
   {
     // Identificador corto alternativo al _id, generado al crear.
-    shortId: {
+    sID: {
       type: String,
-      default: generateShortId,
+      default: generateSID,
       unique: true,
       sparse: true,
     },
@@ -320,7 +320,7 @@ schema.statics.preConstruct = async function (connection, ownerUser, data) {
   //   !mongoose.Types.ObjectId.isValid(data.requester_profile_id)
   // ) {
   const requesterNormalization = await normalizeProfileId(
-    data.requester_profile_id || ownerUser.username || ownerUser.shortId|| ownerUser.sub || ownerUser.email || ownerUser._id,
+    data.requester_profile_id || ownerUser.username || ownerUser.sID || ownerUser.sub || ownerUser.email || ownerUser._id,
     connection,
   );
 

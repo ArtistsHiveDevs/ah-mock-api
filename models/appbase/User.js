@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const { schema: FollowerSchema } = require("../domain/Follower.schema");
-const { generateShortId } = require("../../helpers/shortId");
+const { generateSID } = require("../../helpers/sID");
 const { Schema } = mongoose;
 
 const emergencyContactSchema = new mongoose.Schema({
@@ -35,8 +35,8 @@ const schema = new mongoose.Schema({
   // múltiples documentos sin el campo sin violar el índice único.
   sub: { type: String, unique: true, sparse: true },
   // Identificador corto alternativo al _id, generado al crear. Unicidad
-  // global (compartida con Artist/Place) se garantiza en EntityDirectory.shortId.
-  shortId: { type: String, default: generateShortId },
+  // global (compartida con Artist/Place) se garantiza en EntityDirectory.sID.
+  sID: { type: String, default: generateSID },
   given_names: String,
   surnames: String,
   stage_name: String,

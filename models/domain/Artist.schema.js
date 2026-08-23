@@ -5,7 +5,7 @@ const { connections } = require("../../db/db_g");
 const { schema: FollowerSchema } = require("./Follower.schema");
 const { schema: FileSchema } = require("./File.schema");
 const { schema: MemberSchema } = require("./Member.schema");
-const { generateShortId } = require("../../helpers/shortId");
+const { generateSID } = require("../../helpers/sID");
 
 const ArtistInTrackSchema = new mongoose.Schema({
   // external_urls: {
@@ -87,8 +87,8 @@ const schema = new mongoose.Schema(
   {
     artistType: { type: String },
     // Identificador corto alternativo al _id, generado al crear. Unicidad
-    // global (compartida con User/Place) se garantiza en EntityDirectory.shortId.
-    shortId: { type: String, default: generateShortId },
+    // global (compartida con User/Place) se garantiza en EntityDirectory.sID.
+    sID: { type: String, default: generateSID },
     name: { type: String, required: true },
     username: {
       type: String,

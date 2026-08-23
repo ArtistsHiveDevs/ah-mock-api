@@ -1,8 +1,11 @@
 const mongoose = require("mongoose");
+const { generateSID } = require("../../../../helpers/sID");
 const { Schema } = mongoose;
 
 // Define el esquema para la alergia
 const schema = new Schema({
+  // Identificador corto alternativo al _id, generado al crear.
+  sID: { type: String, default: generateSID, unique: true, sparse: true },
   name: {
     type: String,
     required: true,

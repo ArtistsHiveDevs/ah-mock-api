@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
+const { generateSID } = require("../../../helpers/sID");
 const { Schema } = mongoose;
 
 const schema = new Schema({
+  // Identificador corto alternativo al _id, generado al crear.
+  sID: { type: String, default: generateSID, unique: true, sparse: true },
   name: { type: String, required: true },
   native: { type: String, required: true },
   phone: { type: [Number], required: true },

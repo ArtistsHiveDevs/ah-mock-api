@@ -114,10 +114,10 @@ app.post("/api/generate-key", helpers.validateEnvironment, async (req, res) => {
       const orConditions = [];
 
       if (identifier) {
-        // username, shortID, email
+        // username, sID, email
         orConditions.push(
           { username: identifier },
-          { shortID: identifier },
+          { sID: identifier },
           { email: identifier },
         );
 

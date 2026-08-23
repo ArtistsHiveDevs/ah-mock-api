@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
+const { generateSID } = require("../../../helpers/sID");
 
 const schema = new mongoose.Schema({
+  // Identificador corto alternativo al _id, generado al crear.
+  sID: { type: String, default: generateSID, unique: true, sparse: true },
   ISO_4217_key: {
     type: String,
     required: true,

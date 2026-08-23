@@ -3,14 +3,14 @@ const { Schema } = mongoose;
 
 const { connections } = require("../../db/db_g");
 const { schema: FollowerSchema } = require("./Follower.schema");
-const { generateShortId } = require("../../helpers/shortId");
+const { generateSID } = require("../../helpers/sID");
 
 const schema = new mongoose.Schema(
   {
     // Identificador corto alternativo al _id, generado al crear.
-    shortId: {
+    sID: {
       type: String,
-      default: generateShortId,
+      default: generateSID,
       unique: true,
       sparse: true,
     },

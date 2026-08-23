@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { generateShortId } = require("../../helpers/shortId");
+const { generateSID } = require("../../helpers/sID");
 const { Schema } = mongoose;
 
 const REPORT_CLAIM_REASONS = [
@@ -16,9 +16,9 @@ const REPORT_CLAIM_STATUSES = ["PENDING", "REVIEWED", "DISMISSED"];
 const schema = new mongoose.Schema(
   {
     // Identificador corto alternativo al _id, generado al crear.
-    shortId: {
+    sID: {
       type: String,
-      default: generateShortId,
+      default: generateSID,
       unique: true,
       sparse: true,
     },

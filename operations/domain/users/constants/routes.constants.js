@@ -11,7 +11,7 @@ module.exports = {
   public_fields: [
     // "artistType",
     "id",
-    "shortId",
+    "sID",
     "name",
     "username",
     // "subtitle",
@@ -22,7 +22,7 @@ module.exports = {
   authenticated_fields: [
     // "artistType",
     "id",
-    "shortId",
+    "sID",
     "given_names",
     "surnames",
     "username",
