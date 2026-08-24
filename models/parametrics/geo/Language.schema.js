@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
+const { generateSID } = require("../../../helpers/sID");
 
 const schema = new mongoose.Schema(
   {
+    sID: { type: String, default: generateSID, unique: true, sparse: true },
     key: { type: String, required: true, unique: true },
     main_flag_2: { type: String },
     main_flag_3: { type: String },
@@ -15,11 +17,11 @@ const schema = new mongoose.Schema(
         {
           name: String,
         },
-        { _id: false }
+        { _id: false },
       ),
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = { schema };

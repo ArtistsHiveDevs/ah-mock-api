@@ -348,6 +348,7 @@ function loadRoutes() {
           public_fields: [
             "_id",
             "id",
+            "sID",
             "username",
             "name",
             "description",
@@ -629,6 +630,7 @@ function loadRoutes() {
           // de crud-actions.js), y el listado devuelve casi todo vacío.
           public_fields: [
             "_id",
+            "sID",
             "event_name",
             "event_date",
             "start_date",
@@ -667,6 +669,7 @@ function loadRoutes() {
           ],
           authenticated_fields: [
             "_id",
+            "sID",
             "event_name",
             "event_date",
             "start_date",

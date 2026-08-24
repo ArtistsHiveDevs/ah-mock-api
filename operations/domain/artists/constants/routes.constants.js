@@ -10,6 +10,7 @@ module.exports = {
     "_id",
     "id",
     "identifier",
+    "sID",
     "name",
     "username",
     // "subtitle",
@@ -67,6 +68,7 @@ module.exports = {
   authenticated_fields: [
     // "artistType",
     "id",
+    "sID",
     "name",
     "username",
     "subtitle",
@@ -129,6 +131,7 @@ module.exports = {
       summary: [
         "id",
         "identifier",
+        "sID",
         "entityType",
         "profile_pic",
         "name",
@@ -145,6 +148,7 @@ module.exports = {
       detail: [
         "id",
         "identifier",
+        "sID",
         "entityType",
         "location",
         "profile_pic",
@@ -164,6 +168,7 @@ module.exports = {
       summary: [],
       detail: [
         "_id",
+        "sID",
         "sub",
         "username",
         "email",
@@ -204,12 +209,16 @@ module.exports = {
   },
   parametric_public_fields: {
     Allergy: {
-      summary: ["type", "name", "percentage", "code"],
-      detail: ["type", "name", "percentage", "code"],
+      summary: ["sID", "type", "name", "percentage", "code"],
+      detail: ["sID", "type", "name", "percentage", "code"],
     },
-    Continent: { summary: ["key", "name"], detail: ["key", "name"] },
+    Continent: {
+      summary: ["sID", "key", "name"],
+      detail: ["sID", "key", "name"],
+    },
     Country: {
       summary: [
+        "sID",
         "name",
         "native",
         "phone",
@@ -221,6 +230,7 @@ module.exports = {
         "languages",
       ],
       detail: [
+        "sID",
         "name",
         "native",
         "phone",
@@ -238,10 +248,10 @@ module.exports = {
         "top_10_touristic_activities",
       ],
     },
-    Currency: ["ISO_4217_key", "name", "symbol", "decimals"],
+    Currency: ["sID", "ISO_4217_key", "name", "symbol", "decimals"],
     Language: {
-      summary: ["key", "name", "native", "main_flag_2", "main_flag_3"],
-      detail: ["key", "name", "native", "main_flag_2", "main_flag_3"],
+      summary: ["sID", "key", "name", "native", "main_flag_2", "main_flag_3"],
+      detail: ["sID", "key", "name", "native", "main_flag_2", "main_flag_3"],
     },
   },
 };

@@ -68,7 +68,7 @@ async function backfill() {
       try {
         const entityInfo = {
           id: artist._id,
-          shortId: artist.shortId,
+          sID: artist.sID,
           profile_pic: artist.profile_pic,
           name: artist.name,
           username: artist.username,

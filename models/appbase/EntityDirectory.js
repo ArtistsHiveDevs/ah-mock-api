@@ -1,6 +1,14 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
+const PARAMETRIC_ENTITY_TYPES = [
+  "Allergy",
+  "Continent",
+  "Country",
+  "Currency",
+  "Language",
+];
+
 const LocationSchema = new Schema(
   {
     country_name: String,
@@ -15,6 +23,7 @@ const LocationSchema = new Schema(
   },
   { _id: false },
 );
+
 // Definir el esquema para EventTemplate
 const schema = new Schema(
   {
@@ -24,7 +33,7 @@ const schema = new Schema(
       required: true,
       refPath: "entityType", // Referencia dinámica a la colección correspondiente
     },
-    shortId: String,
+    sID: String,
     profile_pic: String,
     name: String,
     // Espejo del username ya validado (match /^[a-z0-9_.]{3,24}$/) en el schema
@@ -55,11 +64,13 @@ const schema = new Schema(
 // username mientras protege contra duplicados cuando sí está presente.
 schema.index({ username: 1 }, { unique: true, sparse: true });
 
+schema.index({ sID: 1 }, { unique: true, sparse: true });
+
 /**
  * Virtual para populate de recipients
  */
 schema.virtual("identifier").get(function () {
-  return this.username || this.shortId || this.id || this._id;
+  return this.username || this.sID || this.id || this._id;
 });
 
 /**
@@ -111,8 +122,8 @@ schema.set("toObject", { virtuals: true });
 schema.set("toJSON", { virtuals: true });
 
 /**
- * Normaliza un profile_id (username, shortId o ObjectId) a ObjectId de EntityDirectory
- * @param {string|ObjectId} id - Identificador a normalizar (username, shortId o ObjectId)
+ * Normaliza un profile_id (username, sID o ObjectId) a ObjectId de EntityDirectory
+ * @param {string|ObjectId} id - Identificador a normalizar (username, sID o ObjectId)
  * @param {Connection} connection - Conexión de Mongoose a usar
  * @returns {Promise<ObjectId>} ObjectId normalizado de EntityDirectory
  * @throws {Error} Si no se encuentra la entidad
@@ -127,7 +138,7 @@ async function normalizeProfileId(id, connection) {
 
   const EntityDirectory = entityDirectoryConnection.model("EntityDirectory");
 
-  const idFields = ["username", "shortId"];
+  const idFields = ["username", "sID"];
 
   const idFieldsRegexFilter = idFields.map((field) => {
     return { [field]: { $regex: new RegExp(`^${id}$`, "i") } };
@@ -139,7 +150,7 @@ async function normalizeProfileId(id, connection) {
   if (mongoose.Types.ObjectId.isValid(id)) {
     query.id = id;
   } else {
-    // Búsqueda por `username` o `shortId` si `id` no es un ObjectId
+    // Búsqueda por `username` o `sID` si `id` no es un ObjectId
     query = {
       $or: idFieldsRegexFilter,
     };
@@ -173,7 +184,7 @@ async function normalizeProfileId(id, connection) {
  * (helpers/crud-actions.js) como por rutas de creación manuales (ej. POST /artists) y
  * por scripts de backfill.
  * @param {Object} params
- * @param {Object} params.entityInfo - { id, shortId, profile_pic, name, username, subtitle, verified_status, approval_status }
+ * @param {Object} params.entityInfo - { id, sID, profile_pic, name, username, subtitle, verified_status, approval_status }
  * @param {string} params.modelName - "Artist" | "Place" | "User"
  * @param {Object} params.newEntity - Documento recién guardado del modelo (Artist/Place/User)
  * @param {string} [params.countryName] - Nombre del país (no viene en el propio documento)
@@ -256,4 +267,9 @@ async function createEntityDirectoryRecord({
   return entityDirectory;
 }
 
-module.exports = { schema, normalizeProfileId, createEntityDirectoryRecord };
+module.exports = {
+  schema,
+  normalizeProfileId,
+  createEntityDirectoryRecord,
+  PARAMETRIC_ENTITY_TYPES,
+};

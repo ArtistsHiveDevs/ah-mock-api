@@ -13,6 +13,30 @@ const helperFunctions = require("../../../helpers/helperFunctions");
 const { connections } = require("../../../db/db_g");
 const { getModel } = require("../../../helpers/getModel");
 const { decompressJSON } = require("../../../helpers/compression");
+const { maskIds } = require("../../../helpers/maskEntityId");
+const { resolveId } = require("../../../helpers/resolveEntityId");
+
+const REFERENCE_FIELDS_TO_RESOLVE = [
+  { field: "country", modelName: "Country" },
+  { field: "spoken_languages", modelName: "Language" },
+  { field: "stage_languages", modelName: "Language" },
+  { field: "arts_languages", modelName: "Language" },
+];
+
+async function resolveReferenceFields(info, connection) {
+  for (const { field, modelName } of REFERENCE_FIELDS_TO_RESOLVE) {
+    if (info[field] === undefined || info[field] === null) {
+      continue;
+    }
+    if (Array.isArray(info[field])) {
+      info[field] = await Promise.all(
+        info[field].map((value) => resolveId(value, modelName, connection)),
+      );
+    } else {
+      info[field] = await resolveId(info[field], modelName, connection);
+    }
+  }
+}
 
 var artistRouter = express.Router({ mergeParams: true });
 
@@ -232,7 +256,7 @@ module.exports = [
 
         res.json(
           createPaginatedDataResponse(
-            artists.slice(0, limit),
+            maskIds(artists.slice(0, limit)),
             page,
             Math.ceil(artists.length / limit),
           ),
@@ -278,10 +302,16 @@ module.exports = [
       try {
         let query = {};
 
+        // sID siempre es un criterio válido (independientemente de si artistId
+        // resulta ser también un ObjectId real): el cliente puede reenviar el
+        // id enmascarado que la propia API le devolvió como _id/id.
+        query.$or = [
+          { sID: artistId },
+          { username: artistId },
+          { name: artistId },
+        ];
         if (mongoose.Types.ObjectId.isValid(artistId)) {
-          query.$or = [{ _id: new mongoose.Types.ObjectId(artistId) }];
-        } else {
-          query.$or = [{ username: artistId }, { name: artistId }];
+          query.$or.push({ _id: new mongoose.Types.ObjectId(artistId) });
         }
 
         const modelName = "Artist";
@@ -658,9 +688,9 @@ module.exports = [
             return acc;
           }, {});
 
-          res.json(createPaginatedDataResponse(reducedArtistData));
+          res.json(createPaginatedDataResponse(maskIds(reducedArtistData)));
         } else {
-          res.json(createPaginatedDataResponse(artistInfo));
+          res.json(createPaginatedDataResponse(maskIds(artistInfo)));
         }
       } catch (err) {
         console.error(err);
@@ -676,6 +706,10 @@ module.exports = [
     async (req, res) => {
       try {
         const info = { ...req.body };
+
+        await resolveReferenceFields(info, {
+          environment: req.serverEnvironment,
+        });
 
         info.entityRoleMap = [
           {
@@ -704,6 +738,7 @@ module.exports = [
         if (!bandInfo) {
           bandInfo = {
             id: newArtist._id,
+            sID: newArtist.sID,
             profile_pic: newArtist.profile_pic,
             name: newArtist.name,
             username: newArtist.username,
@@ -733,7 +768,9 @@ module.exports = [
 
         ownerUser.save();
 
-        res.status(201).send(createPaginatedDataResponse(newArtist));
+        res
+          .status(201)
+          .send(createPaginatedDataResponse(maskIds(newArtist.toObject())));
       } catch (err) {
         res.status(400).send(err);
       }
@@ -784,7 +821,7 @@ module.exports = [
         //   // Si no es un ObjectId, busca por otros campos
         //   query = {
         //     $or: [
-        //       // { shortId: artistId },
+        //       // { sID: artistId },
         //       { username: artistId },
         //       { name: artistId },
         //     ],
@@ -803,6 +840,10 @@ module.exports = [
 
         // res.json(artist);
 
+        await resolveReferenceFields(newInfo, {
+          environment: req.serverEnvironment,
+        });
+
         // Primero, intentamos encontrar el documento basado en el searchValue
         const Artist = await getModel(req.serverEnvironment, "Artist");
         const artist = await Artist.findOne({
@@ -810,6 +851,7 @@ module.exports = [
             mongoose.Types.ObjectId.isValid(searchValue)
               ? { _id: searchValue }
               : null,
+            { sID: searchValue },
             { username: searchValue },
             { name: searchValue },
           ].filter(Boolean), // Filtra valores nulos si el cast a ObjectId no es válido
@@ -902,7 +944,9 @@ module.exports = [
             }
             return res
               .status(201)
-              .send(createPaginatedDataResponse(updatedArtist));
+              .send(
+                createPaginatedDataResponse(maskIds(updatedArtist.toObject())),
+              );
           } else {
             // Caso 3: El userId no tiene los roles OWNER o ADMIN
             res.status(401).json({

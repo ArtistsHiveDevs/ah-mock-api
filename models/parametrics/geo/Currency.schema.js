@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
+const { generateSID } = require("../../../helpers/sID");
 
 const schema = new mongoose.Schema({
+  sID: { type: String, default: generateSID, unique: true, sparse: true },
   ISO_4217_key: {
     type: String,
     required: true,
@@ -58,7 +60,7 @@ const schema = new mongoose.Schema({
         minorSingle: String,
         minorPlural: String,
       },
-      { _id: false }
+      { _id: false },
     ),
   },
 });

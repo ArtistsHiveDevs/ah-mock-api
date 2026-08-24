@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
+const { generateSID } = require("../../../../helpers/sID");
 const { Schema } = mongoose;
 
 // Define el esquema para la alergia
 const schema = new Schema({
+  sID: { type: String, default: generateSID, unique: true, sparse: true },
   name: {
     type: String,
     required: true,
@@ -15,7 +17,7 @@ const schema = new Schema({
       {
         name: String,
       },
-      { _id: false }
+      { _id: false },
     ),
   },
   percentage: {

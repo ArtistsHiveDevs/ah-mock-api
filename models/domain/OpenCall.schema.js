@@ -1,8 +1,15 @@
 const mongoose = require("mongoose");
+const { generateSID } = require("../../helpers/sID");
 const { Schema } = mongoose;
 
 const schema = new Schema(
   {
+    sID: {
+      type: String,
+      default: generateSID,
+      unique: true,
+      sparse: true,
+    },
     event_name: { type: String, required: true },
     event_date: { type: String, required: true },
     start_date: { type: String, required: true },
@@ -49,7 +56,7 @@ const schema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 module.exports = { schema };

@@ -5,6 +5,7 @@ const { connections } = require("../../db/db_g");
 const { schema: FollowerSchema } = require("./Follower.schema");
 const { schema: FileSchema } = require("./File.schema");
 const { schema: MemberSchema } = require("./Member.schema");
+const { generateSID } = require("../../helpers/sID");
 
 const ArtistInTrackSchema = new mongoose.Schema({
   // external_urls: {
@@ -41,7 +42,7 @@ const SpotifySchema = new mongoose.Schema(
     id: { type: String, required: true },
     url: { type: String, required: true },
   },
-  { _id: false }
+  { _id: false },
 );
 
 const AlbumSchema = new mongoose.Schema(
@@ -56,7 +57,7 @@ const AlbumSchema = new mongoose.Schema(
     tracks: [TrackSchema],
     type: { type: String },
   },
-  { _id: false }
+  { _id: false },
 );
 
 const TopTrackSchema = new mongoose.Schema({
@@ -72,23 +73,27 @@ const TopTrackSchema = new mongoose.Schema({
 });
 
 const MemberWithouthAccountSchema = new mongoose.Schema({
-  internal_id: {type: String, required: true},
-  names: {type: String, required: true},
-  surnames: {type: String, required: true},
-  stage_name: {type: String, required: false},
-  email: {type: String, required: true},
-  gender: {type: String, required: true},
-  member_role: {type: String, required: true},
-  member_instrument: {type: String, required: true},
+  internal_id: { type: String, required: true },
+  names: { type: String, required: true },
+  surnames: { type: String, required: true },
+  stage_name: { type: String, required: false },
+  email: { type: String, required: true },
+  gender: { type: String, required: true },
+  member_role: { type: String, required: true },
+  member_instrument: { type: String, required: true },
 });
 
 const schema = new mongoose.Schema(
   {
     artistType: { type: String },
+    sID: { type: String, default: generateSID },
     name: { type: String, required: true },
     username: {
       type: String,
-      match: [/^[a-z0-9_.]{3,24}$/, "username debe tener 3-24 caracteres y solo minúsculas, números, '_' o '.'"],
+      match: [
+        /^[a-z0-9_.]{3,24}$/,
+        "username debe tener 3-24 caracteres y solo minúsculas, números, '_' o '.'",
+      ],
     },
     subtitle: { type: String },
     verified_status: { type: Number, default: 0 },
@@ -215,7 +220,7 @@ const schema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 // Configura el virtual para la relación inversa
@@ -270,24 +275,36 @@ setImmediate(() => {
   try {
     const { modelsWithCustomConnections } = require("../../db/db_g");
 
-    if (modelsWithCustomConnections && modelsWithCustomConnections.includes("Artist")) {
+    if (
+      modelsWithCustomConnections &&
+      modelsWithCustomConnections.includes("Artist")
+    ) {
       const { addCrossDBPopulateHook } = require("../../db/crossDBPopulate");
 
       // Configurar populate automático entre DBs
       // Usar función para detectar el ambiente dinámicamente
-      addCrossDBPopulateHook(schema, (query) => {
-        // Intentar obtener el ambiente del contexto del query
-        // Por defecto usar 'prod'
-        return query?.options?.serverEnvironment || process.env.NODE_ENV || 'prod';
-      }, [
-        { path: 'country', model: 'Country' },
-        { path: 'spoken_languages', model: 'Language' },
-        { path: 'stage_languages', model: 'Language' },
-        { path: 'arts_languages', model: 'Language' },
-      ]);
+      addCrossDBPopulateHook(
+        schema,
+        (query) => {
+          // Intentar obtener el ambiente del contexto del query
+          // Por defecto usar 'prod'
+          return (
+            query?.options?.serverEnvironment || process.env.NODE_ENV || "prod"
+          );
+        },
+        [
+          { path: "country", model: "Country" },
+          { path: "spoken_languages", model: "Language" },
+          { path: "stage_languages", model: "Language" },
+          { path: "arts_languages", model: "Language" },
+        ],
+      );
     }
   } catch (err) {
-    console.warn('⚠️ No se pudo configurar cross-DB populate para Artist:', err.message);
+    console.warn(
+      "⚠️ No se pudo configurar cross-DB populate para Artist:",
+      err.message,
+    );
   }
 });
 

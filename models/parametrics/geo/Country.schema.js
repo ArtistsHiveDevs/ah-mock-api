@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
+const { generateSID } = require("../../../helpers/sID");
 const { Schema } = mongoose;
 
 const schema = new Schema({
+  sID: { type: String, default: generateSID, unique: true, sparse: true },
   name: { type: String, required: true },
   native: { type: String, required: true },
   phone: { type: [Number], required: true },
@@ -17,7 +19,7 @@ const schema = new Schema({
       {
         name: String,
       },
-      { _id: false }
+      { _id: false },
     ),
   },
   official_name: { type: String, required: true },

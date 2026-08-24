@@ -4,6 +4,7 @@ var RoutesConstants = require("./constants/index");
 const mongoose = require("mongoose");
 const {
   schema: EntityDirectorySchema,
+  PARAMETRIC_ENTITY_TYPES,
 } = require("../../../models/appbase/EntityDirectory");
 const {
   createPaginatedDataResponse,
@@ -140,7 +141,9 @@ async function searchEntitiesDB(req, queryRQ) {
     }
 
     // 2️⃣ Separar la búsqueda en tokens (palabras individuales)
-    const searchTokens = normalizedQuery.split(" ").filter(token => token.length > 0);
+    const searchTokens = normalizedQuery
+      .split(" ")
+      .filter((token) => token.length > 0);
 
     // console.log("QUERY normalizedQuery:", normalizedQuery);
     // console.log("QUERY searchTokens:", searchTokens);
@@ -161,11 +164,11 @@ async function searchEntitiesDB(req, queryRQ) {
       if (USE_TEXT_SEARCH && searchTokens.length >= 2) {
         // Estrategia 1: $text search (más rápido pero menos flexible - solo palabras completas)
         searchCondition = {
-          $text: { $search: normalizedQuery }
+          $text: { $search: normalizedQuery },
         };
       } else {
         // Estrategia 2: $regex (más flexible - encuentra palabras parciales/contenidas)
-        const tokenConditions = searchTokens.map(token => {
+        const tokenConditions = searchTokens.map((token) => {
           return {
             $or: [
               { name: { $regex: token, $options: "i" } },
@@ -173,13 +176,14 @@ async function searchEntitiesDB(req, queryRQ) {
               { search_cache: { $regex: token, $options: "i" } },
               { "genres.music.l1": { $regex: token, $options: "i" } },
               { "genres.music.l2": { $regex: token, $options: "i" } },
-            ]
+            ],
           };
         });
 
-        searchCondition = tokenConditions.length > 1
-          ? { $and: tokenConditions }
-          : tokenConditions[0];
+        searchCondition =
+          tokenConditions.length > 1
+            ? { $and: tokenConditions }
+            : tokenConditions[0];
       }
     }
 
@@ -191,7 +195,9 @@ async function searchEntitiesDB(req, queryRQ) {
     // 5️⃣ Construir condiciones base
     const baseConditions = {
       ...searchCondition,
-      ...(et && { entityType: et }),
+      ...(et
+        ? { entityType: et }
+        : { entityType: { $nin: PARAMETRIC_ENTITY_TYPES } }),
       // ...(geoFilters.length > 0 && { $and: geoFilters }),
     };
 
@@ -213,17 +219,20 @@ async function searchEntitiesDB(req, queryRQ) {
           ],
         };
 
+        const parametricExclusion = {
+          entityType: { $nin: PARAMETRIC_ENTITY_TYPES },
+        };
+
         // Si hay searchCondition, combinar con activityFilter
         if (Object.keys(searchCondition).length > 0) {
           matchCondition = {
-            $and: [
-              searchCondition,
-              activityFilter,
-            ],
+            $and: [searchCondition, activityFilter, parametricExclusion],
           };
         } else {
-          // Si no hay búsqueda, solo aplicar activityFilter
-          matchCondition = activityFilter;
+          // Si no hay búsqueda, solo aplicar activityFilter + exclusión de paramétricos
+          matchCondition = {
+            $and: [activityFilter, parametricExclusion],
+          };
         }
 
         // Código anterior con geoFilters (comentado)
@@ -274,14 +283,12 @@ async function searchEntitiesDB(req, queryRQ) {
 
     // 5️⃣ Buscar y agrupar por entityType
     const isTextSearch = USE_TEXT_SEARCH && searchTokens.length >= 2;
-    const aggregationPipeline = [
-      { $match: matchCondition },
-    ];
+    const aggregationPipeline = [{ $match: matchCondition }];
 
     // Si usamos $text search, agregar el score de relevancia
     if (isTextSearch) {
       aggregationPipeline.push({
-        $addFields: { textScore: { $meta: "textScore" } }
+        $addFields: { textScore: { $meta: "textScore" } },
       });
     }
 
@@ -303,7 +310,7 @@ async function searchEntitiesDB(req, queryRQ) {
               $sortArray: {
                 input: "$entities",
                 sortBy: isTextSearch
-                  ? { textScore: -1, verified_status: 1, profile_pic: 1 }  // Ordenar por relevancia si usamos $text
+                  ? { textScore: -1, verified_status: 1, profile_pic: 1 } // Ordenar por relevancia si usamos $text
                   : { verified_status: 1, profile_pic: 1, lastActivity: -1 }, // Ordenar normal
               },
             },
@@ -374,7 +381,7 @@ const searchEntities = async ({
     const regex = new RegExp(q, "i"); // 'i' para búsqueda case-insensitive
     searchQuery = {
       $or: [
-        { shortId: regex },
+        { sID: regex },
         { name: regex },
         { username: regex },
         { subtitle: regex },

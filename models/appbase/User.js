@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { schema: FollowerSchema } = require("../domain/Follower.schema");
+const { generateSID } = require("../../helpers/sID");
 const { Schema } = mongoose;
 
 const emergencyContactSchema = new mongoose.Schema({
@@ -25,62 +26,69 @@ const roleSchema = new mongoose.Schema(
       },
     ],
   },
-  { _id: false }
+  { _id: false },
 );
 
-const schema = new mongoose.Schema({
-  // sparse: los Users de login tradicional (sin Cognito) no tienen `sub`, y
-  // viceversa no todos tienen `email` seteado en todo flujo; sparse permite
-  // múltiples documentos sin el campo sin violar el índice único.
-  sub: { type: String, unique: true, sparse: true },
-  given_names: String,
-  surnames: String,
-  stage_name: String,
-  username: {
-    type: String,
-    match: [/^[a-z0-9_.]{3,24}$/, "username debe tener 3-24 caracteres y solo minúsculas, números, '_' o '.'"],
+const schema = new mongoose.Schema(
+  {
+    // sparse: los Users de login tradicional (sin Cognito) no tienen `sub`, y
+    // viceversa no todos tienen `email` seteado en todo flujo; sparse permite
+    // múltiples documentos sin el campo sin violar el índice único.
+    sub: { type: String, unique: true, sparse: true },
+    sID: { type: String, default: generateSID },
+    given_names: String,
+    surnames: String,
+    stage_name: String,
+    username: {
+      type: String,
+      match: [
+        /^[a-z0-9_.]{3,24}$/,
+        "username debe tener 3-24 caracteres y solo minúsculas, números, '_' o '.'",
+      ],
+    },
+    currentProfileIdentifier: String,
+    email: { type: String, unique: true, sparse: true },
+    password: String,
+    phone_number: String,
+    access_token: String,
+    emergency_contact: [emergencyContactSchema],
+    gender: Number,
+    blood_group: String,
+    agrees_to_a_blood_transfusion: Boolean,
+    birthdate: String,
+    country: { type: Schema.Types.ObjectId, ref: "Country" },
+    nationality: String,
+    birthplace_country: String,
+    birthplace_level1: String,
+    birthplace_level2: String,
+    birthplace_level3: String,
+    home_city_country: String,
+    home_city_level1: String,
+    home_city_level2: String,
+    home_city_level3: String,
+    home_address: String,
+    // spoken_languages: [{ type: Schema.Types.ObjectId, ref: "Language" }],
+    spoken_languages: [String],
+    allergies: [{ type: Schema.Types.ObjectId, ref: "Allergy" }],
+    dietary_restrictions: String,
+    latlng: String,
+    profile_pic: String,
+    verified_status: Number,
+    user_language: String,
+    roles: [roleSchema],
+    created_at: String,
+    updated_at: String,
+    show_industry_member_banner: Boolean,
+    request_industry_member: Number,
+    followed_profiles: { type: [FollowerSchema], default: [] },
+    followed_by: { type: [FollowerSchema], default: [] },
+    // Se asigna manualmente en la base de datos por ahora, sin endpoint dedicado.
+    is_platform_admin: { type: Boolean, default: false },
   },
-  currentProfileIdentifier: String,
-  email: { type: String, unique: true, sparse: true },
-  password: String,
-  phone_number: String,
-  access_token: String,
-  emergency_contact: [emergencyContactSchema],
-  gender: Number,
-  blood_group: String,
-  agrees_to_a_blood_transfusion: Boolean,
-  birthdate: String,
-  country: { type: Schema.Types.ObjectId, ref: "Country" },
-  nationality: String,
-  birthplace_country: String,
-  birthplace_level1: String,
-  birthplace_level2: String,
-  birthplace_level3: String,
-  home_city_country: String,
-  home_city_level1: String,
-  home_city_level2: String,
-  home_city_level3: String,
-  home_address: String,
-  // spoken_languages: [{ type: Schema.Types.ObjectId, ref: "Language" }],
-  spoken_languages: [String],
-  allergies: [{ type: Schema.Types.ObjectId, ref: "Allergy" }],
-  dietary_restrictions: String,
-  latlng: String,
-  profile_pic: String,
-  verified_status: Number,
-  user_language: String,
-  roles: [roleSchema],
-  created_at: String,
-  updated_at: String,
-  show_industry_member_banner: Boolean,
-  request_industry_member: Number,
-  followed_profiles: { type: [FollowerSchema], default: [] },
-  followed_by: { type: [FollowerSchema], default: [] },
-  // Se asigna manualmente en la base de datos por ahora, sin endpoint dedicado.
-  is_platform_admin: { type: Boolean, default: false },
-}, {
-  timestamps: true
-});
+  {
+    timestamps: true,
+  },
+);
 
 schema.virtual("followersCount").get(function () {
   return async function (connection) {
@@ -119,7 +127,7 @@ schema.virtual("followedProfilesCount").get(function () {
 });
 
 schema.virtual("fullname").get(function () {
-  return `${this.given_names || ''} ${this.surnames || ''}`.trim();
+  return `${this.given_names || ""} ${this.surnames || ""}`.trim();
 });
 
 schema.virtual("nameKnownAs").get(function () {
