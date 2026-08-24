@@ -1,9 +1,10 @@
 const ErrorCodes = require("../constants/errors");
+const { maskIds } = require("./maskEntityId");
 
 module.exports = {
   createPaginatedDataResponse(data, currentPage = 1, totalPages = 1) {
     return {
-      data,
+      data: maskIds(data),
       currentPage,
       totalPages,
     };
@@ -15,10 +16,6 @@ module.exports = {
     response.status(errorContent?.errorCode || 500).json(errorContent);
   },
 
-  // Traduce un error atrapado en un handler del CRUD genérico (helpers/crud-routes.js)
-  // a { status, body } diferenciando validación (Mongoose ValidationError),
-  // duplicado (MongoDB E11000) y cualquier otro error, que sigue cayendo en 500
-  // con el mismo shape que antes para no romper contratos existentes.
   mapDatabaseErrorToResponse(err) {
     if (err?.name === "ValidationError") {
       const fieldMessages = Object.values(err.errors || {}).map(

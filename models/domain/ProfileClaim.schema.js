@@ -3,6 +3,7 @@ const { Schema } = mongoose;
 
 const { connections } = require("../../db/db_g");
 const { schema: FollowerSchema } = require("./Follower.schema");
+const { sIDPlugin } = require("../../helpers/sIDPlugin");
 
 const schema = new mongoose.Schema(
   {
@@ -18,7 +19,9 @@ const schema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
+
+schema.plugin(sIDPlugin);
 
 module.exports = { schema };

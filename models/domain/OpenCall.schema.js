@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { sIDPlugin } = require("../../helpers/sIDPlugin");
 const { Schema } = mongoose;
 
 const schema = new Schema(
@@ -49,7 +50,9 @@ const schema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
+
+schema.plugin(sIDPlugin);
 
 module.exports = { schema };

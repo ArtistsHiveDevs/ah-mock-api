@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { sIDPlugin } = require("../../../helpers/sIDPlugin");
 
 const schema = new mongoose.Schema({
   ISO_4217_key: {
@@ -58,9 +59,11 @@ const schema = new mongoose.Schema({
         minorSingle: String,
         minorPlural: String,
       },
-      { _id: false }
+      { _id: false },
     ),
   },
 });
+
+schema.plugin(sIDPlugin);
 
 module.exports = { schema };

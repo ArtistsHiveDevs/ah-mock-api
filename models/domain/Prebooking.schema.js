@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const { normalizeProfileId } = require("../appbase/EntityDirectory");
+const { sIDPlugin } = require("../../helpers/sIDPlugin");
 
 // ============================================================================
 // ENUMS (Referencia TypeScript)
@@ -311,7 +312,12 @@ schema.statics.preConstruct = async function (connection, ownerUser, data) {
   //   !mongoose.Types.ObjectId.isValid(data.requester_profile_id)
   // ) {
   const requesterNormalization = await normalizeProfileId(
-    data.requester_profile_id || ownerUser.username || ownerUser.shortId|| ownerUser.sub || ownerUser.email || ownerUser._id,
+    data.requester_profile_id ||
+      ownerUser.username ||
+      ownerUser.sID ||
+      ownerUser.sub ||
+      ownerUser.email ||
+      ownerUser._id,
     connection,
   );
 
@@ -644,5 +650,7 @@ schema.post("save", async function (doc, next) {
 // ============================================================================
 // EXPORTS
 // ============================================================================
+
+schema.plugin(sIDPlugin);
 
 module.exports = { schema };

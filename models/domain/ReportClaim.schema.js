@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { sIDPlugin } = require("../../helpers/sIDPlugin");
 const { Schema } = mongoose;
 
 const REPORT_CLAIM_REASONS = [
@@ -32,5 +33,7 @@ const schema = new mongoose.Schema(
   },
   { timestamps: true },
 );
+
+schema.plugin(sIDPlugin);
 
 module.exports = { schema, REPORT_CLAIM_REASONS, REPORT_CLAIM_STATUSES };

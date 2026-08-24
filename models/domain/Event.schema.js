@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { sIDPlugin } = require("../../helpers/sIDPlugin");
 const { Schema } = mongoose;
 
 // Definir el esquema para EventTemplate
@@ -53,7 +54,9 @@ const schema = new Schema(
   },
   {
     timestamps: true, // Agrega createdAt y updatedAt automáticamente
-  }
+  },
 );
+
+schema.plugin(sIDPlugin);
 
 module.exports = { schema };

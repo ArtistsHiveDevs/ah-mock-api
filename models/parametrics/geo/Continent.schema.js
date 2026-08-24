@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { connections } = require("../../../db/db_g");
+const { sIDPlugin } = require("../../../helpers/sIDPlugin");
 
 const schema = new mongoose.Schema({
   key: {
@@ -16,9 +17,11 @@ const schema = new mongoose.Schema({
       {
         name: String,
       },
-      { _id: false }
+      { _id: false },
     ),
   },
 });
+
+schema.plugin(sIDPlugin);
 
 module.exports = { schema };

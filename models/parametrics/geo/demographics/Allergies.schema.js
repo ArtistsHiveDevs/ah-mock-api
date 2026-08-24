@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { sIDPlugin } = require("../../../../helpers/sIDPlugin");
 const { Schema } = mongoose;
 
 // Define el esquema para la alergia
@@ -15,7 +16,7 @@ const schema = new Schema({
       {
         name: String,
       },
-      { _id: false }
+      { _id: false },
     ),
   },
   percentage: {
@@ -38,5 +39,7 @@ const schema = new Schema({
     default: "", // Código estándar de clasificación, si aplica
   },
 });
+
+schema.plugin(sIDPlugin);
 
 module.exports = { schema };

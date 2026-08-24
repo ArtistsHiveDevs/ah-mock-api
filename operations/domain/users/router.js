@@ -34,7 +34,7 @@ var userRouter = express.Router({ mergeParams: true });
 
 // Campos del User que deben sincronizarse con EntityDirectory
 const ENTITY_DIRECTORY_SYNC_FIELDS = [
-  "shortId",
+  "sID",
   "profile_pic",
   "name",
   "given_names",
@@ -589,7 +589,7 @@ module.exports = [
         // Si no es un ObjectId, busca por otros campos
         query = {
           $or: [
-            // { shortId: artistId },
+            { sID: userId },
             { username: userId },
           ],
         };
@@ -774,7 +774,7 @@ module.exports = [
           // Si no es un ObjectId, busca por otros campos
           query = {
             $or: [
-              // { shortId: userId },
+              { sID: userId },
               { username: userId },
               { name: userId },
             ],

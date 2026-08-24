@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const { User, schema: userSchema } = require("../models/appbase/User");
 const EntityDirectory = require("../models/appbase/EntityDirectory");
+const { PARAMETRIC_ENTITY_TYPES } = EntityDirectory;
 const apiHelperFunctions = require("./apiHelperFunctions");
 const helpers = require("./helperFunctions");
 const routesConstants = require("../operations/domain/artists/constants/routes.constants");
@@ -28,6 +29,13 @@ function modelRequiresOwnership(modelName) {
 }
 function modelRequiresEntityIndex(modelName) {
   return ["Artist", "Place", "User"].includes(modelName);
+}
+
+function modelMirrorsToEntityDirectory(modelName) {
+  return (
+    modelRequiresEntityIndex(modelName) ||
+    PARAMETRIC_ENTITY_TYPES.includes(modelName)
+  );
 }
 
 /**
@@ -277,6 +285,8 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
           acc[field] = 1;
           return acc;
         }, {});
+
+      projection.sID = 1;
 
       // Identificar campos que necesitan populate
       const populateFields = [
@@ -684,9 +694,8 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
     if (mongoose.Types.ObjectId.isValid(id)) {
       query._id = id;
     } else {
-      // Búsqueda por `username` o `name` si `id` no es un ObjectId
       query = {
-        $or: idFieldsRegexFilter,
+        $or: [{ sID: id }, ...idFieldsRegexFilter],
       };
     }
 
@@ -1012,7 +1021,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         if (!entityInfo) {
           entityInfo = {
             id: newEntity._id,
-            shortId: newEntity.shortId,
+            sID: newEntity.sID,
             profile_pic: newEntity.profile_pic,
             name: newEntity.name,
             username: newEntity.username,
@@ -1049,6 +1058,23 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
           );
         }
       }
+
+      // if (
+      //   !modelRequiresAuth(modelName) &&
+      //   PARAMETRIC_ENTITY_TYPES.includes(modelName)
+      // ) {
+      //   await EntityDirectory.createEntityDirectoryRecord({
+      //     entityInfo: {
+      //       id: newEntity._id,
+      //       sID: newEntity.sID,
+      //       name: newEntity.name,
+      //     },
+      //     modelName,
+      //     newEntity,
+      //     EntityDirectoryModel,
+      //   });
+      // }
+
       // Llamar a postCreateFunction si existe en options
       if (
         options.postCreateFunction &&

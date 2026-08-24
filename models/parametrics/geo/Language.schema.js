@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { sIDPlugin } = require("../../../helpers/sIDPlugin");
 
 const schema = new mongoose.Schema(
   {
@@ -15,11 +16,13 @@ const schema = new mongoose.Schema(
         {
           name: String,
         },
-        { _id: false }
+        { _id: false },
       ),
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
+
+schema.plugin(sIDPlugin);
 
 module.exports = { schema };
