@@ -926,24 +926,21 @@ module.exports = [
     routesConstants.deleteById,
     ...baseMiddlewares,
     async (req, res) => {
-      //   const items = helpers.getEntityData("Artist");
-      //   return res
-      //     .status(200)
-      //     .json(items[Math.round(Math.random() * items.length)]);
-      const { identifier } = req.params;
+      const { id: searchValue } = req.params;
 
       try {
         const Artist = await getModel(req.serverEnvironment, "Artist");
         const artist = await Artist.findOneAndDelete(
           {
             $or: [
-              { id: identifier },
-              { shortId: identifier },
-              { username: identifier },
-            ],
+              mongoose.Types.ObjectId.isValid(searchValue)
+                ? { _id: searchValue }
+                : null,
+              { sID: searchValue },
+              { username: searchValue },
+            ].filter(Boolean),
           },
-          req.body,
-          { new: true }, // Retorna el documento actualizado
+          { new: true },
         );
 
         if (!artist) {
