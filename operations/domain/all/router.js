@@ -15,6 +15,20 @@ const routesConstants = require("../artists/constants/routes.constants");
 
 const MAX_FOLLOWERS = 200;
 
+const SEARCH_RESULT_PUBLIC_FIELDS = [
+  "sID",
+  "name",
+  "username",
+  "subtitle",
+  "profile_pic",
+  "verified_status",
+  "location",
+  "main_date",
+  "given_names",
+  "surnames",
+  "stage_name",
+];
+
 const convertKmToDegrees = (km) => {
   const earthRadiusKm = 6371;
   return km / earthRadiusKm;
@@ -318,6 +332,24 @@ async function searchEntitiesDB(req, queryRQ) {
           ],
         },
         _id: 0,
+      },
+    });
+
+    aggregationPipeline.push({
+      $set: {
+        entities: {
+          $map: {
+            input: "$entities",
+            as: "entity",
+            in: SEARCH_RESULT_PUBLIC_FIELDS.reduce(
+              (projectedFields, field) => {
+                projectedFields[field] = `$$entity.${field}`;
+                return projectedFields;
+              },
+              { id: "$$entity.sID" },
+            ),
+          },
+        },
       },
     });
 

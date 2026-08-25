@@ -13,7 +13,6 @@ const helperFunctions = require("../../../helpers/helperFunctions");
 const { connections } = require("../../../db/db_g");
 const { getModel } = require("../../../helpers/getModel");
 const { decompressJSON } = require("../../../helpers/compression");
-const { maskIds } = require("../../../helpers/maskEntityId");
 const { resolveId } = require("../../../helpers/resolveEntityId");
 
 const REFERENCE_FIELDS_TO_RESOLVE = [
@@ -256,7 +255,7 @@ module.exports = [
 
         res.json(
           createPaginatedDataResponse(
-            maskIds(artists.slice(0, limit)),
+            artists.slice(0, limit),
             page,
             Math.ceil(artists.length / limit),
           ),
@@ -688,9 +687,9 @@ module.exports = [
             return acc;
           }, {});
 
-          res.json(createPaginatedDataResponse(maskIds(reducedArtistData)));
+          res.json(createPaginatedDataResponse(reducedArtistData));
         } else {
-          res.json(createPaginatedDataResponse(maskIds(artistInfo)));
+          res.json(createPaginatedDataResponse(artistInfo));
         }
       } catch (err) {
         console.error(err);
@@ -770,7 +769,7 @@ module.exports = [
 
         res
           .status(201)
-          .send(createPaginatedDataResponse(maskIds(newArtist.toObject())));
+          .send(createPaginatedDataResponse(newArtist.toObject()));
       } catch (err) {
         res.status(400).send(err);
       }
@@ -944,9 +943,7 @@ module.exports = [
             }
             return res
               .status(201)
-              .send(
-                createPaginatedDataResponse(maskIds(updatedArtist.toObject())),
-              );
+              .send(createPaginatedDataResponse(updatedArtist.toObject()));
           } else {
             // Caso 3: El userId no tiene los roles OWNER o ADMIN
             res.status(401).json({
