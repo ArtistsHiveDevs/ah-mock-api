@@ -1,15 +1,9 @@
 const mongoose = require("mongoose");
-const { generateSID } = require("../../helpers/sID");
+const { sIDPlugin } = require("../../helpers/sIDPlugin");
 const { Schema } = mongoose;
 
 const schema = new Schema(
   {
-    sID: {
-      type: String,
-      default: generateSID,
-      unique: true,
-      sparse: true,
-    },
     open_call_id: {
       type: Schema.Types.ObjectId,
       ref: "OpenCall",
@@ -37,5 +31,7 @@ const schema = new Schema(
     timestamps: true,
   },
 );
+
+schema.plugin(sIDPlugin);
 
 module.exports = { schema };

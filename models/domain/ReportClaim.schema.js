@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { generateSID } = require("../../helpers/sID");
+const { sIDPlugin } = require("../../helpers/sIDPlugin");
 const { Schema } = mongoose;
 
 const REPORT_CLAIM_REASONS = [
@@ -15,12 +15,6 @@ const REPORT_CLAIM_STATUSES = ["PENDING", "REVIEWED", "DISMISSED"];
 
 const schema = new mongoose.Schema(
   {
-    sID: {
-      type: String,
-      default: generateSID,
-      unique: true,
-      sparse: true,
-    },
     user: { type: Schema.Types.ObjectId, ref: "User", required: true },
     entityType: { type: String, required: true },
     entityId: {
@@ -39,5 +33,7 @@ const schema = new mongoose.Schema(
   },
   { timestamps: true },
 );
+
+schema.plugin(sIDPlugin);
 
 module.exports = { schema, REPORT_CLAIM_REASONS, REPORT_CLAIM_STATUSES };

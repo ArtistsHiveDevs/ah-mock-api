@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const { schema: FollowerSchema } = require("../domain/Follower.schema");
-const { generateSID } = require("../../helpers/sID");
+const { sIDPlugin } = require("../../helpers/sIDPlugin");
 const { Schema } = mongoose;
 
 const emergencyContactSchema = new mongoose.Schema({
@@ -35,7 +35,6 @@ const schema = new mongoose.Schema(
     // viceversa no todos tienen `email` seteado en todo flujo; sparse permite
     // múltiples documentos sin el campo sin violar el índice único.
     sub: { type: String, unique: true, sparse: true },
-    sID: { type: String, default: generateSID },
     given_names: String,
     surnames: String,
     stage_name: String,
@@ -137,6 +136,8 @@ schema.virtual("nameKnownAs").get(function () {
 // Incluye los virtuals en los resultados de JSON
 schema.set("toObject", { virtuals: true });
 schema.set("toJSON", { virtuals: true });
+
+schema.plugin(sIDPlugin);
 
 const User = mongoose.model("User", schema);
 

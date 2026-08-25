@@ -1,16 +1,10 @@
 const mongoose = require("mongoose");
-const { generateSID } = require("../../helpers/sID");
+const { sIDPlugin } = require("../../helpers/sIDPlugin");
 const { Schema } = mongoose;
 
 // Definir el esquema para EventTemplate
 const schema = new Schema(
   {
-    sID: {
-      type: String,
-      default: generateSID,
-      unique: true,
-      sparse: true,
-    },
     verified_status: {
       type: Number,
     },
@@ -62,5 +56,7 @@ const schema = new Schema(
     timestamps: true, // Agrega createdAt y updatedAt automáticamente
   },
 );
+
+schema.plugin(sIDPlugin);
 
 module.exports = { schema };

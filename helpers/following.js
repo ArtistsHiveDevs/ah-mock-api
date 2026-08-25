@@ -100,13 +100,8 @@ async function followProfile(
       arrayFilters.length ? { arrayFilters } : {}
     );
 
-    // 🛠️ Si `followList` no existe, se crea con `upsert`
-    if (action === "follow" && updateResult.modifiedCount === 0) {
-      await FollowedModel.updateOne(
-        query,
-        { $setOnInsert: { [followList]: [] } },
-        { upsert: true }
-      );
+    if (updateResult.matchedCount === 0) {
+      throw Error("No se encontró la entidad a seguir");
     }
   }
 }

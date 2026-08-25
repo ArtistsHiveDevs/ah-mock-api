@@ -1,9 +1,8 @@
 const mongoose = require("mongoose");
-const { generateSID } = require("../../../helpers/sID");
+const { sIDPlugin } = require("../../../helpers/sIDPlugin");
 const { Schema } = mongoose;
 
 const schema = new Schema({
-  sID: { type: String, default: generateSID, unique: true, sparse: true },
   name: { type: String, required: true },
   native: { type: String, required: true },
   phone: { type: [Number], required: true },
@@ -30,5 +29,7 @@ const schema = new Schema({
   top_10_touristic_activities: { type: [String] },
   official_languages: [{ type: String }],
 });
+
+schema.plugin(sIDPlugin);
 
 module.exports = { schema };

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const { schema: FollowerSchema } = require("./Follower.schema");
-const { generateSID } = require("../../helpers/sID");
+const { sIDPlugin } = require("../../helpers/sIDPlugin");
 const { Schema } = mongoose;
 
 const imageSchema = new mongoose.Schema(
@@ -43,7 +43,6 @@ const SocialNetworkStatsSchema = new Schema(
 
 const schema = new Schema(
   {
-    sID: { type: String, default: generateSID },
     username: {
       type: String,
       required: true,
@@ -175,5 +174,7 @@ schema.virtual("followedProfilesCount").get(function () {
 // Incluye los virtuals en los resultados de JSON
 schema.set("toObject", { virtuals: true });
 schema.set("toJSON", { virtuals: true });
+
+schema.plugin(sIDPlugin);
 
 module.exports = { schema };

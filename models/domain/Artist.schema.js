@@ -5,7 +5,7 @@ const { connections } = require("../../db/db_g");
 const { schema: FollowerSchema } = require("./Follower.schema");
 const { schema: FileSchema } = require("./File.schema");
 const { schema: MemberSchema } = require("./Member.schema");
-const { generateSID } = require("../../helpers/sID");
+const { sIDPlugin } = require("../../helpers/sIDPlugin");
 
 const ArtistInTrackSchema = new mongoose.Schema({
   // external_urls: {
@@ -86,7 +86,6 @@ const MemberWithouthAccountSchema = new mongoose.Schema({
 const schema = new mongoose.Schema(
   {
     artistType: { type: String },
-    sID: { type: String, default: generateSID },
     name: { type: String, required: true },
     username: {
       type: String,
@@ -311,5 +310,7 @@ setImmediate(() => {
 // const Artist = mongoose.model("Artist", ArtistSchema);
 
 // module.exports = Artist;
+
+schema.plugin(sIDPlugin);
 
 module.exports = { schema };

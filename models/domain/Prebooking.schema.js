@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const { normalizeProfileId } = require("../appbase/EntityDirectory");
-const { generateSID } = require("../../helpers/sID");
+const { sIDPlugin } = require("../../helpers/sIDPlugin");
 
 // ============================================================================
 // ENUMS (Referencia TypeScript)
@@ -101,13 +101,6 @@ const ParticipantNoteSchema = new mongoose.Schema(
 
 const schema = new Schema(
   {
-    sID: {
-      type: String,
-      default: generateSID,
-      unique: true,
-      sparse: true,
-    },
-
     // ========================================================================
     // PARTICIPANTES (Multi-party support)
     // ========================================================================
@@ -657,5 +650,7 @@ schema.post("save", async function (doc, next) {
 // ============================================================================
 // EXPORTS
 // ============================================================================
+
+schema.plugin(sIDPlugin);
 
 module.exports = { schema };

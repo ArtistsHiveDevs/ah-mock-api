@@ -3,16 +3,10 @@ const { Schema } = mongoose;
 
 const { connections } = require("../../db/db_g");
 const { schema: FollowerSchema } = require("./Follower.schema");
-const { generateSID } = require("../../helpers/sID");
+const { sIDPlugin } = require("../../helpers/sIDPlugin");
 
 const schema = new mongoose.Schema(
   {
-    sID: {
-      type: String,
-      default: generateSID,
-      unique: true,
-      sparse: true,
-    },
     user: { type: Schema.Types.ObjectId, ref: "User" },
     entityType: String,
     entityId: {
@@ -27,5 +21,7 @@ const schema = new mongoose.Schema(
     timestamps: true,
   },
 );
+
+schema.plugin(sIDPlugin);
 
 module.exports = { schema };
