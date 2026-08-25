@@ -589,7 +589,7 @@ module.exports = [
         // Si no es un ObjectId, busca por otros campos
         query = {
           $or: [
-            // { sID: artistId },
+            { sID: userId },
             { username: userId },
           ],
         };
@@ -774,7 +774,7 @@ module.exports = [
           // Si no es un ObjectId, busca por otros campos
           query = {
             $or: [
-              // { sID: userId },
+              { sID: userId },
               { username: userId },
               { name: userId },
             ],

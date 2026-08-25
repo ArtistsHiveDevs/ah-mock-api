@@ -286,6 +286,8 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
           return acc;
         }, {});
 
+      projection.sID = 1;
+
       // Identificar campos que necesitan populate
       const populateFields = [
         ...modelFields
@@ -692,9 +694,8 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
     if (mongoose.Types.ObjectId.isValid(id)) {
       query._id = id;
     } else {
-      // Búsqueda por `username` o `name` si `id` no es un ObjectId
       query = {
-        $or: idFieldsRegexFilter,
+        $or: [{ sID: id }, ...idFieldsRegexFilter],
       };
     }
 
