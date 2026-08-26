@@ -14,6 +14,11 @@ const { connections } = require("../../../db/db_g");
 const { getModel } = require("../../../helpers/getModel");
 const { decompressJSON } = require("../../../helpers/compression");
 const { resolveId } = require("../../../helpers/resolveEntityId");
+const {
+  buildHomeCityData,
+  buildLocationFieldData,
+  omitRawLocationFields,
+} = require("../../../helpers/locationData");
 
 const REFERENCE_FIELDS_TO_RESOLVE = [
   { field: "country", modelName: "Country" },
@@ -600,6 +605,13 @@ module.exports = [
             visibleAttributes = [...visibleAttributes, "photo", "description"];
           }
         }
+
+        //  ====================================    Home city ===========================
+        artistInfo = {
+          ...omitRawLocationFields(artistInfo, ["home_city", "origin_city"]),
+          homeCityData: buildHomeCityData(artistInfo),
+          originCityData: buildLocationFieldData(artistInfo, "origin_city"),
+        };
 
         //  ====================================    Country and city ===========================
         if (!!artistInfo["country"]) {

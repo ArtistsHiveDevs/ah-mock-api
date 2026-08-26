@@ -262,37 +262,10 @@ app.get("/me", helpers.validateEnvironment, validateApiKey, (req, res) => {
   }
 
   const {
-    findLocationByPath,
-  } = require("./operations/parametrics/general/locationEntities/countries-data");
-
-  // Función auxiliar para enriquecer datos de ubicación
-  const enrichLocationData = (
-    countryField,
-    level1Field,
-    level2Field,
-    returnChildren = false,
-  ) => {
-    const path = [countryField, level1Field, level2Field].filter(Boolean);
-
-    if (path.length === 0) return [];
-
-    const levelNames = ["country", "state", "city", "district", "neighborhood"];
-    const locationData = [];
-
-    for (let i = 1; i <= path.length; i++) {
-      const levelData = findLocationByPath(path.slice(0, i), returnChildren);
-      if (levelData) {
-        // Extraer solo label, value y level de cada nivel
-        const cleanData = {
-          level: levelNames[i - 1],
-          label: levelData.label,
-          value: levelData.value,
-        };
-        locationData.push(cleanData);
-      }
-    }
-    return locationData;
-  };
+    enrichLocationData,
+    buildHomeCityData,
+    omitRawLocationFields,
+  } = require("./helpers/locationData");
 
   const userInfo = req.user.toObject ? req.user.toObject() : req.user;
 
@@ -304,14 +277,10 @@ app.get("/me", helpers.validateEnvironment, validateApiKey, (req, res) => {
   );
 
   // Enriquecer datos de ciudad actual
-  const homeCityData = enrichLocationData(
-    userInfo.home_city_country,
-    userInfo.home_city_level1,
-    userInfo.home_city_level2,
-  );
+  const homeCityData = buildHomeCityData(userInfo);
 
   res.status(200).send({
-    ...userInfo,
+    ...omitRawLocationFields(userInfo, ["birthplace", "home_city"]),
     birthplaceData,
     homeCityData,
   });
