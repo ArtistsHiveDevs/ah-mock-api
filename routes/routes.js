@@ -29,6 +29,7 @@ const Language = require("../models/parametrics/geo/Language.schema");
 const Allergy = require("../models/parametrics/geo/demographics/Allergies.schema");
 const routesConstants = require("../operations/domain/artists/constants/routes.constants");
 const helperFunctions = require("../helpers/helperFunctions");
+const { buildHomeCityData } = require("../helpers/locationData");
 const { normalizeProfileId } = require("../models/appbase/EntityDirectory");
 const { getModel } = require("../helpers/getModel");
 const {
@@ -359,6 +360,11 @@ function loadRoutes() {
             "country_alpha2",
             "state",
             "city",
+            "home_city",
+            "home_city_country",
+            "home_city_level1",
+            "home_city_level2",
+            "home_city_level3",
             "address",
             "location",
             "email",
@@ -435,6 +441,11 @@ function loadRoutes() {
           postScriptFunction: (data) => {
             const { results, req } = data || {};
             results.forEach((place) => {
+              place.homeCityData = buildHomeCityData(place);
+              ["country", "level1", "level2", "level3"].forEach((suffix) => {
+                delete place[`home_city_${suffix}`];
+              });
+
               (place.events || []).forEach((event) => {
                 if (!event.name) {
                   const names = (event.artists || [])

@@ -17,6 +17,7 @@ const { maskIds } = require("../../../helpers/maskEntityId");
 const { resolveId } = require("../../../helpers/resolveEntityId");
 const {
   buildHomeCityData,
+  buildLocationFieldData,
   omitRawLocationFields,
 } = require("../../../helpers/locationData");
 
@@ -608,8 +609,9 @@ module.exports = [
 
         //  ====================================    Home city ===========================
         artistInfo = {
-          ...omitRawLocationFields(artistInfo, ["home_city"]),
+          ...omitRawLocationFields(artistInfo, ["home_city", "origin_city"]),
           homeCityData: buildHomeCityData(artistInfo),
+          originCityData: buildLocationFieldData(artistInfo, "origin_city"),
         };
 
         //  ====================================    Country and city ===========================

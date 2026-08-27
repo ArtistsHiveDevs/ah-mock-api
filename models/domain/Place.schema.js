@@ -1,7 +1,25 @@
 const mongoose = require("mongoose");
 const { schema: FollowerSchema } = require("./Follower.schema");
 const { generateSID } = require("../../helpers/sID");
+const { buildHomeCityData } = require("../../helpers/locationData");
 const { Schema } = mongoose;
+
+const buildLegacyLocationFields = (source = {}) => {
+  if (!source.home_city_country) return {};
+
+  const levels = buildHomeCityData(source);
+  const labelOf = (levelName) =>
+    levels.find((level) => level.level === levelName)?.label;
+
+  const state = labelOf("state");
+  const city = labelOf("city");
+
+  return {
+    country: source.home_city_country,
+    ...(state ? { state } : {}),
+    ...(city ? { city } : {}),
+  };
+};
 
 const imageSchema = new mongoose.Schema(
   {
@@ -63,6 +81,11 @@ const schema = new Schema(
     country_alpha2: { type: String },
     state: { type: String },
     city: { type: String, required: true },
+    home_city: { type: String },
+    home_city_country: String,
+    home_city_level1: String,
+    home_city_level2: String,
+    home_city_level3: String,
     address: { type: String },
     location: { type: String },
     email: { type: String },
@@ -172,6 +195,18 @@ schema.virtual("followedProfilesCount").get(function () {
     return count.length > 0 ? count[0].total : 0;
   };
 });
+schema.pre("validate", function () {
+  Object.entries(buildLegacyLocationFields(this)).forEach(([field, value]) => {
+    this[field] = value;
+  });
+});
+
+schema.pre("findOneAndUpdate", function () {
+  const update = this.getUpdate() || {};
+  const changes = update.$set || update;
+  Object.assign(changes, buildLegacyLocationFields(changes));
+});
+
 // Incluye los virtuals en los resultados de JSON
 schema.set("toObject", { virtuals: true });
 schema.set("toJSON", { virtuals: true });

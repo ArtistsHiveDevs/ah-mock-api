@@ -32,13 +32,16 @@ const enrichLocationData = (
   return locationData;
 };
 
+const buildLocationFieldData = (entity = {}, fieldName) =>
+  enrichLocationData(
+    entity[`${fieldName}_country`],
+    entity[`${fieldName}_level1`],
+    entity[`${fieldName}_level2`],
+  );
+
 /** Atajo para el campo `home_city` de cualquier entidad que persista sus niveles. */
 const buildHomeCityData = (entity = {}) =>
-  enrichLocationData(
-    entity.home_city_country,
-    entity.home_city_level1,
-    entity.home_city_level2,
-  );
+  buildLocationFieldData(entity, "home_city");
 
 /** Los niveles crudos ya viajan dentro de `<campo>Data`: se omiten para no duplicar el mismo dato. */
 const omitRawLocationFields = (entity = {}, fieldNames = []) => {
@@ -51,4 +54,9 @@ const omitRawLocationFields = (entity = {}, fieldNames = []) => {
   return clean;
 };
 
-module.exports = { enrichLocationData, buildHomeCityData, omitRawLocationFields };
+module.exports = {
+  enrichLocationData,
+  buildLocationFieldData,
+  buildHomeCityData,
+  omitRawLocationFields,
+};
