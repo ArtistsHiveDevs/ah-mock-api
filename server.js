@@ -22,6 +22,7 @@ var textConstants = require("./helpers/index");
 const helpers = require("./helpers");
 const ErrorCodes = require("./constants/errors");
 const { getModel } = require("./helpers/getModel");
+const { maskIds } = require("./helpers/maskEntityId");
 // TODO: Fix emailService SES v2 configuration
 // const { sendEmail } = require("./helpers/emailService");
 
@@ -279,8 +280,10 @@ app.get("/me", helpers.validateEnvironment, validateApiKey, (req, res) => {
   // Enriquecer datos de ciudad actual
   const homeCityData = buildHomeCityData(userInfo);
 
+  const maskedUserInfo = maskIds(userInfo);
+
   res.status(200).send({
-    ...omitRawLocationFields(userInfo, ["birthplace", "home_city"]),
+    ...omitRawLocationFields(maskedUserInfo, ["birthplace", "home_city"]),
     birthplaceData,
     homeCityData,
   });

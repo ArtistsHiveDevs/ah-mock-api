@@ -87,8 +87,16 @@ async function updateEntityRoleMap(
     const EntityModel = await getModel(serverEnvironment, entityName);
     const userObjectId = new mongoose.Types.ObjectId(userId);
 
+    // Construir query para buscar la entidad por _id, sID o username
+    let query = {};
+    if (mongoose.Types.ObjectId.isValid(entityId)) {
+      query._id = entityId;
+    } else {
+      query = { $or: [{ sID: entityId }, { username: entityId }] };
+    }
+
     // Verificar si la entidad existe y tiene entityRoleMap inicializado
-    const entity = await EntityModel.findById(entityId);
+    const entity = await EntityModel.findOne(query);
     if (!entity) {
       console.warn(
         `[EntityRoleMap] Entidad ${entityName}/${entityId} no encontrada`,
@@ -96,10 +104,13 @@ async function updateEntityRoleMap(
       return;
     }
 
+    // Usar el _id real de la entidad encontrada para las operaciones posteriores
+    const realEntityId = entity._id;
+
     // Si entityRoleMap no existe, inicializarlo como array vacío
     if (!entity.entityRoleMap || !Array.isArray(entity.entityRoleMap)) {
       await EntityModel.updateOne(
-        { _id: entityId },
+        { _id: realEntityId },
         { $set: { entityRoleMap: [] } },
       );
       console.log(
@@ -113,14 +124,14 @@ async function updateEntityRoleMap(
         for (const role of roles) {
           // Verificar si el rol ya existe en entityRoleMap
           const roleExists = await EntityModel.findOne({
-            _id: entityId,
+            _id: realEntityId,
             "entityRoleMap.role": role,
           });
 
           if (!roleExists) {
             // Si el rol no existe, crear la entrada
             await EntityModel.updateOne(
-              { _id: entityId },
+              { _id: realEntityId },
               {
                 $push: {
                   entityRoleMap: { role: role, ids: [userObjectId] },
@@ -130,7 +141,7 @@ async function updateEntityRoleMap(
           } else {
             // Si el rol existe, agregar el usuario al array de ids
             await EntityModel.updateOne(
-              { _id: entityId },
+              { _id: realEntityId },
               {
                 $addToSet: {
                   "entityRoleMap.$[elem].ids": userObjectId,
@@ -150,7 +161,7 @@ async function updateEntityRoleMap(
       case "update":
         // Primero, remover el usuario de todos los roles
         await EntityModel.updateOne(
-          { _id: entityId },
+          { _id: realEntityId },
           {
             $pull: {
               "entityRoleMap.$[].ids": userObjectId,
@@ -162,14 +173,14 @@ async function updateEntityRoleMap(
         for (const role of roles) {
           // Verificar si el rol ya existe en entityRoleMap
           const roleExists = await EntityModel.findOne({
-            _id: entityId,
+            _id: realEntityId,
             "entityRoleMap.role": role,
           });
 
           if (!roleExists) {
             // Si el rol no existe, crear la entrada
             await EntityModel.updateOne(
-              { _id: entityId },
+              { _id: realEntityId },
               {
                 $push: {
                   entityRoleMap: { role: role, ids: [userObjectId] },
@@ -179,7 +190,7 @@ async function updateEntityRoleMap(
           } else {
             // Si el rol existe, agregar el usuario al array de ids
             await EntityModel.updateOne(
-              { _id: entityId },
+              { _id: realEntityId },
               {
                 $addToSet: {
                   "entityRoleMap.$[elem].ids": userObjectId,
@@ -199,7 +210,7 @@ async function updateEntityRoleMap(
       case "remove":
         // Remover el usuario de todos los roles de la entidad
         await EntityModel.updateOne(
-          { _id: entityId },
+          { _id: realEntityId },
           {
             $pull: {
               "entityRoleMap.$[].ids": userObjectId,
