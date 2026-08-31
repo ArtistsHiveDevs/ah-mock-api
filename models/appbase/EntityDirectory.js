@@ -40,6 +40,7 @@ const schema = new Schema(
     // de la entidad origen (User/Artist/Place) al momento de crear este registro
     // vía createEntityDirectoryRecord(); no se duplica el `match` acá.
     username: String,
+    run: String,
     subtitle: String,
     verified_status: Number,
     search_cache: String,

@@ -554,7 +554,7 @@ module.exports = [
             const query = {
               $or: [
                 // { username: { $regex: new RegExp(`^${String(id).trim()}$`, "i") } },
-                { username: id },
+                { run: id },
                 // { name: { $regex: new RegExp(`^${id}$`, "i") } },
               ],
             };
@@ -949,6 +949,7 @@ module.exports = [
       // Buscar el EntityDirectory de la entidad seguida
       let entityDirectoryIdFollowed;
       let followedEntityType;
+      let followedEntityId;
       try {
         const followedIdentifier = id || username || identifier;
         const followedEntityDirectoryInfo = await normalizeProfileId(
@@ -957,6 +958,7 @@ module.exports = [
         );
         entityDirectoryIdFollowed = followedEntityDirectoryInfo._id;
         followedEntityType = followedEntityDirectoryInfo.entityType;
+        followedEntityId = followedEntityDirectoryInfo.entity_id;
       } catch (err) {
         console.warn(
           `EntityDirectory not found for followed: ${id || username || identifier}`,
@@ -979,7 +981,7 @@ module.exports = [
 
             const followedInfo = {
               entityDirectoryId: entityDirectoryIdFollowed,
-              id,
+              id: followedEntityId || id,
               identifier,
               username,
               entity: followedEntityType || entity,
@@ -1010,7 +1012,10 @@ module.exports = [
                   { _id: new mongoose.Types.ObjectId(id) },
                   { username: username || identifier },
                 ]
-              : [{ username: username || identifier }];
+              : [
+                  { username: username || identifier },
+                  { sID: id || identifier },
+                ];
 
             // 🔍 Obtener el artista actualizado
 
@@ -1036,10 +1041,12 @@ module.exports = [
               req.serverEnvironment,
               "ProfileClaim",
             );
+            // 
             const claim = new ProfileClaimModel({
               user: req.userId,
               entityType: entity,
-              entityId: new mongoose.Types.ObjectId(id),
+              // entityId: new mongoose.Types.ObjectId(id),
+              entityId: id,
               identifier: identifier,
             });
             await claim.save();
