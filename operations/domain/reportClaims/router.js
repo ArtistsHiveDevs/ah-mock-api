@@ -15,6 +15,8 @@ const {
   mapDatabaseErrorToResponse,
 } = require("../../../helpers/apiHelperFunctions");
 const { getModel } = require("../../../helpers/getModel");
+const { resolveId } = require("../../../helpers/resolveEntityId");
+const { connectToDatabase } = require("../../../db/db_g");
 const {
   REPORT_CLAIM_REASONS,
   REPORT_CLAIM_STATUSES,
@@ -50,12 +52,28 @@ router.post("/", ...helpers.getWriteMiddlewares(), async (req, res) => {
       });
     }
 
+    const connection = await connectToDatabase(req);
+
+    let resolvedEntityId;
+    try {
+      resolvedEntityId = await resolveId(
+        entityId || identifier,
+        entityType,
+        connection,
+      );
+    } catch (err) {
+      return res.status(404).json({
+        message: `${entityType} '${entityId || identifier}' no encontrado.`,
+        errorCode: ErrorCodes.CONTENT_NOT_FOUND,
+      });
+    }
+
     const EntityModel = await getModel(req.serverEnvironment, entityType);
-    const entity = await EntityModel.findById(entityId);
+    const entity = await EntityModel.findById(resolvedEntityId);
 
     if (!entity) {
       return res.status(404).json({
-        message: `${entityType} '${entityId}' no encontrado.`,
+        message: `${entityType} '${entityId || identifier}' no encontrado.`,
         errorCode: ErrorCodes.CONTENT_NOT_FOUND,
       });
     }
@@ -68,7 +86,7 @@ router.post("/", ...helpers.getWriteMiddlewares(), async (req, res) => {
     const existingPendingReport = await ReportClaimModel.findOne({
       user: req.userId,
       entityType,
-      entityId,
+      entityId: resolvedEntityId,
       status: "PENDING",
     });
 
@@ -82,7 +100,7 @@ router.post("/", ...helpers.getWriteMiddlewares(), async (req, res) => {
     const reportClaim = await ReportClaimModel.create({
       user: req.userId,
       entityType,
-      entityId,
+      entityId: resolvedEntityId,
       reason,
       description,
       identifier,
