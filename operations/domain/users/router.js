@@ -87,8 +87,16 @@ async function updateEntityRoleMap(
     const EntityModel = await getModel(serverEnvironment, entityName);
     const userObjectId = new mongoose.Types.ObjectId(userId);
 
+    // Construir query para buscar la entidad por _id, sID o username
+    let query = {};
+    if (mongoose.Types.ObjectId.isValid(entityId)) {
+      query._id = entityId;
+    } else {
+      query = { $or: [{ sID: entityId }, { username: entityId }] };
+    }
+
     // Verificar si la entidad existe y tiene entityRoleMap inicializado
-    const entity = await EntityModel.findById(entityId);
+    const entity = await EntityModel.findOne(query);
     if (!entity) {
       console.warn(
         `[EntityRoleMap] Entidad ${entityName}/${entityId} no encontrada`,
@@ -96,10 +104,13 @@ async function updateEntityRoleMap(
       return;
     }
 
+    // Usar el _id real de la entidad encontrada para las operaciones posteriores
+    const realEntityId = entity._id;
+
     // Si entityRoleMap no existe, inicializarlo como array vacío
     if (!entity.entityRoleMap || !Array.isArray(entity.entityRoleMap)) {
       await EntityModel.updateOne(
-        { _id: entityId },
+        { _id: realEntityId },
         { $set: { entityRoleMap: [] } },
       );
       console.log(
@@ -113,14 +124,14 @@ async function updateEntityRoleMap(
         for (const role of roles) {
           // Verificar si el rol ya existe en entityRoleMap
           const roleExists = await EntityModel.findOne({
-            _id: entityId,
+            _id: realEntityId,
             "entityRoleMap.role": role,
           });
 
           if (!roleExists) {
             // Si el rol no existe, crear la entrada
             await EntityModel.updateOne(
-              { _id: entityId },
+              { _id: realEntityId },
               {
                 $push: {
                   entityRoleMap: { role: role, ids: [userObjectId] },
@@ -130,7 +141,7 @@ async function updateEntityRoleMap(
           } else {
             // Si el rol existe, agregar el usuario al array de ids
             await EntityModel.updateOne(
-              { _id: entityId },
+              { _id: realEntityId },
               {
                 $addToSet: {
                   "entityRoleMap.$[elem].ids": userObjectId,
@@ -150,7 +161,7 @@ async function updateEntityRoleMap(
       case "update":
         // Primero, remover el usuario de todos los roles
         await EntityModel.updateOne(
-          { _id: entityId },
+          { _id: realEntityId },
           {
             $pull: {
               "entityRoleMap.$[].ids": userObjectId,
@@ -162,14 +173,14 @@ async function updateEntityRoleMap(
         for (const role of roles) {
           // Verificar si el rol ya existe en entityRoleMap
           const roleExists = await EntityModel.findOne({
-            _id: entityId,
+            _id: realEntityId,
             "entityRoleMap.role": role,
           });
 
           if (!roleExists) {
             // Si el rol no existe, crear la entrada
             await EntityModel.updateOne(
-              { _id: entityId },
+              { _id: realEntityId },
               {
                 $push: {
                   entityRoleMap: { role: role, ids: [userObjectId] },
@@ -179,7 +190,7 @@ async function updateEntityRoleMap(
           } else {
             // Si el rol existe, agregar el usuario al array de ids
             await EntityModel.updateOne(
-              { _id: entityId },
+              { _id: realEntityId },
               {
                 $addToSet: {
                   "entityRoleMap.$[elem].ids": userObjectId,
@@ -199,7 +210,7 @@ async function updateEntityRoleMap(
       case "remove":
         // Remover el usuario de todos los roles de la entidad
         await EntityModel.updateOne(
-          { _id: entityId },
+          { _id: realEntityId },
           {
             $pull: {
               "entityRoleMap.$[].ids": userObjectId,
@@ -221,6 +232,57 @@ async function updateEntityRoleMap(
     );
     throw error;
   }
+}
+
+/**
+ * Mergea los roles entrantes de un PUT sobre los roles ya persistidos del usuario.
+ * El array `roles` es un snapshot denormalizado que el cliente suele mandar
+ * incompleto o vacío; un $set directo borraba perfiles previos del usuario.
+ * @param {Array} currentRoles - Roles actualmente persistidos
+ * @param {Array} incomingRoles - Roles recibidos en el body
+ * @returns {Array} Roles mergeados: agrega y actualiza, nunca elimina
+ */
+function mergeUserRoles(currentRoles = [], incomingRoles = []) {
+  const merged = (currentRoles || []).map((roleGroup) => {
+    const plain =
+      typeof roleGroup?.toObject === "function"
+        ? roleGroup.toObject()
+        : { ...roleGroup };
+    plain.entityRoleMap = (plain.entityRoleMap || []).map((entry) =>
+      typeof entry?.toObject === "function" ? entry.toObject() : { ...entry },
+    );
+    return plain;
+  });
+
+  (incomingRoles || []).forEach((incomingGroup) => {
+    if (!incomingGroup?.entityName) return;
+
+    let targetGroup = merged.find(
+      (group) => group.entityName === incomingGroup.entityName,
+    );
+
+    if (!targetGroup) {
+      targetGroup = { entityName: incomingGroup.entityName, entityRoleMap: [] };
+      merged.push(targetGroup);
+    }
+
+    (incomingGroup.entityRoleMap || []).forEach((incomingEntry) => {
+      const existingIndex = targetGroup.entityRoleMap.findIndex(
+        (entry) => String(entry.id) === String(incomingEntry.id),
+      );
+
+      if (existingIndex === -1) {
+        targetGroup.entityRoleMap.push(incomingEntry);
+      } else {
+        targetGroup.entityRoleMap[existingIndex] = {
+          ...targetGroup.entityRoleMap[existingIndex],
+          ...incomingEntry,
+        };
+      }
+    });
+  });
+
+  return merged;
 }
 
 /**
@@ -786,6 +848,15 @@ module.exports = [
         // Obtener usuario actual ANTES de actualizar para detectar cambios en roles
         const currentUser = await UserModel.findOne(query);
 
+        // El cliente manda `roles` como snapshot y puede venir incompleto: mergeamos
+        // salvo que se pida un reemplazo explícito con `rolesReplace: true`.
+        const replaceRoles = updateFields.rolesReplace === true;
+        delete updateFields.rolesReplace;
+
+        if (Array.isArray(newInfo.roles) && !replaceRoles) {
+          updateFields.roles = mergeUserRoles(currentUser?.roles, newInfo.roles);
+        }
+
         // Realizar la consulta de actualización con $set
         const updatedUser = await UserModel.findOneAndUpdate(
           query,
@@ -809,7 +880,7 @@ module.exports = [
           await detectAndNotifyRoleChanges(
             req.serverEnvironment,
             currentUser,
-            newInfo.roles,
+            updateFields.roles,
             updatedBy,
             req.lang,
           );
