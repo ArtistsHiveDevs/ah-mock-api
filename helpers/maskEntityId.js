@@ -8,7 +8,8 @@ function maskIds(data, context = "unknown") {
   }
 
   const source = data.constructor?.modelName || context;
-  const plainData = typeof data.toObject === "function" ? data.toObject() : data;
+  const plainData =
+    typeof data.toObject === "function" ? data.toObject() : data;
 
   const hasSID = plainData.sID !== undefined && plainData.sID !== null;
   const has_Id = plainData._id !== undefined && plainData._id !== null;
@@ -16,9 +17,9 @@ function maskIds(data, context = "unknown") {
   const hasMaskableId = hasSID && (has_Id || hasIdVirtual);
 
   if (!hasSID && (has_Id || hasIdVirtual)) {
-    console.warn(
-      `[maskIds] sID ausente en ${source} (id=${plainData._id ?? plainData.id}); se expone el ObjectId real`,
-    );
+    // console.warn(
+    //   `[maskIds] sID ausente en ${source} (id=${plainData._id ?? plainData.id}); se expone el ObjectId real`,
+    // );
   }
 
   const masked = {};

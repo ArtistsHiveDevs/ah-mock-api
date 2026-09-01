@@ -28,6 +28,17 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
       ...baseMiddlewares,
       async (req, res) => {
         try {
+          if (modelName === "Place") {
+            console.log(`>> Place >> 🔍 GET list - Inicio`);
+            console.log(`>> Place >> 📥 Params:`, {
+              page: req.query.page,
+              limit: req.query.limit,
+              fields: !!req.query.fields,
+              hasUser: !!req.user,
+              serverEnv: req.serverEnvironment
+            });
+          }
+
           // Auto-seed: insert mock data if collection is empty (runs once)
           if (options.autoSeed && !autoSeeded[modelName]) {
             try {
@@ -46,13 +57,16 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             }
           }
 
+          if (modelName === "Place") console.log(`>> Place >> 🔍 Creando CRUD actions`);
           const modelActions = await createCRUDActions({
             modelName,
             schema,
             options,
             req,
           });
+          if (modelName === "Place") console.log(`>> Place >> ✅ CRUD actions creado, hasListEntities: ${!!modelActions?.listEntities}`);
 
+          if (modelName === "Place") console.log(`>> Place >> 🔍 Llamando listEntities con limit: ${3000 || req.query.limit || 50}`);
           const response = await modelActions.listEntities({
             page: req.query.page,
             limit: 3000 || req.query.limit || 50,
@@ -64,8 +78,30 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             user: req.user,
           });
 
+          if (modelName === "Place") {
+            console.log(`>> Place >> ✅ listEntities completado`);
+            console.log(`>> Place >> 📊 Response:`, {
+              exists: !!response,
+              hasData: !!response?.data,
+              dataIsArray: Array.isArray(response?.data),
+              dataLength: response?.data?.length,
+              page: response?.page,
+              totalPages: response?.totalPages,
+              totalCount: response?.totalCount
+            });
+            if (response?.data?.length > 0) {
+              console.log(`>> Place >> 📦 Primer item:`, {
+                hasId: !!response.data[0]._id,
+                hasName: !!response.data[0].name,
+                hasSID: !!response.data[0].sID
+              });
+            }
+          }
+
           res.json(response);
+          if (modelName === "Place") console.log(`>> Place >> ✅ Response enviado al cliente`);
         } catch (err) {
+          if (modelName === "Place") console.error(`>> Place >> ❌ Error:`, err.message);
           console.error(err);
           const { status, body } = apiHelperFunctions.mapDatabaseErrorToResponse(err);
           res.status(status).json(body);
