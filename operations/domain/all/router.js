@@ -788,6 +788,7 @@ module.exports = [
               name: 1,
               username: 1,
               _id: 1,
+              sID:1,
               followed_by: 1,
               followed_profiles: 1,
             },
