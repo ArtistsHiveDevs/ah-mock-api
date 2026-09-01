@@ -920,12 +920,32 @@ module.exports = [
         let followedEntityInfo;
 
         if (req.currentProfileInfo && req.currentProfileEntity) {
+          // Convert shortID to ObjectId if needed for followed_by query
+          let currentProfileObjectId = req.currentProfileInfo.id;
+
+          if (!mongoose.Types.ObjectId.isValid(req.currentProfileInfo.id)) {
+            const CurrentProfileModel = await getModel(
+              req.serverEnvironment,
+              req.currentProfileEntity
+            );
+            const currentProfile = await CurrentProfileModel.findOne({
+              $or: [
+                { sID: req.currentProfileInfo.id },
+                { username: req.currentProfileInfo.id },
+              ],
+            }).select("_id");
+
+            if (currentProfile) {
+              currentProfileObjectId = currentProfile._id;
+            }
+          }
+
           followedEntityInfo = await entityModel
             .findOne({
               ...query,
               ["followed_by"]: {
                 $elemMatch: {
-                  entityId: req.currentProfileInfo.id,
+                  entityId: currentProfileObjectId,
                   entityType: req.currentProfileEntity,
                   isFollowing: true,
                 },

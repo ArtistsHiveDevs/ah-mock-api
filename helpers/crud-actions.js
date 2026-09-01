@@ -683,6 +683,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
     const currentUser = await UserModel.findById(userId);
 
     // console.log("current user ", currentUser?.username);
+    idFields.push("sID");
     idFields.push("username");
     idFields.push("name");
 
@@ -831,12 +832,32 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
     if (modelRequiresEntityIndex(modelName)) {
       let followedEntityInfo;
       if (req.currentProfileInfo && req.currentProfileEntity) {
+        let currentProfileObjectId = req.currentProfileInfo.id;
+
+        if (!mongoose.Types.ObjectId.isValid(req.currentProfileInfo.id)) {
+          // Es un shortID, necesitamos buscar el ObjectId real
+          const CurrentProfileModel = await getModel(
+            req.serverEnvironment,
+            req.currentProfileEntity,
+          );
+          const currentProfile = await CurrentProfileModel.findOne({
+            $or: [
+              { sID: req.currentProfileInfo.id },
+              { username: req.currentProfileInfo.id },
+            ],
+          }).select("_id");
+
+          if (currentProfile) {
+            currentProfileObjectId = currentProfile._id;
+          }
+        }
+
         let followedQuery = model
           .findOne({
             ...query,
             ["followed_by"]: {
               $elemMatch: {
-                entityId: req.currentProfileInfo.id,
+                entityId: currentProfileObjectId,
                 entityType: req.currentProfileEntity,
                 isFollowing: true,
               },
@@ -876,24 +897,40 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
     // ==========================  CLAIM PROFILE =====
     if (modelRequiresEntityIndex(modelName)) {
-      const ProfileClaimModel = await getModel(
-        req.serverEnvironment,
-        "ProfileClaim",
-      );
-      let claimResult;
-      try {
-        let queryClaim = {};
-
-        if (mongoose.Types.ObjectId.isValid(id)) {
-          queryClaim.$or = [{ entityId: new mongoose.Types.ObjectId(id) }];
-        } else {
-          queryClaim.$or = [{ identifier: id }];
-        }
-        claimResult = await ProfileClaimModel.findOne({ ...queryClaim });
-      } catch (error) {
-        console.log(error);
+      // Primero verificar si la entidad ya tiene un owner en entityRoleMap
+      let hasOwner = false;
+      if (entityInfo.entityRoleMap && Array.isArray(entityInfo.entityRoleMap)) {
+        const ownerRole = entityInfo.entityRoleMap.find(
+          (roleEntry) => roleEntry.role === "OWNER",
+        );
+        hasOwner = !!(ownerRole && ownerRole.ids && ownerRole.ids.length > 0);
       }
-      entityInfo.isClaimedProfile = !!claimResult;
+
+      let isClaimedProfile = hasOwner;
+
+      if (!hasOwner) {
+        const ProfileClaimModel = await getModel(
+          req.serverEnvironment,
+          "ProfileClaim",
+        );
+
+        let claimResult;
+        try {
+          const queryClaim = {
+            $or: [{ entityId: id }, { identifier: id }],
+          };
+          claimResult = await ProfileClaimModel.findOne(queryClaim);
+        } catch (error) {
+          console.log(error);
+        }
+
+        // Si hay un claim pendiente, marcar como claimed
+        if (claimResult) {
+          isClaimedProfile = true;
+        }
+      }
+
+      entityInfo.isClaimedProfile = isClaimedProfile;
     }
 
     // Traducir los resultados utilizando translateDBResults
@@ -907,8 +944,17 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       (role) =>
         role.entityName === modelName &&
         role.entityRoleMap.some((entityRole) => {
-          return new mongoose.Types.ObjectId(entityRole.id).equals(
-            entityInfo._id,
+          // Comparar directamente sin casting si no es un ObjectId válido
+          if (mongoose.Types.ObjectId.isValid(entityRole.id)) {
+            return new mongoose.Types.ObjectId(entityRole.id).equals(
+              entityInfo._id,
+            );
+          }
+          // Si es shortID o username, comparar con esos campos
+          return (
+            entityRole.id === entityInfo.sID ||
+            entityRole.id === entityInfo.username ||
+            entityRole.id === String(entityInfo._id)
           );
         }),
     );
@@ -917,8 +963,17 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
     if (roleAsEntity) {
       const rolesInEntity = roleAsEntity.entityRoleMap.find(
         (entityPermissions) => {
-          return new mongoose.Types.ObjectId(entityPermissions.id).equals(
-            entityInfo._id,
+          // Comparar directamente sin casting si no es un ObjectId válido
+          if (mongoose.Types.ObjectId.isValid(entityPermissions.id)) {
+            return new mongoose.Types.ObjectId(entityPermissions.id).equals(
+              entityInfo._id,
+            );
+          }
+          // Si es shortID o username, comparar con esos campos
+          return (
+            entityPermissions.id === entityInfo.sID ||
+            entityPermissions.id === entityInfo.username ||
+            entityPermissions.id === String(entityInfo._id)
           );
         },
       );
@@ -940,7 +995,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
     if (postScriptFunction && typeof postScriptFunction === "function") {
       const results = [entityInfo];
-      postScriptFunction({ results });
+      await postScriptFunction({ results });
       entityInfo = results[0];
     }
 
