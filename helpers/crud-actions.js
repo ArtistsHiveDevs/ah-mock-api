@@ -289,49 +289,72 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       projection.sID = 1;
 
       // Identificar campos que necesitan populate
-      const populateFields = [
-        ...modelFields
-          .filter((field) => {
-            const fieldType = model.schema.paths[field];
-            // Mongoose 9
-            const arrayItemType =
-              fieldType?.caster || fieldType?.embeddedSchemaType;
+      const populateFieldsData = modelFields
+        .filter((field) => {
+          const fieldType = model.schema.paths[field];
+          // Mongoose 9
+          const arrayItemType =
+            fieldType?.caster || fieldType?.embeddedSchemaType;
 
-            return (
-              fieldType &&
-              (fieldType.instance.toLowerCase() === "objectid" ||
-                (fieldType.instance.toLowerCase() === "array" &&
-                  arrayItemType &&
-                  arrayItemType?.instance?.toLowerCase() === "objectid"))
-            );
-          })
-          .map((field) => {
-            const arrayItemType =
-              model.schema.paths[field].caster ||
-              model.schema.paths[field].embeddedSchemaType;
-            const refModel =
-              model.schema.paths[field].options?.ref ||
-              arrayItemType?.options?.ref;
-            const refModelFields = model.schema.paths.i18n
-              ? [
-                  `i18n.${lang}`,
-                  ...(public_fields ??
-                    routesConstants?.parametric_public_fields?.[refModel]
-                      ?.summary ??
-                    routesConstants?.public_fields ?? ["name"]),
-                ]
-              : (public_fields ??
-                routesConstants?.parametric_public_fields?.[refModel]
-                  ?.summary ??
-                routesConstants?.public_fields ?? ["name"]);
+          return (
+            fieldType &&
+            (fieldType.instance.toLowerCase() === "objectid" ||
+              (fieldType.instance.toLowerCase() === "array" &&
+                arrayItemType &&
+                arrayItemType?.instance?.toLowerCase() === "objectid"))
+          );
+        })
+        .map((field) => {
+          const arrayItemType =
+            model.schema.paths[field].caster ||
+            model.schema.paths[field].embeddedSchemaType;
+          const refModel =
+            model.schema.paths[field].options?.ref ||
+            arrayItemType?.options?.ref;
+          const refModelFields = model.schema.paths.i18n
+            ? [
+                `i18n.${lang}`,
+                ...(public_fields ??
+                  routesConstants?.parametric_public_fields?.[refModel]
+                    ?.summary ??
+                  routesConstants?.public_fields ?? ["name"]),
+              ]
+            : (public_fields ??
+              routesConstants?.parametric_public_fields?.[refModel]
+                ?.summary ??
+              routesConstants?.public_fields ?? ["name"]);
 
-            return {
-              path: field,
-              select: refModelFields.join(" "),
-            };
-          }),
-        ...(options.customPopulateFields || []),
-      ];
+          return {
+            field,
+            refModel,
+            select: refModelFields.join(" "),
+          };
+        });
+
+      // Resolver modelos para populate de forma async
+      const populateFields = await Promise.all(
+        populateFieldsData.map(async ({ field, refModel, select }) => {
+          const populateOption = {
+            path: field,
+            select,
+          };
+
+          // Si el modelo referenciado tiene conexión personalizada, especificar el modelo explícitamente
+          if (refModel && modelsWithCustomConnections.includes(refModel)) {
+            try {
+              const refModelInstance = await getModel(connection.environment, refModel);
+              populateOption.model = refModelInstance;
+            } catch (err) {
+              console.warn(`⚠️ No se pudo obtener modelo ${refModel}:`, err.message);
+            }
+          }
+
+          return populateOption;
+        })
+      );
+
+      // Agregar custom populate fields
+      populateFields.push(...(options.customPopulateFields || []));
 
       // Obtén el año actual
       const currentYear = new Date().getFullYear();
