@@ -15,7 +15,7 @@ function maskIds(data, context = "unknown") {
   const hasIdVirtual = plainData.id !== undefined && plainData.id !== null;
   const hasMaskableId = hasSID && (has_Id || hasIdVirtual);
 
-  if (!hasSID && (has_Id || hasIdVirtual)) {
+  if (!hasSID && has_Id) {
     console.warn(
       `[maskIds] sID ausente en ${source} (id=${plainData._id ?? plainData.id}); se expone el ObjectId real`,
     );

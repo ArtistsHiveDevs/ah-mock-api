@@ -4,6 +4,7 @@ const { schema: userSchema } = require("../models/appbase/User");
 const { getAvailableTranslation } = require("./lang");
 const { connectToDatabase, decryptEnv } = require("../db/db_g");
 const { getModel } = require("./getModel");
+const { warmCountrySIDMaps } = require("./countrySID");
 const { normalizeProfileId } = require("../models/appbase/EntityDirectory");
 const {
   appbase_public_fields,
@@ -177,6 +178,15 @@ async function validateEnvironment(req, res, next) {
         message: "Database connection not ready",
         errorCode: ErrorCodes.CONNECTION_REQUEST_FAILED,
       });
+    }
+
+    try {
+      await warmCountrySIDMaps(req.serverEnvironment);
+    } catch (err) {
+      console.warn(
+        `[countrySID] No se pudo precargar el mapa de países (${req.serverEnvironment}):`,
+        err.message,
+      );
     }
 
     // Conexión lista, continuar

@@ -272,13 +272,14 @@ app.get("/me", helpers.validateEnvironment, validateApiKey, (req, res) => {
 
   // Enriquecer datos de lugar de nacimiento
   const birthplaceData = enrichLocationData(
+    req.serverEnvironment,
     userInfo.birthplace_country,
     userInfo.birthplace_level1,
     userInfo.birthplace_level2,
   );
 
   // Enriquecer datos de ciudad actual
-  const homeCityData = buildHomeCityData(userInfo);
+  const homeCityData = buildHomeCityData(req.serverEnvironment, userInfo);
 
   const maskedUserInfo = maskIds(userInfo);
 

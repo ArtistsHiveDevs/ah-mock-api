@@ -5,6 +5,7 @@ const {
   createPaginatedDataResponse,
 } = require("../../../../helpers/apiHelperFunctions");
 const { countries } = require("./countries-data");
+const { toCountryObjectId } = require("../../../../helpers/countrySID");
 
 var router = express.Router({ mergeParams: true });
 
@@ -25,40 +26,50 @@ function findNodeByValue(nodes, value, level = 1) {
 }
 
 module.exports = [
-  router.get(RoutesConstants.artistsList, (req, res) => {
-    const { countryId: countryRQ, level, parentId } = req.query;
+  router.get(
+    RoutesConstants.artistsList,
+    helpers.validateEnvironment,
+    (req, res) => {
+      const { countryId: countryRQ, level, parentId } = req.query;
 
-    const country = countries.find((c) => c.id === countryRQ) || countries[3];
-    let response = [];
+      const countryId = toCountryObjectId(req.serverEnvironment, countryRQ);
+      const country = countries.find((c) => c.id === countryId);
 
-    switch (parseInt(level)) {
-      case 1:
-        // states del país
-        response = country.states.map((s) => ({
-          label: s.label,
-          value: s.value,
-        }));
-        break;
+      if (!country) {
+        return res.json(createPaginatedDataResponse([]));
+      }
 
-      default:
-        // buscar el padre (un nivel antes) usando parentId
-        const parent = findNodeByValue(country.states, parentId);
-        if (parent) {
-          const children =
-            parent.states ||
-            parent.cities ||
-            parent.districts ||
-            parent.neighborhoods;
-          response = (children || []).map((child) => ({
-            label: child.label,
-            value: child.value,
+      let response = [];
+
+      switch (parseInt(level)) {
+        case 1:
+          // states del país
+          response = country.states.map((s) => ({
+            label: s.label,
+            value: s.value,
           }));
-        }
-        break;
-    }
+          break;
 
-    return res.json(createPaginatedDataResponse(response));
-  }),
+        default:
+          // buscar el padre (un nivel antes) usando parentId
+          const parent = findNodeByValue(country.states, parentId);
+          if (parent) {
+            const children =
+              parent.states ||
+              parent.cities ||
+              parent.districts ||
+              parent.neighborhoods;
+            response = (children || []).map((child) => ({
+              label: child.label,
+              value: child.value,
+            }));
+          }
+          break;
+      }
+
+      return res.json(createPaginatedDataResponse(response));
+    },
+  ),
 
   // router.get(RoutesConstants.findArtistById, (req, res) => {
   //   let artistsList = require(`../../${RoutesConstants.countriesListLocation}`);
