@@ -643,12 +643,31 @@ module.exports = [
 
         let followedEntityInfo;
         if (req.currentProfileInfo && req.currentProfileEntity) {
+          let currentProfileObjectId = req.currentProfileInfo.id;
+
+          if (!mongoose.Types.ObjectId.isValid(req.currentProfileInfo.id)) {
+            const CurrentProfileModel = await getModel(
+              req.serverEnvironment,
+              req.currentProfileEntity,
+            );
+            const currentProfile = await CurrentProfileModel.findOne({
+              $or: [
+                { sID: req.currentProfileInfo.id },
+                { username: req.currentProfileInfo.id },
+              ],
+            }).select("_id");
+
+            if (currentProfile) {
+              currentProfileObjectId = currentProfile._id;
+            }
+          }
+
           followedEntityInfo = await model
             .findOne({
               ...query,
               ["followed_by"]: {
                 $elemMatch: {
-                  entityId: req.currentProfileInfo.id,
+                  entityId: currentProfileObjectId,
                   entityType: req.currentProfileEntity,
                   isFollowing: true,
                 },
@@ -674,26 +693,43 @@ module.exports = [
 
         // ==========================  CLAIM PROFILE =====
 
-        const ProfileClaimModel = await getModel(
-          req.serverEnvironment,
-          "ProfileClaim",
-        );
-        let claimResult;
-        try {
-          let queryClaim = {};
-
-          if (mongoose.Types.ObjectId.isValid(artistId)) {
-            queryClaim.$or = [
-              { entityId: new mongoose.Types.ObjectId(artistId) },
-            ];
-          } else {
-            queryClaim.$or = [{ identifier: artistId }];
-          }
-          claimResult = await ProfileClaimModel.findOne({ ...queryClaim });
-        } catch (error) {
-          console.log(error);
+        // Primero verificar si el artista ya tiene un owner en entityRoleMap
+        let hasOwner = false;
+        if (
+          artistInfo.entityRoleMap &&
+          Array.isArray(artistInfo.entityRoleMap)
+        ) {
+          const ownerRole = artistInfo.entityRoleMap.find(
+            (roleEntry) => roleEntry.role === "OWNER",
+          );
+          hasOwner = !!(ownerRole && ownerRole.ids && ownerRole.ids.length > 0);
         }
-        artistInfo.isClaimedProfile = !!claimResult;
+
+        let isClaimedProfile = hasOwner;
+
+        if (!hasOwner) {
+          const ProfileClaimModel = await getModel(
+            req.serverEnvironment,
+            "ProfileClaim",
+          );
+
+          let claimResult;
+          try {
+            const queryClaim = {
+              $or: [{ entityId: artistId }, { identifier: artistId }],
+            };
+            claimResult = await ProfileClaimModel.findOne(queryClaim);
+          } catch (error) {
+            console.log(error);
+          }
+
+          // Si hay un claim pendiente, marcar como claimed
+          if (claimResult) {
+            isClaimedProfile = true;
+          }
+        }
+
+        artistInfo.isClaimedProfile = isClaimedProfile;
 
         // ================================= Ownership
 
@@ -783,9 +819,7 @@ module.exports = [
 
         ownerUser.save();
 
-        res
-          .status(201)
-          .send(createPaginatedDataResponse(newArtist.toObject()));
+        res.status(201).send(createPaginatedDataResponse(newArtist.toObject()));
       } catch (err) {
         res.status(400).send(err);
       }
