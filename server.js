@@ -514,6 +514,10 @@ if (require.main === module) {
     console.log(new Date());
     console.log();
     console.log("=".repeat(20));
+    console.log("*".repeat(20));
+    console.log("*".repeat(20));
+    console.log("*".repeat(20));
+    console.log("...Nueva instancia...");
     console.log();
     // sendEmail({
     //   to: "cnpiensadigital@gmail.com",
