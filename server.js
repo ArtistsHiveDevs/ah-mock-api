@@ -342,6 +342,19 @@ app.get("/@:username", async (req, res) => {
   const { a } = req.query;
 
   const environment = decryptSharedLinkEnv(a);
+  const doms = {
+    prod: {
+      repo: "https://docsfr.artist-hive.com/",
+      domain: "https://artist-hive.com",
+    },
+    uat: {
+      repo: "https://filesnd.artist-hive.com/",
+      domain: "https://almost.artist-hive.com",
+    },
+  };
+
+  // Obtener configuración del ambiente actual
+  const currentEnvConfig = doms[environment] || doms.prod;
 
   console.log("SHARED environment: ", environment);
   req.serverEnvironment = environment;
@@ -350,15 +363,20 @@ app.get("/@:username", async (req, res) => {
   const usernameNormalization = !!username
     ? await normalizeProfileId(username, connection)
     : undefined;
-  // http://localhost:3001/@puertocandelaria
-  console.log("USERNAME: ", usernameNormalization);
+
   if (usernameNormalization) {
     const title = `${usernameNormalization.name} · Artist Hive`;
     const description = `Perfil de ${usernameNormalization.name} (@${usernameNormalization.username}) en Artist Hive.`;
-    const imageUrl =
+    let imageUrl =
       usernameNormalization.profile_pic ||
-      "https://artist-hive.com/img/artisthive_b.png";
-    const targetUrl = `https://artist-hive.com/${usernameNormalization.entityType.toLowerCase()}s/details/${username}`;
+      `${currentEnvConfig.domain}/img/artisthive_b.png`;
+
+    // Reemplazar r:// con el repo correspondiente al ambiente
+    if (imageUrl.startsWith("r://")) {
+      imageUrl = imageUrl.replace("r://", currentEnvConfig.repo);
+    }
+
+    const targetUrl = `${currentEnvConfig.domain}/${usernameNormalization.entityType.toLowerCase()}s/details/${username}`;
 
     res
       .status(200)
