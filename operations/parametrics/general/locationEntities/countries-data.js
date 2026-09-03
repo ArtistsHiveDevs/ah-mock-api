@@ -9620,6 +9620,1943 @@ const countries = [
       },
     ],
     sID: "C3Ok8llCsK",
+  },  {
+    label: "Chile",
+    value: "CL",
+    id: "66d61979a546e02c6ce65a33",
+    // INE (Instituto Nacional de Estadísticas)
+    // Sistema: Código territorial
+    // Niveles: Regiones → Provincias → Comunas
+    // Código: Variable por nivel
+    // ISO 3166-2: CL-XX
+    statisticalInstitute: "INE",
+    codingSystem: "Código territorial",
+    adminLevels: ["Región", "Provincia", "Comuna"],
+    states: [
+      {
+        label: "Región de Arica y Parinacota",
+        value: "CL-AP",
+        provincia: {
+          nombre: "Arica y Parinacota",
+          codigo: "15",
+          sID: "9VVvvjPxgM",
+        },
+        cities: [
+          {
+            label: "Arica",
+            value: "15101",
+            sID: "5ZRnbVhHpv",
+          },
+          {
+            label: "Camarones",
+            value: "15102",
+            sID: "OW57Cj7h2T",
+          },
+          {
+            label: "Putre",
+            value: "15201",
+            sID: "hNLB5fJSjt",
+          },
+          {
+            label: "General Lagos",
+            value: "15202",
+            sID: "S8TqhCvXK1",
+          }
+        ],
+        sID: "w1I1XrhPtm",
+      },
+      {
+        label: "Región de Tarapacá",
+        value: "CL-TA",
+        provincia: {
+          nombre: "Tarapacá",
+          codigo: "01",
+          sID: "DWVkiEdjRN",
+        },
+        cities: [
+          {
+            label: "Iquique",
+            value: "01101",
+            sID: "FgJJS86ZSF",
+          },
+          {
+            label: "Alto Hospicio",
+            value: "01107",
+            sID: "SrkaCHl6r5",
+          },
+          {
+            label: "Pozo Almonte",
+            value: "01401",
+            sID: "DaKENjGfTG",
+          },
+          {
+            label: "Camiña",
+            value: "01402",
+            sID: "SfFuNef4jG",
+          },
+          {
+            label: "Colchane",
+            value: "01403",
+            sID: "OCgIACSa3G",
+          },
+          {
+            label: "Huara",
+            value: "01404",
+            sID: "ABTWSlAqeJ",
+          },
+          {
+            label: "Pica",
+            value: "01405",
+            sID: "kvfv6KLUDb",
+          }
+        ],
+        sID: "sCAGtPqzir",
+      },
+      {
+        label: "Región de Antofagasta",
+        value: "CL-AN",
+        provincia: {
+          nombre: "Antofagasta",
+          codigo: "02",
+          sID: "BW2DdJBsa6",
+        },
+        cities: [
+          {
+            label: "Antofagasta",
+            value: "02101",
+            sID: "oDEbywR1Vz",
+          },
+          {
+            label: "Mejillones",
+            value: "02102",
+            sID: "LLiMENXvM5",
+          },
+          {
+            label: "Sierra Gorda",
+            value: "02103",
+            sID: "5zDIA3FC4O",
+          },
+          {
+            label: "Taltal",
+            value: "02104",
+            sID: "sMELjjVGRF",
+          },
+          {
+            label: "Calama",
+            value: "02201",
+            sID: "TtphGA1AwI",
+          },
+          {
+            label: "Ollagüe",
+            value: "02202",
+            sID: "arugbdP5b1",
+          },
+          {
+            label: "San Pedro de Atacama",
+            value: "02203",
+            sID: "i3RhHs5SCC",
+          },
+          {
+            label: "Tocopilla",
+            value: "02301",
+            sID: "ENEqbBN21N",
+          },
+          {
+            label: "María Elena",
+            value: "02302",
+            sID: "HaHX6B3MpV",
+          }
+        ],
+        sID: "2ZyElV5VCG",
+      },
+      {
+        label: "Región de Atacama",
+        value: "CL-AT",
+        provincia: {
+          nombre: "Atacama",
+          codigo: "03",
+          sID: "lRZivad4dF",
+        },
+        cities: [
+          {
+            label: "Copiapó",
+            value: "03101",
+            sID: "NTxCav5cfR",
+          },
+          {
+            label: "Caldera",
+            value: "03102",
+            sID: "jFJsHol0A1",
+          },
+          {
+            label: "Tierra Amarilla",
+            value: "03103",
+            sID: "75HEvG4DxN",
+          },
+          {
+            label: "Chañaral",
+            value: "03201",
+            sID: "7Z04ZyNBoB",
+          },
+          {
+            label: "Diego de Almagro",
+            value: "03202",
+            sID: "HQm5RPnbAT",
+          },
+          {
+            label: "Vallenar",
+            value: "03301",
+            sID: "XnRGEmB0oO",
+          },
+          {
+            label: "Alto del Carmen",
+            value: "03302",
+            sID: "Eo3RGnuore",
+          },
+          {
+            label: "Freirina",
+            value: "03303",
+            sID: "f9ZeXra0nt",
+          },
+          {
+            label: "Huasco",
+            value: "03304",
+            sID: "Gx9qtd4Oga",
+          }
+        ],
+        sID: "7bElj238Gu",
+      },
+      {
+        label: "Región de Coquimbo",
+        value: "CL-CO",
+        provincia: {
+          nombre: "Coquimbo",
+          codigo: "04",
+          sID: "FKCzcrrVY6",
+        },
+        cities: [
+          {
+            label: "La Serena",
+            value: "04101",
+            sID: "pZyQxOv5Az",
+          },
+          {
+            label: "Coquimbo",
+            value: "04102",
+            sID: "Le1uYPd4vC",
+          },
+          {
+            label: "Andacollo",
+            value: "04103",
+            sID: "LnWExNOUSm",
+          },
+          {
+            label: "La Higuera",
+            value: "04104",
+            sID: "TZHWGB7AhE",
+          },
+          {
+            label: "Paiguano",
+            value: "04105",
+            sID: "zCukbQkjIq",
+          },
+          {
+            label: "Vicuña",
+            value: "04106",
+            sID: "HlCYLXGSGx",
+          },
+          {
+            label: "Illapel",
+            value: "04201",
+            sID: "QdQPlJpUKK",
+          },
+          {
+            label: "Canela",
+            value: "04202",
+            sID: "XiRjXuSooD",
+          },
+          {
+            label: "Los Vilos",
+            value: "04203",
+            sID: "lG9R31H496",
+          },
+          {
+            label: "Salamanca",
+            value: "04204",
+            sID: "8y5BrMacmr",
+          },
+          {
+            label: "Ovalle",
+            value: "04301",
+            sID: "CBX4sScDat",
+          },
+          {
+            label: "Combarbalá",
+            value: "04302",
+            sID: "izwDFYFGPD",
+          },
+          {
+            label: "Monte Patria",
+            value: "04303",
+            sID: "eIDvZdgcip",
+          },
+          {
+            label: "Punitaqui",
+            value: "04304",
+            sID: "uyq3HZPCzR",
+          },
+          {
+            label: "Río Hurtado",
+            value: "04305",
+            sID: "mNYKd6YvtQ",
+          }
+        ],
+        sID: "XxhYwms8eU",
+      },
+      {
+        label: "Región de Valparaíso",
+        value: "CL-VS",
+        provincia: {
+          nombre: "Valparaíso",
+          codigo: "05",
+          sID: "kcTxxFjsOu",
+        },
+        cities: [
+          {
+            label: "Valparaíso",
+            value: "05101",
+            sID: "TDKuds0Lcm",
+          },
+          {
+            label: "Casablanca",
+            value: "05102",
+            sID: "d61cQrFjoX",
+          },
+          {
+            label: "Concón",
+            value: "05103",
+            sID: "mWHjKel0xG",
+          },
+          {
+            label: "Juan Fernández",
+            value: "05104",
+            sID: "xyBODNhbr2",
+          },
+          {
+            label: "Puchuncaví",
+            value: "05105",
+            sID: "bdVqWNfcDJ",
+          },
+          {
+            label: "Quintero",
+            value: "05107",
+            sID: "U9Ib4jX8pR",
+          },
+          {
+            label: "Viña del Mar",
+            value: "05109",
+            sID: "cz8D8aSU6A",
+          },
+          {
+            label: "Isla de Pascua",
+            value: "05201",
+            sID: "XHxUYE8UqV",
+          },
+          {
+            label: "Los Andes",
+            value: "05301",
+            sID: "WWBDhef4j1",
+          },
+          {
+            label: "Calle Larga",
+            value: "05302",
+            sID: "dUCB6H63ci",
+          },
+          {
+            label: "Rinconada",
+            value: "05303",
+            sID: "CYNCP472Ze",
+          },
+          {
+            label: "San Esteban",
+            value: "05304",
+            sID: "kFWjr35NTd",
+          },
+          {
+            label: "La Ligua",
+            value: "05401",
+            sID: "vgIqnNGVyb",
+          },
+          {
+            label: "Cabildo",
+            value: "05402",
+            sID: "qKpdmByCYq",
+          },
+          {
+            label: "Papudo",
+            value: "05403",
+            sID: "JGdFTtuyUO",
+          },
+          {
+            label: "Petorca",
+            value: "05404",
+            sID: "tt09ApPcdq",
+          },
+          {
+            label: "Zapallar",
+            value: "05405",
+            sID: "nx3J6G8FZU",
+          },
+          {
+            label: "Quillota",
+            value: "05501",
+            sID: "XvYoEZxqbX",
+          },
+          {
+            label: "Calera",
+            value: "05502",
+            sID: "L6ZpRCQBmB",
+          },
+          {
+            label: "Hijuelas",
+            value: "05503",
+            sID: "x3SgoCdYdi",
+          },
+          {
+            label: "La Cruz",
+            value: "05504",
+            sID: "JBh5k5oeVN",
+          },
+          {
+            label: "Nogales",
+            value: "05506",
+            sID: "QZaOVyDlJW",
+          },
+          {
+            label: "San Antonio",
+            value: "05601",
+            sID: "CbarluavJb",
+          },
+          {
+            label: "Algarrobo",
+            value: "05602",
+            sID: "FRx87y3Nr3",
+          },
+          {
+            label: "Cartagena",
+            value: "05603",
+            sID: "DZ4MH5n4Q8",
+          },
+          {
+            label: "El Quisco",
+            value: "05604",
+            sID: "NEsnYHMVmV",
+          },
+          {
+            label: "El Tabo",
+            value: "05605",
+            sID: "ZIrGNzmF8X",
+          },
+          {
+            label: "Santo Domingo",
+            value: "05606",
+            sID: "BtrBUqy6Ex",
+          },
+          {
+            label: "San Felipe",
+            value: "05701",
+            sID: "CEACcOSW1n",
+          },
+          {
+            label: "Catemu",
+            value: "05702",
+            sID: "BAKBgAoZQR",
+          },
+          {
+            label: "Llaillay",
+            value: "05703",
+            sID: "Q2Aq1ZRCGv",
+          },
+          {
+            label: "Panquehue",
+            value: "05704",
+            sID: "sBXE0hHmgS",
+          },
+          {
+            label: "Putaendo",
+            value: "05705",
+            sID: "7XBx36qnXk",
+          },
+          {
+            label: "Santa María",
+            value: "05706",
+            sID: "xppJcRPTZP",
+          },
+          {
+            label: "Quilpué",
+            value: "05801",
+            sID: "K3K7IPjPD4",
+          },
+          {
+            label: "Limache",
+            value: "05802",
+            sID: "c0Z2mWCaED",
+          },
+          {
+            label: "Olmué",
+            value: "05803",
+            sID: "ezp6Eb5z3t",
+          },
+          {
+            label: "Villa Alemana",
+            value: "05804",
+            sID: "0YNdhWk2NA",
+          }
+        ],
+        sID: "IWE9A6gN37",
+      },
+      {
+        label: "Región Metropolitana de Santiago",
+        value: "CL-RM",
+        provincia: {
+          nombre: "Santiago",
+          codigo: "13",
+          sID: "EoiW8ecJXy",
+        },
+        cities: [
+          {
+            label: "Santiago",
+            value: "13101",
+            sID: "LOQCEly2dc",
+          },
+          {
+            label: "Cerrillos",
+            value: "13102",
+            sID: "VNXqyUDR64",
+          },
+          {
+            label: "Cerro Navia",
+            value: "13103",
+            sID: "BeYG4PYNvw",
+          },
+          {
+            label: "Conchalí",
+            value: "13104",
+            sID: "0lPOWZOwMP",
+          },
+          {
+            label: "El Bosque",
+            value: "13105",
+            sID: "FCWrIrn8HT",
+          },
+          {
+            label: "Estación Central",
+            value: "13106",
+            sID: "sG2FWPZCf4",
+          },
+          {
+            label: "Huechuraba",
+            value: "13107",
+            sID: "aC8ngBjelh",
+          },
+          {
+            label: "Independencia",
+            value: "13108",
+            sID: "1CPGky0b1i",
+          },
+          {
+            label: "La Cisterna",
+            value: "13109",
+            sID: "f8UO2kHht8",
+          },
+          {
+            label: "La Florida",
+            value: "13110",
+            sID: "o8D29ALy2s",
+          },
+          {
+            label: "La Granja",
+            value: "13111",
+            sID: "7eSnpZ2Ylg",
+          },
+          {
+            label: "La Pintana",
+            value: "13112",
+            sID: "TGMjdt0XNH",
+          },
+          {
+            label: "La Reina",
+            value: "13113",
+            sID: "eyjwJbewco",
+          },
+          {
+            label: "Las Condes",
+            value: "13114",
+            sID: "INWF5qKhD3",
+          },
+          {
+            label: "Lo Barnechea",
+            value: "13115",
+            sID: "et28WSjmgd",
+          },
+          {
+            label: "Lo Espejo",
+            value: "13116",
+            sID: "wc1bSZfOUW",
+          },
+          {
+            label: "Lo Prado",
+            value: "13117",
+            sID: "O5zI6kAZxz",
+          },
+          {
+            label: "Macul",
+            value: "13118",
+            sID: "NISrUkwdcQ",
+          },
+          {
+            label: "Maipú",
+            value: "13119",
+            sID: "MiTVhUQsen",
+          },
+          {
+            label: "Ñuñoa",
+            value: "13120",
+            sID: "quzM1xXig0",
+          },
+          {
+            label: "Pedro Aguirre Cerda",
+            value: "13121",
+            sID: "b9Wxqn1xvj",
+          },
+          {
+            label: "Peñalolén",
+            value: "13122",
+            sID: "50zxLB5OgD",
+          },
+          {
+            label: "Providencia",
+            value: "13123",
+            sID: "biMi9L8VlJ",
+          },
+          {
+            label: "Pudahuel",
+            value: "13124",
+            sID: "FBBEfxlXif",
+          },
+          {
+            label: "Quilicura",
+            value: "13125",
+            sID: "07NvCKAAOG",
+          },
+          {
+            label: "Quinta Normal",
+            value: "13126",
+            sID: "OdZYZH1Mo2",
+          },
+          {
+            label: "Recoleta",
+            value: "13127",
+            sID: "ZEu1UABSqv",
+          },
+          {
+            label: "Renca",
+            value: "13128",
+            sID: "nYJHGrOmh2",
+          },
+          {
+            label: "San Joaquín",
+            value: "13129",
+            sID: "EzscV98QLo",
+          },
+          {
+            label: "San Miguel",
+            value: "13130",
+            sID: "r8449xhHTN",
+          },
+          {
+            label: "San Ramón",
+            value: "13131",
+            sID: "OaeCVfkqxe",
+          },
+          {
+            label: "Vitacura",
+            value: "13132",
+            sID: "xkvoH3QFst",
+          },
+          {
+            label: "Puente Alto",
+            value: "13201",
+            sID: "etYr3vUcpx",
+          },
+          {
+            label: "Pirque",
+            value: "13202",
+            sID: "f4sucnW9FA",
+          },
+          {
+            label: "San José de Maipo",
+            value: "13203",
+            sID: "q8vVBCTDCm",
+          },
+          {
+            label: "Colina",
+            value: "13301",
+            sID: "V3p6QOqYBV",
+          },
+          {
+            label: "Lampa",
+            value: "13302",
+            sID: "NBIJY619hZ",
+          },
+          {
+            label: "Tiltil",
+            value: "13303",
+            sID: "JgEXRENfbd",
+          },
+          {
+            label: "San Bernardo",
+            value: "13401",
+            sID: "7aUwch81rT",
+          },
+          {
+            label: "Buin",
+            value: "13402",
+            sID: "eJ2snrCK76",
+          },
+          {
+            label: "Calera de Tango",
+            value: "13403",
+            sID: "1vxTdztiDi",
+          },
+          {
+            label: "Paine",
+            value: "13404",
+            sID: "zDP9tJA4TG",
+          },
+          {
+            label: "Melipilla",
+            value: "13501",
+            sID: "kCl5jlNWDt",
+          },
+          {
+            label: "Alhué",
+            value: "13502",
+            sID: "e4nAKr1whd",
+          },
+          {
+            label: "Curacaví",
+            value: "13503",
+            sID: "5gMbaBKUoa",
+          },
+          {
+            label: "María Pinto",
+            value: "13504",
+            sID: "kqZmexEkMV",
+          },
+          {
+            label: "San Pedro",
+            value: "13505",
+            sID: "bVvty4w0zq",
+          },
+          {
+            label: "Talagante",
+            value: "13601",
+            sID: "d4eU6Qx7qa",
+          },
+          {
+            label: "El Monte",
+            value: "13602",
+            sID: "98tNQtCHLB",
+          },
+          {
+            label: "Isla de Maipo",
+            value: "13603",
+            sID: "h2V24WuA3I",
+          },
+          {
+            label: "Padre Hurtado",
+            value: "13604",
+            sID: "5eEmszBYEj",
+          },
+          {
+            label: "Peñaflor",
+            value: "13605",
+            sID: "975Op4rXzs",
+          }
+        ],
+        sID: "OaFUz3utvj",
+      },
+      {
+        label: "Región del Libertador General Bernardo O'Higgins",
+        value: "CL-LI",
+        provincia: {
+          nombre: "Libertador General Bernardo O'Higgins",
+          codigo: "06",
+          sID: "2PMirK768s",
+        },
+        cities: [
+          {
+            label: "Rancagua",
+            value: "06101",
+            sID: "vImhKC5LrT",
+          },
+          {
+            label: "Codegua",
+            value: "06102",
+            sID: "p8TwMCxLNb",
+          },
+          {
+            label: "Coinco",
+            value: "06103",
+            sID: "jUgePcXIor",
+          },
+          {
+            label: "Coltauco",
+            value: "06104",
+            sID: "lmC33Y2TBz",
+          },
+          {
+            label: "Doñihue",
+            value: "06105",
+            sID: "YDo4XwEvn4",
+          },
+          {
+            label: "Graneros",
+            value: "06106",
+            sID: "mr6zuxAc0D",
+          },
+          {
+            label: "Las Cabras",
+            value: "06107",
+            sID: "16HZG6PXBm",
+          },
+          {
+            label: "Machalí",
+            value: "06108",
+            sID: "ZGQVme6tC4",
+          },
+          {
+            label: "Malloa",
+            value: "06109",
+            sID: "hrMPWdgGmB",
+          },
+          {
+            label: "Mostazal",
+            value: "06110",
+            sID: "MfreU0SsAD",
+          },
+          {
+            label: "Olivar",
+            value: "06111",
+            sID: "py2Lxj2d7Q",
+          },
+          {
+            label: "Peumo",
+            value: "06112",
+            sID: "T79rvEe6m8",
+          },
+          {
+            label: "Pichidegua",
+            value: "06113",
+            sID: "H6JBqGHPZm",
+          },
+          {
+            label: "Quinta de Tilcoco",
+            value: "06114",
+            sID: "vkBYVtDPa3",
+          },
+          {
+            label: "Rengo",
+            value: "06115",
+            sID: "rAZy3nDc5N",
+          },
+          {
+            label: "Requínoa",
+            value: "06116",
+            sID: "h66Ixl8asF",
+          },
+          {
+            label: "San Vicente",
+            value: "06117",
+            sID: "xRGC28bpH0",
+          },
+          {
+            label: "Pichilemu",
+            value: "06201",
+            sID: "ihT1kbfQkR",
+          },
+          {
+            label: "La Estrella",
+            value: "06202",
+            sID: "52Jrn76E99",
+          },
+          {
+            label: "Litueche",
+            value: "06203",
+            sID: "ul9tPD6vSH",
+          },
+          {
+            label: "Marchihue",
+            value: "06204",
+            sID: "x5jC2jzVuW",
+          },
+          {
+            label: "Navidad",
+            value: "06205",
+            sID: "wFWfHIyAB0",
+          },
+          {
+            label: "Paredones",
+            value: "06206",
+            sID: "LPUoL1l7TB",
+          },
+          {
+            label: "San Fernando",
+            value: "06301",
+            sID: "CMC3Czlxoh",
+          },
+          {
+            label: "Chépica",
+            value: "06302",
+            sID: "j0vOztG8iW",
+          },
+          {
+            label: "Chimbarongo",
+            value: "06303",
+            sID: "n1BpkPVz7Q",
+          },
+          {
+            label: "Lolol",
+            value: "06304",
+            sID: "9Z0SBApNdD",
+          },
+          {
+            label: "Nancagua",
+            value: "06305",
+            sID: "NlEuQePFeH",
+          },
+          {
+            label: "Palmilla",
+            value: "06306",
+            sID: "xs2HXIsh0S",
+          },
+          {
+            label: "Peralillo",
+            value: "06307",
+            sID: "SDowyIGzmV",
+          },
+          {
+            label: "Placilla",
+            value: "06308",
+            sID: "H8IUKu07kB",
+          },
+          {
+            label: "Pumanque",
+            value: "06309",
+            sID: "0aN6rOYvGP",
+          },
+          {
+            label: "Santa Cruz",
+            value: "06310",
+            sID: "EI0609Fnp9",
+          }
+        ],
+        sID: "ofj1JuFBdE",
+      },
+      {
+        label: "Región del Maule",
+        value: "CL-ML",
+        provincia: {
+          nombre: "Maule",
+          codigo: "07",
+          sID: "njg6xrLbaz",
+        },
+        cities: [
+          {
+            label: "Talca",
+            value: "07101",
+            sID: "zrr3HN6frG",
+          },
+          {
+            label: "Constitución",
+            value: "07102",
+            sID: "yDug0twCKD",
+          },
+          {
+            label: "Curepto",
+            value: "07103",
+            sID: "UkpBo1zCqG",
+          },
+          {
+            label: "Empedrado",
+            value: "07104",
+            sID: "9m0oRK8gt3",
+          },
+          {
+            label: "Maule",
+            value: "07105",
+            sID: "1jHmfAxb91",
+          },
+          {
+            label: "Pelarco",
+            value: "07106",
+            sID: "ZJHkzziRK4",
+          },
+          {
+            label: "Pencahue",
+            value: "07107",
+            sID: "tSRQmQGyrn",
+          },
+          {
+            label: "Río Claro",
+            value: "07108",
+            sID: "DFr26DkETs",
+          },
+          {
+            label: "San Clemente",
+            value: "07109",
+            sID: "T4YjHMUQIg",
+          },
+          {
+            label: "San Rafael",
+            value: "07110",
+            sID: "PeuS5elZHq",
+          },
+          {
+            label: "Cauquenes",
+            value: "07201",
+            sID: "hDR2pgetB1",
+          },
+          {
+            label: "Chanco",
+            value: "07202",
+            sID: "lFSigYzKFI",
+          },
+          {
+            label: "Pelluhue",
+            value: "07203",
+            sID: "7rBO6YBGwl",
+          },
+          {
+            label: "Curicó",
+            value: "07301",
+            sID: "cTCOLy4eJ2",
+          },
+          {
+            label: "Hualañé",
+            value: "07302",
+            sID: "pd5jxBU3aS",
+          },
+          {
+            label: "Licantén",
+            value: "07303",
+            sID: "szNVtZhWU6",
+          },
+          {
+            label: "Molina",
+            value: "07304",
+            sID: "xD5RzCWvT0",
+          },
+          {
+            label: "Rauco",
+            value: "07305",
+            sID: "DAMECgE5C4",
+          },
+          {
+            label: "Romeral",
+            value: "07306",
+            sID: "3qzkpJhbU5",
+          },
+          {
+            label: "Sagrada Familia",
+            value: "07307",
+            sID: "VuHFnjL9EV",
+          },
+          {
+            label: "Teno",
+            value: "07308",
+            sID: "4aXMzzoNum",
+          },
+          {
+            label: "Vichuquén",
+            value: "07309",
+            sID: "S90fglAaFZ",
+          },
+          {
+            label: "Linares",
+            value: "07401",
+            sID: "zEyjl63Oob",
+          },
+          {
+            label: "Colbún",
+            value: "07402",
+            sID: "26sENeAmY5",
+          },
+          {
+            label: "Longaví",
+            value: "07403",
+            sID: "NcQ914n89m",
+          },
+          {
+            label: "Parral",
+            value: "07404",
+            sID: "BmoL6MdL5g",
+          },
+          {
+            label: "Retiro",
+            value: "07405",
+            sID: "zeh3gatvDy",
+          },
+          {
+            label: "San Javier",
+            value: "07406",
+            sID: "XpYbyS1zwG",
+          },
+          {
+            label: "Villa Alegre",
+            value: "07407",
+            sID: "FIzjB9nbmo",
+          },
+          {
+            label: "Yerbas Buenas",
+            value: "07408",
+            sID: "23Qs1Bk2i3",
+          }
+        ],
+        sID: "wHXR7siMGx",
+      },
+      {
+        label: "Región de Ñuble",
+        value: "CL-NB",
+        provincia: {
+          nombre: "Ñuble",
+          codigo: "16",
+          sID: "XaRVVJkLgh",
+        },
+        cities: [
+          {
+            label: "Chillán",
+            value: "16101",
+            sID: "EcZi5cNXb3",
+          },
+          {
+            label: "Bulnes",
+            value: "16102",
+            sID: "MIBnBmekRk",
+          },
+          {
+            label: "Chillán Viejo",
+            value: "16103",
+            sID: "O0H2upFp8T",
+          },
+          {
+            label: "El Carmen",
+            value: "16104",
+            sID: "jfsobY9D2r",
+          },
+          {
+            label: "Pemuco",
+            value: "16105",
+            sID: "7oG5CpwyTp",
+          },
+          {
+            label: "Pinto",
+            value: "16106",
+            sID: "kQOydiDhNb",
+          },
+          {
+            label: "Quillón",
+            value: "16107",
+            sID: "ytaXdHGgfb",
+          },
+          {
+            label: "San Ignacio",
+            value: "16108",
+            sID: "apZhHm38ob",
+          },
+          {
+            label: "Yungay",
+            value: "16109",
+            sID: "vtkVaVDicj",
+          },
+          {
+            label: "Quirihue",
+            value: "16201",
+            sID: "5jsJUGblzy",
+          },
+          {
+            label: "Cobquecura",
+            value: "16202",
+            sID: "UF4fcKEJDs",
+          },
+          {
+            label: "Coelemu",
+            value: "16203",
+            sID: "oFzm9nrLvh",
+          },
+          {
+            label: "Ninhue",
+            value: "16204",
+            sID: "CL8CJ0SD64",
+          },
+          {
+            label: "Portezuelo",
+            value: "16205",
+            sID: "3y7NYT4hxB",
+          },
+          {
+            label: "Ranquil",
+            value: "16206",
+            sID: "r77LTEbgpa",
+          },
+          {
+            label: "Treguaco",
+            value: "16207",
+            sID: "zcd3GfvFQJ",
+          },
+          {
+            label: "San Carlos",
+            value: "16301",
+            sID: "kNX8404QKO",
+          },
+          {
+            label: "Coihueco",
+            value: "16302",
+            sID: "bs6yrEdEy7",
+          },
+          {
+            label: "Ñiquén",
+            value: "16303",
+            sID: "UtJVfSnH1J",
+          },
+          {
+            label: "San Fabián",
+            value: "16304",
+            sID: "bISd5Y8UVj",
+          },
+          {
+            label: "San Nicolás",
+            value: "16305",
+            sID: "YRCwZ9IHxa",
+          }
+        ],
+        sID: "VkfRODjueN",
+      },
+      {
+        label: "Región del Biobío",
+        value: "CL-BI",
+        provincia: {
+          nombre: "Biobío",
+          codigo: "08",
+          sID: "Y536JBIEAQ",
+        },
+        cities: [
+          {
+            label: "Concepción",
+            value: "08101",
+            sID: "HL8NYC3Sp7",
+          },
+          {
+            label: "Coronel",
+            value: "08102",
+            sID: "3jfpzfq70T",
+          },
+          {
+            label: "Chiguayante",
+            value: "08103",
+            sID: "Gn01ISgQaL",
+          },
+          {
+            label: "Florida",
+            value: "08104",
+            sID: "4twl7eDda0",
+          },
+          {
+            label: "Hualqui",
+            value: "08105",
+            sID: "P59SlENuOO",
+          },
+          {
+            label: "Lota",
+            value: "08106",
+            sID: "KHOxA8j0Lm",
+          },
+          {
+            label: "Penco",
+            value: "08107",
+            sID: "CutbbdEF1a",
+          },
+          {
+            label: "San Pedro de la Paz",
+            value: "08108",
+            sID: "AaZKUVce6i",
+          },
+          {
+            label: "Santa Juana",
+            value: "08109",
+            sID: "NxL7zDNO5o",
+          },
+          {
+            label: "Talcahuano",
+            value: "08110",
+            sID: "aTLXBUEIvU",
+          },
+          {
+            label: "Tomé",
+            value: "08111",
+            sID: "QudI1IrMbV",
+          },
+          {
+            label: "Hualpén",
+            value: "08112",
+            sID: "1oZk9Ehn4V",
+          },
+          {
+            label: "Lebu",
+            value: "08201",
+            sID: "1i8C1KGOme",
+          },
+          {
+            label: "Arauco",
+            value: "08202",
+            sID: "BDs2ETUUvl",
+          },
+          {
+            label: "Cañete",
+            value: "08203",
+            sID: "RRhiTImuEP",
+          },
+          {
+            label: "Contulmo",
+            value: "08204",
+            sID: "pLociA1oTr",
+          },
+          {
+            label: "Curanilahue",
+            value: "08205",
+            sID: "pmZNweKLRN",
+          },
+          {
+            label: "Los Álamos",
+            value: "08206",
+            sID: "9qRT1Jogfw",
+          },
+          {
+            label: "Tirúa",
+            value: "08207",
+            sID: "uAV0ZDEIGp",
+          },
+          {
+            label: "Los Ángeles",
+            value: "08301",
+            sID: "fwQ4hRz0Mq",
+          },
+          {
+            label: "Antuco",
+            value: "08302",
+            sID: "G6rqgAxbyO",
+          },
+          {
+            label: "Cabrero",
+            value: "08303",
+            sID: "ltzfA9HO8J",
+          },
+          {
+            label: "Laja",
+            value: "08304",
+            sID: "AFDXaKBtYI",
+          },
+          {
+            label: "Mulchén",
+            value: "08305",
+            sID: "BHxxiuHEmK",
+          },
+          {
+            label: "Nacimiento",
+            value: "08306",
+            sID: "SvlEEFidFn",
+          },
+          {
+            label: "Negrete",
+            value: "08307",
+            sID: "HV0hPL88wD",
+          },
+          {
+            label: "Quilaco",
+            value: "08308",
+            sID: "qGqHEi0Q4q",
+          },
+          {
+            label: "Quilleco",
+            value: "08309",
+            sID: "MlkpBiXPVA",
+          },
+          {
+            label: "San Rosendo",
+            value: "08310",
+            sID: "harxcQROQC",
+          },
+          {
+            label: "Santa Bárbara",
+            value: "08311",
+            sID: "lA5XKkvRTn",
+          },
+          {
+            label: "Tucapel",
+            value: "08312",
+            sID: "gsVt0r7PsM",
+          },
+          {
+            label: "Yumbel",
+            value: "08313",
+            sID: "CPM9fJcQSO",
+          },
+          {
+            label: "Alto Biobío",
+            value: "08314",
+            sID: "JGXJhcoDtD",
+          }
+        ],
+        sID: "cf6yBO4BOQ",
+      },
+      {
+        label: "Región de La Araucanía",
+        value: "CL-AR",
+        provincia: {
+          nombre: "La Araucanía",
+          codigo: "09",
+          sID: "Gw81hn5Z32",
+        },
+        cities: [
+          {
+            label: "Temuco",
+            value: "09101",
+            sID: "z1TbFV9vuZ",
+          },
+          {
+            label: "Carahue",
+            value: "09102",
+            sID: "LX2ztiDUDk",
+          },
+          {
+            label: "Cunco",
+            value: "09103",
+            sID: "JsyDyEq7Sz",
+          },
+          {
+            label: "Curarrehue",
+            value: "09104",
+            sID: "ZJYayLWDc5",
+          },
+          {
+            label: "Freire",
+            value: "09105",
+            sID: "EgrzWU6TBS",
+          },
+          {
+            label: "Galvarino",
+            value: "09106",
+            sID: "sG01I0FAck",
+          },
+          {
+            label: "Gorbea",
+            value: "09107",
+            sID: "Je56ycD1V8",
+          },
+          {
+            label: "Lautaro",
+            value: "09108",
+            sID: "84as2mraIh",
+          },
+          {
+            label: "Loncoche",
+            value: "09109",
+            sID: "UuqcvTZFCa",
+          },
+          {
+            label: "Melipeuco",
+            value: "09110",
+            sID: "EgJVbxlBvf",
+          },
+          {
+            label: "Nueva Imperial",
+            value: "09111",
+            sID: "P6L8h4mJNH",
+          },
+          {
+            label: "Padre Las Casas",
+            value: "09112",
+            sID: "48jX7M6tUo",
+          },
+          {
+            label: "Perquenco",
+            value: "09113",
+            sID: "GJyWH1ADxE",
+          },
+          {
+            label: "Pitrufquén",
+            value: "09114",
+            sID: "DeXZGqEFAu",
+          },
+          {
+            label: "Pucón",
+            value: "09115",
+            sID: "wG3zBMVpXI",
+          },
+          {
+            label: "Saavedra",
+            value: "09116",
+            sID: "jE0OLW0ODy",
+          },
+          {
+            label: "Teodoro Schmidt",
+            value: "09117",
+            sID: "mCWb08alr0",
+          },
+          {
+            label: "Toltén",
+            value: "09118",
+            sID: "Y63qSnRP05",
+          },
+          {
+            label: "Vilcún",
+            value: "09119",
+            sID: "iTbvBAia5W",
+          },
+          {
+            label: "Villarrica",
+            value: "09120",
+            sID: "GtmymmL5a0",
+          },
+          {
+            label: "Cholchol",
+            value: "09121",
+            sID: "bOBEw03j7T",
+          },
+          {
+            label: "Angol",
+            value: "09201",
+            sID: "NMugYHJBG7",
+          },
+          {
+            label: "Collipulli",
+            value: "09202",
+            sID: "t3Lan5wd3E",
+          },
+          {
+            label: "Curacautín",
+            value: "09203",
+            sID: "QdH930Q4YO",
+          },
+          {
+            label: "Ercilla",
+            value: "09204",
+            sID: "XdXXz7GLmD",
+          },
+          {
+            label: "Lonquimay",
+            value: "09205",
+            sID: "Y63NrHMZ0B",
+          },
+          {
+            label: "Los Sauces",
+            value: "09206",
+            sID: "M28n9zTppB",
+          },
+          {
+            label: "Lumaco",
+            value: "09207",
+            sID: "WtJbJqp0yB",
+          },
+          {
+            label: "Purén",
+            value: "09208",
+            sID: "cPPaRkLjCg",
+          },
+          {
+            label: "Renaico",
+            value: "09209",
+            sID: "SEemwBnBEG",
+          },
+          {
+            label: "Traiguén",
+            value: "09210",
+            sID: "ksB4fYPbAG",
+          },
+          {
+            label: "Victoria",
+            value: "09211",
+            sID: "QZQo2tuLpV",
+          }
+        ],
+        sID: "54MhzCHwAA",
+      },
+      {
+        label: "Región de Los Ríos",
+        value: "CL-LR",
+        provincia: {
+          nombre: "Los Ríos",
+          codigo: "14",
+          sID: "BbD99I84du",
+        },
+        cities: [
+          {
+            label: "Valdivia",
+            value: "14101",
+            sID: "YpBsXWwzdU",
+          },
+          {
+            label: "Corral",
+            value: "14102",
+            sID: "AvHmN1NyJr",
+          },
+          {
+            label: "Lanco",
+            value: "14103",
+            sID: "32QxMOZ8jS",
+          },
+          {
+            label: "Los Lagos",
+            value: "14104",
+            sID: "c7i3YG6OE3",
+          },
+          {
+            label: "Máfil",
+            value: "14105",
+            sID: "pjc7DahWAE",
+          },
+          {
+            label: "Mariquina",
+            value: "14106",
+            sID: "ZZW8FMp4hQ",
+          },
+          {
+            label: "Paillaco",
+            value: "14107",
+            sID: "bDlNG8bAtO",
+          },
+          {
+            label: "Panguipulli",
+            value: "14108",
+            sID: "Z2oWtts4vu",
+          },
+          {
+            label: "La Unión",
+            value: "14201",
+            sID: "yBpj95Uhre",
+          },
+          {
+            label: "Futrono",
+            value: "14202",
+            sID: "vXdUxexA4Q",
+          },
+          {
+            label: "Lago Ranco",
+            value: "14203",
+            sID: "KeYtuHXH2E",
+          },
+          {
+            label: "Río Bueno",
+            value: "14204",
+            sID: "AeCpXimL9V",
+          }
+        ],
+        sID: "12NdJ6rvky",
+      },
+      {
+        label: "Región de Los Lagos",
+        value: "CL-LL",
+        provincia: {
+          nombre: "Los Lagos",
+          codigo: "10",
+          sID: "ybvkTyFUwa",
+        },
+        cities: [
+          {
+            label: "Puerto Montt",
+            value: "10101",
+            sID: "KDnSRHicFd",
+          },
+          {
+            label: "Calbuco",
+            value: "10102",
+            sID: "7VchKrSxrW",
+          },
+          {
+            label: "Cochamó",
+            value: "10103",
+            sID: "G92loow7KE",
+          },
+          {
+            label: "Fresia",
+            value: "10104",
+            sID: "X0FEQur2Nm",
+          },
+          {
+            label: "Frutillar",
+            value: "10105",
+            sID: "fGubc1UqCy",
+          },
+          {
+            label: "Los Muermos",
+            value: "10106",
+            sID: "VV0XmnnsBY",
+          },
+          {
+            label: "Llanquihue",
+            value: "10107",
+            sID: "qHB9cyQVv7",
+          },
+          {
+            label: "Maullín",
+            value: "10108",
+            sID: "cIH3ZO8nNm",
+          },
+          {
+            label: "Puerto Varas",
+            value: "10109",
+            sID: "Xj9glyClu8",
+          },
+          {
+            label: "Castro",
+            value: "10201",
+            sID: "YcsgsoDaxl",
+          },
+          {
+            label: "Ancud",
+            value: "10202",
+            sID: "6zaQDdAOph",
+          },
+          {
+            label: "Chonchi",
+            value: "10203",
+            sID: "Zoxot7o5em",
+          },
+          {
+            label: "Curaco de Vélez",
+            value: "10204",
+            sID: "YDxTn2MSEw",
+          },
+          {
+            label: "Dalcahue",
+            value: "10205",
+            sID: "sanzmAHsFj",
+          },
+          {
+            label: "Puqueldón",
+            value: "10206",
+            sID: "gVyOubZkBR",
+          },
+          {
+            label: "Queilén",
+            value: "10207",
+            sID: "Y3jzcbQGrT",
+          },
+          {
+            label: "Quellón",
+            value: "10208",
+            sID: "6a2F2PE08w",
+          },
+          {
+            label: "Quemchi",
+            value: "10209",
+            sID: "mjqjSZb9Yk",
+          },
+          {
+            label: "Quinchao",
+            value: "10210",
+            sID: "FAUlWDVsWV",
+          },
+          {
+            label: "Osorno",
+            value: "10301",
+            sID: "LXyxPsKFEB",
+          },
+          {
+            label: "Puerto Octay",
+            value: "10302",
+            sID: "AU2dKaOTnH",
+          },
+          {
+            label: "Purranque",
+            value: "10303",
+            sID: "6lTsLuZ2IG",
+          },
+          {
+            label: "Puyehue",
+            value: "10304",
+            sID: "uoMeouvfYi",
+          },
+          {
+            label: "Río Negro",
+            value: "10305",
+            sID: "0TyvMBBY9g",
+          },
+          {
+            label: "San Juan de la Costa",
+            value: "10306",
+            sID: "7GjcWmhPic",
+          },
+          {
+            label: "San Pablo",
+            value: "10307",
+            sID: "OvipC7N57A",
+          },
+          {
+            label: "Chaitén",
+            value: "10401",
+            sID: "lLVnAmVej4",
+          },
+          {
+            label: "Futaleufú",
+            value: "10402",
+            sID: "No7IzIjJ4Y",
+          },
+          {
+            label: "Hualaihué",
+            value: "10403",
+            sID: "FsojYlhwEP",
+          },
+          {
+            label: "Palena",
+            value: "10404",
+            sID: "mNYFKjg4pf",
+          }
+        ],
+        sID: "Vr8mtgXu8s",
+      },
+      {
+        label: "Región de Aysén del General Carlos Ibáñez del Campo",
+        value: "CL-AI",
+        provincia: {
+          nombre: "Aysén del General Carlos Ibáñez del Campo",
+          codigo: "11",
+          sID: "5dqqLvOABu",
+        },
+        cities: [
+          {
+            label: "Coyhaique",
+            value: "11101",
+            sID: "QC2Zahbwrc",
+          },
+          {
+            label: "Lago Verde",
+            value: "11102",
+            sID: "nYFrdgzrSN",
+          },
+          {
+            label: "Aysén",
+            value: "11201",
+            sID: "T7NDLFDhU9",
+          },
+          {
+            label: "Cisnes",
+            value: "11202",
+            sID: "lTB1L3GGVj",
+          },
+          {
+            label: "Guaitecas",
+            value: "11203",
+            sID: "jbXFSidSDp",
+          },
+          {
+            label: "Cochrane",
+            value: "11301",
+            sID: "5LoLEI1l2W",
+          },
+          {
+            label: "O'Higgins",
+            value: "11302",
+            sID: "nPJFCAMtB4",
+          },
+          {
+            label: "Tortel",
+            value: "11303",
+            sID: "BAn8JVCfzs",
+          },
+          {
+            label: "Chile Chico",
+            value: "11401",
+            sID: "AWxCD471UZ",
+          },
+          {
+            label: "Río Ibáñez",
+            value: "11402",
+            sID: "ykx0QDWX5t",
+          }
+        ],
+        sID: "ovsJtbzYNf",
+      },
+      {
+        label: "Región de Magallanes y de la Antártica Chilena",
+        value: "CL-MA",
+        provincia: {
+          nombre: "Magallanes y de la Antártica Chilena",
+          codigo: "12",
+          sID: "GD3TqR96lT",
+        },
+        cities: [
+          {
+            label: "Punta Arenas",
+            value: "12101",
+            sID: "hqEyuJqKRt",
+          },
+          {
+            label: "Laguna Blanca",
+            value: "12102",
+            sID: "F69FlgRwkF",
+          },
+          {
+            label: "Río Verde",
+            value: "12103",
+            sID: "f1e3xlKu0S",
+          },
+          {
+            label: "San Gregorio",
+            value: "12104",
+            sID: "acDonBC7wb",
+          },
+          {
+            label: "Cabo de Hornos",
+            value: "12201",
+            sID: "D3etR13nhg",
+          },
+          {
+            label: "Antártica",
+            value: "12202",
+            sID: "dtJe0EN7Uu",
+          },
+          {
+            label: "Porvenir",
+            value: "12301",
+            sID: "QNFO0VCKPs",
+          },
+          {
+            label: "Primavera",
+            value: "12302",
+            sID: "XdMyFnnj1g",
+          },
+          {
+            label: "Timaukel",
+            value: "12303",
+            sID: "wJtMGQXQ5V",
+          },
+          {
+            label: "Natales",
+            value: "12401",
+            sID: "RvtNYeQGZs",
+          },
+          {
+            label: "Torres del Paine",
+            value: "12402",
+            sID: "lcTGsS4CXH",
+          }
+        ],
+        sID: "pDs7UR0WzW",
+      },
+    ],
+    sID: "y3x0sr6Eyt",
   },
 ];
 
@@ -9638,10 +11575,10 @@ function findLocationByPath(pathIds, returnChildren = false) {
     return returnChildren ? countries : null;
   }
 
-  // Buscar el país (primer nivel)
+  // Buscar el país (primer nivel) por ISO code, ObjectId o sID
   const countryId = pathIds[0];
   let currentNode = countries.find(
-    (c) => c.value === countryId || c.id === countryId,
+    (c) => c.value === countryId || c.id === countryId || c.sID === countryId,
   );
 
   if (!currentNode) {
