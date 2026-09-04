@@ -165,6 +165,7 @@ async function normalizeProfileId(id, connection) {
       _id: entity._id,
       identifier: entity.identifier,
       entity_id: entity.id,
+      sID: entity.sID,
       username: entity.username,
       name:
         entity.name ||

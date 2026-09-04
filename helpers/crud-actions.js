@@ -1021,7 +1021,11 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
             modelName,
         );
       }
-      const info = { ...body };
+      const info =
+        options.buildCreatePayload &&
+        typeof options.buildCreatePayload === "function"
+          ? await options.buildCreatePayload({ body: { ...body }, req, userId })
+          : { ...body };
 
       if (
         options.validateCreate &&
@@ -1179,7 +1183,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       query._id = id;
     } else {
       query = {
-        $or: [{ username: id }, { name: id }],
+        $or: [{ sID: id }, { username: id }, { name: id }],
       };
     }
 
@@ -1273,7 +1277,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       query._id = id;
     } else {
       query = {
-        $or: [{ username: id }, { name: id }],
+        $or: [{ sID: id }, { username: id }, { name: id }],
       };
     }
     console.log(`[${modelName}] - query:`, JSON.stringify(query));
@@ -1314,6 +1318,17 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
     );
 
     if (!modelRequiresOwnership(modelName) || hasRole) {
+      if (
+        options.validateDelete &&
+        typeof options.validateDelete === "function"
+      ) {
+        await options.validateDelete({
+          userId,
+          existingEntity: entityInfo,
+          req,
+        });
+      }
+
       // Construir query de eliminación según si el modelo requiere ownership o no
       let deleteQuery = { _id: entityInfo._id };
 
