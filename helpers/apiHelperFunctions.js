@@ -19,13 +19,13 @@ module.exports = {
   mapDatabaseErrorToResponse(err) {
     if (err?.name === "ValidationError") {
       const fieldMessages = Object.values(err.errors || {}).map(
-        (fieldError) => fieldError.message
+        (fieldError) => fieldError.message,
       );
       return {
         status: 400,
         body: this.createAPIErrorResponse(
           fieldMessages.length ? fieldMessages.join(" ") : err.message,
-          ErrorCodes.VALIDATION_ERROR
+          ErrorCodes.VALIDATION_ERROR,
         ),
       };
     }
@@ -43,7 +43,7 @@ module.exports = {
           duplicatedField
             ? `El valor de '${duplicatedField}' ya está en uso.`
             : "Ya existe un registro con ese valor único.",
-          ErrorCodes.VALIDATION_DUPLICATE_KEY
+          ErrorCodes.VALIDATION_DUPLICATE_KEY,
         ),
       };
     }

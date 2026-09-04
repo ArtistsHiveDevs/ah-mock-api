@@ -16,10 +16,10 @@ function maskIds(data, context = "unknown") {
   const hasIdVirtual = plainData.id !== undefined && plainData.id !== null;
   const hasMaskableId = hasSID && (has_Id || hasIdVirtual);
 
-  if (!hasSID && (has_Id || hasIdVirtual)) {
-    // console.warn(
-    //   `[maskIds] sID ausente en ${source} (id=${plainData._id ?? plainData.id}); se expone el ObjectId real`,
-    // );
+  if (!hasSID && has_Id) {
+    console.warn(
+      `[maskIds] sID ausente en ${source} (id=${plainData._id ?? plainData.id}); se expone el ObjectId real`,
+    );
   }
 
   const masked = {};
@@ -32,11 +32,9 @@ function maskIds(data, context = "unknown") {
 
   if (hasMaskableId) {
     if (has_Id) {
-      masked._id = plainData.sID;
+      delete masked._id;
     }
-    if (hasIdVirtual) {
-      masked.id = plainData.sID;
-    }
+    masked.id = plainData.sID;
   }
 
   return masked;

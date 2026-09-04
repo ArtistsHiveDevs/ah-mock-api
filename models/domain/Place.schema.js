@@ -4,10 +4,10 @@ const { sIDPlugin } = require("../../helpers/sIDPlugin");
 const { buildHomeCityData } = require("../../helpers/locationData");
 const { Schema } = mongoose;
 
-const buildLegacyLocationFields = (source = {}) => {
+const buildLegacyLocationFields = (env, source = {}) => {
   if (!source.home_city_country) return {};
 
-  const levels = buildHomeCityData(source);
+  const levels = buildHomeCityData(env, source);
   const labelOf = (levelName) =>
     levels.find((level) => level.level === levelName)?.label;
 
@@ -195,15 +195,19 @@ schema.virtual("followedProfilesCount").get(function () {
   };
 });
 schema.pre("validate", function () {
-  Object.entries(buildLegacyLocationFields(this)).forEach(([field, value]) => {
-    this[field] = value;
-  });
+  const env = this.db?.environment;
+  Object.entries(buildLegacyLocationFields(env, this)).forEach(
+    ([field, value]) => {
+      this[field] = value;
+    },
+  );
 });
 
 schema.pre("findOneAndUpdate", function () {
+  const env = this.model?.db?.environment;
   const update = this.getUpdate() || {};
   const changes = update.$set || update;
-  Object.assign(changes, buildLegacyLocationFields(changes));
+  Object.assign(changes, buildLegacyLocationFields(env, changes));
 });
 
 // Incluye los virtuals en los resultados de JSON

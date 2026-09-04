@@ -609,8 +609,12 @@ module.exports = [
         //  ====================================    Home city ===========================
         artistInfo = {
           ...omitRawLocationFields(artistInfo, ["home_city", "origin_city"]),
-          homeCityData: buildHomeCityData(artistInfo),
-          originCityData: buildLocationFieldData(artistInfo, "origin_city"),
+          homeCityData: buildHomeCityData(req.serverEnvironment, artistInfo),
+          originCityData: buildLocationFieldData(
+            req.serverEnvironment,
+            artistInfo,
+            "origin_city",
+          ),
         };
 
         //  ====================================    Country and city ===========================

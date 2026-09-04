@@ -7,6 +7,7 @@ var helpers = require("./index");
 const apiHelperFunctions = require("./apiHelperFunctions");
 const EntityDirectory = require("../models/appbase/EntityDirectory");
 const createCRUDActions = require("./crud-actions");
+const { maskIds } = require("./maskEntityId");
 
 const modelActions = {};
 const autoSeeded = {}; // Track which models have been auto-seeded
@@ -28,28 +29,25 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
       ...baseMiddlewares,
       async (req, res) => {
         try {
-          if (modelName === "Place") {
-            console.log(`>> Place >> 🔍 GET list - Inicio`);
-            console.log(`>> Place >> 📥 Params:`, {
-              page: req.query.page,
-              limit: req.query.limit,
-              fields: !!req.query.fields,
-              hasUser: !!req.user,
-              serverEnv: req.serverEnvironment
-            });
-          }
-
           // Auto-seed: insert mock data if collection is empty (runs once)
           if (options.autoSeed && !autoSeeded[modelName]) {
             try {
               const { getModelWithSchema } = require("./getModel");
-              const Model = getModelWithSchema(req.serverEnvironment, modelName, schema);
+              const Model = getModelWithSchema(
+                req.serverEnvironment,
+                modelName,
+                schema,
+              );
               const count = await Model.countDocuments();
               if (count === 0) {
                 const fs = require("fs");
-                const mockData = JSON.parse(fs.readFileSync(options.autoSeed.dataFile));
+                const mockData = JSON.parse(
+                  fs.readFileSync(options.autoSeed.dataFile),
+                );
                 await Model.insertMany(mockData);
-                console.log(`[${modelName}] Auto-seeded ${mockData.length} documents`);
+                console.log(
+                  `[${modelName}] Auto-seeded ${mockData.length} documents`,
+                );
               }
               autoSeeded[modelName] = true;
             } catch (seedErr) {
@@ -57,16 +55,13 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             }
           }
 
-          if (modelName === "Place") console.log(`>> Place >> 🔍 Creando CRUD actions`);
           const modelActions = await createCRUDActions({
             modelName,
             schema,
             options,
             req,
           });
-          if (modelName === "Place") console.log(`>> Place >> ✅ CRUD actions creado, hasListEntities: ${!!modelActions?.listEntities}`);
 
-          if (modelName === "Place") console.log(`>> Place >> 🔍 Llamando listEntities con limit: ${3000 || req.query.limit || 50}`);
           const response = await modelActions.listEntities({
             page: req.query.page,
             limit: 3000 || req.query.limit || 50,
@@ -78,35 +73,14 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             user: req.user,
           });
 
-          if (modelName === "Place") {
-            console.log(`>> Place >> ✅ listEntities completado`);
-            console.log(`>> Place >> 📊 Response:`, {
-              exists: !!response,
-              hasData: !!response?.data,
-              dataIsArray: Array.isArray(response?.data),
-              dataLength: response?.data?.length,
-              page: response?.page,
-              totalPages: response?.totalPages,
-              totalCount: response?.totalCount
-            });
-            if (response?.data?.length > 0) {
-              console.log(`>> Place >> 📦 Primer item:`, {
-                hasId: !!response.data[0]._id,
-                hasName: !!response.data[0].name,
-                hasSID: !!response.data[0].sID
-              });
-            }
-          }
-
-          res.json(response);
-          if (modelName === "Place") console.log(`>> Place >> ✅ Response enviado al cliente`);
+          res.json(maskIds(response));
         } catch (err) {
-          if (modelName === "Place") console.error(`>> Place >> ❌ Error:`, err.message);
           console.error(err);
-          const { status, body } = apiHelperFunctions.mapDatabaseErrorToResponse(err);
+          const { status, body } =
+            apiHelperFunctions.mapDatabaseErrorToResponse(err);
           res.status(status).json(body);
         }
-      }
+      },
     );
 
     // GET by ID route
@@ -132,13 +106,14 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             public_fields: options.public_fields,
             postScriptFunction: options.postScriptFunction,
           });
-          res.json(response);
+          res.json(maskIds(response));
         } catch (err) {
           console.error(err);
-          const { status, body } = apiHelperFunctions.mapDatabaseErrorToResponse(err);
+          const { status, body } =
+            apiHelperFunctions.mapDatabaseErrorToResponse(err);
           res.status(status).json(body);
         }
-      }
+      },
     );
 
     // POST create route
@@ -158,14 +133,15 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             userId: req.userId,
             body: req.body,
           });
-          res.json(response);
+          res.json(maskIds(response));
         } catch (err) {
           console.error(`[${modelName}] Error creating entity:`, err.message);
           console.error("Stack trace:", err.stack);
-          const { status, body } = apiHelperFunctions.mapDatabaseErrorToResponse(err);
+          const { status, body } =
+            apiHelperFunctions.mapDatabaseErrorToResponse(err);
           res.status(status).json(body);
         }
-      }
+      },
     );
 
     // PUT update route
@@ -187,12 +163,13 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             userId: req.userId,
             body: req.body,
           });
-          res.json(response);
+          res.json(maskIds(response));
         } catch (err) {
-          const { status, body } = apiHelperFunctions.mapDatabaseErrorToResponse(err);
+          const { status, body } =
+            apiHelperFunctions.mapDatabaseErrorToResponse(err);
           res.status(status).json(body);
         }
-      }
+      },
     );
 
     // DELETE route
@@ -213,13 +190,14 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             id,
             userId: req.userId,
           });
-          res.json(response);
+          res.json(maskIds(response));
         } catch (err) {
           console.error(`[${modelName}] Error deleting entity:`, err.message);
-          const { status, body } = apiHelperFunctions.mapDatabaseErrorToResponse(err);
+          const { status, body } =
+            apiHelperFunctions.mapDatabaseErrorToResponse(err);
           res.status(status).json(body);
         }
-      }
+      },
     );
 
     if (!!options.actions) {
@@ -256,7 +234,7 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
               req,
               res,
               entity,
-              req.body
+              req.body,
             );
 
             // Guardar los cambios
@@ -289,10 +267,11 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             res.json(apiHelperFunctions.createPaginatedDataResponse(result));
           } catch (err) {
             console.error(err);
-            const { status, body } = apiHelperFunctions.mapDatabaseErrorToResponse(err);
+            const { status, body } =
+              apiHelperFunctions.mapDatabaseErrorToResponse(err);
             res.status(status).json(body);
           }
-        }
+        },
       );
     }
 

@@ -441,7 +441,10 @@ function loadRoutes() {
           postScriptFunction: (data) => {
             const { results, req } = data || {};
             results.forEach((place) => {
-              place.homeCityData = buildHomeCityData(place);
+              place.homeCityData = buildHomeCityData(
+                req?.serverEnvironment,
+                place,
+              );
               ["country", "level1", "level2", "level3"].forEach((suffix) => {
                 delete place[`home_city_${suffix}`];
               });
