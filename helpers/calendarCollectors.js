@@ -87,6 +87,7 @@ async function collectActivityCalendarEvents({ req, from, to }) {
     editable: true,
     meta: {
       notes: activity.notes || null,
+      image: activity.image || null,
       owner_profile_entity: activity.owner_profile_entity || null,
     },
   }));
@@ -101,7 +102,7 @@ async function collectOpenCallCalendarEvents({ req, from, to }) {
     .select(
       "sID event_name end_date event_date status place_id city applications_count",
     )
-    .populate({ path: "place_id", select: "sID" })
+    .populate({ path: "place_id", select: "sID profile_pic" })
     .lean();
 
   const today = startOfDay(new Date());
@@ -133,6 +134,7 @@ async function collectOpenCallCalendarEvents({ req, from, to }) {
         event_date: openCall.event_date || null,
         applications_count: openCall.applications_count || 0,
         expired: deadline < today,
+        image: openCall.place_id?.profile_pic || null,
       },
     });
 
@@ -147,7 +149,7 @@ async function collectEventCalendarEvents({ req, from, to }) {
     .select(
       "sID name subtitle profile_pic place timetable__initial_date timetable__end_date confirmation_status",
     )
-    .populate({ path: "place", select: "sID name city" })
+    .populate({ path: "place", select: "sID name city profile_pic" })
     .lean();
 
   return events.reduce((calendarEvents, event) => {
@@ -177,7 +179,7 @@ async function collectEventCalendarEvents({ req, from, to }) {
       editable: false,
       meta: {
         subtitle: event.subtitle || null,
-        profile_pic: event.profile_pic || null,
+        image: event.profile_pic || event.place?.profile_pic || null,
         place_name: event.place?.name || null,
         city: event.place?.city || null,
         confirmation_status: event.confirmation_status ?? null,

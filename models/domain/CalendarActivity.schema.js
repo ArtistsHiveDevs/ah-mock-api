@@ -43,6 +43,7 @@ const schema = new Schema(
     end: { type: Date },
     allDay: { type: Boolean, default: false },
     notes: { type: String },
+    image: { type: String },
     owner_profile_id: {
       type: Schema.Types.ObjectId,
       index: true,
