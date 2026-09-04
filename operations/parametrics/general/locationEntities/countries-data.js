@@ -6633,6 +6633,482 @@ const countries = [
     sID: "h9M7rpSkby",
   },
   {
+    label: "Brasil",
+    value: "BR",
+    id: "66d61977a546e02c6ce65a15",
+    // IBGE (Instituto Brasileiro de Geografia e Estatística)
+    // Sistema: Códigos de unidades territoriais
+    // Niveles: Estados → Municípios
+    // Código: 7 dígitos para municipios
+    // ISO 3166-2: BR-XX
+    statisticalInstitute: "IBGE",
+    codingSystem: "Códigos de unidades territoriais",
+    adminLevels: ["Estado", "Município"],
+    states: [
+      {
+        label: "Acre",
+        value: "BR-AC",
+        estado: {
+          nome: "Acre",
+          codigo: "12",
+          sID: "PJ8azgVXEX",
+        },
+        cities: [
+          {
+            label: "Rio Branco",
+            value: "1200401",
+            sID: "xyKDfEnIJV",
+          }
+        ],
+        sID: "pqrhGludFG",
+      },
+      {
+        label: "Alagoas",
+        value: "BR-AL",
+        estado: {
+          nome: "Alagoas",
+          codigo: "27",
+          sID: "BAE1FU9pkI",
+        },
+        cities: [
+          {
+            label: "Maceió",
+            value: "2704302",
+            sID: "YWrb1sfV5W",
+          }
+        ],
+        sID: "4juRbm3lFp",
+      },
+      {
+        label: "Amapá",
+        value: "BR-AP",
+        estado: {
+          nome: "Amapá",
+          codigo: "16",
+          sID: "GzD6CgNOeC",
+        },
+        cities: [
+          {
+            label: "Macapá",
+            value: "1600303",
+            sID: "JnI95WNxQH",
+          }
+        ],
+        sID: "39s1O1VHVj",
+      },
+      {
+        label: "Amazonas",
+        value: "BR-AM",
+        estado: {
+          nome: "Amazonas",
+          codigo: "13",
+          sID: "VNjF9JTHFX",
+        },
+        cities: [
+          {
+            label: "Manaus",
+            value: "1302603",
+            sID: "FEHIFha1ya",
+          }
+        ],
+        sID: "cFRTqI4gDl",
+      },
+      {
+        label: "Bahia",
+        value: "BR-BA",
+        estado: {
+          nome: "Bahia",
+          codigo: "29",
+          sID: "34QzvX1Fww",
+        },
+        cities: [
+          {
+            label: "Salvador",
+            value: "2927408",
+            sID: "kCooWWBfOo",
+          }
+        ],
+        sID: "3l9hMsLSV4",
+      },
+      {
+        label: "Ceará",
+        value: "BR-CE",
+        estado: {
+          nome: "Ceará",
+          codigo: "23",
+          sID: "htuImmbAi0",
+        },
+        cities: [
+          {
+            label: "Fortaleza",
+            value: "2304400",
+            sID: "S0z6udm4XK",
+          }
+        ],
+        sID: "AWxDR03Z3Y",
+      },
+      {
+        label: "Distrito Federal",
+        value: "BR-DF",
+        estado: {
+          nome: "Distrito Federal",
+          codigo: "53",
+          sID: "3Ftv9JaXVh",
+        },
+        cities: [
+          {
+            label: "Brasília",
+            value: "5300108",
+            sID: "29rV28FBk0",
+          }
+        ],
+        sID: "nxSg4ZLWks",
+      },
+      {
+        label: "Espírito Santo",
+        value: "BR-ES",
+        estado: {
+          nome: "Espírito Santo",
+          codigo: "32",
+          sID: "LWK3PVamuN",
+        },
+        cities: [
+          {
+            label: "Vitória",
+            value: "3205309",
+            sID: "63DA0ibli7",
+          }
+        ],
+        sID: "VH6nFEvhvx",
+      },
+      {
+        label: "Goiás",
+        value: "BR-GO",
+        estado: {
+          nome: "Goiás",
+          codigo: "52",
+          sID: "rvMvVEYe8C",
+        },
+        cities: [
+          {
+            label: "Goiânia",
+            value: "5208707",
+            sID: "Mxp3QXdwJw",
+          }
+        ],
+        sID: "q87i9aQDmE",
+      },
+      {
+        label: "Maranhão",
+        value: "BR-MA",
+        estado: {
+          nome: "Maranhão",
+          codigo: "21",
+          sID: "JWzjDqNnOi",
+        },
+        cities: [
+          {
+            label: "São Luís",
+            value: "2111300",
+            sID: "E9JZDujCvZ",
+          }
+        ],
+        sID: "75OFFd17jN",
+      },
+      {
+        label: "Mato Grosso",
+        value: "BR-MT",
+        estado: {
+          nome: "Mato Grosso",
+          codigo: "51",
+          sID: "dzfjRSkSoS",
+        },
+        cities: [
+          {
+            label: "Cuiabá",
+            value: "5103403",
+            sID: "l0VwnCkJ2H",
+          }
+        ],
+        sID: "9KHHPiSPqF",
+      },
+      {
+        label: "Mato Grosso do Sul",
+        value: "BR-MS",
+        estado: {
+          nome: "Mato Grosso do Sul",
+          codigo: "50",
+          sID: "lzXeeqOotE",
+        },
+        cities: [
+          {
+            label: "Campo Grande",
+            value: "5002704",
+            sID: "rplQK4BEf7",
+          }
+        ],
+        sID: "79Y4EKO1Cy",
+      },
+      {
+        label: "Minas Gerais",
+        value: "BR-MG",
+        estado: {
+          nome: "Minas Gerais",
+          codigo: "31",
+          sID: "ZIXF8mU3Ns",
+        },
+        cities: [
+          {
+            label: "Belo Horizonte",
+            value: "3106200",
+            sID: "R7LSUJfmHO",
+          }
+        ],
+        sID: "5Ijg15M0Jq",
+      },
+      {
+        label: "Pará",
+        value: "BR-PA",
+        estado: {
+          nome: "Pará",
+          codigo: "15",
+          sID: "IhYCwS9aGz",
+        },
+        cities: [
+          {
+            label: "Belém",
+            value: "1501402",
+            sID: "I7OyjNUbpb",
+          }
+        ],
+        sID: "9xy6f3STVN",
+      },
+      {
+        label: "Paraíba",
+        value: "BR-PB",
+        estado: {
+          nome: "Paraíba",
+          codigo: "25",
+          sID: "kHPCon4Gw1",
+        },
+        cities: [
+          {
+            label: "João Pessoa",
+            value: "2507507",
+            sID: "c6nHysUcs3",
+          }
+        ],
+        sID: "DtyE2aOSHT",
+      },
+      {
+        label: "Paraná",
+        value: "BR-PR",
+        estado: {
+          nome: "Paraná",
+          codigo: "41",
+          sID: "YePPoICWFI",
+        },
+        cities: [
+          {
+            label: "Curitiba",
+            value: "4106902",
+            sID: "R3hVljUBEL",
+          }
+        ],
+        sID: "2kdH3GjEWS",
+      },
+      {
+        label: "Pernambuco",
+        value: "BR-PE",
+        estado: {
+          nome: "Pernambuco",
+          codigo: "26",
+          sID: "VkmHhmc8WL",
+        },
+        cities: [
+          {
+            label: "Recife",
+            value: "2611606",
+            sID: "y6YbqDwxIa",
+          }
+        ],
+        sID: "ur0B9eR2R2",
+      },
+      {
+        label: "Piauí",
+        value: "BR-PI",
+        estado: {
+          nome: "Piauí",
+          codigo: "22",
+          sID: "sd3Ae3KXqU",
+        },
+        cities: [
+          {
+            label: "Teresina",
+            value: "2211001",
+            sID: "NOBp9zXvOP",
+          }
+        ],
+        sID: "IPsLQaGDLW",
+      },
+      {
+        label: "Rio de Janeiro",
+        value: "BR-RJ",
+        estado: {
+          nome: "Rio de Janeiro",
+          codigo: "33",
+          sID: "LF7MhPwfPJ",
+        },
+        cities: [
+          {
+            label: "Rio de Janeiro",
+            value: "3304557",
+            sID: "rVwPoTf0DX",
+          }
+        ],
+        sID: "3MSgcmYa7v",
+      },
+      {
+        label: "Rio Grande do Norte",
+        value: "BR-RN",
+        estado: {
+          nome: "Rio Grande do Norte",
+          codigo: "24",
+          sID: "fneMe5kczg",
+        },
+        cities: [
+          {
+            label: "Natal",
+            value: "2408102",
+            sID: "Zx1nCFD2tq",
+          }
+        ],
+        sID: "oJCg6FQe9z",
+      },
+      {
+        label: "Rio Grande do Sul",
+        value: "BR-RS",
+        estado: {
+          nome: "Rio Grande do Sul",
+          codigo: "43",
+          sID: "QVz6KfRcLt",
+        },
+        cities: [
+          {
+            label: "Porto Alegre",
+            value: "4314902",
+            sID: "GsVktAUgWl",
+          }
+        ],
+        sID: "yPadKSOCd7",
+      },
+      {
+        label: "Rondônia",
+        value: "BR-RO",
+        estado: {
+          nome: "Rondônia",
+          codigo: "11",
+          sID: "CcfcqnZfUs",
+        },
+        cities: [
+          {
+            label: "Porto Velho",
+            value: "1100205",
+            sID: "MipsPJe2vG",
+          }
+        ],
+        sID: "4C3w4ixZW4",
+      },
+      {
+        label: "Roraima",
+        value: "BR-RR",
+        estado: {
+          nome: "Roraima",
+          codigo: "14",
+          sID: "HRFLGWqpzq",
+        },
+        cities: [
+          {
+            label: "Boa Vista",
+            value: "1400100",
+            sID: "8u8Frxqude",
+          }
+        ],
+        sID: "Cb8h1HTUpG",
+      },
+      {
+        label: "Santa Catarina",
+        value: "BR-SC",
+        estado: {
+          nome: "Santa Catarina",
+          codigo: "42",
+          sID: "Mb8XBSwxVs",
+        },
+        cities: [
+          {
+            label: "Florianópolis",
+            value: "4205407",
+            sID: "izVE8ihyVj",
+          }
+        ],
+        sID: "Wk5UZq827h",
+      },
+      {
+        label: "São Paulo",
+        value: "BR-SP",
+        estado: {
+          nome: "São Paulo",
+          codigo: "35",
+          sID: "JKh0Af0saK",
+        },
+        cities: [
+          {
+            label: "São Paulo",
+            value: "3550308",
+            sID: "s9rK1Kw4RP",
+          }
+        ],
+        sID: "HtCecGxeKb",
+      },
+      {
+        label: "Sergipe",
+        value: "BR-SE",
+        estado: {
+          nome: "Sergipe",
+          codigo: "28",
+          sID: "FQc2o4jBoD",
+        },
+        cities: [
+          {
+            label: "Aracaju",
+            value: "2800308",
+            sID: "plPJ3mVWIP",
+          }
+        ],
+        sID: "o3H01nxCEt",
+      },
+      {
+        label: "Tocantins",
+        value: "BR-TO",
+        estado: {
+          nome: "Tocantins",
+          codigo: "17",
+          sID: "yHJ1IGaMO1",
+        },
+        cities: [
+          {
+            label: "Palmas",
+            value: "1721000",
+            sID: "H1QnaP5o3x",
+          }
+        ],
+        sID: "fuN077Sd5m",
+      }
+    ],
+    sID: "WNCfglOH1Y",
+  },
+
+  {
     label: "México",
     value: "MX",
     id: "66d61985a546e02c6ce65b11",
