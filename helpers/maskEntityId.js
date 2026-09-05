@@ -1,3 +1,5 @@
+const SENSITIVE_FIELDS = ["sub", "password"];
+
 function maskIds(data, context = "unknown") {
   if (Array.isArray(data)) {
     return data.map((item) => maskIds(item, context));
@@ -25,6 +27,9 @@ function maskIds(data, context = "unknown") {
   const masked = {};
   Object.keys(plainData).forEach((key) => {
     if (hasMaskableId && key === "sID") {
+      return;
+    }
+    if (SENSITIVE_FIELDS.includes(key)) {
       return;
     }
     masked[key] = maskIds(plainData[key], `${source}.${key}`);
