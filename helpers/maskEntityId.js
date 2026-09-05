@@ -1,17 +1,21 @@
 const SENSITIVE_FIELDS = ["sub", "password"];
 
-function maskIds(data, context = "unknown") {
+const HINT_FIELDS = ["username", "name", "email", "title", "stage_name"];
+
+function maskIds(data, path = "root") {
   if (Array.isArray(data)) {
-    return data.map((item) => maskIds(item, context));
+    return data.map((item, index) => maskIds(item, `${path}[${index}]`));
   }
 
   if (!isPlainMaskableObject(data)) {
     return data;
   }
 
-  const source = data.constructor?.modelName || context;
   const plainData =
     typeof data.toObject === "function" ? data.toObject() : data;
+
+  const entityLabel =
+    data.constructor?.modelName || plainData.entityType || plainData.__t;
 
   const hasSID = plainData.sID !== undefined && plainData.sID !== null;
   const has_Id = plainData._id !== undefined && plainData._id !== null;
@@ -19,8 +23,13 @@ function maskIds(data, context = "unknown") {
   const hasMaskableId = hasSID && (has_Id || hasIdVirtual);
 
   if (!hasSID && has_Id) {
+    const hintField = HINT_FIELDS.find(
+      (field) => plainData[field] !== undefined && plainData[field] !== null,
+    );
+    const hint = hintField ? `, ${hintField}="${plainData[hintField]}"` : "";
     console.warn(
-      `[maskIds] sID ausente en ${source} (id=${plainData._id ?? plainData.id}); se expone el ObjectId real`,
+      `[maskIds] sID ausente en ${path}${entityLabel ? ` (${entityLabel})` : ""} ` +
+        `(id=${plainData._id ?? plainData.id}${hint}); se expone el ObjectId real`,
     );
   }
 
@@ -32,7 +41,7 @@ function maskIds(data, context = "unknown") {
     if (SENSITIVE_FIELDS.includes(key)) {
       return;
     }
-    masked[key] = maskIds(plainData[key], `${source}.${key}`);
+    masked[key] = maskIds(plainData[key], `${path}.${key}`);
   });
 
   if (hasMaskableId) {
