@@ -41,6 +41,7 @@ const ENTITY_DIRECTORY_SYNC_FIELDS = [
   "surnames",
   "stage_name",
   "username",
+  "run",
   "subtitle",
   "verified_status",
 ];
@@ -650,10 +651,7 @@ module.exports = [
       } else {
         // Si no es un ObjectId, busca por otros campos
         query = {
-          $or: [
-            { sID: userId },
-            { username: userId },
-          ],
+          $or: [{ sID: userId }, { username: userId }],
         };
       }
 
@@ -835,11 +833,7 @@ module.exports = [
         } else {
           // Si no es un ObjectId, busca por otros campos
           query = {
-            $or: [
-              { sID: userId },
-              { username: userId },
-              { name: userId },
-            ],
+            $or: [{ sID: userId }, { username: userId }, { name: userId }],
           };
         }
 
@@ -854,7 +848,10 @@ module.exports = [
         delete updateFields.rolesReplace;
 
         if (Array.isArray(newInfo.roles) && !replaceRoles) {
-          updateFields.roles = mergeUserRoles(currentUser?.roles, newInfo.roles);
+          updateFields.roles = mergeUserRoles(
+            currentUser?.roles,
+            newInfo.roles,
+          );
         }
 
         // Realizar la consulta de actualización con $set
@@ -892,6 +889,9 @@ module.exports = [
           "EntityDirectory",
         );
 
+        if (updateFields["username"]) {
+          updateFields["run"] = updateFields["username"];
+        }
         // Filtrar solo los campos que fueron actualizados y que deben sincronizarse
         const entityDirectoryUpdates = Object.keys(updateFields)
           .filter((key) => ENTITY_DIRECTORY_SYNC_FIELDS.includes(key))
@@ -1041,7 +1041,7 @@ module.exports = [
               req.serverEnvironment,
               "ProfileClaim",
             );
-            // 
+            //
             const claim = new ProfileClaimModel({
               user: req.userId,
               entityType: entity,
