@@ -162,6 +162,10 @@ async function searchEntitiesDB(req, queryRQ) {
     // console.log("QUERY normalizedQuery:", normalizedQuery);
     // console.log("QUERY searchTokens:", searchTokens);
 
+    if (searchTokens.length === 0 && !et) {
+      return { pagination: {} };
+    }
+
     // 3️⃣ Construir condiciones de búsqueda
     // Estrategia: Usar $regex para flexibilidad (búsquedas parciales)
     // - Separa en tokens y cada token debe aparecer en ALGÚN campo
@@ -295,87 +299,74 @@ async function searchEntitiesDB(req, queryRQ) {
       "EntityDirectory",
     );
 
-    // 5️⃣ Buscar y agrupar por entityType
+    // 5️⃣ Buscar por entityType
     const isTextSearch = USE_TEXT_SEARCH && searchTokens.length >= 2;
-    const aggregationPipeline = [{ $match: matchCondition }];
 
-    // Si usamos $text search, agregar el score de relevancia
-    if (isTextSearch) {
-      aggregationPipeline.push({
-        $addFields: { textScore: { $meta: "textScore" } },
-      });
-    }
-
-    // Agrupar por entityType
-    aggregationPipeline.push({
-      $group: {
-        _id: "$entityType",
-        entities: { $push: "$$ROOT" },
+    // Campos que se necesitan tanto para ordenar como para la respuesta final
+    const projectionFields = SEARCH_RESULT_PUBLIC_FIELDS.reduce(
+      (acc, field) => {
+        acc[field] = 1;
+        return acc;
       },
-    });
+      { entityType: 1, lastActivity: 1 },
+    );
 
-    // Proyectar y ordenar
-    aggregationPipeline.push({
-      $project: {
-        entityType: "$_id",
-        entities: {
-          $slice: [
-            {
-              $sortArray: {
-                input: "$entities",
-                sortBy: isTextSearch
-                  ? { textScore: -1, verified_status: 1, profile_pic: 1 } // Ordenar por relevancia si usamos $text
-                  : { verified_status: 1, profile_pic: 1, lastActivity: -1 }, // Ordenar normal
-              },
-            },
-            limit,
-          ],
-        },
-        _id: 0,
-      },
-    });
+    const sortSpec = isTextSearch
+      ? { score: { $meta: "textScore" }, verified_status: 1, profile_pic: 1 }
+      : { verified_status: 1, profile_pic: 1, lastActivity: -1 };
 
-    aggregationPipeline.push({
-      $set: {
-        entities: {
-          $map: {
-            input: "$entities",
-            as: "entity",
-            in: SEARCH_RESULT_PUBLIC_FIELDS.reduce(
-              (projectedFields, field) => {
-                projectedFields[field] = `$$entity.${field}`;
-                return projectedFields;
-              },
-              { id: "$$entity.sID" },
-            ),
+    const matchedEntityTypes = await EntityDirectory.distinct(
+      "entityType",
+      matchCondition,
+    );
+
+    const [entitiesByType, countResults] = await Promise.all([
+      Promise.all(
+        matchedEntityTypes.map(async (type) => {
+          const typeMatch = { $and: [matchCondition, { entityType: type }] };
+
+          const selectFields = isTextSearch
+            ? { ...projectionFields, score: { $meta: "textScore" } }
+            : projectionFields;
+
+          const docs = await EntityDirectory.find(typeMatch)
+            .select(selectFields)
+            .sort(sortSpec)
+            .limit(Number(limit))
+            .lean();
+
+          return { entityType: type, entities: docs };
+        }),
+      ),
+      // Contar resultados (usa $sum, que sí puede spillear a disco, así que
+      // no tiene el mismo problema de memoria que $push)
+      EntityDirectory.aggregate([
+        { $match: matchCondition },
+        {
+          $group: {
+            _id: "$entityType",
+            count: { $sum: 1 },
           },
         },
-      },
-    });
-
-    aggregationPipeline.push({ $sort: { entityType: 1 } });
-
-    const results = await EntityDirectory.aggregate(aggregationPipeline);
-
-    // 6️⃣ Contar resultados
-    const countResults = await EntityDirectory.aggregate([
-      { $match: matchCondition },
-      {
-        $group: {
-          _id: "$entityType",
-          count: { $sum: 1 },
-        },
-      },
+      ]),
     ]);
 
-    // 7️⃣ Construir respuesta
+    // 6️⃣ Construir respuesta
     const countMap = countResults.reduce((acc, item) => {
       acc[`total_${item._id.toLowerCase()}s`] = item.count;
       return acc;
     }, {});
 
-    const resultData = results.reduce((acc, item) => {
-      acc[`${item.entityType.toLowerCase()}s`] = item.entities;
+    const resultData = entitiesByType.reduce((acc, item) => {
+      acc[`${item.entityType.toLowerCase()}s`] = item.entities.map((entity) =>
+        SEARCH_RESULT_PUBLIC_FIELDS.reduce(
+          (projected, field) => {
+            projected[field] = entity[field];
+            return projected;
+          },
+          { id: entity.sID },
+        ),
+      );
       return acc;
     }, {});
 
@@ -737,7 +728,9 @@ module.exports = [
         limit: 200,
       });
       // console.log(results);
-      return res.json(createPaginatedDataResponse(results));
+      return res.json(
+        createPaginatedDataResponse({ ...results, otroCampo: "yeihh--" }),
+      );
       const result = searchEntities(req.query);
       return res.json(createPaginatedDataResponse(result));
     } catch (error) {
@@ -788,7 +781,7 @@ module.exports = [
               name: 1,
               username: 1,
               _id: 1,
-              sID:1,
+              sID: 1,
               followed_by: 1,
               followed_profiles: 1,
             },
@@ -926,7 +919,7 @@ module.exports = [
           if (!mongoose.Types.ObjectId.isValid(req.currentProfileInfo.id)) {
             const CurrentProfileModel = await getModel(
               req.serverEnvironment,
-              req.currentProfileEntity
+              req.currentProfileEntity,
             );
             const currentProfile = await CurrentProfileModel.findOne({
               $or: [
