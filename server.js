@@ -506,20 +506,35 @@ process.on("unhandledRejection", (reason, promise) => {
 });
 
 //  Server Zone
+// Formatea la fecha/hora actual en GMT-5 (Bogotá/Lima/Guayaquil no tienen DST,
+// siempre UTC-5), independiente de la zona horaria del servidor.
+function nowGMT5() {
+  const formatted = new Intl.DateTimeFormat("es-CO", {
+    timeZone: "America/Bogota",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true,
+  }).format(new Date());
+  return `${formatted} GMT-5`;
+}
+
 // Solo escucha en un puerto real cuando este archivo se ejecuta directamente
 // (ej. `node server.js` / `nodemon server.js`). Si otro módulo lo hace `require`
 // (ej. un test con supertest), `app` se usa sin abrir un socket TCP real.
 if (require.main === module) {
   app.listen(port, function () {
     console.log(textConstants.runningServer, port);
-    console.log(new Date());
+    console.log(nowGMT5());
     console.log();
     console.log("=".repeat(20));
     console.log("*".repeat(20));
     console.log("*".repeat(20));
     console.log("*".repeat(20));
-    console.log("...Nueva instancia...");
-    console.log();
+    console.log("...Nueva instancia...  ", nowGMT5());
     // sendEmail({
     //   to: "cnpiensadigital@gmail.com",
     //   subject: "Inicio de servidor",
