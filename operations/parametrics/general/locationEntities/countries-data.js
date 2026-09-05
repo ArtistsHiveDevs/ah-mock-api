@@ -6658,7 +6658,7 @@ const countries = [
             label: "Rio Branco",
             value: "1200401",
             sID: "xyKDfEnIJV",
-          }
+          },
         ],
         sID: "pqrhGludFG",
       },
@@ -6675,7 +6675,7 @@ const countries = [
             label: "Maceió",
             value: "2704302",
             sID: "YWrb1sfV5W",
-          }
+          },
         ],
         sID: "4juRbm3lFp",
       },
@@ -6692,7 +6692,7 @@ const countries = [
             label: "Macapá",
             value: "1600303",
             sID: "JnI95WNxQH",
-          }
+          },
         ],
         sID: "39s1O1VHVj",
       },
@@ -6709,7 +6709,7 @@ const countries = [
             label: "Manaus",
             value: "1302603",
             sID: "FEHIFha1ya",
-          }
+          },
         ],
         sID: "cFRTqI4gDl",
       },
@@ -6726,7 +6726,7 @@ const countries = [
             label: "Salvador",
             value: "2927408",
             sID: "kCooWWBfOo",
-          }
+          },
         ],
         sID: "3l9hMsLSV4",
       },
@@ -6743,7 +6743,7 @@ const countries = [
             label: "Fortaleza",
             value: "2304400",
             sID: "S0z6udm4XK",
-          }
+          },
         ],
         sID: "AWxDR03Z3Y",
       },
@@ -6760,7 +6760,7 @@ const countries = [
             label: "Brasília",
             value: "5300108",
             sID: "29rV28FBk0",
-          }
+          },
         ],
         sID: "nxSg4ZLWks",
       },
@@ -6777,7 +6777,7 @@ const countries = [
             label: "Vitória",
             value: "3205309",
             sID: "63DA0ibli7",
-          }
+          },
         ],
         sID: "VH6nFEvhvx",
       },
@@ -6794,7 +6794,7 @@ const countries = [
             label: "Goiânia",
             value: "5208707",
             sID: "Mxp3QXdwJw",
-          }
+          },
         ],
         sID: "q87i9aQDmE",
       },
@@ -6811,7 +6811,7 @@ const countries = [
             label: "São Luís",
             value: "2111300",
             sID: "E9JZDujCvZ",
-          }
+          },
         ],
         sID: "75OFFd17jN",
       },
@@ -6828,7 +6828,7 @@ const countries = [
             label: "Cuiabá",
             value: "5103403",
             sID: "l0VwnCkJ2H",
-          }
+          },
         ],
         sID: "9KHHPiSPqF",
       },
@@ -6845,7 +6845,7 @@ const countries = [
             label: "Campo Grande",
             value: "5002704",
             sID: "rplQK4BEf7",
-          }
+          },
         ],
         sID: "79Y4EKO1Cy",
       },
@@ -6862,7 +6862,7 @@ const countries = [
             label: "Belo Horizonte",
             value: "3106200",
             sID: "R7LSUJfmHO",
-          }
+          },
         ],
         sID: "5Ijg15M0Jq",
       },
@@ -6879,7 +6879,7 @@ const countries = [
             label: "Belém",
             value: "1501402",
             sID: "I7OyjNUbpb",
-          }
+          },
         ],
         sID: "9xy6f3STVN",
       },
@@ -6896,7 +6896,7 @@ const countries = [
             label: "João Pessoa",
             value: "2507507",
             sID: "c6nHysUcs3",
-          }
+          },
         ],
         sID: "DtyE2aOSHT",
       },
@@ -6913,7 +6913,7 @@ const countries = [
             label: "Curitiba",
             value: "4106902",
             sID: "R3hVljUBEL",
-          }
+          },
         ],
         sID: "2kdH3GjEWS",
       },
@@ -6930,7 +6930,7 @@ const countries = [
             label: "Recife",
             value: "2611606",
             sID: "y6YbqDwxIa",
-          }
+          },
         ],
         sID: "ur0B9eR2R2",
       },
@@ -6947,7 +6947,7 @@ const countries = [
             label: "Teresina",
             value: "2211001",
             sID: "NOBp9zXvOP",
-          }
+          },
         ],
         sID: "IPsLQaGDLW",
       },
@@ -6964,7 +6964,7 @@ const countries = [
             label: "Rio de Janeiro",
             value: "3304557",
             sID: "rVwPoTf0DX",
-          }
+          },
         ],
         sID: "3MSgcmYa7v",
       },
@@ -6981,7 +6981,7 @@ const countries = [
             label: "Natal",
             value: "2408102",
             sID: "Zx1nCFD2tq",
-          }
+          },
         ],
         sID: "oJCg6FQe9z",
       },
@@ -6998,7 +6998,7 @@ const countries = [
             label: "Porto Alegre",
             value: "4314902",
             sID: "GsVktAUgWl",
-          }
+          },
         ],
         sID: "yPadKSOCd7",
       },
@@ -7015,7 +7015,7 @@ const countries = [
             label: "Porto Velho",
             value: "1100205",
             sID: "MipsPJe2vG",
-          }
+          },
         ],
         sID: "4C3w4ixZW4",
       },
@@ -7032,7 +7032,7 @@ const countries = [
             label: "Boa Vista",
             value: "1400100",
             sID: "8u8Frxqude",
-          }
+          },
         ],
         sID: "Cb8h1HTUpG",
       },
@@ -7049,7 +7049,7 @@ const countries = [
             label: "Florianópolis",
             value: "4205407",
             sID: "izVE8ihyVj",
-          }
+          },
         ],
         sID: "Wk5UZq827h",
       },
@@ -7066,7 +7066,7 @@ const countries = [
             label: "São Paulo",
             value: "3550308",
             sID: "s9rK1Kw4RP",
-          }
+          },
         ],
         sID: "HtCecGxeKb",
       },
@@ -7083,7 +7083,7 @@ const countries = [
             label: "Aracaju",
             value: "2800308",
             sID: "plPJ3mVWIP",
-          }
+          },
         ],
         sID: "o3H01nxCEt",
       },
@@ -7100,10 +7100,10 @@ const countries = [
             label: "Palmas",
             value: "1721000",
             sID: "H1QnaP5o3x",
-          }
+          },
         ],
         sID: "fuN077Sd5m",
-      }
+      },
     ],
     sID: "WNCfglOH1Y",
   },
@@ -10096,7 +10096,8 @@ const countries = [
       },
     ],
     sID: "C3Ok8llCsK",
-  },  {
+  },
+  {
     label: "Chile",
     value: "CL",
     id: "66d61979a546e02c6ce65a33",
@@ -10137,7 +10138,7 @@ const countries = [
             label: "General Lagos",
             value: "15202",
             sID: "S8TqhCvXK1",
-          }
+          },
         ],
         sID: "w1I1XrhPtm",
       },
@@ -10184,7 +10185,7 @@ const countries = [
             label: "Pica",
             value: "01405",
             sID: "kvfv6KLUDb",
-          }
+          },
         ],
         sID: "sCAGtPqzir",
       },
@@ -10241,7 +10242,7 @@ const countries = [
             label: "María Elena",
             value: "02302",
             sID: "HaHX6B3MpV",
-          }
+          },
         ],
         sID: "2ZyElV5VCG",
       },
@@ -10298,7 +10299,7 @@ const countries = [
             label: "Huasco",
             value: "03304",
             sID: "Gx9qtd4Oga",
-          }
+          },
         ],
         sID: "7bElj238Gu",
       },
@@ -10385,7 +10386,7 @@ const countries = [
             label: "Río Hurtado",
             value: "04305",
             sID: "mNYKd6YvtQ",
-          }
+          },
         ],
         sID: "XxhYwms8eU",
       },
@@ -10587,7 +10588,7 @@ const countries = [
             label: "Villa Alemana",
             value: "05804",
             sID: "0YNdhWk2NA",
-          }
+          },
         ],
         sID: "IWE9A6gN37",
       },
@@ -10859,7 +10860,7 @@ const countries = [
             label: "Peñaflor",
             value: "13605",
             sID: "975Op4rXzs",
-          }
+          },
         ],
         sID: "OaFUz3utvj",
       },
@@ -11036,7 +11037,7 @@ const countries = [
             label: "Santa Cruz",
             value: "06310",
             sID: "EI0609Fnp9",
-          }
+          },
         ],
         sID: "ofj1JuFBdE",
       },
@@ -11198,7 +11199,7 @@ const countries = [
             label: "Yerbas Buenas",
             value: "07408",
             sID: "23Qs1Bk2i3",
-          }
+          },
         ],
         sID: "wHXR7siMGx",
       },
@@ -11315,7 +11316,7 @@ const countries = [
             label: "San Nicolás",
             value: "16305",
             sID: "YRCwZ9IHxa",
-          }
+          },
         ],
         sID: "VkfRODjueN",
       },
@@ -11492,7 +11493,7 @@ const countries = [
             label: "Alto Biobío",
             value: "08314",
             sID: "JGXJhcoDtD",
-          }
+          },
         ],
         sID: "cf6yBO4BOQ",
       },
@@ -11664,7 +11665,7 @@ const countries = [
             label: "Victoria",
             value: "09211",
             sID: "QZQo2tuLpV",
-          }
+          },
         ],
         sID: "54MhzCHwAA",
       },
@@ -11736,7 +11737,7 @@ const countries = [
             label: "Río Bueno",
             value: "14204",
             sID: "AeCpXimL9V",
-          }
+          },
         ],
         sID: "12NdJ6rvky",
       },
@@ -11898,7 +11899,7 @@ const countries = [
             label: "Palena",
             value: "10404",
             sID: "mNYFKjg4pf",
-          }
+          },
         ],
         sID: "Vr8mtgXu8s",
       },
@@ -11960,7 +11961,7 @@ const countries = [
             label: "Río Ibáñez",
             value: "11402",
             sID: "ykx0QDWX5t",
-          }
+          },
         ],
         sID: "ovsJtbzYNf",
       },
@@ -12027,7 +12028,7 @@ const countries = [
             label: "Torres del Paine",
             value: "12402",
             sID: "lcTGsS4CXH",
-          }
+          },
         ],
         sID: "pDs7UR0WzW",
       },
@@ -12071,7 +12072,13 @@ function findLocationByPath(pathIds, returnChildren = false) {
 
   for (let i = 1; i < pathIds.length; i++) {
     const searchId = pathIds[i];
-    currentNode = currentLevel.find((item) => item.value === searchId);
+
+    currentNode = currentLevel.find(
+      (item) =>
+        item.value === searchId ||
+        item.id === searchId ||
+        item.sID === searchId,
+    );
 
     if (!currentNode) {
       return null;
