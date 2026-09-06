@@ -69,6 +69,25 @@ async function notifyUserWelcome(user, lang) {
         },
       },
     });
+    await notificationService.send({
+      type: "user.welcome",
+      recipient: {
+        id: user._id?.toString() || user.id?.toString(),
+        email: "users@artist-hive.com",
+        name: displayName,
+      },
+      data: {
+        lang: userLang,
+        user: {
+          _id: user._id?.toString() || user.id,
+          name: displayName,
+          stage_name: user.stage_name,
+          given_names: user.given_names,
+          username: user.username,
+          email: user.email,
+        },
+      },
+    });
 
     console.log(
       `[UserNotifications] ✅ Notificación de bienvenida encolada para ${emailTo} (idioma: ${userLang})`
