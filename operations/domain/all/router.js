@@ -364,7 +364,7 @@ async function searchEntitiesDB(req, queryRQ) {
             projected[field] = entity[field];
             return projected;
           },
-          { id: entity.sID },
+          { id: entity.sID || entity._id },
         ),
       );
       return acc;
@@ -728,9 +728,7 @@ module.exports = [
         limit: 200,
       });
       // console.log(results);
-      return res.json(
-        createPaginatedDataResponse({ ...results, otroCampo: "yeihh--" }),
-      );
+      return res.json(createPaginatedDataResponse(results));
       const result = searchEntities(req.query);
       return res.json(createPaginatedDataResponse(result));
     } catch (error) {

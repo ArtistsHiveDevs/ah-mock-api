@@ -833,7 +833,12 @@ module.exports = [
         } else {
           // Si no es un ObjectId, busca por otros campos
           query = {
-            $or: [{ sID: userId }, { username: userId }, { name: userId }],
+            $or: [
+              { sID: userId },
+              { username: userId },
+              { name: userId },
+              { email: userId },
+            ],
           };
         }
 
