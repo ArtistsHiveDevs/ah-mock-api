@@ -5,7 +5,8 @@
 const notificationService = require("../infrastructure/notifications");
 
 // TEMPORAL: Email de prueba mientras se verifica el dominio en producción
-const TEMP_TEST_EMAIL = process.env.TEMP_NOTIFICATION_EMAIL || "admiprogramacion@gmail.com";
+const TEMP_TEST_EMAIL =
+  process.env.TEMP_NOTIFICATION_EMAIL || "admiprogramacion@gmail.com";
 const USE_TEST_EMAIL = process.env.USE_TEST_EMAIL === "true";
 
 /**
@@ -26,11 +27,13 @@ async function notifyUserWelcome(user, lang) {
     if (USE_TEST_EMAIL) {
       // En modo de prueba, siempre usar el email de prueba
       emailTo = TEMP_TEST_EMAIL;
-      console.log(`[UserNotifications] 🧪 Modo de prueba activo: ${user.email || user.name} → ${emailTo}`);
+      console.log(
+        `[UserNotifications] 🧪 Modo de prueba activo: ${user.email || user.name} → ${emailTo}`,
+      );
     } else if (!user.email) {
       // En producción, si no hay email, cancelar
       console.warn(
-        `[UserNotifications] ⚠️ Usuario ${user._id} no tiene email configurado - CANCELADO`
+        `[UserNotifications] ⚠️ Usuario ${user._id} no tiene email configurado - CANCELADO`,
       );
       return;
     } else {
@@ -41,15 +44,22 @@ async function notifyUserWelcome(user, lang) {
 
     // Determinar el idioma: priorizar user_language, luego lang pasado, luego español
     const userLang = user.user_language || lang || "es";
-    console.log(`[UserNotifications] Idioma detectado: ${userLang} (user.user_language: ${user.user_language}, lang param: ${lang})`);
+    console.log(
+      `[UserNotifications] Idioma detectado: ${userLang} (user.user_language: ${user.user_language}, lang param: ${lang})`,
+    );
 
     // Determinar el nombre a mostrar: stage_name, given_names, username, o "Usuario"
-    const displayName = user.stage_name || user.given_names || user.username || "Usuario";
+    const displayName =
+      user.stage_name || user.given_names || user.username || "Usuario";
 
-    console.log(`[UserNotifications] Nombre para saludo: ${displayName} (stage_name: ${user.stage_name}, given_names: ${user.given_names}, username: ${user.username})`);
+    console.log(
+      `[UserNotifications] Nombre para saludo: ${displayName} (stage_name: ${user.stage_name}, given_names: ${user.given_names}, username: ${user.username})`,
+    );
 
     // Enviar notificación
-    console.log(`[UserNotifications] Llamando a notificationService.send() para ${emailTo}`);
+    console.log(
+      `[UserNotifications] Llamando a notificationService.send() para ${emailTo}`,
+    );
     await notificationService.send({
       type: "user.welcome",
       recipient: {
@@ -90,12 +100,12 @@ async function notifyUserWelcome(user, lang) {
     });
 
     console.log(
-      `[UserNotifications] ✅ Notificación de bienvenida encolada para ${emailTo} (idioma: ${userLang})`
+      `[UserNotifications] ✅ Notificación de bienvenida encolada para ${emailTo} (idioma: ${userLang})`,
     );
   } catch (error) {
     console.error(
       "[UserNotifications] ❌ Error enviando notificación de bienvenida:",
-      error.message
+      error.message,
     );
     console.error("[UserNotifications] Stack:", error.stack);
     // No lanzar el error para no afectar el flujo principal
@@ -109,11 +119,15 @@ async function notifyUserWelcome(user, lang) {
  */
 function getTargetEmail(user) {
   if (USE_TEST_EMAIL) {
-    console.log(`[UserNotifications] 🧪 Modo de prueba: ${user.email || user.name} → ${TEMP_TEST_EMAIL}`);
+    console.log(
+      `[UserNotifications] 🧪 Modo de prueba: ${user.email || user.name} → ${TEMP_TEST_EMAIL}`,
+    );
     return TEMP_TEST_EMAIL;
   }
   if (!user.email) {
-    console.warn(`[UserNotifications] ⚠️ Usuario ${user._id} no tiene email - CANCELADO`);
+    console.warn(
+      `[UserNotifications] ⚠️ Usuario ${user._id} no tiene email - CANCELADO`,
+    );
     return null;
   }
   return user.email;
@@ -135,13 +149,17 @@ function getDisplayName(user) {
  */
 function getInformativeName(user) {
   if (user.stage_name) {
-    return user.username ? `${user.stage_name} (@${user.username})` : user.stage_name;
+    return user.username
+      ? `${user.stage_name} (@${user.username})`
+      : user.stage_name;
   } else if (user.given_names && user.surnames) {
     return user.username
       ? `${user.given_names} ${user.surnames} (@${user.username})`
       : `${user.given_names} ${user.surnames}`;
   } else if (user.given_names) {
-    return user.username ? `${user.given_names} (@${user.username})` : user.given_names;
+    return user.username
+      ? `${user.given_names} (@${user.username})`
+      : user.given_names;
   } else {
     return user.username ? `@${user.username}` : "Usuario";
   }
@@ -155,7 +173,13 @@ function getInformativeName(user) {
  * @param {string} params.role - Rol asignado
  * @param {Object} params.assignedBy - Usuario que realizó la asignación
  */
-async function notifyProfileAssigned({ user, profile, role, assignedBy, lang }) {
+async function notifyProfileAssigned({
+  user,
+  profile,
+  role,
+  assignedBy,
+  lang,
+}) {
   try {
     console.log("[UserNotifications] 📤 Notificando asignación de perfil");
 
@@ -193,9 +217,14 @@ async function notifyProfileAssigned({ user, profile, role, assignedBy, lang }) 
       },
     });
 
-    console.log(`[UserNotifications] ✅ Notificación de asignación enviada a ${emailTo}`);
+    console.log(
+      `[UserNotifications] ✅ Notificación de asignación enviada a ${emailTo}`,
+    );
   } catch (error) {
-    console.error("[UserNotifications] ❌ Error en notifyProfileAssigned:", error.message);
+    console.error(
+      "[UserNotifications] ❌ Error en notifyProfileAssigned:",
+      error.message,
+    );
   }
 }
 
@@ -207,7 +236,13 @@ async function notifyProfileAssigned({ user, profile, role, assignedBy, lang }) 
  * @param {string} params.previousRole - Rol anterior
  * @param {string} params.newRole - Nuevo rol
  */
-async function notifyProfileRoleUpdated({ user, profile, previousRole, newRole, lang }) {
+async function notifyProfileRoleUpdated({
+  user,
+  profile,
+  previousRole,
+  newRole,
+  lang,
+}) {
   try {
     console.log("[UserNotifications] 📤 Notificando actualización de rol");
 
@@ -241,9 +276,14 @@ async function notifyProfileRoleUpdated({ user, profile, previousRole, newRole, 
       },
     });
 
-    console.log(`[UserNotifications] ✅ Notificación de rol actualizado enviada a ${emailTo}`);
+    console.log(
+      `[UserNotifications] ✅ Notificación de rol actualizado enviada a ${emailTo}`,
+    );
   } catch (error) {
-    console.error("[UserNotifications] ❌ Error en notifyProfileRoleUpdated:", error.message);
+    console.error(
+      "[UserNotifications] ❌ Error en notifyProfileRoleUpdated:",
+      error.message,
+    );
   }
 }
 
@@ -285,9 +325,14 @@ async function notifyProfileRemoved({ user, profile, lang }) {
       },
     });
 
-    console.log(`[UserNotifications] ✅ Notificación de remoción enviada a ${emailTo}`);
+    console.log(
+      `[UserNotifications] ✅ Notificación de remoción enviada a ${emailTo}`,
+    );
   } catch (error) {
-    console.error("[UserNotifications] ❌ Error en notifyProfileRemoved:", error.message);
+    console.error(
+      "[UserNotifications] ❌ Error en notifyProfileRemoved:",
+      error.message,
+    );
   }
 }
 
@@ -300,7 +345,14 @@ async function notifyProfileRemoved({ user, profile, lang }) {
  * @param {Object} params.invitedBy - Usuario que envía la invitación
  * @param {string} params.invitationId - ID de la invitación para los enlaces
  */
-async function notifyProfileInvitation({ user, profile, proposedRole, invitedBy, invitationId, lang }) {
+async function notifyProfileInvitation({
+  user,
+  profile,
+  proposedRole,
+  invitedBy,
+  invitationId,
+  lang,
+}) {
   try {
     console.log("[UserNotifications] 📤 Notificando invitación a perfil");
 
@@ -341,7 +393,10 @@ async function notifyProfileInvitation({ user, profile, proposedRole, invitedBy,
 
     console.log(`[UserNotifications] ✅ Invitación enviada a ${emailTo}`);
   } catch (error) {
-    console.error("[UserNotifications] ❌ Error en notifyProfileInvitation:", error.message);
+    console.error(
+      "[UserNotifications] ❌ Error en notifyProfileInvitation:",
+      error.message,
+    );
   }
 }
 
@@ -352,7 +407,12 @@ async function notifyProfileInvitation({ user, profile, proposedRole, invitedBy,
  * @param {Object} params.invitee - Usuario que aceptó
  * @param {Object} params.profile - Perfil al que se unió
  */
-async function notifyProfileInvitationAccepted({ inviter, invitee, profile, lang }) {
+async function notifyProfileInvitationAccepted({
+  inviter,
+  invitee,
+  profile,
+  lang,
+}) {
   try {
     console.log("[UserNotifications] 📤 Notificando invitación aceptada");
 
@@ -388,9 +448,14 @@ async function notifyProfileInvitationAccepted({ inviter, invitee, profile, lang
       },
     });
 
-    console.log(`[UserNotifications] ✅ Notificación de aceptación enviada a ${emailTo}`);
+    console.log(
+      `[UserNotifications] ✅ Notificación de aceptación enviada a ${emailTo}`,
+    );
   } catch (error) {
-    console.error("[UserNotifications] ❌ Error en notifyProfileInvitationAccepted:", error.message);
+    console.error(
+      "[UserNotifications] ❌ Error en notifyProfileInvitationAccepted:",
+      error.message,
+    );
   }
 }
 
@@ -401,7 +466,12 @@ async function notifyProfileInvitationAccepted({ inviter, invitee, profile, lang
  * @param {Object} params.invitee - Usuario que rechazó
  * @param {Object} params.profile - Perfil al que se invitaba
  */
-async function notifyProfileInvitationDeclined({ inviter, invitee, profile, lang }) {
+async function notifyProfileInvitationDeclined({
+  inviter,
+  invitee,
+  profile,
+  lang,
+}) {
   try {
     console.log("[UserNotifications] 📤 Notificando invitación rechazada");
 
@@ -437,9 +507,14 @@ async function notifyProfileInvitationDeclined({ inviter, invitee, profile, lang
       },
     });
 
-    console.log(`[UserNotifications] ✅ Notificación de rechazo enviada a ${emailTo}`);
+    console.log(
+      `[UserNotifications] ✅ Notificación de rechazo enviada a ${emailTo}`,
+    );
   } catch (error) {
-    console.error("[UserNotifications] ❌ Error en notifyProfileInvitationDeclined:", error.message);
+    console.error(
+      "[UserNotifications] ❌ Error en notifyProfileInvitationDeclined:",
+      error.message,
+    );
   }
 }
 

@@ -1331,6 +1331,32 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       throw new Error("Must search an id, username or name");
     }
 
+    // Convertir shortIDs a ObjectIds para campos con ref (mismo criterio que createEntity)
+    for (const [fieldName, fieldValue] of Object.entries(newInfo)) {
+      if (!fieldValue) continue;
+
+      const schemaPath = model.schema.paths[fieldName];
+      if (!schemaPath) continue;
+
+      // Si el campo tiene ref y el valor no es un ObjectId válido, intentar convertirlo
+      const ref = schemaPath.options?.ref;
+      if (ref && typeof fieldValue === 'string' && !mongoose.Types.ObjectId.isValid(fieldValue)) {
+        try {
+          const RefModel = await getModel(connection.environment, ref);
+          const refDoc = await RefModel.findOne({
+            $or: [{ sID: fieldValue }, { username: fieldValue }],
+          }).select('_id');
+
+          if (refDoc) {
+            newInfo[fieldName] = refDoc._id;
+            console.log(`🔄 [UpdateEntity] Convertido ${fieldName}: ${fieldValue} -> ${refDoc._id}`);
+          }
+        } catch (err) {
+          console.warn(`⚠️ [UpdateEntity] Error convirtiendo ${fieldName}:`, err.message);
+        }
+      }
+    }
+
     let query = {};
 
     let visibleAttributes = routesConstants.authenticated_fields;

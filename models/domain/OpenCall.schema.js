@@ -8,6 +8,7 @@ const schema = new Schema(
     event_date: { type: String, required: true },
     start_date: { type: String, required: true },
     end_date: { type: String, required: true },
+    poster: { type: String },
     place_id: { type: Schema.Types.ObjectId, ref: "Place" },
     place: { type: Schema.Types.ObjectId, ref: "Place" },
     city: { type: String },

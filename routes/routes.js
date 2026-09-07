@@ -702,6 +702,7 @@ function loadRoutes() {
             "event_date",
             "start_date",
             "end_date",
+            "poster",
             "place_id",
             "city",
             "status",
@@ -741,6 +742,7 @@ function loadRoutes() {
             "event_date",
             "start_date",
             "end_date",
+            "poster",
             "place_id",
             "city",
             "status",
@@ -795,6 +797,14 @@ function loadRoutes() {
             if (!body.place_id) return;
 
             // await validatePlaceOwnership(body.place_id, req);
+          },
+          postScriptFunction: (data) => {
+            data.results.forEach((element) => {
+              element.place = element.place_id;
+              delete element.place_id;
+            });
+
+            return data;
           },
         },
       }),
