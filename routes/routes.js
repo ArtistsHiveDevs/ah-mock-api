@@ -15,8 +15,10 @@ var faqRouter = require("../operations/app/faq/router");
 var notificationsRouter = require("../operations/system/notifications/router");
 var pendingProfilesRouter = require("../operations/domain/admin/pendingProfiles/router");
 var reportClaimsRouter = require("../operations/domain/reportClaims/router");
+var allEventsRouter = require("../operations/domain/allEvents/router");
 const createCRUDRoutes = require("../helpers/crud-routes");
 const Place = require("../models/domain/Place.schema");
+const CalendarActivity = require("../models/domain/CalendarActivity.schema");
 const Event = require("../models/domain/Event.schema");
 const Prebooking = require("../models/domain/Prebooking.schema");
 const ProfileClaim = require("../models/domain/ProfileClaim.schema");
@@ -39,6 +41,11 @@ const {
 const {
   notifyOpenCallApplicationStatusChanged,
 } = require("../helpers/openCallApplicationNotifications");
+const {
+  buildCalendarActivityCreatePayload,
+  buildCalendarActivityVisibilityFilter,
+  assertCalendarActivityBelongsToActiveProfile,
+} = require("../helpers/calendarActivityOwnership");
 
 // Estados válidos para OpenCallApplication.status (debe coincidir con el enum del schema)
 const OPEN_CALL_APPLICATION_STATUSES = ["pending", "accepted", "rejected"];
@@ -170,6 +177,52 @@ async function buildOpenCallApplicationsVisibilityFilter({ userId, req }) {
 function loadRoutes() {
   return [
     { path: "/", route: { router: allRouter } },
+    { path: "/events", route: { router: allEventsRouter } },
+    {
+      path: "/calendar-activities",
+      route: createCRUDRoutes({
+        modelName: "CalendarActivity",
+        schema: CalendarActivity.schema,
+        options: {
+          public_fields: [
+            "_id",
+            "sID",
+            "title",
+            "type",
+            "subtype",
+            "start",
+            "end",
+            "allDay",
+            "notes",
+            "entityRoleMap",
+            "owner_profile_id",
+            "owner_profile_entity",
+            "createdAt",
+            "updatedAt",
+          ],
+          authenticated_fields: [
+            "_id",
+            "sID",
+            "title",
+            "type",
+            "subtype",
+            "start",
+            "end",
+            "allDay",
+            "notes",
+            "entityRoleMap",
+            "owner_profile_id",
+            "owner_profile_entity",
+            "createdAt",
+            "updatedAt",
+          ],
+          buildCreatePayload: buildCalendarActivityCreatePayload,
+          listQueryFilter: buildCalendarActivityVisibilityFilter,
+          validateUpdate: assertCalendarActivityBelongsToActiveProfile,
+          validateDelete: assertCalendarActivityBelongsToActiveProfile,
+        },
+      }),
+    },
     { path: "/academies", route: { router: academyRouter } },
     {
       path: "/allergies",
