@@ -68,6 +68,7 @@ module.exports = {
     "technical_epk",
     "technical_rider",
     "stage_plot",
+    "music_performance",
   ],
   authenticated_fields: [
     // "artistType",
@@ -133,6 +134,8 @@ module.exports = {
     "technical_epk",
     "technical_rider",
     "stage_plot",
+
+    "music_performance",
   ],
   appbase_public_fields: {
     EntityDirectory: {

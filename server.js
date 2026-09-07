@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const _ = require("lodash");
 var { validateApiKey } = require("./helpers");
+const mongoose = require("mongoose");
 const { User, schema: userSchema } = require("./models/appbase/User");
 const { normalizeProfileId } = require("./models/appbase/EntityDirectory");
 const { loadRoutes } = require("./routes/routes");
@@ -308,20 +309,91 @@ app.get("/", async (req, res) => {
   });
 });
 
-// GET /r/oc/:id → convocatoria (PRUEBA: usa el id del path directo, sin BD todavía)
+// GET /r/oc/:id → convocatoria (por sID o _id de la OpenCall)
 // Prefijo "/r/" (resource) genérico para cualquier entidad no-perfil: /r/oc/:id, /r/evento/:id, /r/lugar/:id...
-app.get("/r/:resourceType/:id", helpers.validateEnvironment, (req, res) => {
-  const { resourceType, resourceId } = req.params;
+app.get("/r/:resourceType/:id", async (req, res) => {
+  const { resourceType, id: resourceId } = req.params;
 
-  const tipoRecurso = resourceType.toUpperCase() || "oc";
-  const title = `${tipoRecurso} ${resourceId}`;
-  const description = `Detalles de la ${tipoRecurso} "${resourceId}" en Artist Hive.`;
-  const imageUrl =
-    resourceType === "oc"
-      ? "https://artist-hive.com/img/search.png"
-      : "https://artist-hive.com/img/artisthive_b.png";
+  const { a } = req.query;
 
-  const targetUrl = `https://artist-hive.com/${tipoRecurso}/${resourceId}`;
+  const environment = decryptSharedLinkEnv(a);
+  const doms = {
+    prod: {
+      repo: "https://docsfr.artist-hive.com/",
+      domain: "https://artist-hive.com",
+    },
+    uat: {
+      repo: "https://filesnd.artist-hive.com/",
+      domain: "https://almost.artist-hive.com",
+    },
+    dev: {
+      repo: "http://localhost:9231/files/public/",
+      domain: "http://localhost:3001",
+    },
+  };
+
+  // Obtener configuración del ambiente actual
+  const currentEnvConfig = doms[environment] || doms.prod;
+
+  req.serverEnvironment = environment;
+  const connection = await connectToDatabase(req);
+
+  const tipoRecurso = resourceType.toLowerCase() || "oc";
+
+  let title = `${tipoRecurso} ${resourceId}`;
+  let description = `Detalles de la ${tipoRecurso} "${resourceId}" en Artist Hive.`;
+  let imageUrl = "https://artist-hive.com/img/artisthive_b.png";
+  let resourcePath = undefined;
+
+  const resolveImageUrl = (rawPath) => {
+    if (!rawPath) return undefined;
+    return rawPath.startsWith("r://")
+      ? rawPath.replace("r://", currentEnvConfig.repo)
+      : rawPath;
+  };
+
+  switch (tipoRecurso) {
+    case "oc": {
+      resourcePath = "open-calls";
+
+      const OpenCallModel = await getModel(environment, "OpenCall");
+      const openCall = await OpenCallModel.findOne({
+        $or: [
+          { sID: resourceId },
+          ...(mongoose.Types.ObjectId.isValid(resourceId)
+            ? [{ _id: resourceId }]
+            : []),
+        ],
+      }).select(
+        ["event_name", "description", "poster", "place_id", "place"].join(" "),
+      );
+
+      if (openCall) {
+        title = `${openCall.event_name} · Artist Hive`;
+        description =
+          openCall.description ||
+          `Convocatoria abierta "${openCall.event_name}" en Artist Hive.`;
+
+        let resolvedImage = resolveImageUrl(openCall.poster);
+
+        // Si la OpenCall no tiene poster propio, usar el profile_pic del Place organizador
+        if (!resolvedImage) {
+          const placeId = openCall.place_id || openCall.place;
+          if (placeId) {
+            const PlaceModel = await getModel(environment, "Place");
+            const place =
+              await PlaceModel.findById(placeId).select("profile_pic");
+            resolvedImage = resolveImageUrl(place?.profile_pic);
+          }
+        }
+
+        imageUrl = resolvedImage || imageUrl;
+      }
+      break;
+    }
+  }
+
+  const targetUrl = `${currentEnvConfig.domain}/${resourcePath}/details/${resourceId}`;
 
   res
     .status(200)
@@ -357,7 +429,6 @@ app.get("/@:username", async (req, res) => {
   // Obtener configuración del ambiente actual
   const currentEnvConfig = doms[environment] || doms.prod;
 
-  console.log("SHARED environment: ", environment);
   req.serverEnvironment = environment;
   const connection = await connectToDatabase(req);
 

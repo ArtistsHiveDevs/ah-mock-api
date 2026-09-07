@@ -100,9 +100,19 @@ async function collectOpenCallCalendarEvents({ req, from, to }) {
     status: PUBLISHED_OPEN_CALL_STATUS,
   })
     .select(
-      "sID event_name end_date event_date status place_id city applications_count",
+      [
+        "sID",
+        "event_name",
+        "end_date",
+        "event_date",
+        "status",
+        "place_id",
+        "city",
+        "applications_count",
+        "poster",
+      ].join(" "),
     )
-    .populate({ path: "place_id", select: "sID profile_pic" })
+    .populate({ path: "place_id", select: ["sID", "profile_pic"].join(" ") })
     .lean();
 
   const today = startOfDay(new Date());
@@ -134,7 +144,7 @@ async function collectOpenCallCalendarEvents({ req, from, to }) {
         event_date: openCall.event_date || null,
         applications_count: openCall.applications_count || 0,
         expired: deadline < today,
-        image: openCall.place_id?.profile_pic || null,
+        image: openCall.poster || openCall.place_id?.profile_pic || null,
       },
     });
 

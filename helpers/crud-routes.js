@@ -7,7 +7,8 @@ var helpers = require("./index");
 const apiHelperFunctions = require("./apiHelperFunctions");
 const EntityDirectory = require("../models/appbase/EntityDirectory");
 const createCRUDActions = require("./crud-actions");
-const { maskIds } = require("./maskEntityId");
+const { maskIdsWithEntityDirectory } = require("./maskEntityId");
+const { connections } = require("../db/db_g");
 
 const modelActions = {};
 const autoSeeded = {}; // Track which models have been auto-seeded
@@ -73,7 +74,12 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             user: req.user,
           });
 
-          res.json(maskIds(response));
+          res.json(
+            await maskIdsWithEntityDirectory(
+              response,
+              connections[req.serverEnvironment],
+            ),
+          );
         } catch (err) {
           console.error(err);
           const { status, body } =
@@ -106,7 +112,12 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             public_fields: options.public_fields,
             postScriptFunction: options.postScriptFunction,
           });
-          res.json(maskIds(response));
+          res.json(
+            await maskIdsWithEntityDirectory(
+              response,
+              connections[req.serverEnvironment],
+            ),
+          );
         } catch (err) {
           console.error(err);
           const { status, body } =
@@ -133,7 +144,12 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             userId: req.userId,
             body: req.body,
           });
-          res.json(maskIds(response));
+          res.json(
+            await maskIdsWithEntityDirectory(
+              response,
+              connections[req.serverEnvironment],
+            ),
+          );
         } catch (err) {
           console.error(`[${modelName}] Error creating entity:`, err.message);
           console.error("Stack trace:", err.stack);
@@ -163,7 +179,12 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             userId: req.userId,
             body: req.body,
           });
-          res.json(maskIds(response));
+          res.json(
+            await maskIdsWithEntityDirectory(
+              response,
+              connections[req.serverEnvironment],
+            ),
+          );
         } catch (err) {
           const { status, body } =
             apiHelperFunctions.mapDatabaseErrorToResponse(err);
@@ -190,7 +211,12 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             id,
             userId: req.userId,
           });
-          res.json(maskIds(response));
+          res.json(
+            await maskIdsWithEntityDirectory(
+              response,
+              connections[req.serverEnvironment],
+            ),
+          );
         } catch (err) {
           console.error(`[${modelName}] Error deleting entity:`, err.message);
           const { status, body } =

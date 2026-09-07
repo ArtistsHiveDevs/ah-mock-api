@@ -40,6 +40,13 @@ const schema = new Schema(
     accommodation_provided: { type: String },
     meals_provided: { type: String },
     additional_notes: { type: String },
+    documents: [
+      {
+        title: String,
+        content: String,
+        docType: String,
+      },
+    ],
     applications_count: { type: Number, default: 0 },
     created_by: { type: Schema.Types.ObjectId, ref: "EntityDirectory" },
     entityRoleMap: [
