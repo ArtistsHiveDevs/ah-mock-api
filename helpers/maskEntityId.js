@@ -19,7 +19,8 @@ function collectRoleMapUserIds(data, acc) {
     return;
   }
 
-  const plainData = typeof data.toObject === "function" ? data.toObject() : data;
+  const plainData =
+    typeof data.toObject === "function" ? data.toObject() : data;
 
   Object.entries(plainData).forEach(([key, value]) => {
     if (key === "entityRoleMap" && Array.isArray(value)) {
@@ -78,9 +79,9 @@ async function resolveEntityRoleMapUserSids(rawIds, connection) {
       }
     });
   } catch (error) {
-    console.warn(
-      `[maskIds] Error resolviendo entityRoleMap.ids contra EntityDirectory: ${error.message}`,
-    );
+    // console.warn(
+    //   `[maskIds] Error resolviendo entityRoleMap.ids contra EntityDirectory: ${error.message}`,
+    // );
   }
 
   return map;
@@ -96,9 +97,9 @@ function maskEntityRoleMapGroup(group, sidByUserId, path) {
     if (sid) {
       acc.push(sid);
     } else {
-      console.warn(
-        `[maskIds] EntityDirectory sin sID para ${path} (id=${rawId}); se omite del array`,
-      );
+      // console.warn(
+      //   `[maskIds] EntityDirectory sin sID para ${path} (id=${rawId}); se omite del array`,
+      // );
     }
     return acc;
   }, []);
@@ -133,10 +134,10 @@ function maskIdsCore(data, path, sidByUserId) {
       (field) => plainData[field] !== undefined && plainData[field] !== null,
     );
     const hint = hintField ? `, ${hintField}="${plainData[hintField]}"` : "";
-    console.warn(
-      `[maskIds] sID ausente en ${path}${entityLabel ? ` (${entityLabel})` : ""} ` +
-        `(id=${plainData._id ?? plainData.id}${hint}); se expone el ObjectId real`,
-    );
+    // console.warn(
+    //   `[maskIds] sID ausente en ${path}${entityLabel ? ` (${entityLabel})` : ""} ` +
+    //     `(id=${plainData._id ?? plainData.id}${hint}); se expone el ObjectId real`,
+    // );
   }
 
   const masked = {};
@@ -148,7 +149,11 @@ function maskIdsCore(data, path, sidByUserId) {
       return;
     }
 
-    if (key === "entityRoleMap" && Array.isArray(plainData[key]) && sidByUserId) {
+    if (
+      key === "entityRoleMap" &&
+      Array.isArray(plainData[key]) &&
+      sidByUserId
+    ) {
       masked[key] = plainData[key].map((group) =>
         maskEntityRoleMapGroup(group, sidByUserId, `${path}.${key}`),
       );
