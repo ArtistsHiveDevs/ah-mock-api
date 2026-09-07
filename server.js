@@ -337,8 +337,19 @@ app.get("/r/:resourceType/:id", async (req, res) => {
 
   req.serverEnvironment = environment;
   const connection = await connectToDatabase(req);
+  // connectToDatabase corrige req.serverEnvironment (ej. a "uat") cuando `environment`
+  // vino null/inválido (falla de decryptSharedLinkEnv o falta el query param `a`).
+  // Hay que usar ese valor corregido para getModel, no la variable `environment` original.
+  const dbEnvironment = req.serverEnvironment;
 
   const tipoRecurso = resourceType.toLowerCase() || "oc";
+
+  console.log("[SHARE] request", {
+    resourceType,
+    resourceId,
+    environment,
+    dbEnvironment,
+  });
 
   let title = `${tipoRecurso} ${resourceId}`;
   let description = `Detalles de la ${tipoRecurso} "${resourceId}" en Artist Hive.`;
@@ -356,7 +367,7 @@ app.get("/r/:resourceType/:id", async (req, res) => {
     case "oc": {
       resourcePath = "open-calls";
 
-      const OpenCallModel = await getModel(environment, "OpenCall");
+      const OpenCallModel = await getModel(dbEnvironment, "OpenCall");
       const openCall = await OpenCallModel.findOne({
         $or: [
           { sID: resourceId },
@@ -367,6 +378,8 @@ app.get("/r/:resourceType/:id", async (req, res) => {
       }).select(
         ["event_name", "description", "poster", "place_id", "place"].join(" "),
       );
+
+      console.log("[SHARE] openCall found?", !!openCall, openCall?._id);
 
       if (openCall) {
         title = `${openCall.event_name} · Artist Hive`;
@@ -380,10 +393,15 @@ app.get("/r/:resourceType/:id", async (req, res) => {
         if (!resolvedImage) {
           const placeId = openCall.place_id || openCall.place;
           if (placeId) {
-            const PlaceModel = await getModel(environment, "Place");
+            const PlaceModel = await getModel(dbEnvironment, "Place");
             const place =
               await PlaceModel.findById(placeId).select("profile_pic");
             resolvedImage = resolveImageUrl(place?.profile_pic);
+            console.log("[SHARE] place fallback image", {
+              placeId: String(placeId),
+              profile_pic: place?.profile_pic,
+              resolvedImage,
+            });
           }
         }
 
@@ -394,6 +412,8 @@ app.get("/r/:resourceType/:id", async (req, res) => {
   }
 
   const targetUrl = `${currentEnvConfig.domain}/${resourcePath}/details/${resourceId}`;
+
+  console.log("[SHARE] response", { title, description, imageUrl, targetUrl });
 
   res
     .status(200)
