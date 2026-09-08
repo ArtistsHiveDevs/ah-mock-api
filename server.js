@@ -336,20 +336,12 @@ app.get("/r/:resourceType/:id", async (req, res) => {
 
   req.serverEnvironment = environment;
 
-  console.log("[SHARE] ENV", { environment });
   const connection = await connectToDatabase(req);
 
   const dbEnvironment = req.serverEnvironment;
   const currentEnvConfig = doms[dbEnvironment] || doms.prod;
 
   const tipoRecurso = resourceType.toLowerCase() || "oc";
-
-  console.log("[SHARE] request", {
-    resourceType,
-    resourceId,
-    environment,
-    dbEnvironment,
-  });
 
   let title = `${tipoRecurso} ${resourceId}`;
   let description = `Detalles de la ${tipoRecurso} "${resourceId}" en Artist Hive.`;
@@ -379,8 +371,6 @@ app.get("/r/:resourceType/:id", async (req, res) => {
         ["event_name", "description", "poster", "place_id", "place"].join(" "),
       );
 
-      console.log("[SHARE] openCall found?", !!openCall, openCall?._id);
-
       if (openCall) {
         title = `${openCall.event_name} · Artist Hive`;
         description =
@@ -397,11 +387,6 @@ app.get("/r/:resourceType/:id", async (req, res) => {
             const place =
               await PlaceModel.findById(placeId).select("profile_pic");
             resolvedImage = resolveImageUrl(place?.profile_pic);
-            console.log("[SHARE] place fallback image", {
-              placeId: String(placeId),
-              profile_pic: place?.profile_pic,
-              resolvedImage,
-            });
           }
         }
 
@@ -412,8 +397,6 @@ app.get("/r/:resourceType/:id", async (req, res) => {
   }
 
   const targetUrl = `${currentEnvConfig.domain}/${resourcePath}/details/${resourceId}`;
-
-  console.log("[SHARE] response", { title, description, imageUrl, targetUrl });
 
   res
     .status(200)
@@ -520,6 +503,13 @@ function buildShareHtml({ title, description, imageUrl, targetUrl, ogType }) {
   title = escapeHtml(title);
   description = escapeHtml(description);
 
+  // fb:app_id habilita Insights/analytics del link en Meta; no es necesario para que
+  // WhatsApp/Facebook muestren la imagen del preview. Requiere una app real creada en
+  // developers.facebook.com > Mis Apps > Crear app; el ID va en FB_APP_ID.
+  const fbAppIdTag = process.env.FB_APP_ID
+    ? `\n  <meta property="fb:app_id" content="${escapeHtml(process.env.FB_APP_ID)}" />`
+    : "";
+
   return `<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -528,23 +518,23 @@ function buildShareHtml({ title, description, imageUrl, targetUrl, ogType }) {
   <meta name="description" content="${description}" />
 
   <meta property="og:type" content="${ogType}" />
+  <meta property="og:site_name" content="Artist Hive" />
   <meta property="og:url" content="${targetUrl}" />
   <meta property="og:title" content="${title}" />
   <meta property="og:description" content="${description}" />
-  <meta property="og:image" content="${imageUrl}" />
+  <meta property="og:image" content="${imageUrl}" />${fbAppIdTag}
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${title}" />
   <meta name="twitter:description" content="${description}" />
   <meta name="twitter:image" content="${imageUrl}" />
   
-  <!--meta http-equiv="refresh" content="0;url=${targetUrl}" />
-  <script>window.location.replace(${JSON.stringify(targetUrl)});</script -->
+  <meta http-equiv="refresh" content="0;url=${targetUrl}" />
+  <script>window.location.replace(${JSON.stringify(targetUrl)});</script>
 
 </head>
 <body>
   Redirigiendo a <a href="${targetUrl}">${title}</a>
-  ${JSON.stringify({ title, description, imageUrl, targetUrl, ogType })}
 </body>
 </html>`;
 }
