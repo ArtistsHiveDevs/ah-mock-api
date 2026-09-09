@@ -78,6 +78,7 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             await maskIdsWithEntityDirectory(
               response,
               connections[req.serverEnvironment],
+              { viewerIdentity: req.user },
             ),
           );
         } catch (err) {
@@ -116,6 +117,7 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             await maskIdsWithEntityDirectory(
               response,
               connections[req.serverEnvironment],
+              { viewerIdentity: req.user },
             ),
           );
         } catch (err) {
@@ -148,6 +150,7 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             await maskIdsWithEntityDirectory(
               response,
               connections[req.serverEnvironment],
+              { viewerIdentity: req.user },
             ),
           );
         } catch (err) {
@@ -183,6 +186,7 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             await maskIdsWithEntityDirectory(
               response,
               connections[req.serverEnvironment],
+              { viewerIdentity: req.user },
             ),
           );
         } catch (err) {
@@ -215,6 +219,7 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             await maskIdsWithEntityDirectory(
               response,
               connections[req.serverEnvironment],
+              { viewerIdentity: req.user },
             ),
           );
         } catch (err) {

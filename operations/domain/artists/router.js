@@ -259,11 +259,11 @@ module.exports = [
         ]);
 
         res.json(
-          createPaginatedDataResponse(
-            artists.slice(0, limit),
-            page,
-            Math.ceil(artists.length / limit),
-          ),
+          createPaginatedDataResponse(artists.slice(0, limit), {
+            currentPage: page,
+            totalPages: Math.ceil(artists.length / limit),
+            viewerIdentity: req.user,
+          }),
         );
       } catch (err) {
         res.status(500).json({ message: err.message });
@@ -492,21 +492,23 @@ module.exports = [
         const UserModel = await getModel(req.serverEnvironment, "User");
         const currentUser = await UserModel.findById(userId);
 
+        const matchesThisArtist = (entityRole) => {
+          // Verifica si entityRole.id es un ObjectId válido
+          if (mongoose.Types.ObjectId.isValid(entityRole.id)) {
+            // Compara si los ObjectIds son iguales
+            return new mongoose.Types.ObjectId(entityRole.id).equals(
+              artistInfo._id,
+            );
+          } else {
+            // Compara como strings si no es un ObjectId válido
+            return entityRole.id === artistInfo._id.toString();
+          }
+        };
+
         const roleAsArtist = currentUser?.roles.find(
           (role) =>
             role.entityName === "Artist" &&
-            role.entityRoleMap.some((entityRole) => {
-              // Verifica si entityRole.id es un ObjectId válido
-              if (mongoose.Types.ObjectId.isValid(entityRole.id)) {
-                // Compara si los ObjectIds son iguales
-                return new mongoose.Types.ObjectId(entityRole.id).equals(
-                  artistInfo._id,
-                );
-              } else {
-                // Compara como strings si no es un ObjectId válido
-                return entityRole.id === artistInfo._id.toString();
-              }
-            }),
+            role.entityRoleMap.some(matchesThisArtist),
         );
 
         if (!!artistInfo.spotify) {
@@ -733,15 +735,22 @@ module.exports = [
 
         // ================================= Ownership
 
+        // viewerCanSeeUnmasked ya sabe recorrer req.user.roles[].entityRoleMap[]
+        // (de cualquier entityName) como respaldo si el entityRoleMap del propio
+        // Artist no matchea, así que basta pasar el user completo.
+        const viewerIdentity = req.user;
+
         if (!currentUserIsOwner) {
           let reducedArtistData = visibleAttributes.reduce((acc, field) => {
             acc[field] = artistInfo[field];
             return acc;
           }, {});
 
-          res.json(createPaginatedDataResponse(reducedArtistData));
+          res.json(
+            createPaginatedDataResponse(reducedArtistData, { viewerIdentity }),
+          );
         } else {
-          res.json(createPaginatedDataResponse(artistInfo));
+          res.json(createPaginatedDataResponse(artistInfo, { viewerIdentity }));
         }
       } catch (err) {
         console.error(err);
@@ -819,7 +828,13 @@ module.exports = [
 
         ownerUser.save();
 
-        res.status(201).send(createPaginatedDataResponse(newArtist.toObject()));
+        res
+          .status(201)
+          .send(
+            createPaginatedDataResponse(newArtist.toObject(), {
+              viewerIdentity: req.user,
+            }),
+          );
       } catch (err) {
         res.status(400).send(err);
       }
@@ -993,7 +1008,11 @@ module.exports = [
             }
             return res
               .status(201)
-              .send(createPaginatedDataResponse(updatedArtist.toObject()));
+              .send(
+                createPaginatedDataResponse(updatedArtist.toObject(), {
+                  viewerIdentity: req.user,
+                }),
+              );
           } else {
             // Caso 3: El userId no tiene los roles OWNER o ADMIN
             res.status(401).json({
@@ -1038,7 +1057,11 @@ module.exports = [
           return res.status(404).json({ message: "Artist not found" });
         }
 
-        res.json(createPaginatedDataResponse(artist));
+        res.json(
+          createPaginatedDataResponse(artist, {
+            viewerIdentity: req.user,
+          }),
+        );
       } catch (err) {
         res.status(500).json({ message: err.message });
       }

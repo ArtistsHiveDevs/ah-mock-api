@@ -2,9 +2,33 @@ const ErrorCodes = require("../constants/errors");
 const { maskIds } = require("./maskEntityId");
 
 module.exports = {
-  createPaginatedDataResponse(data, currentPage = 1, totalPages = 1) {
+  /**
+   * @param {*} data
+   * @param {object} [options]
+   * @param {number} [options.currentPage=1]
+   * @param {number} [options.totalPages=1]
+   * @param {string|object|null} [options.viewerIdentity=null] - identifier de quien
+   *   hace la petición: string suelto (asume id/_id) u objeto parcial
+   *   {username, sID, id, _id}. Si se pasa, no se enmascaran los campos sensibles
+   *   de un recurso que sea el propio viewer o que lo tenga en su entityRoleMap.
+   *   Ver maskIds en maskEntityId.js.
+   * @param {boolean} [options.forceView=false]
+   * @param {boolean} [options.skipMask=false] - no enmascara data. Úsalo cuando el
+   *   caller va a enmascarar el resultado completo más adelante (ej. crud-routes.js
+   *   -> maskIdsWithEntityDirectory, que además resuelve entityRoleMap contra
+   *   EntityDirectory) para no enmascarar dos veces el mismo dato.
+   */
+  createPaginatedDataResponse(data, options = {}) {
+    const {
+      currentPage = 1,
+      totalPages = 1,
+      viewerIdentity = null,
+      forceView = [],
+      skipMask = false,
+    } = options;
+
     return {
-      data: maskIds(data),
+      data: skipMask ? data : maskIds(data, "root", viewerIdentity, forceView),
       currentPage,
       totalPages,
     };

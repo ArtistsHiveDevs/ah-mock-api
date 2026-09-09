@@ -265,7 +265,11 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       (filters || []).some((filter) => filter.compareWith === "sameUser");
 
     if (needsFailedProfileFilter || needsFailedUserFilter) {
-      return apiHelperFunctions.createPaginatedDataResponse([], page, 0);
+      return apiHelperFunctions.createPaginatedDataResponse([], {
+        currentPage: page,
+        totalPages: 0,
+        skipMask: true,
+      });
     }
 
     try {
@@ -648,11 +652,11 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       }
 
       // Crear la respuesta paginada
-      return apiHelperFunctions.createPaginatedDataResponse(
-        results,
-        page,
-        Math.ceil(results.length / limit),
-      );
+      return apiHelperFunctions.createPaginatedDataResponse(results, {
+        currentPage: page,
+        totalPages: Math.ceil(results.length / limit),
+        skipMask: true,
+      });
     } catch (error) {
       console.error(error);
     }
@@ -1137,9 +1141,13 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         return acc;
       }, {});
 
-      return apiHelperFunctions.createPaginatedDataResponse(reducedEntityData);
+      return apiHelperFunctions.createPaginatedDataResponse(reducedEntityData, {
+        skipMask: true,
+      });
     } else {
-      return apiHelperFunctions.createPaginatedDataResponse(entityInfo);
+      return apiHelperFunctions.createPaginatedDataResponse(entityInfo, {
+        skipMask: true,
+      });
     }
   }
 
@@ -1311,7 +1319,9 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         }
       }
 
-      return apiHelperFunctions.createPaginatedDataResponse(newEntity);
+      return apiHelperFunctions.createPaginatedDataResponse(newEntity, {
+        skipMask: true,
+      });
     } catch (error) {
       // console.log("ERROR: ", modelName, ", UserId: ", userId, ", body: ", 'message ', error );
       throw error;
@@ -1428,7 +1438,9 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         });
       }
 
-      return apiHelperFunctions.createPaginatedDataResponse(updatedEntity);
+      return apiHelperFunctions.createPaginatedDataResponse(updatedEntity, {
+        skipMask: true,
+      });
     } else {
       throw new Error("Permission denied");
     }
@@ -1556,7 +1568,9 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         );
       }
 
-      return apiHelperFunctions.createPaginatedDataResponse(deletedEntity);
+      return apiHelperFunctions.createPaginatedDataResponse(deletedEntity, {
+        skipMask: true,
+      });
     } else {
       throw new Error("Permission denied");
     }

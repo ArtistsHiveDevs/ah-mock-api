@@ -46,6 +46,29 @@ const ENTITY_DIRECTORY_SYNC_FIELDS = [
   "verified_status",
 ];
 
+const MONTHS_ES = [
+  "enero",
+  "febrero",
+  "marzo",
+  "abril",
+  "mayo",
+  "junio",
+  "julio",
+  "agosto",
+  "septiembre",
+  "octubre",
+  "noviembre",
+  "diciembre",
+];
+
+function formatReadableDateEs(date) {
+  const parsedDate = new Date(date);
+  const day = String(parsedDate.getDate()).padStart(2, "0");
+  const month = MONTHS_ES[parsedDate.getMonth()];
+  const year = parsedDate.getFullYear();
+  return `${day} de ${month} de ${year}`;
+}
+
 /**
  * Construye el objeto entityInfo para EntityDirectory desde un User
  * @param {Object} user - Documento de User
@@ -591,9 +614,11 @@ module.exports = [
         }
       }
 
-      return res
-        .status(200)
-        .json(apiHelperFunctions.createPaginatedDataResponse(response));
+      return res.status(200).json(
+        apiHelperFunctions.createPaginatedDataResponse(response, {
+          forceView: ["email"],
+        }),
+      );
     },
   ),
   userRouter.get(
@@ -787,7 +812,11 @@ module.exports = [
         );
         await notifyUserWelcome(user, lang);
 
-        res.status(201).send(createPaginatedDataResponse(user));
+        res.status(201).send(
+          createPaginatedDataResponse(user, {
+            viewerIdentity: helpers.getEntityIdentifiers(user),
+          }),
+        );
       } catch (err) {
         console.log(err);
         res.status(400).send(err);
@@ -914,7 +943,11 @@ module.exports = [
           );
         }
 
-        return res.status(200).json(createPaginatedDataResponse(updatedUser));
+        return res.status(200).json(
+          createPaginatedDataResponse(updatedUser, {
+            viewerIdentity: req.user,
+          }),
+        );
       } catch (err) {
         console.error(err);
         res.status(500).json({ message: err.message });
@@ -1046,15 +1079,28 @@ module.exports = [
               req.serverEnvironment,
               "ProfileClaim",
             );
-            //
-            const claim = new ProfileClaimModel({
+
+            const existingClaim = await ProfileClaimModel.findOne({
               user: req.userId,
               entityType: entity,
-              // entityId: new mongoose.Types.ObjectId(id),
               entityId: id,
-              identifier: identifier,
             });
-            await claim.save();
+
+            if (!existingClaim) {
+              const claim = new ProfileClaimModel({
+                user: req.userId,
+                entityType: entity,
+                // entityId: new mongoose.Types.ObjectId(id),
+                entityId: id,
+                identifier: identifier,
+              });
+              await claim.save();
+            } else {
+              return res.status(409).json({
+                message: `Ya hay una solicitud de reclamación en proceso desde el ${formatReadableDateEs(existingClaim.createdAt)}. Esta puede tardar de 1 a 5 días hábiles en ser resuelta.`,
+              });
+            }
+
             return res
               .status(200)
               .json(createPaginatedDataResponse({ result: true }));

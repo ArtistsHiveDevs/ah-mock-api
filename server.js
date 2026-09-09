@@ -282,7 +282,8 @@ app.get("/me", helpers.validateEnvironment, validateApiKey, (req, res) => {
   // Enriquecer datos de ciudad actual
   const homeCityData = buildHomeCityData(req.serverEnvironment, userInfo);
 
-  const maskedUserInfo = maskIds(userInfo);
+  const viewerIdentity = req.user;
+  const maskedUserInfo = maskIds(userInfo, "root", viewerIdentity);
 
   res.status(200).send({
     ...omitRawLocationFields(maskedUserInfo, ["birthplace", "home_city"]),

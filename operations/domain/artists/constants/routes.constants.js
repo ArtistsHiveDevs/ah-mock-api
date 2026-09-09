@@ -69,6 +69,7 @@ module.exports = {
     "technical_rider",
     "stage_plot",
     "music_performance",
+    "entityRoleMap",
   ],
   authenticated_fields: [
     // "artistType",

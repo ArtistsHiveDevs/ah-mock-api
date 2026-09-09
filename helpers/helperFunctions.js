@@ -1,3 +1,5 @@
+const { IDENTIFIER_FIELDS } = require("./maskEntityId");
+
 const userRoleMapFields = [
   "id",
   "profile_pic",
@@ -53,7 +55,7 @@ module.exports = {
     baseObject,
     search,
     properties,
-    options = { caseSentive: false }
+    options = { caseSentive: false },
   ) {
     return baseObject?.filter((objElement) => {
       return (
@@ -70,7 +72,7 @@ module.exports = {
           if (!!options) {
             if (!options.caseSentive) {
               searchValue = this.removeStringAccents(
-                searchValue.toLowerCase().trim()
+                searchValue.toLowerCase().trim(),
               );
               // console.log(
               //   "TYPEE!!!!!  ",
@@ -79,7 +81,7 @@ module.exports = {
               // );
               objectPropertyValue = !!objectPropertyValue
                 ? this.removeStringAccents(
-                    objectPropertyValue.toLowerCase().trim()
+                    objectPropertyValue.toLowerCase().trim(),
                   )
                 : "";
             }
@@ -100,14 +102,14 @@ module.exports = {
     baseObject,
     searchLatLong,
     property,
-    options = { maxdistance: 5 } // Measured in Km
+    options = { maxdistance: 5 }, // Measured in Km
   ) {
     return baseObject?.filter((objElement) => {
       if (!!property) {
         const propertyPath = property.split(".") || [];
         const objLatLong = propertyPath.reduce(
           (previous, current) => previous[current],
-          objElement
+          objElement,
         );
 
         const coords = objLatLong.split(",");
@@ -176,7 +178,7 @@ module.exports = {
     mainObject,
     relationshipName,
     relationshipData,
-    relationshipID = "id"
+    relationshipID = "id",
   ) {
     const mainObjectIsArray = Array.isArray(mainObject);
     let mainArray = mainObject;
@@ -193,7 +195,7 @@ module.exports = {
     mainArray.forEach((object) => {
       object[relationshipName.replace("_id", "")] = relationshipDataArray.find(
         (relatedObject) =>
-          `${relatedObject[relationshipID]}` === `${object[relationshipName]}`
+          `${relatedObject[relationshipID]}` === `${object[relationshipName]}`,
       );
     });
 
@@ -209,7 +211,7 @@ module.exports = {
           fullData,
           relationship.relationshipName,
           relationship.relationshipData,
-          relationship.relationshipID || "id"
+          relationship.relationshipID || "id",
         );
       } catch (error) {
         console.log(error);
@@ -224,7 +226,7 @@ module.exports = {
     objectRelationshipName,
     relationshipName,
     relationshipData,
-    objectID = "id"
+    objectID = "id",
   ) {
     const mainObjectIsArray = Array.isArray(mainObject);
     let mainArray = mainObject;
@@ -242,7 +244,7 @@ module.exports = {
       if (!objectRelationshipName.includes(".")) {
         object[objectRelationshipName] = relationshipDataArray.filter(
           (relatedObject) =>
-            `${relatedObject[relationshipName]}` === `${object[objectID]}`
+            `${relatedObject[relationshipName]}` === `${object[objectID]}`,
         );
       } else {
         const subpathnames = objectRelationshipName.split(".");
@@ -252,7 +254,7 @@ module.exports = {
             this.fillRelationship(
               firstRelationship,
               relationshipName,
-              relationshipDataArray
+              relationshipDataArray,
             );
           }
         });
@@ -270,7 +272,7 @@ module.exports = {
         relationship.objectRelationshipName || relationship.field,
         relationship.relationshipName,
         relationship.relationshipData,
-        objectID
+        objectID,
       );
     });
 
@@ -286,7 +288,7 @@ module.exports = {
         initialDate1[1],
         initialDate1[2],
         `${hour1}`.substring(0, 2),
-        `${hour1}`.substring(2, 4)
+        `${hour1}`.substring(2, 4),
       );
 
       const initialDate2 = event2[nameDate].split("-");
@@ -296,7 +298,7 @@ module.exports = {
         initialDate2[1],
         initialDate2[2],
         `${hour2}`.substring(0, 2),
-        `${hour2}`.substring(2, 4)
+        `${hour2}`.substring(2, 4),
       );
 
       const difference =
@@ -314,64 +316,66 @@ module.exports = {
       // `C:/Users/fnp/Documents/Proyectos/QuarenDevs/2024/tsProcessor/data/drive/artists_drive_db_output.json`
       //   `C:/Users/fnp/Documents/Proyectos/QuarenDevs/2024/tsProcessor/data/drive/new_artists_drive_consolidado_completo.json`
       // )
-      fs.readFileSync(`./assets/mocks/domain/artists/artistsList.json`)
+      fs.readFileSync(`./assets/mocks/domain/artists/artistsList.json`),
     );
     const albums = JSON.parse(
-      fs.readFileSync(`./assets/mocks/domain/artists/albumsList.json`)
+      fs.readFileSync(`./assets/mocks/domain/artists/albumsList.json`),
     );
     const allergies = JSON.parse(
-      fs.readFileSync(`./assets/mocks/parametrics/demographics/allergies.json`)
+      fs.readFileSync(`./assets/mocks/parametrics/demographics/allergies.json`),
     );
     const continents = JSON.parse(
       fs.readFileSync(
-        `./assets/mocks/parametrics/general/continents/continentsDB.json`
-      )
+        `./assets/mocks/parametrics/general/continents/continentsDB.json`,
+      ),
     );
     const countries = JSON.parse(
       fs.readFileSync(
-        `./assets/mocks/parametrics/general/countries/fullCountriesTips.json`
-      )
+        `./assets/mocks/parametrics/general/countries/fullCountriesTips.json`,
+      ),
     );
     const currencies = JSON.parse(
       fs.readFileSync(
-        `./assets/mocks/parametrics/general/currencies/currencies.json`
-      )
+        `./assets/mocks/parametrics/general/currencies/currencies.json`,
+      ),
     );
     const events = JSON.parse(
-      fs.readFileSync(`./assets/mocks/domain/events/eventsList.json`)
+      fs.readFileSync(`./assets/mocks/domain/events/eventsList.json`),
     );
     const instruments = JSON.parse(
       fs.readFileSync(
-        `./assets/mocks/parametrics/domain/instruments/instrumentsList.json`
-      )
+        `./assets/mocks/parametrics/domain/instruments/instrumentsList.json`,
+      ),
     );
     const languages = JSON.parse(
       fs.readFileSync(
-        `./assets/mocks/parametrics/general/languages/languages_full.json`
-      )
+        `./assets/mocks/parametrics/general/languages/languages_full.json`,
+      ),
     );
     const places = JSON.parse(
-      fs.readFileSync(`./assets/mocks/domain/places/placesList.json`)
+      fs.readFileSync(`./assets/mocks/domain/places/placesList.json`),
     );
     const rehearsalRooms = JSON.parse(
       fs.readFileSync(
-        `./assets/mocks/domain/rehearsal_rooms/rehearsal_roomsList.json`
-      )
+        `./assets/mocks/domain/rehearsal_rooms/rehearsal_roomsList.json`,
+      ),
     );
     const users = JSON.parse(
-      fs.readFileSync(`./assets/mocks/domain/users/usersList.json`)
+      fs.readFileSync(`./assets/mocks/domain/users/usersList.json`),
     );
     const riders = JSON.parse(
-      fs.readFileSync(`./assets/mocks/domain/riders/ridersList.json`)
+      fs.readFileSync(`./assets/mocks/domain/riders/ridersList.json`),
     );
     const academies = JSON.parse(
-      fs.readFileSync(`./assets/mocks/domain/academies/academiesList.json`)
+      fs.readFileSync(`./assets/mocks/domain/academies/academiesList.json`),
     );
     const openCalls = JSON.parse(
-      fs.readFileSync(`./assets/mocks/domain/open-calls/openCallsList.json`)
+      fs.readFileSync(`./assets/mocks/domain/open-calls/openCallsList.json`),
     );
     const openCallApplications = JSON.parse(
-      fs.readFileSync(`./assets/mocks/domain/open-calls/openCallApplicationsList.json`)
+      fs.readFileSync(
+        `./assets/mocks/domain/open-calls/openCallApplicationsList.json`,
+      ),
     );
 
     if (entityName === "Artist") {
@@ -443,7 +447,7 @@ module.exports = {
               24 *
               60 *
               60 *
-              1000
+              1000,
         );
 
         fechas.forEach((fecha) => {
@@ -457,7 +461,7 @@ module.exports = {
           const year = eventUpdatedDate.getFullYear();
           const month = String(eventUpdatedDate.getMonth() + 1).padStart(
             2,
-            "0"
+            "0",
           );
           const day = String(eventUpdatedDate.getDate()).padStart(2, "0");
           event[fecha] = `${year}-${month}-${day}`;
@@ -466,7 +470,7 @@ module.exports = {
         // Estado de confirmación
         event["confirmation_status"] = Object.keys(EVENT_CONFIRMATION_STATUS)[
           Math.floor(
-            Math.random() * Object.keys(EVENT_CONFIRMATION_STATUS).length
+            Math.random() * Object.keys(EVENT_CONFIRMATION_STATUS).length,
           )
         ];
       });
@@ -518,7 +522,7 @@ module.exports = {
     return arr.flatMap((item) =>
       Array(times)
         .fill(null)
-        .map(() => ({ ...item }))
+        .map(() => ({ ...item })),
     );
   },
   hideProperties(arrayObjects, properties) {
@@ -528,13 +532,13 @@ module.exports = {
           acc[prop] = element[prop];
         }
         return acc;
-      }, {})
+      }, {}),
     );
   },
   userRoleMapFields,
   hasToUpdateUserRoleMap(updateInfo) {
     return Object.keys(updateInfo).some((updateKey) =>
-      userRoleMapFields.includes(updateKey)
+      userRoleMapFields.includes(updateKey),
     );
   },
   // Resincroniza el snapshot denormalizado en User.roles[].entityRoleMap (name,
@@ -564,16 +568,15 @@ module.exports = {
 
     const updateFields = {};
     Object.keys(roleMapNewInfo).forEach((key) => {
-      updateFields[
-        `roles.$[roleElement].entityRoleMap.$[mapElement].${key}`
-      ] = roleMapNewInfo[key];
+      updateFields[`roles.$[roleElement].entityRoleMap.$[mapElement].${key}`] =
+        roleMapNewInfo[key];
     });
 
     const relatedUserIds = [
       ...new Set(
         updatedEntity.entityRoleMap.flatMap((role) =>
-          (role.ids || []).map((relatedId) => relatedId.toString())
-        )
+          (role.ids || []).map((relatedId) => relatedId.toString()),
+        ),
       ),
     ];
 
@@ -592,16 +595,16 @@ module.exports = {
               { "mapElement.id": entityRoleMapId },
             ],
             new: true,
-          }
-        )
-      )
+          },
+        ),
+      ),
     );
   },
   flattenObject: function flattenObject(
     obj,
     parentPath = "",
     result = {},
-    exclude = []
+    exclude = [],
   ) {
     for (const key in obj) {
       if (!obj.hasOwnProperty(key)) continue;
@@ -610,7 +613,7 @@ module.exports = {
       const path = parentPath ? `${parentPath}.${key}` : key;
 
       const shouldExclude = exclude.some((excludedPath) =>
-        path.startsWith(excludedPath)
+        path.startsWith(excludedPath),
       );
 
       if (shouldExclude) {
@@ -654,5 +657,16 @@ module.exports = {
     const formattedDate = resultDate.toISOString().split("T")[0];
 
     return formattedDate;
+  },
+
+  getEntityIdentifiers(entityInstance) {
+    const data = IDENTIFIER_FIELDS.reduce((identifiers, field) => {
+      identifiers[field] = (entityInstance || {})[field];
+      return identifiers;
+    }, {});
+
+    data.roles = (entityInstance || {}).roles || [];
+
+    return data;
   },
 };
