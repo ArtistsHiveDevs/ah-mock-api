@@ -182,6 +182,13 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             userId: req.userId,
             body: req.body,
           });
+          if (
+            options.postScriptFunction &&
+            typeof options.postScriptFunction === "function"
+          ) {
+            await options.postScriptFunction({ results: [response.data], req });
+          }
+
           res.json(
             await maskIdsWithEntityDirectory(
               response,

@@ -24,6 +24,7 @@ const schema = new Schema(
     accepted_project_types: [{ type: String }],
     max_applications: { type: Number },
     requirements_description: { type: String },
+    selection_criteria: { type: String },
     stage_type: { type: String },
     stage_dimensions: { type: String },
     set_duration_min: { type: Number },

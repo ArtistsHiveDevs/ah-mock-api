@@ -699,6 +699,7 @@ function loadRoutes() {
             "_id",
             "sID",
             "event_name",
+            "event_type",
             "event_date",
             "start_date",
             "end_date",
@@ -713,6 +714,7 @@ function loadRoutes() {
             "accepted_project_types",
             "max_applications",
             "requirements_description",
+            "selection_criteria",
             "stage_type",
             "stage_dimensions",
             "set_duration_min",
@@ -740,6 +742,7 @@ function loadRoutes() {
             "_id",
             "sID",
             "event_name",
+            "event_type",
             "event_date",
             "start_date",
             "end_date",
@@ -754,6 +757,7 @@ function loadRoutes() {
             "accepted_project_types",
             "max_applications",
             "requirements_description",
+            "selection_criteria",
             "stage_type",
             "stage_dimensions",
             "set_duration_min",
@@ -843,7 +847,7 @@ function loadRoutes() {
           customPopulateFields: [
             {
               path: "open_call_id",
-              select: "event_name event_date city status",
+              select: "event_name event_date city status sID",
             },
             {
               path: "artist_id",

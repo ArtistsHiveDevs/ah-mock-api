@@ -1318,6 +1318,9 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
           // No lanzar el error para no afectar la creación
         }
       }
+      if (options.customPopulateFields && options.customPopulateFields.length > 0) {
+        await newEntity.populate(options.customPopulateFields);
+      }
 
       return apiHelperFunctions.createPaginatedDataResponse(newEntity, {
         skipMask: true,
@@ -1436,6 +1439,9 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
           newInfo,
           UserModel,
         });
+      }
+      if (options.customPopulateFields && options.customPopulateFields.length > 0) {
+        await updatedEntity.populate(options.customPopulateFields);
       }
 
       return apiHelperFunctions.createPaginatedDataResponse(updatedEntity, {
