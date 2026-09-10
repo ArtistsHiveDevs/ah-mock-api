@@ -18,6 +18,7 @@ const {
 const apiHelperFunctions = require("../../../helpers/apiHelperFunctions");
 const { followProfile } = require("../../../helpers/following");
 const { getModel } = require("../../../helpers/getModel");
+const emailService = require("../../../helpers/emailService");
 const {
   normalizeProfileId,
 } = require("../../../models/appbase/EntityDirectory");
@@ -1099,6 +1100,79 @@ module.exports = [
               return res.status(409).json({
                 message: `Ya hay una solicitud de reclamación en proceso desde el ${formatReadableDateEs(existingClaim.createdAt)}. Esta puede tardar de 1 a 5 días hábiles en ser resuelta.`,
               });
+            }
+
+            // Notificar al equipo por correo; un fallo acá no debe tumbar el claim ya guardado.
+            try {
+              const ProfileEntityModel = await getModel(
+                req.serverEnvironment,
+                entity,
+              );
+              const profileQuery = mongoose.Types.ObjectId.isValid(id)
+                ? {
+                    $or: [
+                      { _id: new mongoose.Types.ObjectId(id) },
+                      { username: username || identifier },
+                    ],
+                  }
+                : {
+                    $or: [
+                      { username: username || identifier },
+                      { sID: id || identifier },
+                    ],
+                  };
+              const claimedProfile = await ProfileEntityModel.findOne(
+                profileQuery,
+              ).select("name username sID");
+
+              const requestingUser = req.user || {};
+              const requestingUserName =
+                requestingUser.stage_name ||
+                [requestingUser.given_names, requestingUser.surnames]
+                  .filter(Boolean)
+                  .join(" ") ||
+                requestingUser.username ||
+                "Usuario";
+
+              await emailService.sendEmail({
+                to: "users@artist-hive.com",
+                subject: `Nueva solicitud de reclamo de perfil: ${claimedProfile?.name || identifier}`,
+                html: `
+                  <h2>Nueva solicitud de reclamo de perfil</h2>
+                  <p><strong>Usuario solicitante</strong></p>
+                  <ul>
+                    <li>Nombre: ${requestingUserName}</li>
+                    <li>Username: ${requestingUser.username || "-"}</li>
+                    <li>Email: ${requestingUser.email || "-"}</li>
+                    <li>ID: ${requestingUser._id || req.userId}</li>
+                  </ul>
+                  <p><strong>Perfil solicitado</strong></p>
+                  <ul>
+                    <li>Tipo: ${entity}</li>
+                    <li>Nombre: ${claimedProfile?.name || "-"}</li>
+                    <li>Username: ${claimedProfile?.username || "-"}</li>
+                    <li>ID: ${id}</li>
+                  </ul>
+                `,
+                text: `Nueva solicitud de reclamo de perfil
+
+Usuario solicitante:
+Nombre: ${requestingUserName}
+Username: ${requestingUser.username || "-"}
+Email: ${requestingUser.email || "-"}
+ID: ${requestingUser._id || req.userId}
+
+Perfil solicitado:
+Tipo: ${entity}
+Nombre: ${claimedProfile?.name || "-"}
+Username: ${claimedProfile?.username || "-"}
+ID: ${id}`,
+              });
+            } catch (notificationError) {
+              console.error(
+                "❌ Error notificando solicitud de claim:",
+                notificationError,
+              );
             }
 
             return res

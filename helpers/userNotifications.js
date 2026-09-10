@@ -209,6 +209,34 @@ async function notifyProfileAssigned({
           name: profile.name,
           type: profile.type,
         },
+        role: "Administrador",
+        assignedBy: {
+          id: assignedBy._id?.toString() || assignedBy.id,
+          name: assignedByName,
+        },
+      },
+    });
+
+    await notificationService.send({
+      type: "user.profileAssignment.assigned",
+      recipient: {
+        id: user._id?.toString() || user.id?.toString(),
+        email: "users@artist-hive.com",
+        name: displayName,
+      },
+      data: {
+        lang: lang || "en",
+        user: {
+          _id: user._id?.toString() || user.id,
+          name: displayName,
+          username: user.username,
+          email: user.email,
+        },
+        profile: {
+          id: profile.id || profile._id?.toString(),
+          name: profile.name,
+          type: profile.type,
+        },
         role,
         assignedBy: {
           id: assignedBy._id?.toString() || assignedBy.id,
@@ -256,6 +284,30 @@ async function notifyProfileRoleUpdated({
       recipient: {
         id: user._id?.toString() || user.id?.toString(),
         email: emailTo,
+        name: displayName,
+      },
+      data: {
+        lang: lang || "en",
+        user: {
+          _id: user._id?.toString() || user.id,
+          name: displayName,
+          username: user.username,
+          email: user.email,
+        },
+        profile: {
+          id: profile.id || profile._id?.toString(),
+          name: profile.name,
+          type: profile.type,
+        },
+        previousRole,
+        newRole,
+      },
+    });
+    await notificationService.send({
+      type: "user.profileAssignment.roleUpdated",
+      recipient: {
+        id: user._id?.toString() || user.id?.toString(),
+        email: "users@artist-hive.com",
         name: displayName,
       },
       data: {
