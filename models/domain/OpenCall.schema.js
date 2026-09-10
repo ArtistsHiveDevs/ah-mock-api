@@ -6,6 +6,7 @@ const schema = new Schema(
   {
     event_name: { type: String, required: true },
     event_date: { type: String, required: true },
+    event_type: { type: String, required: true },
     start_date: { type: String, required: true },
     end_date: { type: String, required: true },
     poster: { type: String },

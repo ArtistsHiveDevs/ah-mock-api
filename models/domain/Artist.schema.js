@@ -79,6 +79,7 @@ const MemberWithouthAccountSchema = new mongoose.Schema({
   stage_name: { type: String, required: false },
   email: { type: String, required: true },
   gender: { type: String, required: true },
+  gender_identity: { type: String, required: true },
   member_role: { type: String, required: true },
   member_instrument: { type: String, required: true },
 });
