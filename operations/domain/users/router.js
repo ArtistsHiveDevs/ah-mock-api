@@ -391,6 +391,23 @@ async function detectAndNotifyRoleChanges(
           assignedBy: updatedBy,
           lang,
         });
+
+        // Si esta asignación resuelve una solicitud de reclamo pendiente, marcarla con la fecha de aprobación.
+        try {
+          const ProfileClaimModel = await getModel(
+            serverEnvironment,
+            "ProfileClaim",
+          );
+          await ProfileClaimModel.updateOne(
+            { user: currentUser._id, entityType: entityName, entityId },
+            { $set: { issuedDate: new Date() } },
+          );
+        } catch (claimError) {
+          console.error(
+            `[RoleChanges] Error actualizando ProfileClaim para ${entityName}/${entityId}:`,
+            claimError,
+          );
+        }
       } else {
         // Verificar si los roles cambiaron
         const rolesChanged =
@@ -1121,9 +1138,10 @@ module.exports = [
                       { sID: id || identifier },
                     ],
                   };
-              const claimedProfile = await ProfileEntityModel.findOne(
-                profileQuery,
-              ).select("name username sID");
+              const claimedProfile =
+                await ProfileEntityModel.findOne(profileQuery).select(
+                  "name username sID",
+                );
 
               const requestingUser = req.user || {};
               const requestingUserName =

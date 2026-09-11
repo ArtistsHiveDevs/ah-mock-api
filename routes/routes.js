@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 var allRouter = require("../operations/domain/all/router");
 var academyRouter = require("../operations/domain/academies/router");
 var artistRouter = require("../operations/domain/artists/router");
@@ -939,7 +940,83 @@ function loadRoutes() {
       route: createCRUDRoutes({
         modelName: "ProfileClaim",
         schema: ProfileClaim.schema,
-        options: { listEntities: { limit: 0 } },
+        options: {
+          listEntities: { limit: 0 },
+          disableMasking: true,
+          public_fields: [
+            "user",
+            "entityType",
+            "entityId",
+            "identifier",
+            "issuedDate",
+            "createdAt",
+          ],
+          // `user` tiene ref en el schema y se puebla solo con esto. `entityId` es
+          // polimórfico (Artist/Place según `entityType`) y, en datos legacy, guarda el
+          // sID o el username de la entidad en vez de su ObjectId de Mongo (p.ej.
+          // "nRO6ybjvNs") -- no se puede resolver con un populate estático por ref/refPath,
+          // así que se busca a mano por _id/sID/username, igual que el resto de los lookups
+          // "flexibles" de este backend (ver users/router.js, EntityDirectory.normalizeProfileId).
+          customPopulateFields: [
+            {
+              path: "user",
+              select:
+                "name given_names surnames stage_name username email profile_pic sID",
+            },
+          ],
+          postScriptFunction: async ({ results, req }) => {
+            const claims = (
+              Array.isArray(results) ? results : [results]
+            ).filter(Boolean);
+
+            await Promise.all(
+              claims.map(async (claim) => {
+                try {
+                  const EntityModel = await getModel(
+                    req.serverEnvironment,
+                    claim.entityType,
+                  );
+                  const lookupValue = claim.entityId || claim.identifier;
+
+                  const query = mongoose.Types.ObjectId.isValid(lookupValue)
+                    ? {
+                        $or: [
+                          { _id: lookupValue },
+                          { sID: lookupValue },
+                          { username: lookupValue },
+                        ],
+                      }
+                    : {
+                        $or: [{ sID: lookupValue }, { username: lookupValue }],
+                      };
+
+                  const entity = await EntityModel.findOne(query).select(
+                    "name username run profile_pic instagram spotify sID",
+                  );
+
+                  claim.entityProfile = entity
+                    ? {
+                        id: entity._id,
+                        name: entity.name,
+                        username: entity.username,
+                        run: entity.run,
+                        profile_pic: entity.profile_pic,
+                        instagram: entity.instagram,
+                        spotify: entity.spotify,
+                        sID: entity.sID,
+                      }
+                    : null;
+                } catch (err) {
+                  console.error(
+                    `[ProfileClaim] Error resolviendo ${claim.entityType}/${claim.entityId}:`,
+                    err.message,
+                  );
+                  claim.entityProfile = null;
+                }
+              }),
+            );
+          },
+        },
       }),
     },
     // { path: "/rehearsal_rooms", route: { router: rehearsalRoomsRouter } },

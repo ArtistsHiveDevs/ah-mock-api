@@ -13,6 +13,24 @@ const { connections } = require("../db/db_g");
 const modelActions = {};
 const autoSeeded = {}; // Track which models have been auto-seeded
 
+/**
+ * Envía la respuesta aplicando maskIdsWithEntityDirectory (_id -> sID, datos sensibles, etc.),
+ * salvo que la ruta se haya configurado con `options.disableMasking: true` -- útil para
+ * endpoints internos/admin que necesitan el ObjectId real (ej. para copiarlo y buscarlo
+ * directo en Mongo) en vez del sID enmascarado.
+ */
+async function sendMaskedResponse(res, response, req, options) {
+  if (options.disableMasking) {
+    return res.json(response);
+  }
+
+  return res.json(
+    await maskIdsWithEntityDirectory(response, connections[req.serverEnvironment], {
+      viewerIdentity: req.user,
+    }),
+  );
+}
+
 // Función genérica para crear rutas CRUD
 function createCRUDRoutes({ modelName, schema, options = {} }) {
   try {
@@ -74,13 +92,7 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             user: req.user,
           });
 
-          res.json(
-            await maskIdsWithEntityDirectory(
-              response,
-              connections[req.serverEnvironment],
-              { viewerIdentity: req.user },
-            ),
-          );
+          await sendMaskedResponse(res, response, req, options);
         } catch (err) {
           console.error(err);
           const { status, body } =
@@ -113,13 +125,7 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             public_fields: options.public_fields,
             postScriptFunction: options.postScriptFunction,
           });
-          res.json(
-            await maskIdsWithEntityDirectory(
-              response,
-              connections[req.serverEnvironment],
-              { viewerIdentity: req.user },
-            ),
-          );
+          await sendMaskedResponse(res, response, req, options);
         } catch (err) {
           console.error(err);
           const { status, body } =
@@ -146,13 +152,7 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             userId: req.userId,
             body: req.body,
           });
-          res.json(
-            await maskIdsWithEntityDirectory(
-              response,
-              connections[req.serverEnvironment],
-              { viewerIdentity: req.user },
-            ),
-          );
+          await sendMaskedResponse(res, response, req, options);
         } catch (err) {
           console.error(`[${modelName}] Error creating entity:`, err.message);
           console.error("Stack trace:", err.stack);
@@ -189,13 +189,7 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             await options.postScriptFunction({ results: [response.data], req });
           }
 
-          res.json(
-            await maskIdsWithEntityDirectory(
-              response,
-              connections[req.serverEnvironment],
-              { viewerIdentity: req.user },
-            ),
-          );
+          await sendMaskedResponse(res, response, req, options);
         } catch (err) {
           const { status, body } =
             apiHelperFunctions.mapDatabaseErrorToResponse(err);
@@ -222,13 +216,7 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             id,
             userId: req.userId,
           });
-          res.json(
-            await maskIdsWithEntityDirectory(
-              response,
-              connections[req.serverEnvironment],
-              { viewerIdentity: req.user },
-            ),
-          );
+          await sendMaskedResponse(res, response, req, options);
         } catch (err) {
           console.error(`[${modelName}] Error deleting entity:`, err.message);
           const { status, body } =

@@ -9,12 +9,10 @@ const schema = new mongoose.Schema(
   {
     user: { type: Schema.Types.ObjectId, ref: "User" },
     entityType: String,
+    // entityId guarda históricamente el sID/identifier de la entidad, no su ObjectId de Mongo
+    // (ver datos legacy: p.ej. "nRO6ybjvNs"). No se puede tipar como ObjectId + refPath sin
+    // migrar esos documentos, así que se resuelve a mano por sID/username en el populate.
     entityId: String,
-    // entityId: {
-    //   type: Schema.Types.ObjectId, // Definir id como ObjectId para referenciar otros documentos
-    //   required: true,
-    //   refPath: "entityType", // Referencia dinámica a la colección correspondiente
-    // },
     identifier: { type: Schema.Types.String },
     issuedDate: { type: Schema.Types.Date },
   },

@@ -191,6 +191,7 @@ async function searchEntitiesDB(req, queryRQ) {
             $or: [
               { name: { $regex: token, $options: "i" } },
               { username: { $regex: token, $options: "i" } },
+              { sID: { $regex: token, $options: "i" } },
               { search_cache: { $regex: token, $options: "i" } },
               { "genres.music.l1": { $regex: token, $options: "i" } },
               { "genres.music.l2": { $regex: token, $options: "i" } },
