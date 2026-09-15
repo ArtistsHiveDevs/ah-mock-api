@@ -133,6 +133,7 @@ const schema = new mongoose.Schema(
     twitch: { type: String },
     instagram: { type: String },
     spotify: { type: String },
+    tidal: { type: String },
     soundcloud: { type: String },
     sound_cloud: { type: String },
     youtube: { type: String },
