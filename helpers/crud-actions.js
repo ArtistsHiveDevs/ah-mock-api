@@ -324,8 +324,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
                   routesConstants?.public_fields ?? ["name"]),
               ]
             : (public_fields ??
-              routesConstants?.parametric_public_fields?.[refModel]
-                ?.summary ??
+              routesConstants?.parametric_public_fields?.[refModel]?.summary ??
               routesConstants?.public_fields ?? ["name"]);
 
           return {
@@ -343,11 +342,12 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
             select,
           };
 
-          // Si el modelo referenciado tiene conexión personalizada, especificar el modelo explícitamente
-          if (refModel && modelsWithCustomConnections.includes(refModel)) {
-            console.log(`🔧 [Populate] ${field} -> ${refModel} (custom conn)`);
+          if (refModel) {
             try {
-              const refModelInstance = await getModel(connection.environment, refModel);
+              const refModelInstance = await getModel(
+                connection.environment,
+                refModel,
+              );
               populateOption.model = refModelInstance;
             } catch (err) {
               console.warn(`⚠️ Error obteniendo ${refModel}:`, err.message);
@@ -355,12 +355,16 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
           }
 
           return populateOption;
-        })
+        }),
       );
 
       // Función recursiva para procesar populates anidados
-      const processNestedPopulates = async (populateConfig, parentModel, depth = 0) => {
-        const indent = '  '.repeat(depth);
+      const processNestedPopulates = async (
+        populateConfig,
+        parentModel,
+        depth = 0,
+      ) => {
+        const indent = "  ".repeat(depth);
 
         // Si es un array de populates, procesar cada uno
         if (Array.isArray(populateConfig)) {
@@ -377,40 +381,53 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
         // Intentar obtener el modelo referenciado del schema del modelo padre
         const fieldType = parentModel.schema.paths[populatePath];
-        const arrayItemType = fieldType?.caster || fieldType?.embeddedSchemaType;
+        const arrayItemType =
+          fieldType?.caster || fieldType?.embeddedSchemaType;
         const refModel = fieldType?.options?.ref || arrayItemType?.options?.ref;
 
-        console.log(`${indent}🔍 [Nested] ${populatePath}: refModel=${refModel}, isCustom=${refModel ? modelsWithCustomConnections.includes(refModel) : false}`);
+        console.log(
+          `${indent}🔍 [Nested] ${populatePath}: refModel=${refModel}`,
+        );
 
-        // Si el modelo referenciado tiene conexión personalizada, agregar el modelo explícito
-        if (refModel && modelsWithCustomConnections.includes(refModel)) {
+        if (refModel) {
           try {
-            const refModelInstance = await getModel(connection.environment, refModel);
+            const refModelInstance = await getModel(
+              connection.environment,
+              refModel,
+            );
             populateConfig.model = refModelInstance;
-            console.log(`${indent}✅ [Nested] ${populatePath} -> ${refModel} asignado`);
+            console.log(
+              `${indent}✅ [Nested] ${populatePath} -> ${refModel} asignado`,
+            );
 
             // Si tiene populates anidados, procesarlos recursivamente
             if (populateConfig.populate) {
-              console.log(`${indent}🔄 [Nested] Procesando populates anidados de ${populatePath}`);
-              await processNestedPopulates(populateConfig.populate, refModelInstance, depth + 1);
+              console.log(
+                `${indent}🔄 [Nested] Procesando populates anidados de ${populatePath}`,
+              );
+              await processNestedPopulates(
+                populateConfig.populate,
+                refModelInstance,
+                depth + 1,
+              );
             }
           } catch (err) {
-            console.warn(`${indent}⚠️ Error obteniendo ${refModel}:`, err.message);
-          }
-        } else if (populateConfig.populate && refModel) {
-          // Aunque no tenga custom connection, si tiene populates anidados, procesarlos
-          try {
-            const refModelInstance = await getModel(connection.environment, refModel);
-            await processNestedPopulates(populateConfig.populate, refModelInstance, depth + 1);
-          } catch (err) {
-            console.warn(`${indent}⚠️ Error obteniendo ${refModel} para procesar anidados:`, err.message);
+            console.warn(
+              `${indent}⚠️ Error obteniendo ${refModel}:`,
+              err.message,
+            );
           }
         }
       };
 
       // Procesar custom populate fields para agregar modelos explícitos cuando sea necesario
-      if (options.customPopulateFields && options.customPopulateFields.length > 0) {
-        console.log(`📋 [Custom Populate] Procesando ${options.customPopulateFields.length} campos para modelo: ${modelName}`);
+      if (
+        options.customPopulateFields &&
+        options.customPopulateFields.length > 0
+      ) {
+        console.log(
+          `📋 [Custom Populate] Procesando ${options.customPopulateFields.length} campos para modelo: ${modelName}`,
+        );
 
         for (const customPopulate of options.customPopulateFields) {
           const populatePath = customPopulate.path;
@@ -421,7 +438,8 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
           if (fieldType) {
             // Es un campo real del schema
-            const arrayItemType = fieldType?.caster || fieldType?.embeddedSchemaType;
+            const arrayItemType =
+              fieldType?.caster || fieldType?.embeddedSchemaType;
             refModel = fieldType?.options?.ref || arrayItemType?.options?.ref;
           } else if (model.schema.virtuals[populatePath]) {
             // Es un virtual
@@ -429,15 +447,25 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
             refModel = virtualConfig?.options?.ref;
           }
 
-          console.log(`🔍 [Custom Populate] ${populatePath}: fieldType=${!!fieldType}, isVirtual=${!!model.schema.virtuals[populatePath]}, refModel=${refModel}, isInCustomConn=${refModel ? modelsWithCustomConnections.includes(refModel) : false}`);
+          console.log(
+            `🔍 [Custom Populate] ${populatePath}: fieldType=${!!fieldType}, isVirtual=${!!model.schema.virtuals[populatePath]}, refModel=${refModel}`,
+          );
 
-          // Si el modelo referenciado tiene conexión personalizada, agregar el modelo explícito
-          if (refModel && modelsWithCustomConnections.includes(refModel)) {
-            console.log(`🔧 [Custom Populate] ${populatePath} -> ${refModel} (custom conn)`);
+          // Resolver y asignar el modelo explícitamente SIEMPRE que se conozca refModel (no solo
+          // para modelsWithCustomConnections): sin esto, Mongoose busca el ref internamente vía
+          // `connection.model(refModel)`, que solo existe si otro código YA lo registró antes en
+          // el proceso -- si nada lo tocó todavía (ej. "Artist" sin haber pasado antes por
+          // /artists), tira MissingSchemaError y el populate de este campo falla por completo.
+          if (refModel) {
             try {
-              const refModelInstance = await getModel(connection.environment, refModel);
+              const refModelInstance = await getModel(
+                connection.environment,
+                refModel,
+              );
               customPopulate.model = refModelInstance;
-              console.log(`✅ [Custom Populate] Modelo ${refModel} asignado a ${populatePath}`);
+              console.log(
+                `✅ [Custom Populate] Modelo ${refModel} asignado a ${populatePath}`,
+              );
             } catch (err) {
               console.warn(`⚠️ Error obteniendo ${refModel}:`, err.message);
             }
@@ -445,7 +473,9 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
           // Procesar populates anidados si existen
           if (customPopulate.populate) {
-            console.log(`🔄 [Custom Populate] Procesando populates anidados de ${populatePath}`);
+            console.log(
+              `🔄 [Custom Populate] Procesando populates anidados de ${populatePath}`,
+            );
             // Obtener el modelo referenciado para pasar a la función recursiva
             try {
               const refModelInstance = refModel
@@ -453,10 +483,17 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
                 : null;
 
               if (refModelInstance) {
-                await processNestedPopulates(customPopulate.populate, refModelInstance, 1);
+                await processNestedPopulates(
+                  customPopulate.populate,
+                  refModelInstance,
+                  1,
+                );
               }
             } catch (err) {
-              console.warn(`⚠️ Error procesando anidados de ${populatePath}:`, err.message);
+              console.warn(
+                `⚠️ Error procesando anidados de ${populatePath}:`,
+                err.message,
+              );
             }
           }
 
@@ -464,7 +501,9 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         }
       }
 
-      console.log(`📊 [Populate] Total: ${populateFields.length} campos configurados`);
+      console.log(
+        `📊 [Populate] Total: ${populateFields.length} campos configurados`,
+      );
 
       // Obtén el año actual
       const currentYear = new Date().getFullYear();
@@ -596,9 +635,13 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
       if (populateFields.length > 0) {
         console.log("✓ Applying standard populates:", populateFields.length);
-        console.log(`🎯 [Query] Aplicando populates al modelo: ${modelName} (ambiente: ${connection.environment})`);
+        console.log(
+          `🎯 [Query] Aplicando populates al modelo: ${modelName} (ambiente: ${connection.environment})`,
+        );
         populateFields.forEach((populateOption, index) => {
-          console.log(`  ${index + 1}. path: ${populateOption.path}, hasModel: ${!!populateOption.model}, model: ${populateOption.model ? populateOption.model.modelName : 'default'}`);
+          console.log(
+            `  ${index + 1}. path: ${populateOption.path}, hasModel: ${!!populateOption.model}, model: ${populateOption.model ? populateOption.model.modelName : "default"}`,
+          );
           query = query.populate(populateOption);
         });
       }
@@ -1208,19 +1251,28 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
         // Si el campo tiene ref y el valor no es un ObjectId válido, intentar convertirlo
         const ref = schemaPath.options?.ref;
-        if (ref && typeof fieldValue === 'string' && !mongoose.Types.ObjectId.isValid(fieldValue)) {
+        if (
+          ref &&
+          typeof fieldValue === "string" &&
+          !mongoose.Types.ObjectId.isValid(fieldValue)
+        ) {
           try {
             const RefModel = await getModel(connection.environment, ref);
             const refDoc = await RefModel.findOne({
-              $or: [{ sID: fieldValue }, { username: fieldValue }]
-            }).select('_id');
+              $or: [{ sID: fieldValue }, { username: fieldValue }],
+            }).select("_id");
 
             if (refDoc) {
               info[fieldName] = refDoc._id;
-              console.log(`🔄 [CreateEntity] Convertido ${fieldName}: ${fieldValue} -> ${refDoc._id}`);
+              console.log(
+                `🔄 [CreateEntity] Convertido ${fieldName}: ${fieldValue} -> ${refDoc._id}`,
+              );
             }
           } catch (err) {
-            console.warn(`⚠️ [CreateEntity] Error convirtiendo ${fieldName}:`, err.message);
+            console.warn(
+              `⚠️ [CreateEntity] Error convirtiendo ${fieldName}:`,
+              err.message,
+            );
           }
         }
       }
@@ -1318,7 +1370,10 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
           // No lanzar el error para no afectar la creación
         }
       }
-      if (options.customPopulateFields && options.customPopulateFields.length > 0) {
+      if (
+        options.customPopulateFields &&
+        options.customPopulateFields.length > 0
+      ) {
         await newEntity.populate(options.customPopulateFields);
       }
 
@@ -1353,19 +1408,28 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
       // Si el campo tiene ref y el valor no es un ObjectId válido, intentar convertirlo
       const ref = schemaPath.options?.ref;
-      if (ref && typeof fieldValue === 'string' && !mongoose.Types.ObjectId.isValid(fieldValue)) {
+      if (
+        ref &&
+        typeof fieldValue === "string" &&
+        !mongoose.Types.ObjectId.isValid(fieldValue)
+      ) {
         try {
           const RefModel = await getModel(connection.environment, ref);
           const refDoc = await RefModel.findOne({
             $or: [{ sID: fieldValue }, { username: fieldValue }],
-          }).select('_id');
+          }).select("_id");
 
           if (refDoc) {
             newInfo[fieldName] = refDoc._id;
-            console.log(`🔄 [UpdateEntity] Convertido ${fieldName}: ${fieldValue} -> ${refDoc._id}`);
+            console.log(
+              `🔄 [UpdateEntity] Convertido ${fieldName}: ${fieldValue} -> ${refDoc._id}`,
+            );
           }
         } catch (err) {
-          console.warn(`⚠️ [UpdateEntity] Error convirtiendo ${fieldName}:`, err.message);
+          console.warn(
+            `⚠️ [UpdateEntity] Error convirtiendo ${fieldName}:`,
+            err.message,
+          );
         }
       }
     }
@@ -1440,7 +1504,10 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
           UserModel,
         });
       }
-      if (options.customPopulateFields && options.customPopulateFields.length > 0) {
+      if (
+        options.customPopulateFields &&
+        options.customPopulateFields.length > 0
+      ) {
         await updatedEntity.populate(options.customPopulateFields);
       }
 

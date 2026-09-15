@@ -172,7 +172,29 @@ async function buildOpenCallApplicationsVisibilityFilter({ userId, req }) {
     orConditions.push({ open_call_id: { $in: ownedOpenCallIds } });
   }
 
-  return orConditions.length ? { $or: orConditions } : noResultsFilter;
+  const visibilityFilter = orConditions.length
+    ? { $or: orConditions }
+    : noResultsFilter;
+
+  const openCallIdParam = req?.query?.open_call_id;
+  if (openCallIdParam) {
+    let resolvedOpenCallId;
+    if (mongoose.Types.ObjectId.isValid(openCallIdParam)) {
+      resolvedOpenCallId = openCallIdParam;
+    } else {
+      const openCall = await OpenCallModel.findOne({
+        sID: openCallIdParam,
+      }).select("_id");
+      resolvedOpenCallId = openCall?._id;
+    }
+
+    return {
+      ...visibilityFilter,
+      open_call_id: resolvedOpenCallId || { $in: [] },
+    };
+  }
+
+  return visibilityFilter;
 }
 
 function loadRoutes() {
@@ -931,6 +953,14 @@ function loadRoutes() {
 
               return entity;
             },
+          },
+          postScriptFunction: (data) => {
+            data.results.forEach((element) => {
+              element.artist = element.artist_id;
+              delete element.artist_id;
+            });
+
+            return data;
           },
         },
       }),
