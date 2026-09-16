@@ -8,7 +8,7 @@
 
 ### Wie kann ich mich bei [**Artist Hive**](https://www.artist-hive.com) registrieren?
 
-Um dich zu registrieren, besuche unsere [Registrierungsseite](https://www.artist-hive.com/signup), fülle das Formular mit deinen Informationen aus und folge den Anweisungen zur Aktivierung deines Kontos. Nach der Registrierung erhältst du Zugang zu einer umfassenden Palette an Funktionen und Ressourcen, die dir helfen werden, in deiner Karriere voranzukommen.
+Um dich zu registrieren, besuche unsere [Registrierungsseite](https://www.artist-hive.com/login), fülle das Formular mit deinen Informationen aus und folge den Anweisungen zur Aktivierung deines Kontos. Nach der Registrierung erhältst du Zugang zu einer umfassenden Palette an Funktionen und Ressourcen, die dir helfen werden, in deiner Karriere voranzukommen.
 
 ## Profilarten
 
@@ -22,7 +22,7 @@ Bei [**Artist Hive**](https://www.artist-hive.com) kannst du verschiedene Profil
 
 ### Wie finde ich Auftrittsmöglichkeiten?
 
-Bei [**Artist Hive**](https://www.artist-hive.com) kannst du eine Vielzahl von Veranstaltungen und Auftritten erkunden, die zu deinen Interessen und deinem Musikstil passen. Gehe zum Abschnitt [Events](https://www.artist-hive.com/events) in deinem Konto, um die für dich am besten geeigneten Möglichkeiten zu entdecken und deine Sichtbarkeit auf der musikalischen Bühne zu erhöhen. Über die Plattform kannst du verfügbare Räume sehen und anfragen. Wir begleiten dich während des gesamten Prozesses.
+Bei [**Artist Hive**](https://www.artist-hive.com) kannst du eine Vielzahl von Veranstaltungen und Auftritten erkunden, die zu deinen Interessen und deinem Musikstil passen. Gehe zum Abschnitt [Events](https://www.artist-hive.com/open-calls) in deinem Konto, um die für dich am besten geeigneten Möglichkeiten zu entdecken und deine Sichtbarkeit auf der musikalischen Bühne zu erhöhen. Über die Plattform kannst du verfügbare Räume sehen und anfragen. Wir begleiten dich während des gesamten Prozesses.
 
 ### Wie kann ich meine Auftritte bewerben?
 
@@ -32,7 +32,7 @@ Nutze unsere Werbetools, um deine Veranstaltungen auf [**Artist Hive**](https://
 
 ### Wie kann ich eine Veranstaltung auf [**Artist Hive**](https://www.artist-hive.com) listen?
 
-Um eine Veranstaltung aufzulisten, melde dich bei deinem Venue-Konto an und gehe zum Abschnitt [Events](https://www.artist-hive.com/events). Dort kannst du eine neue Veranstaltung erstellen, alle notwendigen Details eingeben und sie auf der Plattform veröffentlichen, um ein größeres Publikum zu erreichen.
+Um eine Veranstaltung aufzulisten, melde dich bei deinem Venue-Konto an und gehe zum Abschnitt [Events](https://www.artist-hive.com/open-calls). Dort kannst du eine neue Veranstaltung erstellen, alle notwendigen Details eingeben und sie auf der Plattform veröffentlichen, um ein größeres Publikum zu erreichen.
 
 ### Wie wähle ich Künstler für meine Veranstaltungen aus?
 
@@ -50,4 +50,4 @@ Wenn du dein Passwort zurücksetzen musst, besuche die [Passwort-Zurücksetzseit
 
 ## Datenschutz und Kontaktdaten
 
-Wenn du es bevorzugst, deine Kontaktdaten und Buchungsdetails nicht sichtbar zu machen, ist das kein Problem. Bei [**Artist Hive**](https://www.artist-hive.com) verstehen wir die Bedeutung der Privatsphäre. Sensible Daten werden nur bei Bedarf an interessierte Parteien weitergegeben, während öffentliche Informationen die einzigen Inhalte sind, die auf der Plattform angezeigt werden. Denke immer daran, unsere [Nutzungsbedingungen](https://www.artist-hive.com/tos) und [Datenschutzrichtlinien](https://www.artist-hive.com/privacy) zu überprüfen.
+Wenn du es bevorzugst, deine Kontaktdaten und Buchungsdetails nicht sichtbar zu machen, ist das kein Problem. Bei [**Artist Hive**](https://www.artist-hive.com) verstehen wir die Bedeutung der Privatsphäre. Sensible Daten werden nur bei Bedarf an interessierte Parteien weitergegeben, während öffentliche Informationen die einzigen Inhalte sind, die auf der Plattform angezeigt werden. Denke immer daran, unsere [Nutzungsbedingungen](https://www.artist-hive.com/terms) und [Datenschutzrichtlinien](https://www.artist-hive.com/privacy) zu überprüfen.

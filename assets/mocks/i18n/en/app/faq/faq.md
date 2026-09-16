@@ -8,7 +8,7 @@
 
 ### How can I register on [**Artist Hive**](https://www.artist-hive.com)?
 
-To register, visit our [registration page](https://www.artist-hive.com/signup), fill out the form with your information, and follow the instructions to activate your account. Once registered, you will have access to a full range of features and resources to help you advance in your career.
+To register, visit our [registration page](https://www.artist-hive.com/login), fill out the form with your information, and follow the instructions to activate your account. Once registered, you will have access to a full range of features and resources to help you advance in your career.
 
 ## Types of Profiles
 
@@ -22,7 +22,7 @@ On [**Artist Hive**](https://www.artist-hive.com), you can create different type
 
 ### How can I find opportunities to perform?
 
-On [**Artist Hive**](https://www.artist-hive.com), you can explore a variety of events and performances that match your interests and musical style. Go to the [Events](https://www.artist-hive.com/events) section in your account to discover the most suitable opportunities for you and enhance your visibility on the musical stage. Through the platform, you will be able to see available spaces and request them. We will accompany you throughout the process.
+On [**Artist Hive**](https://www.artist-hive.com), you can explore a variety of events and performances that match your interests and musical style. Go to the [Events](https://www.artist-hive.com/open-calls) section in your account to discover the most suitable opportunities for you and enhance your visibility on the musical stage. Through the platform, you will be able to see available spaces and request them. We will accompany you throughout the process.
 
 ### How can I promote my performances?
 
@@ -32,7 +32,7 @@ Use our promotional tools to highlight your events on [**Artist Hive**](https://
 
 ### How can I list an event on [**Artist Hive**](https://www.artist-hive.com)?
 
-To list an event, log in to your Venue account and go to the [Events](https://www.artist-hive.com/events) section. From there, you can create a new event, enter all the necessary details, and publish it on the platform to reach a wider audience.
+To list an event, log in to your Venue account and go to the [Events](https://www.artist-hive.com/open-calls) section. From there, you can create a new event, enter all the necessary details, and publish it on the platform to reach a wider audience.
 
 ### How do I select artists for my events?
 
@@ -50,4 +50,4 @@ If you need to reset your password, visit the [password reset page](https://www.
 
 ## Privacy and Contact Data
 
-If you prefer not to make your contact and booking details visible, that's no problem. At [**Artist Hive**](https://www.artist-hive.com), we understand the importance of privacy. Sensitive data will only be shared with interested parties when necessary, while public information will be the only content displayed on the platform. Always remember to review our [Terms of Service](https://www.artist-hive.com/tos) and [Privacy Policy](https://www.artist-hive.com/privacy).
+If you prefer not to make your contact and booking details visible, that's no problem. At [**Artist Hive**](https://www.artist-hive.com), we understand the importance of privacy. Sensitive data will only be shared with interested parties when necessary, while public information will be the only content displayed on the platform. Always remember to review our [Terms of Service](https://www.artist-hive.com/terms) and [Privacy Policy](https://www.artist-hive.com/privacy).

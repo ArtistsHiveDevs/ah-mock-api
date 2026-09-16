@@ -8,7 +8,7 @@
 
 ### Comment puis-je m'inscrire sur [**Artist Hive**](https://www.artist-hive.com)?
 
-Pour vous inscrire, rendez-vous sur notre [page d'inscription](https://www.artist-hive.com/signup), remplissez le formulaire avec vos informations et suivez les instructions pour activer votre compte. Une fois inscrit, vous aurez accès à une gamme complète de fonctionnalités et de ressources pour vous aider à progresser dans votre carrière.
+Pour vous inscrire, rendez-vous sur notre [page d'inscription](https://www.artist-hive.com/login), remplissez le formulaire avec vos informations et suivez les instructions pour activer votre compte. Une fois inscrit, vous aurez accès à une gamme complète de fonctionnalités et de ressources pour vous aider à progresser dans votre carrière.
 
 ## Types de Profils
 
@@ -22,7 +22,7 @@ Sur [**Artist Hive**](https://www.artist-hive.com), vous pouvez créer différen
 
 ### Comment puis-je trouver des opportunités de performance ?
 
-Sur [**Artist Hive**](https://www.artist-hive.com), vous pouvez explorer une variété d'événements et de performances correspondant à vos intérêts et à votre style musical. Accédez à la section [Événements](https://www.artist-hive.com/events) dans votre compte pour découvrir les opportunités les plus adaptées à vous et augmenter votre visibilité sur la scène musicale. Grâce à la plateforme, vous pourrez voir les espaces disponibles et les demander. Nous vous accompagnerons tout au long du processus.
+Sur [**Artist Hive**](https://www.artist-hive.com), vous pouvez explorer une variété d'événements et de performances correspondant à vos intérêts et à votre style musical. Accédez à la section [Événements](https://www.artist-hive.com/open-calls) dans votre compte pour découvrir les opportunités les plus adaptées à vous et augmenter votre visibilité sur la scène musicale. Grâce à la plateforme, vous pourrez voir les espaces disponibles et les demander. Nous vous accompagnerons tout au long du processus.
 
 ### Comment puis-je promouvoir mes performances ?
 
@@ -32,7 +32,7 @@ Utilisez nos outils promotionnels pour mettre en avant vos événements sur [**A
 
 ### Comment puis-je lister un événement sur [**Artist Hive**](https://www.artist-hive.com) ?
 
-Pour lister un événement, connectez-vous à votre compte de lieu et allez dans la section [Événements](https://www.artist-hive.com/events). À partir de là, vous pouvez créer un nouvel événement, entrer tous les détails nécessaires et le publier sur la plateforme pour atteindre un plus large public.
+Pour lister un événement, connectez-vous à votre compte de lieu et allez dans la section [Événements](https://www.artist-hive.com/open-calls). À partir de là, vous pouvez créer un nouvel événement, entrer tous les détails nécessaires et le publier sur la plateforme pour atteindre un plus large public.
 
 ### Comment sélectionner les artistes pour mes événements ?
 
@@ -50,4 +50,4 @@ Si vous devez réinitialiser votre mot de passe, visitez la [page de réinitiali
 
 ## Confidentialité et Données de Contact
 
-Si vous préférez ne pas rendre vos coordonnées et détails de réservation visibles, pas de problème. Sur [**Artist Hive**](https://www.artist-hive.com), nous comprenons l'importance de la confidentialité. Les données sensibles ne seront partagées avec des parties intéressées que si nécessaire, tandis que les informations publiques seront les seuls contenus affichés sur la plateforme. N'oubliez pas de consulter nos [Conditions d'Utilisation](https://www.artist-hive.com/tos) et notre [Politique de Confidentialité](https://www.artist-hive.com/privacy).
+Si vous préférez ne pas rendre vos coordonnées et détails de réservation visibles, pas de problème. Sur [**Artist Hive**](https://www.artist-hive.com), nous comprenons l'importance de la confidentialité. Les données sensibles ne seront partagées avec des parties intéressées que si nécessaire, tandis que les informations publiques seront les seuls contenus affichés sur la plateforme. N'oubliez pas de consulter nos [Conditions d'Utilisation](https://www.artist-hive.com/terms) et notre [Politique de Confidentialité](https://www.artist-hive.com/privacy).
