@@ -10,6 +10,28 @@ const ANALYTICS_RESOURCE_TYPES = {
   EVENT: "event",
 };
 
+const EXCLUDED_USER_IDENTIFIERS = new Set(
+  (process.env.ANALYTICS_EXCLUDED_USERS || "")
+    .split(",")
+    .map((value) => value.trim())
+    .filter(Boolean),
+);
+
+function isExcludedUser(req) {
+  if (!req?.user || EXCLUDED_USER_IDENTIFIERS.size === 0) {
+    return false;
+  }
+
+  const candidates = [
+    req.user.username,
+    req.user.sID,
+    req.user._id?.toString(),
+  ];
+  return candidates.some(
+    (candidate) => candidate && EXCLUDED_USER_IDENTIFIERS.has(candidate),
+  );
+}
+
 // req.user es el documento completo de User (lo pone registerUserProfile en api_key.js);
 // req.currentProfileInfo/req.currentProfileEntity los arma la misma función a partir de
 // user.currentProfileIdentifier, así que ya vienen resueltos para cualquier request autenticado.
@@ -22,7 +44,8 @@ function buildUserSnapshot(req) {
     id: req.user._id?.toString() || req.user.id,
     sID: req.user.sID,
     identifier: req.user.username || req.user.identifier,
-    currentProfileId: req.currentProfileInfo?.id?.toString?.() || req.currentProfileInfo?.id,
+    currentProfileId:
+      req.currentProfileInfo?.id?.toString?.() || req.currentProfileInfo?.id,
     currentProfileEntityType: req.currentProfileEntity,
   };
 }
@@ -41,13 +64,19 @@ function buildUserSnapshot(req) {
  *   durationMs?: number,
  * }} eventData
  */
-async function trackEvent(req, { resourceType, resource, resultCount, durationMs } = {}) {
+async function trackEvent(
+  req,
+  { resourceType, resource, resultCount, durationMs } = {},
+) {
   try {
-    if (!resourceType) {
+    if (!resourceType || isExcludedUser(req)) {
       return;
     }
 
-    const AnalyticsEvent = await getModel(req.serverEnvironment, "AnalyticsEvent");
+    const AnalyticsEvent = await getModel(
+      req.serverEnvironment,
+      "AnalyticsEvent",
+    );
 
     await AnalyticsEvent.create({
       timestamp: new Date(),
@@ -63,7 +92,10 @@ async function trackEvent(req, { resourceType, resource, resultCount, durationMs
       referrer: req.headers?.referer || req.headers?.referrer,
     });
   } catch (error) {
-    console.error(`⚠️ [analytics] Error registrando evento "${resourceType}":`, error.message);
+    console.error(
+      `⚠️ [analytics] Error registrando evento "${resourceType}":`,
+      error.message,
+    );
   }
 }
 
