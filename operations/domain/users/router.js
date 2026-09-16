@@ -33,19 +33,7 @@ const {
 
 var userRouter = express.Router({ mergeParams: true });
 
-// Campos del User que deben sincronizarse con EntityDirectory
-const ENTITY_DIRECTORY_SYNC_FIELDS = [
-  "sID",
-  "profile_pic",
-  "name",
-  "given_names",
-  "surnames",
-  "stage_name",
-  "username",
-  "run",
-  "subtitle",
-  "verified_status",
-];
+const { ENTITY_DIRECTORY_SYNC_FIELDS } = helpers;
 
 const MONTHS_ES = [
   "enero",

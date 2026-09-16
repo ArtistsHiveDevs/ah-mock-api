@@ -10,6 +10,20 @@ const userRoleMapFields = [
   "approval_status",
   "roles",
 ];
+
+const ENTITY_DIRECTORY_SYNC_FIELDS = [
+  "sID",
+  "profile_pic",
+  "name",
+  "given_names",
+  "surnames",
+  "stage_name",
+  "username",
+  "run",
+  "subtitle",
+  "verified_status",
+];
+
 module.exports = {
   sleep: function (ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -541,11 +555,7 @@ module.exports = {
       userRoleMapFields.includes(updateKey),
     );
   },
-  // Resincroniza el snapshot denormalizado en User.roles[].entityRoleMap (name,
-  // username, etc.) luego de actualizar la entidad dueña de esos datos, para
-  // todo usuario relacionado (cualquier role, no solo OWNER/ADMIN) vía
-  // entityRoleMap.ids de la entidad. Ver mismo patrón (no reutilizado, para no
-  // tocar código ya funcionando) en operations/domain/artists/router.js.
+  ENTITY_DIRECTORY_SYNC_FIELDS,
   async syncEntityRoleMapUserSnapshots({
     entityName,
     updatedEntity,
@@ -564,7 +574,13 @@ module.exports = {
     if (Object.keys(roleMapNewInfo).length === 0) return;
 
     const mongoose = require("mongoose");
-    const entityRoleMapId = updatedEntity._id;
+
+    const entityIdCandidates = [
+      updatedEntity._id?.toString(),
+      updatedEntity.sID,
+    ].filter(Boolean);
+
+    if (entityIdCandidates.length === 0) return;
 
     const updateFields = {};
     Object.keys(roleMapNewInfo).forEach((key) => {
@@ -586,19 +602,70 @@ module.exports = {
           {
             _id: new mongoose.Types.ObjectId(relatedId),
             "roles.entityName": entityName,
-            "roles.entityRoleMap.id": entityRoleMapId,
+            "roles.entityRoleMap.id": { $in: entityIdCandidates },
           },
           { $set: updateFields },
           {
             arrayFilters: [
               { "roleElement.entityName": entityName },
-              { "mapElement.id": entityRoleMapId },
+              { "mapElement.id": { $in: entityIdCandidates } },
             ],
             new: true,
           },
         ),
       ),
     );
+  },
+  async syncEntityDirectorySnapshot({
+    entityId,
+    entityType,
+    newInfo,
+    EntityDirectoryModel,
+  }) {
+    const infoWithRun = { ...newInfo };
+    if (infoWithRun.username) {
+      infoWithRun.run = infoWithRun.username;
+    }
+
+    const entityDirectoryUpdates = ENTITY_DIRECTORY_SYNC_FIELDS.reduce(
+      (acc, key) => {
+        if (infoWithRun.hasOwnProperty(key)) {
+          acc[key] = infoWithRun[key];
+        }
+        return acc;
+      },
+      {},
+    );
+
+    if (Object.keys(entityDirectoryUpdates).length === 0) return null;
+
+    return EntityDirectoryModel.findOneAndUpdate(
+      { id: entityId, entityType },
+      { $set: entityDirectoryUpdates },
+      { new: true },
+    );
+  },
+  async syncDenormalizedEntitySnapshots({
+    entityType,
+    updatedEntity,
+    newInfo,
+    UserModel,
+    EntityDirectoryModel,
+  }) {
+    await Promise.all([
+      module.exports.syncEntityDirectorySnapshot({
+        entityId: updatedEntity._id,
+        entityType,
+        newInfo,
+        EntityDirectoryModel,
+      }),
+      module.exports.syncEntityRoleMapUserSnapshots({
+        entityName: entityType,
+        updatedEntity,
+        newInfo,
+        UserModel,
+      }),
+    ]);
   },
   flattenObject: function flattenObject(
     obj,

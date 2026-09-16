@@ -828,13 +828,11 @@ module.exports = [
 
         ownerUser.save();
 
-        res
-          .status(201)
-          .send(
-            createPaginatedDataResponse(newArtist.toObject(), {
-              viewerIdentity: req.user,
-            }),
-          );
+        res.status(201).send(
+          createPaginatedDataResponse(newArtist.toObject(), {
+            viewerIdentity: req.user,
+          }),
+        );
       } catch (err) {
         res.status(400).send(err);
       }
@@ -957,62 +955,24 @@ module.exports = [
               { new: true },
             );
 
-            if (helpers.hasToUpdateUserRoleMap(newInfo)) {
-              const roleMapNewInfo = helpers.userRoleMapFields.reduce(
-                (result, key) => {
-                  if (newInfo.hasOwnProperty(key)) {
-                    result[key] = newInfo[key];
-                  }
-                  return result;
-                },
-                {},
-              );
+            const [EntityDirectoryModel, UserModel] = await Promise.all([
+              getModel(req.serverEnvironment, "EntityDirectory"),
+              getModel(req.serverEnvironment, "User"),
+            ]);
 
-              updatedArtist.entityRoleMap?.forEach((role) =>
-                role.ids.forEach(async (relatedId) => {
-                  const entityName = "Artist"; // El nombre de la entidad cuyo rol deseas actualizar
-                  const entityRoleMapId = updatedArtist._id; // El ID dentro del entityRoleMap que deseas actualizar
+            await helpers.syncDenormalizedEntitySnapshots({
+              entityType: "Artist",
+              updatedEntity: updatedArtist,
+              newInfo,
+              UserModel,
+              EntityDirectoryModel,
+            });
 
-                  // Construye el objeto de actualización dinámicamente
-                  const updateFields = {};
-                  Object.keys(roleMapNewInfo).forEach((key) => {
-                    updateFields[
-                      `roles.$[roleElement].entityRoleMap.$[mapElement].${key}`
-                    ] = roleMapNewInfo[key];
-                  });
-
-                  // Realizar la consulta de actualización solo para los campos presentes
-                  const UserModel = await getModel(
-                    req.serverEnvironment,
-                    "User",
-                  );
-                  const roleMapUpdateResult = await UserModel.findOneAndUpdate(
-                    {
-                      _id: new mongoose.Types.ObjectId(userId),
-                      "roles.entityName": entityName,
-                      "roles.entityRoleMap.id": entityRoleMapId,
-                    },
-                    {
-                      $set: updateFields, // Aplica solo los campos presentes en updateData
-                    },
-                    {
-                      arrayFilters: [
-                        { "roleElement.entityName": entityName },
-                        { "mapElement.id": entityRoleMapId },
-                      ],
-                      new: true,
-                    },
-                  );
-                }),
-              );
-            }
-            return res
-              .status(201)
-              .send(
-                createPaginatedDataResponse(updatedArtist.toObject(), {
-                  viewerIdentity: req.user,
-                }),
-              );
+            return res.status(201).send(
+              createPaginatedDataResponse(updatedArtist.toObject(), {
+                viewerIdentity: req.user,
+              }),
+            );
           } else {
             // Caso 3: El userId no tiene los roles OWNER o ADMIN
             res.status(401).json({
