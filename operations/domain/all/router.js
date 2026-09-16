@@ -723,11 +723,30 @@ module.exports = [
       //   res.status(500).json({ message: err.message });
       // }
 
+      const searchStartedAt = Date.now();
       const results = await searchEntitiesDB(req, {
         ...req.query,
         page: 1,
         limit: 200,
       });
+
+      helpers.trackEvent(req, {
+        resourceType: helpers.ANALYTICS_RESOURCE_TYPES.SEARCH,
+        resource: {
+          query: req.query.q,
+          filters: {
+            et: req.query.et,
+            activity: req.query.activity,
+            l: req.query.l,
+          },
+        },
+        resultCount: Object.values(results?.pagination || {}).reduce(
+          (sum, count) => sum + count,
+          0,
+        ),
+        durationMs: Date.now() - searchStartedAt,
+      });
+
       // console.log(results);
       return res.json(createPaginatedDataResponse(results));
       const result = searchEntities(req.query);

@@ -25,9 +25,13 @@ async function sendMaskedResponse(res, response, req, options) {
   }
 
   return res.json(
-    await maskIdsWithEntityDirectory(response, connections[req.serverEnvironment], {
-      viewerIdentity: req.user,
-    }),
+    await maskIdsWithEntityDirectory(
+      response,
+      connections[req.serverEnvironment],
+      {
+        viewerIdentity: req.user,
+      },
+    ),
   );
 }
 
@@ -125,6 +129,23 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             public_fields: options.public_fields,
             postScriptFunction: options.postScriptFunction,
           });
+
+          if (options.analytics) {
+            const analyticsConfig =
+              options.analytics === true ? {} : options.analytics;
+            helpers.trackEvent(req, {
+              resourceType:
+                analyticsConfig.resourceType ||
+                helpers.ANALYTICS_RESOURCE_TYPES.PROFILE,
+              resource: {
+                entityType: analyticsConfig.entityType || modelName,
+                entityId:
+                  response?.data?.sID || response?.data?._id?.toString(),
+              },
+              resultCount: response?.data ? 1 : 0,
+            });
+          }
+
           await sendMaskedResponse(res, response, req, options);
         } catch (err) {
           console.error(err);

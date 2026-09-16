@@ -30,6 +30,8 @@ const { maskIds } = require("./helpers/maskEntityId");
 var app = express();
 var port = process.env.PORT || 3001;
 
+app.set("trust proxy", true);
+
 // *****************************   CORS   ****************************
 // Leer orígenes permitidos desde variable de entorno
 const allowedOrigins = process.env.ALLOWED_ORIGINS

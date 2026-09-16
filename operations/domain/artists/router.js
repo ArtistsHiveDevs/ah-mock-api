@@ -297,6 +297,7 @@ module.exports = [
       // }
       const { artistId } = req.params;
       const userId = req.userId;
+      const artistByIdStartedAt = Date.now();
 
       if (!artistId) {
         res
@@ -739,6 +740,16 @@ module.exports = [
         // (de cualquier entityName) como respaldo si el entityRoleMap del propio
         // Artist no matchea, así que basta pasar el user completo.
         const viewerIdentity = req.user;
+
+        helpers.trackEvent(req, {
+          resourceType: helpers.ANALYTICS_RESOURCE_TYPES.PROFILE,
+          resource: {
+            entityType: "Artist",
+            entityId: artistInfo.sID || artistId,
+          },
+          resultCount: 1,
+          durationMs: Date.now() - artistByIdStartedAt,
+        });
 
         if (!currentUserIsOwner) {
           let reducedArtistData = visibleAttributes.reduce((acc, field) => {

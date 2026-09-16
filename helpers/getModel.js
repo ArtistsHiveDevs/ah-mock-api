@@ -9,6 +9,7 @@ function getModelSchema(modelName) {
   const modelSchemas = {
     EntityDirectory: require("../models/appbase/EntityDirectory").schema,
     User: require("../models/appbase/User").schema,
+    AnalyticsEvent: require("../models/appbase/AnalyticsEvent").schema,
     Artist: require("../models/domain/Artist.schema").schema,
     Album: require("../models/domain/ArtistAlbum.schema").schema,
     Place: require("../models/domain/Place.schema").schema,
