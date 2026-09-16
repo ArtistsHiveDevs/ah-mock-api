@@ -746,6 +746,7 @@ module.exports = [
           resource: {
             entityType: "Artist",
             entityId: artistInfo.sID || artistId,
+            identifier: artistInfo.username || null,
           },
           resultCount: 1,
           durationMs: Date.now() - artistByIdStartedAt,

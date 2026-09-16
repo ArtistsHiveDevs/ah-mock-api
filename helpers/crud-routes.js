@@ -133,6 +133,11 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
           if (options.analytics) {
             const analyticsConfig =
               options.analytics === true ? {} : options.analytics;
+
+            const identifier = analyticsConfig.identifierField
+              ? (response?.data?.[analyticsConfig.identifierField] ?? null)
+              : (response?.data?.username ?? response?.data?.name ?? null);
+
             helpers.trackEvent(req, {
               resourceType:
                 analyticsConfig.resourceType ||
@@ -141,6 +146,7 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
                 entityType: analyticsConfig.entityType || modelName,
                 entityId:
                   response?.data?.sID || response?.data?._id?.toString(),
+                identifier,
               },
               resultCount: response?.data ? 1 : 0,
             });

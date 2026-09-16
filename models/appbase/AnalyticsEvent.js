@@ -28,6 +28,7 @@ const schema = new Schema(
     resource: {
       entityType: String, // 'Artist' | 'Place' | 'OpenCall' | 'Event' | ...
       entityId: String, // sID/id del recurso puntual consultado (perfil, doc, open call, evento...)
+      identifier: String,
       query: String, // texto de búsqueda, si aplica
       filters: Schema.Types.Mixed, // filtros/parámetros adicionales (activity, entityType, geo, etc.)
     },
@@ -48,6 +49,10 @@ const schema = new Schema(
 
 schema.index({ resourceType: 1, timestamp: -1 });
 schema.index({ "user.id": 1, timestamp: -1 });
-schema.index({ "resource.entityType": 1, "resource.entityId": 1, timestamp: -1 });
+schema.index({
+  "resource.entityType": 1,
+  "resource.entityId": 1,
+  timestamp: -1,
+});
 
 module.exports = { schema };

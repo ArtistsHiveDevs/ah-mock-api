@@ -717,7 +717,11 @@ function loadRoutes() {
         modelName: "OpenCall",
         schema: OpenCall.schema,
         options: {
-          analytics: { resourceType: "open_call", entityType: "OpenCall" },
+          analytics: {
+            resourceType: "open_call",
+            entityType: "OpenCall",
+            identifierField: "event_name",
+          },
           // Campos reales de OpenCall.schema.js. Sin esto, listEntities() cae a
           // routesConstants.public_fields (los campos de Artist, importado al tope
           // de crud-actions.js), y el listado devuelve casi todo vacío.
