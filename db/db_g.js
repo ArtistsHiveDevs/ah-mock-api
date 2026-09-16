@@ -22,12 +22,16 @@ const SECRET_IV = process.env.ENV_KEY_IV || "358e8a3a5474d65a"; // Mismo de fron
 // Modelos con conexiones personalizadas - configurable desde environment
 // Formato: "Album,Artist" o vacío para desactivar
 const modelsWithCustomConnections = process.env.MODELS_CUSTOM_CONNECTIONS
-  ? process.env.MODELS_CUSTOM_CONNECTIONS.split(',').map(m => m.trim()).filter(Boolean)
+  ? process.env.MODELS_CUSTOM_CONNECTIONS.split(",")
+      .map((m) => m.trim())
+      .filter(Boolean)
   : [];
 
 // Log de configuración
 if (modelsWithCustomConnections.length > 0) {
-  console.log(`🔧 Modelos con conexiones personalizadas: ${modelsWithCustomConnections.join(', ')}`);
+  console.log(
+    `🔧 Modelos con conexiones personalizadas: ${modelsWithCustomConnections.join(", ")}`,
+  );
 } else {
   console.log(`🔧 No hay modelos con conexiones personalizadas configurados`);
 }
@@ -199,15 +203,17 @@ const connectToDatabaseByModel = async (model, env = null) => {
   } else if (!env && modelURIs[model]?.default) {
     // Si no se especifica ambiente, buscar la URI sin sufijo
     uri = modelURIs[model].default;
-    effectiveEnv = 'default';
+    effectiveEnv = "default";
   } else if (!env) {
     // Si no hay ambiente ni URI default, usar la primera disponible
     uri = modelURIs[model]?.prod || modelURIs[model]?.uat;
-    effectiveEnv = modelURIs[model]?.prod ? 'prod' : 'uat';
+    effectiveEnv = modelURIs[model]?.prod ? "prod" : "uat";
   }
 
   if (!uri) {
-    console.warn(`No se encuentra la URI del modelo ${model}${env ? ` para el ambiente ${env}` : ''}`);
+    console.warn(
+      `No se encuentra la URI del modelo ${model}${env ? ` para el ambiente ${env}` : ""}`,
+    );
   }
 
   // Crear una clave única por modelo y ambiente
@@ -221,7 +227,9 @@ const connectToDatabaseByModel = async (model, env = null) => {
 
   if (!!model && !connectionsByModel[connectionKey] && uri?.length > 0) {
     try {
-      console.log(`🔄 Conectando a MongoDB (${model}${effectiveEnv ? ` - ${effectiveEnv}` : ''})`);
+      console.log(
+        `🔄 Conectando a MongoDB (${model}${effectiveEnv ? ` - ${effectiveEnv}` : ""})`,
+      );
       const connection = mongoose.createConnection(uri, {
         serverSelectionTimeoutMS: 30000,
       });
@@ -229,12 +237,17 @@ const connectToDatabaseByModel = async (model, env = null) => {
       connectionsByModel[connectionKey] = connection;
 
       connection.on("error", (err) =>
-        console.error(`❌ Error en MongoDB (${model}${effectiveEnv ? ` - ${effectiveEnv}` : ''}):`, err),
+        console.error(
+          `❌ Error en MongoDB (${model}${effectiveEnv ? ` - ${effectiveEnv}` : ""}):`,
+          err,
+        ),
       );
 
       // Esperar a que la conexión esté lista
       await waitForConnection(connection, connectionKey);
-      console.log(`✅ MongoDB (${model}${effectiveEnv ? ` - ${effectiveEnv}` : ''}) conectado`);
+      console.log(
+        `✅ MongoDB (${model}${effectiveEnv ? ` - ${effectiveEnv}` : ""}) conectado`,
+      );
 
       // Registrar modelos referenciados necesarios para populate
       if (model === "Artist") {

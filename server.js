@@ -371,8 +371,26 @@ app.get("/r/:resourceType/:id", async (req, res) => {
             : []),
         ],
       }).select(
-        ["event_name", "description", "poster", "place_id", "place"].join(" "),
+        [
+          "sID",
+          "event_name",
+          "description",
+          "poster",
+          "place_id",
+          "place",
+        ].join(" "),
       );
+
+      helpers.trackEvent(req, {
+        resourceType: helpers.ANALYTICS_RESOURCE_TYPES.OPEN_CALL,
+        resource: {
+          entityType: "OpenCall",
+          entityId: openCall?.sID || resourceId,
+          identifier: openCall?.event_name || null,
+          filters: { via: "shared_link" },
+        },
+        resultCount: openCall ? 1 : 0,
+      });
 
       if (openCall) {
         title = `${openCall.event_name} · Artist Hive`;
@@ -438,11 +456,27 @@ app.get("/@:username", async (req, res) => {
   req.serverEnvironment = environment;
   const connection = await connectToDatabase(req);
 
-  const usernameNormalization = !!username
-    ? await normalizeProfileId(username, connection)
-    : undefined;
+  let usernameNormalization;
+  if (username) {
+    try {
+      usernameNormalization = await normalizeProfileId(username, connection);
+    } catch (error) {
+      usernameNormalization = undefined;
+    }
+  }
 
   if (usernameNormalization) {
+    helpers.trackEvent(req, {
+      resourceType: helpers.ANALYTICS_RESOURCE_TYPES.PROFILE,
+      resource: {
+        entityType: usernameNormalization.entityType,
+        entityId: usernameNormalization.sID || usernameNormalization.entity_id,
+        identifier: usernameNormalization.username || username,
+        filters: { via: "shared_link" },
+      },
+      resultCount: 1,
+    });
+
     const title = `${usernameNormalization.name} · Artist Hive`;
     const description = `Perfil de ${usernameNormalization.name} (@${usernameNormalization.username}) en Artist Hive.`;
     let imageUrl =
@@ -469,6 +503,16 @@ app.get("/@:username", async (req, res) => {
         }),
       );
   } else {
+    helpers.trackEvent(req, {
+      resourceType: helpers.ANALYTICS_RESOURCE_TYPES.PROFILE,
+      resource: {
+        entityId: username,
+        identifier: username,
+        filters: { via: "shared_link" },
+      },
+      resultCount: 0,
+    });
+
     res
       .status(200)
       .set("Content-Type", "text/html; charset=utf-8")
