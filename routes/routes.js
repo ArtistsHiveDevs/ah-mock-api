@@ -35,6 +35,7 @@ const helperFunctions = require("../helpers/helperFunctions");
 const { buildHomeCityData } = require("../helpers/locationData");
 const { normalizeProfileId } = require("../models/appbase/EntityDirectory");
 const { getModel } = require("../helpers/getModel");
+const { resolveId } = require("../helpers/resolveEntityId");
 const {
   notifyPrebookingCreated,
   notifyPrebookingStatusChanged,
@@ -817,9 +818,6 @@ function loadRoutes() {
               select: routesConstants.public_fields.join(" "),
             },
           ],
-          autoSeed: {
-            dataFile: "./assets/mocks/domain/open-calls/openCallsList.json",
-          },
           validateCreate: async ({ body, req }) => {
             if (!body.place_id) {
               throw new Error("place_id is required to create an Open Call.");
@@ -892,6 +890,33 @@ function loadRoutes() {
             }
 
             // await validateArtistOwnership(body.artist_id, req);
+
+            const connection = { environment: req.serverEnvironment };
+            const resolvedOpenCallId = await resolveId(
+              body.open_call_id,
+              "OpenCall",
+              connection,
+            );
+            const resolvedArtistId = await resolveId(
+              body.artist_id,
+              "Artist",
+              connection,
+            );
+
+            const OpenCallApplicationModel = await getModel(
+              req.serverEnvironment,
+              "OpenCallApplication",
+            );
+            const existingApplication = await OpenCallApplicationModel.findOne({
+              open_call_id: resolvedOpenCallId,
+              artist_id: resolvedArtistId,
+            });
+
+            if (existingApplication) {
+              throw new Error(
+                "This artist has already applied to this Open Call.",
+              );
+            }
           },
           // Revalida ownership del Artist cuando el update reasigna artist_id, evitando que el
           // OWNER/ADMIN de una application existente la "transfiera" a un Artist ajeno.

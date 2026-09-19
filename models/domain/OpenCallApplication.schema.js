@@ -32,6 +32,8 @@ const schema = new Schema(
   },
 );
 
+schema.index({ open_call_id: 1, artist_id: 1 }, { unique: true });
+
 schema.plugin(sIDPlugin);
 
 module.exports = { schema };

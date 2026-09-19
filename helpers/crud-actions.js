@@ -497,6 +497,13 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
             }
           }
 
+          const genericIndex = populateFields.findIndex(
+            (populateOption) => populateOption.path === populatePath,
+          );
+          if (genericIndex !== -1) {
+            populateFields.splice(genericIndex, 1);
+          }
+
           populateFields.push(customPopulate);
         }
       }
