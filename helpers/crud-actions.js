@@ -1249,31 +1249,32 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         await model.schema.statics.preConstruct(connection, ownerUser, info);
       }
 
-      // Convertir shortIDs a ObjectIds para campos con ref
+      // Convertir shortIDs a ObjectIds para campos con ref -- incluye arrays de ref
+      // (ej. Event.artists: [{type: ObjectId, ref: "Artist"}]), no solo el campo escalar.
       for (const [fieldName, fieldValue] of Object.entries(info)) {
         if (!fieldValue) continue;
 
         const schemaPath = model.schema.paths[fieldName];
         if (!schemaPath) continue;
 
-        // Si el campo tiene ref y el valor no es un ObjectId válido, intentar convertirlo
-        const ref = schemaPath.options?.ref;
-        if (
-          ref &&
-          typeof fieldValue === "string" &&
-          !mongoose.Types.ObjectId.isValid(fieldValue)
-        ) {
+        const ref = schemaPath.options?.ref || schemaPath.caster?.options?.ref;
+        if (!ref) continue;
+
+        const resolveRefValue = async (value) => {
+          if (typeof value !== "string" || mongoose.Types.ObjectId.isValid(value)) {
+            return value;
+          }
           try {
             const RefModel = await getModel(connection.environment, ref);
             const refDoc = await RefModel.findOne({
-              $or: [{ sID: fieldValue }, { username: fieldValue }],
+              $or: [{ sID: value }, { username: value }],
             }).select("_id");
 
             if (refDoc) {
-              info[fieldName] = refDoc._id;
               console.log(
-                `🔄 [CreateEntity] Convertido ${fieldName}: ${fieldValue} -> ${refDoc._id}`,
+                `🔄 [CreateEntity] Convertido ${fieldName}: ${value} -> ${refDoc._id}`,
               );
+              return refDoc._id;
             }
           } catch (err) {
             console.warn(
@@ -1281,6 +1282,13 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
               err.message,
             );
           }
+          return value;
+        };
+
+        if (Array.isArray(fieldValue)) {
+          info[fieldName] = await Promise.all(fieldValue.map(resolveRefValue));
+        } else {
+          info[fieldName] = await resolveRefValue(fieldValue);
         }
       }
 
