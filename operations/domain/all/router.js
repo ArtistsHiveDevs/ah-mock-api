@@ -907,20 +907,35 @@ module.exports = [
 
         const cleanFollowData = (data) =>
           data
-            ?.map(({ entityDirectoryId }) =>
-              entityDirectoryId
-                ? Object.keys(entityDirectoryId).reduce((acc, key) => {
-                    if (
-                      routesConstants.appbase_public_fields.EntityDirectory.summary.includes(
-                        key,
-                      )
-                    ) {
-                      acc[key] = entityDirectoryId[key];
-                    }
-                    return acc;
-                  }, {})
-                : null,
-            )
+            ?.map(({ entityDirectoryId }) => {
+              if (!entityDirectoryId) return null;
+
+              const cleaned = Object.keys(entityDirectoryId).reduce(
+                (acc, key) => {
+                  if (
+                    routesConstants.appbase_public_fields.EntityDirectory.summary.includes(
+                      key,
+                    )
+                  ) {
+                    acc[key] = entityDirectoryId[key];
+                  }
+                  return acc;
+                },
+                {},
+              );
+
+              if (Object.keys(cleaned).length === 0) return null;
+
+              const fullname =
+                `${entityDirectoryId.given_names || ""} ${entityDirectoryId.surnames || ""}`.trim();
+              cleaned.identifier =
+                entityDirectoryId.username ||
+                entityDirectoryId.sID ||
+                entityDirectoryId.id;
+              cleaned.nameKnownAs = entityDirectoryId.stage_name || fullname;
+
+              return cleaned;
+            })
             .filter(Boolean);
 
         itemInfo.followed_by = cleanFollowData(itemInfo?.followed_by);
