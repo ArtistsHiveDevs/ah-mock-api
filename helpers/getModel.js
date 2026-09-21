@@ -19,6 +19,7 @@ function getModelSchema(modelName) {
     OpenCall: require("../models/domain/OpenCall.schema").schema,
     OpenCallApplication: require("../models/domain/OpenCallApplication.schema")
       .schema,
+    Country: require("../models/parametrics/geo/Country.schema").schema,
   };
 
   return modelSchemas[modelName] || null;

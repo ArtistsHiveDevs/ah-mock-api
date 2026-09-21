@@ -13,6 +13,24 @@ const {
 } = require("../db/db_g");
 const { getModel } = require("./getModel");
 
+/**
+ * Resuelve el modelo referenciado (`ref`) de un schema path, para campos escalares
+ * (`{type: ObjectId, ref: "X"}`) y para arrays (`[{type: ObjectId, ref: "X"}]`).
+ * En esta versión de Mongoose, un array de ese tipo no expone `.caster` ni
+ * `.embeddedSchemaType` -- el `ref` queda anidado en `options.type[0].ref` en vez de
+ * `options.ref`/`caster.options.ref`, por eso ese tercer fallback es necesario.
+ */
+function getRefModelName(fieldType) {
+  if (!fieldType) return undefined;
+  const arrayItemType = fieldType.caster || fieldType.embeddedSchemaType;
+  return (
+    fieldType.options?.ref ||
+    arrayItemType?.options?.ref ||
+    (Array.isArray(fieldType.options?.type) && fieldType.options.type[0]?.ref) ||
+    undefined
+  );
+}
+
 function modelRequiresAuth(modelName) {
   return ![
     "Allergy",
@@ -296,25 +314,14 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       const populateFieldsData = modelFields
         .filter((field) => {
           const fieldType = model.schema.paths[field];
-          // Mongoose 9
-          const arrayItemType =
-            fieldType?.caster || fieldType?.embeddedSchemaType;
-
           return (
             fieldType &&
-            (fieldType.instance.toLowerCase() === "objectid" ||
-              (fieldType.instance.toLowerCase() === "array" &&
-                arrayItemType &&
-                arrayItemType?.instance?.toLowerCase() === "objectid"))
+            ["objectid", "array"].includes(fieldType.instance.toLowerCase()) &&
+            !!getRefModelName(fieldType)
           );
         })
         .map((field) => {
-          const arrayItemType =
-            model.schema.paths[field].caster ||
-            model.schema.paths[field].embeddedSchemaType;
-          const refModel =
-            model.schema.paths[field].options?.ref ||
-            arrayItemType?.options?.ref;
+          const refModel = getRefModelName(model.schema.paths[field]);
           const refModelFields = model.schema.paths.i18n
             ? [
                 `i18n.${lang}`,
@@ -381,9 +388,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
         // Intentar obtener el modelo referenciado del schema del modelo padre
         const fieldType = parentModel.schema.paths[populatePath];
-        const arrayItemType =
-          fieldType?.caster || fieldType?.embeddedSchemaType;
-        const refModel = fieldType?.options?.ref || arrayItemType?.options?.ref;
+        const refModel = getRefModelName(fieldType);
 
         console.log(
           `${indent}🔍 [Nested] ${populatePath}: refModel=${refModel}`,
@@ -438,9 +443,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
           if (fieldType) {
             // Es un campo real del schema
-            const arrayItemType =
-              fieldType?.caster || fieldType?.embeddedSchemaType;
-            refModel = fieldType?.options?.ref || arrayItemType?.options?.ref;
+            refModel = getRefModelName(fieldType);
           } else if (model.schema.virtuals[populatePath]) {
             // Es un virtual
             const virtualConfig = model.schema.virtuals[populatePath];
@@ -913,20 +916,10 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         .filter((field) => {
           const fieldType = model.schema.paths[field];
           // Requiere `ref` explícito: "_id" es ObjectId pero no referencia otra colección.
-          const arrayItemType =
-            fieldType?.caster || fieldType?.embeddedSchemaType;
-          return (
-            fieldType &&
-            !!(fieldType.options?.ref || arrayItemType?.options?.ref)
-          );
+          return fieldType && !!getRefModelName(fieldType);
         })
         .map((field) => {
-          const arrayItemType =
-            model.schema.paths[field].caster ||
-            model.schema.paths[field].embeddedSchemaType;
-          const refModelName =
-            model.schema.paths[field].options?.ref ||
-            arrayItemType?.options?.ref;
+          const refModelName = getRefModelName(model.schema.paths[field]);
 
           // Obtener el modelo de referencia dinámicamente
           const refModel = connection.model(refModelName);
@@ -1257,7 +1250,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         const schemaPath = model.schema.paths[fieldName];
         if (!schemaPath) continue;
 
-        const ref = schemaPath.options?.ref || schemaPath.caster?.options?.ref;
+        const ref = getRefModelName(schemaPath);
         if (!ref) continue;
 
         const resolveRefValue = async (value) => {
@@ -1271,9 +1264,6 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
             }).select("_id");
 
             if (refDoc) {
-              console.log(
-                `🔄 [CreateEntity] Convertido ${fieldName}: ${value} -> ${refDoc._id}`,
-              );
               return refDoc._id;
             }
           } catch (err) {

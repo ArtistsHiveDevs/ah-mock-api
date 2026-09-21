@@ -2,9 +2,26 @@ const mongoose = require("mongoose");
 const { schema: FollowerSchema } = require("./Follower.schema");
 const { sIDPlugin } = require("../../helpers/sIDPlugin");
 const { buildHomeCityData } = require("../../helpers/locationData");
+const { getModel } = require("../../helpers/getModel");
 const { Schema } = mongoose;
 
-const buildLegacyLocationFields = (env, source = {}) => {
+const resolveCountryObjectId = async (env, countryIdentifier) => {
+  if (!countryIdentifier) return undefined;
+  if (mongoose.Types.ObjectId.isValid(countryIdentifier))
+    return countryIdentifier;
+
+  try {
+    const CountryModel = await getModel(env, "Country");
+    const country = await CountryModel.findOne({
+      $or: [{ sID: countryIdentifier }, { alpha2: countryIdentifier }],
+    }).select("_id");
+    return country?._id;
+  } catch (err) {
+    return undefined;
+  }
+};
+
+const buildLegacyLocationFields = async (env, source = {}) => {
   if (!source.home_city_country) return {};
 
   const levels = buildHomeCityData(env, source);
@@ -14,8 +31,13 @@ const buildLegacyLocationFields = (env, source = {}) => {
   const state = labelOf("state");
   const city = labelOf("city");
 
+  const countryObjectId = await resolveCountryObjectId(
+    env,
+    source.home_city_country,
+  );
+
   return {
-    country: source.home_city_country,
+    ...(countryObjectId ? { country: countryObjectId } : {}),
     ...(state ? { state } : {}),
     ...(city ? { city } : {}),
   };
@@ -194,20 +216,20 @@ schema.virtual("followedProfilesCount").get(function () {
     return count.length > 0 ? count[0].total : 0;
   };
 });
-schema.pre("validate", function () {
+schema.pre("validate", async function () {
   const env = this.db?.environment;
-  Object.entries(buildLegacyLocationFields(env, this)).forEach(
+  Object.entries(await buildLegacyLocationFields(env, this)).forEach(
     ([field, value]) => {
       this[field] = value;
     },
   );
 });
 
-schema.pre("findOneAndUpdate", function () {
+schema.pre("findOneAndUpdate", async function () {
   const env = this.model?.db?.environment;
   const update = this.getUpdate() || {};
   const changes = update.$set || update;
-  Object.assign(changes, buildLegacyLocationFields(env, changes));
+  Object.assign(changes, await buildLegacyLocationFields(env, changes));
 });
 
 // Incluye los virtuals en los resultados de JSON
