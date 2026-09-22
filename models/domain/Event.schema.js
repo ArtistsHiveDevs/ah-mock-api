@@ -55,7 +55,8 @@ const schema = new Schema(
       userId: {type: Schema.Types.ObjectId},
       role: {type: String},
       currentProfileIdentifier: {type: String}
-    }
+    },
+    minimumAge: { type: String },
   },
   {
     timestamps: true, // Agrega createdAt y updatedAt automáticamente

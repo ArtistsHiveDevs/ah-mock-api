@@ -305,7 +305,8 @@ function loadRoutes() {
             "promoter",
             "discounts",
             "owner",
-
+            "national_code",
+            "minimumAge",
           ],
           authenticated_fields: [
             ...routesConstants.public_fields,
@@ -325,6 +326,8 @@ function loadRoutes() {
             "promoter",
             "discounts",
             "owner",
+            "national_code",
+            "minimumAge",
             // "name",
             // // "subtitle",
             // // "main_artist_id",
@@ -379,7 +382,6 @@ function loadRoutes() {
             },
           ],
           postScriptFunction: (data) => {
-            console.log(data)
             const { results, req } = data || {};
             console.log("EVENTOS::::::    ", results?.length);
             results.forEach((result) => {
@@ -402,11 +404,11 @@ function loadRoutes() {
               }
 
               try {
-                result.timetable__initial_date =
-                  helperFunctions.addMonthsToDate(
-                    result.timetable__initial_date,
-                    5,
-                  );
+                // result.timetable__initial_date =
+                //   helperFunctions.addMonthsToDate(
+                //     result.timetable__initial_date,
+                //     5,
+                //   );
               } catch (error) {}
               result.timetable__openning_doors = Number(
                 result.timetable__openning_doors?.replace(":", "") || 0,
