@@ -51,6 +51,11 @@ const schema = new Schema(
     spotify: { type: String },
     youtube: { type: String },
     price: { type: Number },
+    owner: {
+      userId: {type: Schema.Types.ObjectId},
+      role: {type: String},
+      currentProfileIdentifier: {type: String}
+    }
   },
   {
     timestamps: true, // Agrega createdAt y updatedAt automáticamente

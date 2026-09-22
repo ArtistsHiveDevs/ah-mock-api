@@ -9,6 +9,7 @@ const EntityDirectory = require("../models/appbase/EntityDirectory");
 const createCRUDActions = require("./crud-actions");
 const { maskIdsWithEntityDirectory } = require("./maskEntityId");
 const { connections } = require("../db/db_g");
+const modelRequiresOwnership = require("./crud-actions");
 
 const modelActions = {};
 const autoSeeded = {}; // Track which models have been auto-seeded
@@ -174,11 +175,26 @@ function createCRUDRoutes({ modelName, schema, options = {} }) {
             options,
             req,
           });
+          // console.log(req.user);
+          let owner = {};
+          if (!["Prebooking"].includes(modelName)) {
+            owner = {
+              userId: req.user._id,
+              role: 'OWNER',
+              currentProfileIdentifier: req.user.currentProfileIdentifier
+
+            }
+          }
+
+          const newBody = {...req.body, owner}
+
+          console.log ('newBody', newBody)
 
           const response = await modelActions.createEntity({
             userId: req.userId,
-            body: req.body,
+            body: newBody,
           });
+
           await sendMaskedResponse(res, response, req, options);
         } catch (err) {
           console.error(`[${modelName}] Error creating entity:`, err.message);
