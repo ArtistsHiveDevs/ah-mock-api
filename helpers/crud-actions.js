@@ -26,7 +26,8 @@ function getRefModelName(fieldType) {
   return (
     fieldType.options?.ref ||
     arrayItemType?.options?.ref ||
-    (Array.isArray(fieldType.options?.type) && fieldType.options.type[0]?.ref) ||
+    (Array.isArray(fieldType.options?.type) &&
+      fieldType.options.type[0]?.ref) ||
     undefined
   );
 }
@@ -1254,7 +1255,10 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         if (!ref) continue;
 
         const resolveRefValue = async (value) => {
-          if (typeof value !== "string" || mongoose.Types.ObjectId.isValid(value)) {
+          if (
+            typeof value !== "string" ||
+            mongoose.Types.ObjectId.isValid(value)
+          ) {
             return value;
           }
           try {
@@ -1404,31 +1408,34 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       throw new Error("Must search an id, username or name");
     }
 
-    // Convertir shortIDs a ObjectIds para campos con ref (mismo criterio que createEntity)
+    // Convertir shortIDs a ObjectIds para campos con ref
     for (const [fieldName, fieldValue] of Object.entries(newInfo)) {
       if (!fieldValue) continue;
 
       const schemaPath = model.schema.paths[fieldName];
       if (!schemaPath) continue;
 
-      // Si el campo tiene ref y el valor no es un ObjectId válido, intentar convertirlo
-      const ref = schemaPath.options?.ref;
-      if (
-        ref &&
-        typeof fieldValue === "string" &&
-        !mongoose.Types.ObjectId.isValid(fieldValue)
-      ) {
+      const ref = getRefModelName(schemaPath);
+      if (!ref) continue;
+
+      const resolveRefValue = async (value) => {
+        if (
+          typeof value !== "string" ||
+          mongoose.Types.ObjectId.isValid(value)
+        ) {
+          return value;
+        }
         try {
           const RefModel = await getModel(connection.environment, ref);
           const refDoc = await RefModel.findOne({
-            $or: [{ sID: fieldValue }, { username: fieldValue }],
+            $or: [{ sID: value }, { username: value }],
           }).select("_id");
 
           if (refDoc) {
-            newInfo[fieldName] = refDoc._id;
             console.log(
-              `🔄 [UpdateEntity] Convertido ${fieldName}: ${fieldValue} -> ${refDoc._id}`,
+              `🔄 [UpdateEntity] Convertido ${fieldName}: ${value} -> ${refDoc._id}`,
             );
+            return refDoc._id;
           }
         } catch (err) {
           console.warn(
@@ -1436,6 +1443,13 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
             err.message,
           );
         }
+        return value;
+      };
+
+      if (Array.isArray(fieldValue)) {
+        newInfo[fieldName] = await Promise.all(fieldValue.map(resolveRefValue));
+      } else {
+        newInfo[fieldName] = await resolveRefValue(fieldValue);
       }
     }
 

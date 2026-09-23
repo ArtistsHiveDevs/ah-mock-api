@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const {
   schema: EntityDirectorySchema,
   PARAMETRIC_ENTITY_TYPES,
+  normalizeProfileId,
 } = require("../../../models/appbase/EntityDirectory");
 const {
   createPaginatedDataResponse,
@@ -766,29 +767,18 @@ module.exports = [
         const limitFollowers =
           parseInt(req.params.limitFollowers) || MAX_FOLLOWERS;
 
-        let query = {};
-
-        if (mongoose.Types.ObjectId.isValid(profileId)) {
-          query.$or = [{ _id: new mongoose.Types.ObjectId(profileId) }];
-        } else {
-          query.$or = [{ username: profileId }, { name: profileId }];
-        }
-
-        // Obtener `EntityDirectory`
-
-        const EntityDirectoryModel = await getModel(
-          req.serverEnvironment,
-          "EntityDirectory",
-        );
-
-        const entityDirectory = await EntityDirectoryModel.findOne(query);
-
-        if (!entityDirectory) {
+        let resolvedProfile;
+        try {
+          resolvedProfile = await normalizeProfileId(profileId, {
+            environment: req.serverEnvironment,
+          });
+        } catch (err) {
           return res.status(404).json({ error: "Entity not found" });
         }
 
-        const modelName = entityDirectory.entityType; // Obtener el modelo dinámico
+        const modelName = resolvedProfile.entityType; // Obtener el modelo dinámico
         const entityModel = await getModel(req.serverEnvironment, modelName);
+        const query = { _id: resolvedProfile.entity_id };
 
         const followFields = ["followed_by", "followed_profiles"]; // Lista de campos a procesar dinámicamente
 
