@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const express = require("express");
 var allRouter = require("../operations/domain/all/router");
 var academyRouter = require("../operations/domain/academies/router");
 var artistRouter = require("../operations/domain/artists/router");
@@ -198,9 +199,61 @@ async function buildOpenCallApplicationsVisibilityFilter({ userId, req }) {
   return visibilityFilter;
 }
 
+/**
+ * GET /open-call-applications/status?open_call_id=&artist_id=
+ * Responde solo `{ applied, status }` para el par (open call, artista), sin depender de que
+ * el usuario sea OWNER/ADMIN del Artist ni exponer `survey_responses`.
+ */
+function buildOpenCallApplicationStatusRouter() {
+  const helpers = require("../helpers/index");
+  const router = express.Router();
+
+  router.get("/", ...helpers.getWriteMiddlewares(), async (req, res) => {
+    const { open_call_id: openCallParam, artist_id: artistParam } = req.query;
+
+    if (!openCallParam || !artistParam) {
+      return res
+        .status(400)
+        .json({ message: "open_call_id and artist_id are required." });
+    }
+
+    try {
+      const connection = { environment: req.serverEnvironment };
+      const [openCallId, artistId] = await Promise.all([
+        resolveId(openCallParam, "OpenCall", connection),
+        resolveId(artistParam, "Artist", connection),
+      ]);
+
+      const OpenCallApplicationModel = await getModel(
+        req.serverEnvironment,
+        "OpenCallApplication",
+      );
+      const application = await OpenCallApplicationModel.findOne({
+        open_call_id: openCallId,
+        artist_id: artistId,
+      }).select("status");
+
+      return res.json({
+        applied: !!application,
+        status: application?.status ?? null,
+      });
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  });
+
+  return router;
+}
+
 function loadRoutes() {
   return [
     { path: "/", route: { router: allRouter } },
+    {
+      path: "/open-call-applications/status",
+      route: {
+        router: Promise.resolve(buildOpenCallApplicationStatusRouter()),
+      },
+    },
     { path: "/events", route: { router: allEventsRouter } },
     {
       path: "/calendar-activities",
