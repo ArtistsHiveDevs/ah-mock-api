@@ -25,6 +25,8 @@ const Prebooking = require("../models/domain/Prebooking.schema");
 const ProfileClaim = require("../models/domain/ProfileClaim.schema");
 const OpenCall = require("../models/domain/OpenCall.schema");
 const OpenCallApplication = require("../models/domain/OpenCallApplication.schema");
+const EventTicketType = require("../models/domain/EventTicketType.schema");
+const EventGuest = require("../models/domain/EventGuest.schema");
 const Currency = require("../models/parametrics/geo/Currency.schema");
 const Continent = require("../models/parametrics/geo/Continent.schema");
 const Country = require("../models/parametrics/geo/Country.schema");
@@ -196,6 +198,82 @@ async function buildOpenCallApplicationsVisibilityFilter({ userId, req }) {
   }
 
   return visibilityFilter;
+}
+
+async function resolveEventIdQueryParam(req) {
+  const eventIdParam = req?.query?.event_id;
+
+  if (!eventIdParam) {
+    return undefined;
+  }
+
+  if (mongoose.Types.ObjectId.isValid(eventIdParam)) {
+    return eventIdParam;
+  }
+
+  const EventModel = await getModel(req.serverEnvironment, "Event");
+  const event = await EventModel.findOne({ sID: eventIdParam }).select("_id");
+
+  return event?._id || null;
+}
+
+async function buildEventTicketTypesQueryFilter({ req }) {
+  const resolvedEventId = await resolveEventIdQueryParam(req);
+
+  if (resolvedEventId === undefined) {
+    return {};
+  }
+
+  return { event_id: resolvedEventId || { $in: [] } };
+}
+
+async function buildEventGuestsVisibilityFilter({ userId, req }) {
+  const noResultsFilter = { _id: { $in: [] } };
+
+  if (!userId) {
+    return noResultsFilter;
+  }
+
+  const ArtistModel = await getModel(req.serverEnvironment, "Artist");
+  const EventModel = await getModel(req.serverEnvironment, "Event");
+
+  const ownerAdminMatch = {
+    entityRoleMap: {
+      $elemMatch: { role: { $in: ["OWNER", "ADMIN"] }, ids: userId },
+    },
+  };
+
+  const [ownedArtists, ownedEvents] = await Promise.all([
+    ArtistModel.find(ownerAdminMatch).select("_id"),
+    EventModel.find(ownerAdminMatch).select("_id"),
+  ]);
+
+  const orConditions = [];
+  if (ownedArtists.length) {
+    orConditions.push({
+      artist_id: { $in: ownedArtists.map((artist) => artist._id) },
+    });
+  }
+  if (ownedEvents.length) {
+    orConditions.push({
+      event_id: { $in: ownedEvents.map((event) => event._id) },
+    });
+  }
+
+  const visibilityFilter = orConditions.length
+    ? { $or: orConditions }
+    : noResultsFilter;
+
+  const resolvedEventId = await resolveEventIdQueryParam(req);
+
+  if (resolvedEventId === undefined) {
+    return visibilityFilter;
+  }
+
+  return {
+    ...visibilityFilter,
+    event_id: resolvedEventId || { $in: [] },
+  };
 }
 
 function loadRoutes() {
@@ -400,6 +478,176 @@ function loadRoutes() {
               result.promoter = "Sed ut perspiciatis unde omnis";
             });
           },
+        },
+      }),
+    },
+    {
+      path: "/event-ticket-types",
+      route: createCRUDRoutes({
+        modelName: "EventTicketType",
+        schema: EventTicketType.schema,
+        options: {
+          public_fields: [
+            ...routesConstants.public_fields,
+            "event_id",
+            "name",
+            "price",
+            "currency",
+            "order",
+            "active",
+            "createdAt",
+          ],
+          authenticated_fields: [
+            ...routesConstants.public_fields,
+            "event_id",
+            "name",
+            "price",
+            "currency",
+            "order",
+            "active",
+            "createdAt",
+          ],
+          listQueryFilter: buildEventTicketTypesQueryFilter,
+        },
+      }),
+    },
+    {
+      path: "/event-guests",
+      route: createCRUDRoutes({
+        modelName: "EventGuest",
+        schema: EventGuest.schema,
+        options: {
+          public_fields: [
+            ...routesConstants.public_fields,
+            "event_id",
+            "artist_id",
+            "first_name",
+            "last_name",
+            "cc",
+            "email",
+            "ticket_type_id",
+            "ticket_type_name",
+            "ticket_price",
+            "checked_in",
+            "createdAt",
+          ],
+          authenticated_fields: [
+            ...routesConstants.public_fields,
+            "event_id",
+            "artist_id",
+            "first_name",
+            "last_name",
+            "cc",
+            "email",
+            "ticket_type_id",
+            "ticket_type_name",
+            "ticket_price",
+            "checked_in",
+            "createdAt",
+          ],
+          customPopulateFields: [
+            {
+              path: "event_id",
+              select: "name description place sID",
+            },
+            {
+              path: "artist_id",
+              select: routesConstants.public_fields.join(" "),
+            },
+          ],
+          buildCreatePayload: async ({ body, req }) => {
+            const connection = { environment: req.serverEnvironment };
+            const resolvedEventId = await resolveId(
+              body.event_id,
+              "Event",
+              connection,
+            );
+            const resolvedTicketTypeId = await resolveId(
+              body.ticket_type_id,
+              "EventTicketType",
+              connection,
+            );
+
+            const EventTicketTypeModel = await getModel(
+              req.serverEnvironment,
+              "EventTicketType",
+            );
+            const ticketType =
+              await EventTicketTypeModel.findById(resolvedTicketTypeId);
+
+            const payload = {
+              ...body,
+              event_id: resolvedEventId,
+              ticket_type_id: resolvedTicketTypeId,
+              ticket_type_name: ticketType?.name,
+              ticket_price: ticketType?.price,
+              checked_in: false,
+            };
+
+            if (body.artist_id) {
+              payload.artist_id = await resolveId(
+                body.artist_id,
+                "Artist",
+                connection,
+              );
+            } else {
+              delete payload.artist_id;
+            }
+
+            return payload;
+          },
+          validateCreate: async ({ body, req }) => {
+            const connection = { environment: req.serverEnvironment };
+            const resolvedEventId = await resolveId(
+              body.event_id,
+              "Event",
+              connection,
+            );
+            const resolvedTicketTypeId = await resolveId(
+              body.ticket_type_id,
+              "EventTicketType",
+              connection,
+            );
+
+            const EventTicketTypeModel = await getModel(
+              req.serverEnvironment,
+              "EventTicketType",
+            );
+            const ticketType =
+              await EventTicketTypeModel.findById(resolvedTicketTypeId);
+
+            if (!ticketType) {
+              throw new Error(
+                `Ticket type '${body.ticket_type_id}' not found.`,
+              );
+            }
+
+            if (String(ticketType.event_id) !== String(resolvedEventId)) {
+              throw new Error(
+                "The selected ticket type does not belong to this event.",
+              );
+            }
+
+            const EventGuestModel = await getModel(
+              req.serverEnvironment,
+              "EventGuest",
+            );
+            const existingGuest = await EventGuestModel.findOne({
+              event_id: resolvedEventId,
+              cc: body.cc,
+            });
+
+            if (existingGuest) {
+              throw new Error(
+                "A guest with this document number is already registered for this event.",
+              );
+            }
+
+            if (body.artist_id) {
+              await resolveId(body.artist_id, "Artist", connection);
+            }
+          },
+          listQueryFilter: buildEventGuestsVisibilityFilter,
         },
       }),
     },

@@ -19,6 +19,8 @@ function getModelSchema(modelName) {
     OpenCall: require("../models/domain/OpenCall.schema").schema,
     OpenCallApplication: require("../models/domain/OpenCallApplication.schema")
       .schema,
+    EventTicketType: require("../models/domain/EventTicketType.schema").schema,
+    EventGuest: require("../models/domain/EventGuest.schema").schema,
   };
 
   return modelSchemas[modelName] || null;
