@@ -827,60 +827,6 @@ module.exports = [
                 },
               },
             },
-            // Hacer `$lookup` para `entityDirectoryId`
-            {
-              $lookup: {
-                from: "entitydirectories",
-                localField: `${field}.entityDirectoryId`,
-                foreignField: "_id",
-                as: `${field}_data`,
-              },
-            },
-            // Volver a asignar los datos del `lookup` dentro de `field`
-            {
-              $set: {
-                [field]: {
-                  $map: {
-                    input: `$${field}`,
-                    as: "f",
-                    in: {
-                      $mergeObjects: [
-                        "$$f",
-                        {
-                          entityDirectoryId: {
-                            $arrayElemAt: [
-                              {
-                                $filter: {
-                                  input: `$${field}_data`,
-                                  as: "ed",
-                                  cond: {
-                                    $eq: ["$$ed._id", "$$f.entityDirectoryId"],
-                                  },
-                                },
-                              },
-                              0,
-                            ],
-                          },
-                        },
-                      ],
-                    },
-                  },
-                },
-              },
-            },
-            // Eliminar el array temporal `${field}_data`
-            { $unset: `${field}_data` },
-            // **Volver a ordenar `field` después del `$lookup`**
-            {
-              $set: {
-                [field]: {
-                  $sortArray: {
-                    input: `$${field}`,
-                    sortBy: { updatedAt: -1 },
-                  },
-                },
-              },
-            },
           );
         });
 
@@ -895,9 +841,32 @@ module.exports = [
           throw new Error(`${modelName} not found `, model);
         }
 
+        // Resolver entityDirectoryId contra su propia conexión (ver nota arriba).
+        const EntityDirectoryModel = await getModel(
+          req.serverEnvironment,
+          "EntityDirectory",
+        );
+        const entityDirectoryIds = followFields
+          .flatMap((field) => itemInfo[field] || [])
+          .map((entry) => entry.entityDirectoryId)
+          .filter(Boolean);
+
+        const entityDirectoryDocs = entityDirectoryIds.length
+          ? await EntityDirectoryModel.find({
+              _id: { $in: entityDirectoryIds },
+            }).lean()
+          : [];
+
+        const entityDirectoryById = new Map(
+          entityDirectoryDocs.map((doc) => [String(doc._id), doc]),
+        );
+
         const cleanFollowData = (data) =>
           data
-            ?.map(({ entityDirectoryId }) => {
+            ?.map((entry) => {
+              const entityDirectoryId = entityDirectoryById.get(
+                String(entry.entityDirectoryId),
+              );
               if (!entityDirectoryId) return null;
 
               const cleaned = Object.keys(entityDirectoryId).reduce(
