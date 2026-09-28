@@ -30,11 +30,16 @@ module.exports = [
     RoutesConstants.artistsList,
     helpers.validateEnvironment,
     (req, res) => {
-      const { countryId: countryRQ, level, parentId } = req.query;
+      const { countryId: countryRQ, countryAlpha2, level, parentId } = req.query;
+      const alpha2RQ = (countryAlpha2 || "").toUpperCase();
 
       // countryRQ puede ser sID, ObjectId o ISO code
       const country = countries.find(
-        (c) => c.id === countryRQ || c.sID === countryRQ || c.value === countryRQ
+        (c) =>
+          c.id === countryRQ ||
+          c.sID === countryRQ ||
+          c.value === countryRQ ||
+          (alpha2RQ && c.value === alpha2RQ)
       );
 
       if (!country) {

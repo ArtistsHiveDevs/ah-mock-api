@@ -43,6 +43,38 @@ const buildLocationFieldData = (env, entity = {}, fieldName) =>
     entity[`${fieldName}_level2`],
   );
 
+const OBJECT_ID_PATTERN = /^[0-9a-fA-F]{24}$/;
+
+const resolveCountryObjectId = async (env, countryReference) => {
+  if (!countryReference) return undefined;
+  if (OBJECT_ID_PATTERN.test(String(countryReference))) return countryReference;
+
+  try {
+    const { getModelWithSchema } = require("./getModel");
+    const {
+      schema: countrySchema,
+    } = require("../models/parametrics/geo/Country.schema");
+
+    const CountryModel = getModelWithSchema(env, "Country", countrySchema);
+    const countryDoc = await CountryModel.findOne({
+      $or: [
+        { sID: countryReference },
+        { alpha2: String(countryReference).toUpperCase() },
+      ],
+    })
+      .select("_id")
+      .lean();
+
+    return countryDoc?._id;
+  } catch (error) {
+    console.error(
+      `[locationData] No se pudo resolver el pais ${countryReference}:`,
+      error.message,
+    );
+    return undefined;
+  }
+};
+
 /** Atajo para el campo `home_city` de cualquier entidad que persista sus niveles. */
 const buildHomeCityData = (env, entity = {}) =>
   buildLocationFieldData(env, entity, "home_city");
@@ -59,6 +91,7 @@ const omitRawLocationFields = (entity = {}, fieldNames = []) => {
 };
 
 module.exports = {
+  resolveCountryObjectId,
   enrichLocationData,
   buildLocationFieldData,
   buildHomeCityData,

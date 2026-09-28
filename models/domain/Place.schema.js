@@ -1,10 +1,13 @@
 const mongoose = require("mongoose");
 const { schema: FollowerSchema } = require("./Follower.schema");
 const { sIDPlugin } = require("../../helpers/sIDPlugin");
-const { buildHomeCityData } = require("../../helpers/locationData");
+const {
+  buildHomeCityData,
+  resolveCountryObjectId,
+} = require("../../helpers/locationData");
 const { Schema } = mongoose;
 
-const buildLegacyLocationFields = (env, source = {}) => {
+const buildLegacyLocationFields = async (env, source = {}) => {
   if (!source.home_city_country) return {};
 
   const levels = buildHomeCityData(env, source);
@@ -13,9 +16,10 @@ const buildLegacyLocationFields = (env, source = {}) => {
 
   const state = labelOf("state");
   const city = labelOf("city");
+  const country = await resolveCountryObjectId(env, source.home_city_country);
 
   return {
-    country: source.home_city_country,
+    ...(country ? { country } : {}),
     ...(state ? { state } : {}),
     ...(city ? { city } : {}),
   };
@@ -194,20 +198,19 @@ schema.virtual("followedProfilesCount").get(function () {
     return count.length > 0 ? count[0].total : 0;
   };
 });
-schema.pre("validate", function () {
+schema.pre("validate", async function () {
   const env = this.db?.environment;
-  Object.entries(buildLegacyLocationFields(env, this)).forEach(
-    ([field, value]) => {
-      this[field] = value;
-    },
-  );
+  const legacyFields = await buildLegacyLocationFields(env, this);
+  Object.entries(legacyFields).forEach(([field, value]) => {
+    this[field] = value;
+  });
 });
 
-schema.pre("findOneAndUpdate", function () {
+schema.pre("findOneAndUpdate", async function () {
   const env = this.model?.db?.environment;
   const update = this.getUpdate() || {};
   const changes = update.$set || update;
-  Object.assign(changes, buildLegacyLocationFields(env, changes));
+  Object.assign(changes, await buildLegacyLocationFields(env, changes));
 });
 
 // Incluye los virtuals en los resultados de JSON
