@@ -970,9 +970,43 @@ function loadRoutes() {
               req.connection.environment,
               "OpenCall",
             );
-            await OpenCallModel.findByIdAndUpdate(entity.open_call_id, {
-              $inc: { applications_count: 1 },
-            });
+            const openCall = await OpenCallModel.findByIdAndUpdate(
+              entity.open_call_id,
+              { $inc: { applications_count: 1 } },
+              { new: true },
+            );
+
+            // Da acceso temporal al Place dueño de la Open Call sobre los documentos del Artist
+            // aplicante, para que pueda revisarlos durante el proceso de selección. Expira un día
+            // después de la fecha del evento.
+            if (openCall?.place_id) {
+              const PlaceModel = await getModel(
+                req.connection.environment,
+                "Place",
+              );
+              const place = await PlaceModel.findById(openCall.place_id);
+              const placeIdentifier = place?.username || place?.sID || null;
+
+              const eventDate = new Date(openCall.event_date);
+              if (placeIdentifier && !Number.isNaN(eventDate.getTime())) {
+                const expiresAt = new Date(eventDate);
+                expiresAt.setDate(expiresAt.getDate() + 1);
+
+                const AccessGrantModel = await getModel(
+                  req.connection.environment,
+                  "AccessGrant",
+                );
+                await AccessGrantModel.create({
+                  identifier: placeIdentifier,
+                  targetEntityType: "Artist",
+                  targetEntityId: entity.artist_id,
+                  grantType: "temporary",
+                  expiresAt,
+                  fieldPaths: ["documents"],
+                  reason: `OpenCallApplication ${openCall.sID} : ${openCall.event_name}`,
+                });
+              }
+            }
           },
           listQueryFilter: buildOpenCallApplicationsVisibilityFilter,
           actions: {
