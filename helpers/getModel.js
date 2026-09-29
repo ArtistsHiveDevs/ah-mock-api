@@ -11,6 +11,7 @@ function getModelSchema(modelName) {
     User: require("../models/appbase/User").schema,
     AnalyticsEvent: require("../models/appbase/AnalyticsEvent").schema,
     Artist: require("../models/domain/Artist.schema").schema,
+    AccessGrant: require("../models/domain/AccessGrant.schema").schema,
     Album: require("../models/domain/ArtistAlbum.schema").schema,
     Place: require("../models/domain/Place.schema").schema,
     ProfileClaim: require("../models/domain/ProfileClaim.schema").schema,

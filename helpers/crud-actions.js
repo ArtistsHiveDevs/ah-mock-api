@@ -32,6 +32,69 @@ function getRefModelName(fieldType) {
   );
 }
 
+/**
+ * Resuelve `model` explícito (recursivamente, incluyendo populates anidados) para cada entrada
+ * de `customPopulateFields`, mutando los objetos in place. Sin esto, Mongoose busca el ref
+ * internamente vía `connection.model(refModel)`, que solo existe si otro código YA lo registró
+ * antes en la conexión de `parentModel` -- para un modelo con conexión propia eso nunca pasa y populate() falla con
+ * MissingSchemaError. Misma lógica que ya usaba getEntitiesList (el único de los 4 call sites de
+ * populate en este archivo que la tenía).
+ */
+async function resolveCustomPopulateModels(
+  customPopulateFields,
+  parentModel,
+  env,
+) {
+  const processNestedPopulates = async (populateConfig, modelForNested) => {
+    if (Array.isArray(populateConfig)) {
+      for (const pop of populateConfig) {
+        await processNestedPopulates(pop, modelForNested);
+      }
+      return;
+    }
+
+    if (!populateConfig?.path) return;
+
+    const fieldType = modelForNested.schema.paths[populateConfig.path];
+    const refModel = getRefModelName(fieldType);
+    if (!refModel) return;
+
+    try {
+      const refModelInstance = await getModel(env, refModel);
+      populateConfig.model = refModelInstance;
+
+      if (populateConfig.populate) {
+        await processNestedPopulates(populateConfig.populate, refModelInstance);
+      }
+    } catch (err) {
+      console.warn(`⚠️ Error obteniendo ${refModel}:`, err.message);
+    }
+  };
+
+  for (const customPopulate of customPopulateFields || []) {
+    const populatePath = customPopulate.path;
+    const fieldType = parentModel.schema.paths[populatePath];
+    const refModel = fieldType
+      ? getRefModelName(fieldType)
+      : parentModel.schema.virtuals[populatePath]?.options?.ref;
+
+    if (refModel) {
+      try {
+        customPopulate.model = await getModel(env, refModel);
+      } catch (err) {
+        console.warn(`⚠️ Error obteniendo ${refModel}:`, err.message);
+      }
+    }
+
+    if (customPopulate.populate) {
+      const refModelInstance = refModel ? await getModel(env, refModel) : null;
+      if (refModelInstance) {
+        await processNestedPopulates(customPopulate.populate, refModelInstance);
+      }
+    }
+  }
+}
+
 function modelRequiresAuth(modelName) {
   return ![
     "Allergy",
@@ -366,143 +429,21 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         }),
       );
 
-      // Función recursiva para procesar populates anidados
-      const processNestedPopulates = async (
-        populateConfig,
-        parentModel,
-        depth = 0,
-      ) => {
-        const indent = "  ".repeat(depth);
-
-        // Si es un array de populates, procesar cada uno
-        if (Array.isArray(populateConfig)) {
-          for (const pop of populateConfig) {
-            await processNestedPopulates(pop, parentModel, depth);
-          }
-          return;
-        }
-
-        // Si no tiene path, no es un populate válido
-        if (!populateConfig.path) return;
-
-        const populatePath = populateConfig.path;
-
-        // Intentar obtener el modelo referenciado del schema del modelo padre
-        const fieldType = parentModel.schema.paths[populatePath];
-        const refModel = getRefModelName(fieldType);
-
-        console.log(
-          `${indent}🔍 [Nested] ${populatePath}: refModel=${refModel}`,
-        );
-
-        if (refModel) {
-          try {
-            const refModelInstance = await getModel(
-              connection.environment,
-              refModel,
-            );
-            populateConfig.model = refModelInstance;
-            console.log(
-              `${indent}✅ [Nested] ${populatePath} -> ${refModel} asignado`,
-            );
-
-            // Si tiene populates anidados, procesarlos recursivamente
-            if (populateConfig.populate) {
-              console.log(
-                `${indent}🔄 [Nested] Procesando populates anidados de ${populatePath}`,
-              );
-              await processNestedPopulates(
-                populateConfig.populate,
-                refModelInstance,
-                depth + 1,
-              );
-            }
-          } catch (err) {
-            console.warn(
-              `${indent}⚠️ Error obteniendo ${refModel}:`,
-              err.message,
-            );
-          }
-        }
-      };
-
-      // Procesar custom populate fields para agregar modelos explícitos cuando sea necesario
+      // Resolver `model` explícito (recursivo) para cada customPopulateField -- ver
+      // resolveCustomPopulateModels, mismo helper que usan detail/create/update.
       if (
         options.customPopulateFields &&
         options.customPopulateFields.length > 0
       ) {
-        console.log(
-          `📋 [Custom Populate] Procesando ${options.customPopulateFields.length} campos para modelo: ${modelName}`,
+        await resolveCustomPopulateModels(
+          options.customPopulateFields,
+          model,
+          connection.environment,
         );
 
         for (const customPopulate of options.customPopulateFields) {
-          const populatePath = customPopulate.path;
-
-          // Intentar obtener el modelo referenciado del schema (campo real o virtual)
-          let refModel;
-          const fieldType = model.schema.paths[populatePath];
-
-          if (fieldType) {
-            // Es un campo real del schema
-            refModel = getRefModelName(fieldType);
-          } else if (model.schema.virtuals[populatePath]) {
-            // Es un virtual
-            const virtualConfig = model.schema.virtuals[populatePath];
-            refModel = virtualConfig?.options?.ref;
-          }
-
-          console.log(
-            `🔍 [Custom Populate] ${populatePath}: fieldType=${!!fieldType}, isVirtual=${!!model.schema.virtuals[populatePath]}, refModel=${refModel}`,
-          );
-
-          // Resolver y asignar el modelo explícitamente SIEMPRE que se conozca refModel (no solo
-          // para modelsWithCustomConnections): sin esto, Mongoose busca el ref internamente vía
-          // `connection.model(refModel)`, que solo existe si otro código YA lo registró antes en
-          // el proceso -- si nada lo tocó todavía (ej. "Artist" sin haber pasado antes por
-          // /artists), tira MissingSchemaError y el populate de este campo falla por completo.
-          if (refModel) {
-            try {
-              const refModelInstance = await getModel(
-                connection.environment,
-                refModel,
-              );
-              customPopulate.model = refModelInstance;
-              console.log(
-                `✅ [Custom Populate] Modelo ${refModel} asignado a ${populatePath}`,
-              );
-            } catch (err) {
-              console.warn(`⚠️ Error obteniendo ${refModel}:`, err.message);
-            }
-          }
-
-          // Procesar populates anidados si existen
-          if (customPopulate.populate) {
-            console.log(
-              `🔄 [Custom Populate] Procesando populates anidados de ${populatePath}`,
-            );
-            // Obtener el modelo referenciado para pasar a la función recursiva
-            try {
-              const refModelInstance = refModel
-                ? await getModel(connection.environment, refModel)
-                : null;
-
-              if (refModelInstance) {
-                await processNestedPopulates(
-                  customPopulate.populate,
-                  refModelInstance,
-                  1,
-                );
-              }
-            } catch (err) {
-              console.warn(
-                `⚠️ Error procesando anidados de ${populatePath}:`,
-                err.message,
-              );
-            }
-          }
-
           const genericIndex = populateFields.findIndex(
-            (populateOption) => populateOption.path === populatePath,
+            (populateOption) => populateOption.path === customPopulate.path,
           );
           if (genericIndex !== -1) {
             populateFields.splice(genericIndex, 1);
@@ -912,18 +853,19 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       }, {});
 
     // Identificar campos que necesitan populate
-    const populateFields = [
-      ...modelFields
+    const schemaPopulateFields = await Promise.all(
+      modelFields
         .filter((field) => {
           const fieldType = model.schema.paths[field];
           // Requiere `ref` explícito: "_id" es ObjectId pero no referencia otra colección.
           return fieldType && !!getRefModelName(fieldType);
         })
-        .map((field) => {
+        .map(async (field) => {
           const refModelName = getRefModelName(model.schema.paths[field]);
 
-          // Obtener el modelo de referencia dinámicamente
-          const refModel = connection.model(refModelName);
+          // Obtener el modelo de referencia dinámicamente (getModel, no connection.model: el
+          // ref puede vivir en otra conexión, ej. Artist -- ver resolveCustomPopulateModels).
+          const refModel = await getModel(connection.environment, refModelName);
           const hasI18n = refModel.schema.paths.i18n;
 
           const refModelFields = hasI18n
@@ -941,9 +883,20 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
           return {
             path: field,
+            model: refModel,
             select: refModelFields.join(" "),
           };
         }),
+    );
+
+    await resolveCustomPopulateModels(
+      options.customPopulateFields,
+      model,
+      connection.environment,
+    );
+
+    const populateFields = [
+      ...schemaPopulateFields,
       ...(["Place", "Artist"].includes(modelName) ? ["events"] : []),
       ...(options.customPopulateFields || []),
     ];
@@ -1383,6 +1336,11 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         options.customPopulateFields &&
         options.customPopulateFields.length > 0
       ) {
+        await resolveCustomPopulateModels(
+          options.customPopulateFields,
+          model,
+          connection.environment,
+        );
         await newEntity.populate(options.customPopulateFields);
       }
 
@@ -1527,6 +1485,11 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         options.customPopulateFields &&
         options.customPopulateFields.length > 0
       ) {
+        await resolveCustomPopulateModels(
+          options.customPopulateFields,
+          model,
+          connection.environment,
+        );
         await updatedEntity.populate(options.customPopulateFields);
       }
 
