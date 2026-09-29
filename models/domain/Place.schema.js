@@ -136,7 +136,7 @@ const schema = new Schema(
     venue_backline_video: { type: String },
     venue_backline_additional_info: { type: String },
 
-    activity: String,
+    activity: { type: String, default: "active" },
 
     // Solo informativo por ahora: no filtra listados públicos ni bloquea acciones.
     // Ver operations/domain/admin/pendingProfiles/router.js para la cola de revisión.
