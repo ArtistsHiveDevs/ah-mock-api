@@ -158,7 +158,8 @@ async function searchEntitiesDB(req, queryRQ) {
     // 2️⃣ Separar la búsqueda en tokens (palabras individuales)
     const searchTokens = normalizedQuery
       .split(" ")
-      .filter((token) => token.length > 0);
+      .filter((token) => token.length >= 2)
+      .map((token) => token.toLowerCase());
 
     // console.log("QUERY normalizedQuery:", normalizedQuery);
     // console.log("QUERY searchTokens:", searchTokens);
