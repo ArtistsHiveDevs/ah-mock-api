@@ -37,6 +37,7 @@ const { buildHomeCityData } = require("../helpers/locationData");
 const { normalizeProfileId } = require("../models/appbase/EntityDirectory");
 const { getModel } = require("../helpers/getModel");
 const { resolveId } = require("../helpers/resolveEntityId");
+const { getViewerAccessGrants } = require("../helpers/accessGrants");
 const {
   notifyPrebookingCreated,
   notifyPrebookingStatusChanged,
@@ -1021,11 +1022,36 @@ function loadRoutes() {
               return entity;
             },
           },
-          postScriptFunction: (data) => {
-            data.results.forEach((element) => {
-              element.artist = element.artist_id;
-              delete element.artist_id;
-            });
+
+          postScriptFunction: async (data) => {
+            const { results, req } = data || {};
+
+            await Promise.all(
+              (results || []).map(async (element) => {
+                const populatedArtist = element.artist_id;
+
+                if (populatedArtist?._id && req?.currentProfileInfo) {
+                  const { temporaryAccessInstances, trustedInstances } =
+                    await getViewerAccessGrants(
+                      req.serverEnvironment,
+                      "Artist",
+                      populatedArtist._id,
+                      req.currentProfileInfo,
+                    );
+
+                  if (temporaryAccessInstances.length) {
+                    populatedArtist.temporaryAccessInstances =
+                      temporaryAccessInstances;
+                  }
+                  if (trustedInstances.length) {
+                    populatedArtist.trustedInstances = trustedInstances;
+                  }
+                }
+
+                element.artist = populatedArtist;
+                delete element.artist_id;
+              }),
+            );
 
             return data;
           },

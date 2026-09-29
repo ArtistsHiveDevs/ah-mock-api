@@ -72,70 +72,15 @@ async function populateFromGeneralDB(info, fields, lang) {
   }
 }
 
+const {
+  getViewerAccessGrants,
+  grantCoversSubpage,
+} = require("../../../helpers/accessGrants");
+
 const OWNER_ONLY_FIELDS_BY_SUBPAGE = {
   members: ["music_performance"],
   documents: ["technical_epk", "technical_rider", "stage_plot"],
 };
-
-function toClientGrant(grant) {
-  const clientGrant = {
-    identifier: grant.identifier,
-    expiresAt: grant.expiresAt,
-    fieldPaths: grant.fieldPaths || [],
-  };
-  if (grant.reason) {
-    clientGrant.reason = grant.reason;
-  }
-  if (grant.grantType === "trusted") {
-    clientGrant.roles = grant.roles || [];
-  }
-  return clientGrant;
-}
-
-async function getViewerAccessGrants(env, entityType, entityId, viewerProfile) {
-  const viewerIdentifiers = [
-    viewerProfile?.identifier,
-    viewerProfile?.username,
-    viewerProfile?.id,
-  ]
-    .filter(Boolean)
-    .map(String);
-
-  if (!viewerIdentifiers.length) {
-    return { temporaryAccessInstances: [], trustedInstances: [] };
-  }
-
-  const AccessGrantModel = await getModel(env, "AccessGrant");
-  const grants = await AccessGrantModel.find({
-    targetEntityType: entityType,
-    targetEntityId: entityId,
-    identifier: { $in: viewerIdentifiers },
-    expiresAt: { $gt: new Date() },
-  }).lean();
-
-  return {
-    temporaryAccessInstances: grants
-      .filter((grant) => grant.grantType !== "trusted")
-      .map(toClientGrant),
-    trustedInstances: grants
-      .filter((grant) => grant.grantType === "trusted")
-      .map(toClientGrant),
-  };
-}
-
-function grantCoversSubpage(grant, subpage) {
-  return (
-    !grant.fieldPaths?.length ||
-    grant.fieldPaths.some(
-      (path) => path === subpage || path.startsWith(`${subpage}.`),
-    )
-  );
-}
-
-async function resolveGrantTargetEntity(grant, env) {
-  const TargetModel = await getModel(env, grant.targetEntityType);
-  return TargetModel.findById(grant.targetEntityId);
-}
 
 var artistRouter = express.Router({ mergeParams: true });
 
