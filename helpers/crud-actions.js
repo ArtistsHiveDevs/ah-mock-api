@@ -1127,7 +1127,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
     if (postScriptFunction && typeof postScriptFunction === "function") {
       const results = [entityInfo];
-      await postScriptFunction({ results });
+      await postScriptFunction({ results, req });
       entityInfo = results[0];
     }
 
