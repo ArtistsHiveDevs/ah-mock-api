@@ -200,25 +200,29 @@ async function buildOpenCallApplicationsVisibilityFilter({ userId, req }) {
   return visibilityFilter;
 }
 
-async function resolveEventIdQueryParam(req) {
-  const eventIdParam = req?.query?.event_id;
+async function resolveQueryParamEntityId(req, paramName, modelName) {
+  const paramValue = req?.query?.[paramName];
 
-  if (!eventIdParam) {
+  if (!paramValue) {
     return undefined;
   }
 
-  if (mongoose.Types.ObjectId.isValid(eventIdParam)) {
-    return eventIdParam;
+  if (mongoose.Types.ObjectId.isValid(paramValue)) {
+    return paramValue;
   }
 
-  const EventModel = await getModel(req.serverEnvironment, "Event");
-  const event = await EventModel.findOne({ sID: eventIdParam }).select("_id");
+  const Model = await getModel(req.serverEnvironment, modelName);
+  const found = await Model.findOne({ sID: paramValue }).select("_id");
 
-  return event?._id || null;
+  return found?._id || null;
 }
 
 async function buildEventTicketTypesQueryFilter({ req }) {
-  const resolvedEventId = await resolveEventIdQueryParam(req);
+  const resolvedEventId = await resolveQueryParamEntityId(
+    req,
+    "event_id",
+    "Event",
+  );
 
   if (resolvedEventId === undefined) {
     return {};
@@ -227,53 +231,129 @@ async function buildEventTicketTypesQueryFilter({ req }) {
   return { event_id: resolvedEventId || { $in: [] } };
 }
 
+const MEMBERSHIP_ROLES = ["OWNER", "ADMIN"];
+
+function collectUserRoleEntityIdentifiers(user, entityName) {
+  return (user?.roles || [])
+    .filter((role) => role?.entityName === entityName)
+    .flatMap((role) => role?.entityRoleMap || [])
+    .filter((entityRole) =>
+      (entityRole?.roles || []).some((role) =>
+        MEMBERSHIP_ROLES.includes(role),
+      ),
+    )
+    .map((entityRole) =>
+      entityRole?.id === undefined || entityRole?.id === null
+        ? ""
+        : String(entityRole.id).trim(),
+    )
+    .filter((identifier) => identifier.length > 0);
+}
+
+async function findEntityIdsByIdentifiers(Model, identifiers) {
+  if (!identifiers.length) {
+    return [];
+  }
+
+  const objectIdCandidates = identifiers.filter((identifier) =>
+    mongoose.Types.ObjectId.isValid(identifier),
+  );
+
+  const orConditions = [{ sID: { $in: identifiers } }];
+  if (objectIdCandidates.length) {
+    orConditions.push({ _id: { $in: objectIdCandidates } });
+  }
+  if (Model.schema.path("username")) {
+    orConditions.push({ username: { $in: identifiers } });
+  }
+
+  const found = await Model.find({ $or: orConditions }).select("_id");
+
+  return found.map((entity) => entity._id);
+}
+
+function mergeUniqueIds(...idGroups) {
+  const uniqueById = new Map();
+
+  idGroups.flat().forEach((id) => uniqueById.set(String(id), id));
+
+  return [...uniqueById.values()];
+}
+
 async function buildEventGuestsVisibilityFilter({ userId, req }) {
   const noResultsFilter = { _id: { $in: [] } };
 
-  if (!userId) {
+  if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
     return noResultsFilter;
   }
 
-  const ArtistModel = await getModel(req.serverEnvironment, "Artist");
-  const EventModel = await getModel(req.serverEnvironment, "Event");
+  const [ArtistModel, EventModel, UserModel] = await Promise.all([
+    getModel(req.serverEnvironment, "Artist"),
+    getModel(req.serverEnvironment, "Event"),
+    getModel(req.serverEnvironment, "User"),
+  ]);
+
+  const currentUser = await UserModel.findById(userId).select("roles").lean();
 
   const ownerAdminMatch = {
     entityRoleMap: {
-      $elemMatch: { role: { $in: ["OWNER", "ADMIN"] }, ids: userId },
+      $elemMatch: { role: { $in: MEMBERSHIP_ROLES }, ids: userId },
     },
   };
 
-  const [ownedArtists, ownedEvents] = await Promise.all([
+  const [
+    artistsFromEntityRoleMap,
+    eventsFromEntityRoleMap,
+    artistIdsFromUserRoles,
+    eventIdsFromUserRoles,
+  ] = await Promise.all([
     ArtistModel.find(ownerAdminMatch).select("_id"),
     EventModel.find(ownerAdminMatch).select("_id"),
+    findEntityIdsByIdentifiers(
+      ArtistModel,
+      collectUserRoleEntityIdentifiers(currentUser, "Artist"),
+    ),
+    findEntityIdsByIdentifiers(
+      EventModel,
+      collectUserRoleEntityIdentifiers(currentUser, "Event"),
+    ),
   ]);
 
+  const memberArtistIds = mergeUniqueIds(
+    artistsFromEntityRoleMap.map((artist) => artist._id),
+    artistIdsFromUserRoles,
+  );
+  const memberEventIds = mergeUniqueIds(
+    eventsFromEntityRoleMap.map((event) => event._id),
+    eventIdsFromUserRoles,
+  );
+
   const orConditions = [];
-  if (ownedArtists.length) {
-    orConditions.push({
-      artist_id: { $in: ownedArtists.map((artist) => artist._id) },
-    });
+  if (memberArtistIds.length) {
+    orConditions.push({ artist_id: { $in: memberArtistIds } });
   }
-  if (ownedEvents.length) {
-    orConditions.push({
-      event_id: { $in: ownedEvents.map((event) => event._id) },
-    });
+  if (memberEventIds.length) {
+    orConditions.push({ event_id: { $in: memberEventIds } });
   }
 
   const visibilityFilter = orConditions.length
     ? { $or: orConditions }
     : noResultsFilter;
 
-  const resolvedEventId = await resolveEventIdQueryParam(req);
+  const [resolvedEventId, resolvedArtistId] = await Promise.all([
+    resolveQueryParamEntityId(req, "event_id", "Event"),
+    resolveQueryParamEntityId(req, "artist_id", "Artist"),
+  ]);
 
-  if (resolvedEventId === undefined) {
-    return visibilityFilter;
+  const requestedFilters = {};
+  if (resolvedEventId !== undefined) {
+    requestedFilters.event_id = resolvedEventId || { $in: [] };
+  }
+  if (resolvedArtistId !== undefined) {
+    requestedFilters.artist_id = resolvedArtistId || { $in: [] };
   }
 
-  return {
-    ...visibilityFilter,
-    event_id: resolvedEventId || { $in: [] },
-  };
+  return { ...visibilityFilter, ...requestedFilters };
 }
 
 function loadRoutes() {
