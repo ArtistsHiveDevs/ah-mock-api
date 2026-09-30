@@ -1103,7 +1103,7 @@ module.exports = [
               await claim.save();
             } else {
               return res.status(409).json({
-                message: `Ya hay una solicitud de reclamación en proceso desde el ${formatReadableDateEs(existingClaim.createdAt)}. Esta puede tardar de 1 a 5 días hábiles en ser resuelta.`,
+                message: `Ya tienes una solicitud de reclamación en trámite desde el ${formatReadableDateEs(existingClaim.createdAt)}, que resolveremos en un máximo de 5 días hábiles.`,
               });
             }
 
