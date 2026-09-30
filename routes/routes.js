@@ -33,7 +33,10 @@ const Language = require("../models/parametrics/geo/Language.schema");
 const Allergy = require("../models/parametrics/geo/demographics/Allergies.schema");
 const routesConstants = require("../operations/domain/artists/constants/routes.constants");
 const helperFunctions = require("../helpers/helperFunctions");
-const { buildHomeCityData } = require("../helpers/locationData");
+const {
+  buildHomeCityData,
+  buildLocationFieldData,
+} = require("../helpers/locationData");
 const { normalizeProfileId } = require("../models/appbase/EntityDirectory");
 const { getModel } = require("../helpers/getModel");
 const { resolveId } = require("../helpers/resolveEntityId");
@@ -932,7 +935,15 @@ function loadRoutes() {
             },
             {
               path: "artist_id",
-              select: routesConstants.public_fields.join(" "),
+              select: [
+                ...routesConstants.public_fields,
+                "home_city_country",
+                "home_city_level1",
+                "home_city_level2",
+                "origin_city_country",
+                "origin_city_level1",
+                "origin_city_level2",
+              ].join(" "),
             },
           ],
           validateCreate: async ({ body, req }) => {
@@ -1039,12 +1050,40 @@ function loadRoutes() {
               return entity;
             },
           },
-          postScriptFunction: (data) => {
-            data.results.forEach((element) => {
-              element.artist = element.artist_id;
-              delete element.artist_id;
-            });
+          postScriptFunction: async (data) => {
+            const { results, req } = data || {};
 
+            await Promise.all(
+              (results || []).map(async (element) => {
+                const populatedArtist = element.artist_id;
+
+                if (populatedArtist?.home_city_country) {
+                  populatedArtist.homeCityData = buildHomeCityData(
+                    req?.serverEnvironment,
+                    populatedArtist,
+                  );
+                }
+                if (populatedArtist?.origin_city_country) {
+                  populatedArtist.originCityData = buildLocationFieldData(
+                    req?.serverEnvironment,
+                    populatedArtist,
+                    "origin_city",
+                  );
+                }
+                if (populatedArtist) {
+                  ["home_city", "origin_city"].forEach((fieldName) => {
+                    ["country", "level1", "level2", "level3"].forEach(
+                      (suffix) => {
+                        delete populatedArtist[`${fieldName}_${suffix}`];
+                      },
+                    );
+                  });
+                }
+
+                element.artist = populatedArtist;
+                delete element.artist_id;
+              }),
+            );
             return data;
           },
         },
