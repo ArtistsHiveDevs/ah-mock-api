@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const {
   schema: EntityDirectorySchema,
   PARAMETRIC_ENTITY_TYPES,
+  normalizeProfileId,
 } = require("../../../models/appbase/EntityDirectory");
 const {
   createPaginatedDataResponse,
@@ -157,7 +158,8 @@ async function searchEntitiesDB(req, queryRQ) {
     // 2️⃣ Separar la búsqueda en tokens (palabras individuales)
     const searchTokens = normalizedQuery
       .split(" ")
-      .filter((token) => token.length > 0);
+      .filter((token) => token.length >= 2)
+      .map((token) => token.toLowerCase());
 
     // console.log("QUERY normalizedQuery:", normalizedQuery);
     // console.log("QUERY searchTokens:", searchTokens);
@@ -766,29 +768,18 @@ module.exports = [
         const limitFollowers =
           parseInt(req.params.limitFollowers) || MAX_FOLLOWERS;
 
-        let query = {};
-
-        if (mongoose.Types.ObjectId.isValid(profileId)) {
-          query.$or = [{ _id: new mongoose.Types.ObjectId(profileId) }];
-        } else {
-          query.$or = [{ username: profileId }, { name: profileId }];
-        }
-
-        // Obtener `EntityDirectory`
-
-        const EntityDirectoryModel = await getModel(
-          req.serverEnvironment,
-          "EntityDirectory",
-        );
-
-        const entityDirectory = await EntityDirectoryModel.findOne(query);
-
-        if (!entityDirectory) {
+        let resolvedProfile;
+        try {
+          resolvedProfile = await normalizeProfileId(profileId, {
+            environment: req.serverEnvironment,
+          });
+        } catch (err) {
           return res.status(404).json({ error: "Entity not found" });
         }
 
-        const modelName = entityDirectory.entityType; // Obtener el modelo dinámico
+        const modelName = resolvedProfile.entityType; // Obtener el modelo dinámico
         const entityModel = await getModel(req.serverEnvironment, modelName);
+        const query = { _id: resolvedProfile.entity_id };
 
         const followFields = ["followed_by", "followed_profiles"]; // Lista de campos a procesar dinámicamente
 
@@ -837,60 +828,6 @@ module.exports = [
                 },
               },
             },
-            // Hacer `$lookup` para `entityDirectoryId`
-            {
-              $lookup: {
-                from: "entitydirectories",
-                localField: `${field}.entityDirectoryId`,
-                foreignField: "_id",
-                as: `${field}_data`,
-              },
-            },
-            // Volver a asignar los datos del `lookup` dentro de `field`
-            {
-              $set: {
-                [field]: {
-                  $map: {
-                    input: `$${field}`,
-                    as: "f",
-                    in: {
-                      $mergeObjects: [
-                        "$$f",
-                        {
-                          entityDirectoryId: {
-                            $arrayElemAt: [
-                              {
-                                $filter: {
-                                  input: `$${field}_data`,
-                                  as: "ed",
-                                  cond: {
-                                    $eq: ["$$ed._id", "$$f.entityDirectoryId"],
-                                  },
-                                },
-                              },
-                              0,
-                            ],
-                          },
-                        },
-                      ],
-                    },
-                  },
-                },
-              },
-            },
-            // Eliminar el array temporal `${field}_data`
-            { $unset: `${field}_data` },
-            // **Volver a ordenar `field` después del `$lookup`**
-            {
-              $set: {
-                [field]: {
-                  $sortArray: {
-                    input: `$${field}`,
-                    sortBy: { updatedAt: -1 },
-                  },
-                },
-              },
-            },
           );
         });
 
@@ -905,9 +842,32 @@ module.exports = [
           throw new Error(`${modelName} not found `, model);
         }
 
+        // Resolver entityDirectoryId contra su propia conexión (ver nota arriba).
+        const EntityDirectoryModel = await getModel(
+          req.serverEnvironment,
+          "EntityDirectory",
+        );
+        const entityDirectoryIds = followFields
+          .flatMap((field) => itemInfo[field] || [])
+          .map((entry) => entry.entityDirectoryId)
+          .filter(Boolean);
+
+        const entityDirectoryDocs = entityDirectoryIds.length
+          ? await EntityDirectoryModel.find({
+              _id: { $in: entityDirectoryIds },
+            }).lean()
+          : [];
+
+        const entityDirectoryById = new Map(
+          entityDirectoryDocs.map((doc) => [String(doc._id), doc]),
+        );
+
         const cleanFollowData = (data) =>
           data
-            ?.map(({ entityDirectoryId }) => {
+            ?.map((entry) => {
+              const entityDirectoryId = entityDirectoryById.get(
+                String(entry.entityDirectoryId),
+              );
               if (!entityDirectoryId) return null;
 
               const cleaned = Object.keys(entityDirectoryId).reduce(

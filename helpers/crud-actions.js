@@ -13,6 +13,25 @@ const {
 } = require("../db/db_g");
 const { getModel } = require("./getModel");
 
+/**
+ * Resuelve el modelo referenciado (`ref`) de un schema path, para campos escalares
+ * (`{type: ObjectId, ref: "X"}`) y para arrays (`[{type: ObjectId, ref: "X"}]`).
+ * En esta versión de Mongoose, un array de ese tipo no expone `.caster` ni
+ * `.embeddedSchemaType` -- el `ref` queda anidado en `options.type[0].ref` en vez de
+ * `options.ref`/`caster.options.ref`, por eso ese tercer fallback es necesario.
+ */
+function getRefModelName(fieldType) {
+  if (!fieldType) return undefined;
+  const arrayItemType = fieldType.caster || fieldType.embeddedSchemaType;
+  return (
+    fieldType.options?.ref ||
+    arrayItemType?.options?.ref ||
+    (Array.isArray(fieldType.options?.type) &&
+      fieldType.options.type[0]?.ref) ||
+    undefined
+  );
+}
+
 function modelRequiresAuth(modelName) {
   return ![
     "Allergy",
@@ -296,25 +315,14 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       const populateFieldsData = modelFields
         .filter((field) => {
           const fieldType = model.schema.paths[field];
-          // Mongoose 9
-          const arrayItemType =
-            fieldType?.caster || fieldType?.embeddedSchemaType;
-
           return (
             fieldType &&
-            (fieldType.instance.toLowerCase() === "objectid" ||
-              (fieldType.instance.toLowerCase() === "array" &&
-                arrayItemType &&
-                arrayItemType?.instance?.toLowerCase() === "objectid"))
+            ["objectid", "array"].includes(fieldType.instance.toLowerCase()) &&
+            !!getRefModelName(fieldType)
           );
         })
         .map((field) => {
-          const arrayItemType =
-            model.schema.paths[field].caster ||
-            model.schema.paths[field].embeddedSchemaType;
-          const refModel =
-            model.schema.paths[field].options?.ref ||
-            arrayItemType?.options?.ref;
+          const refModel = getRefModelName(model.schema.paths[field]);
           const refModelFields = model.schema.paths.i18n
             ? [
                 `i18n.${lang}`,
@@ -381,9 +389,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
         // Intentar obtener el modelo referenciado del schema del modelo padre
         const fieldType = parentModel.schema.paths[populatePath];
-        const arrayItemType =
-          fieldType?.caster || fieldType?.embeddedSchemaType;
-        const refModel = fieldType?.options?.ref || arrayItemType?.options?.ref;
+        const refModel = getRefModelName(fieldType);
 
         console.log(
           `${indent}🔍 [Nested] ${populatePath}: refModel=${refModel}`,
@@ -438,9 +444,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
           if (fieldType) {
             // Es un campo real del schema
-            const arrayItemType =
-              fieldType?.caster || fieldType?.embeddedSchemaType;
-            refModel = fieldType?.options?.ref || arrayItemType?.options?.ref;
+            refModel = getRefModelName(fieldType);
           } else if (model.schema.virtuals[populatePath]) {
             // Es un virtual
             const virtualConfig = model.schema.virtuals[populatePath];
@@ -913,20 +917,10 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         .filter((field) => {
           const fieldType = model.schema.paths[field];
           // Requiere `ref` explícito: "_id" es ObjectId pero no referencia otra colección.
-          const arrayItemType =
-            fieldType?.caster || fieldType?.embeddedSchemaType;
-          return (
-            fieldType &&
-            !!(fieldType.options?.ref || arrayItemType?.options?.ref)
-          );
+          return fieldType && !!getRefModelName(fieldType);
         })
         .map((field) => {
-          const arrayItemType =
-            model.schema.paths[field].caster ||
-            model.schema.paths[field].embeddedSchemaType;
-          const refModelName =
-            model.schema.paths[field].options?.ref ||
-            arrayItemType?.options?.ref;
+          const refModelName = getRefModelName(model.schema.paths[field]);
 
           // Obtener el modelo de referencia dinámicamente
           const refModel = connection.model(refModelName);
@@ -1180,7 +1174,7 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
 
     if (postScriptFunction && typeof postScriptFunction === "function") {
       const results = [entityInfo];
-      await postScriptFunction({ results });
+      await postScriptFunction({ results, req });
       entityInfo = results[0];
     }
 
@@ -1249,31 +1243,32 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
         await model.schema.statics.preConstruct(connection, ownerUser, info);
       }
 
-      // Convertir shortIDs a ObjectIds para campos con ref
+      // Convertir shortIDs a ObjectIds para campos con ref -- incluye arrays de ref
+      // (ej. Event.artists: [{type: ObjectId, ref: "Artist"}]), no solo el campo escalar.
       for (const [fieldName, fieldValue] of Object.entries(info)) {
         if (!fieldValue) continue;
 
         const schemaPath = model.schema.paths[fieldName];
         if (!schemaPath) continue;
 
-        // Si el campo tiene ref y el valor no es un ObjectId válido, intentar convertirlo
-        const ref = schemaPath.options?.ref;
-        if (
-          ref &&
-          typeof fieldValue === "string" &&
-          !mongoose.Types.ObjectId.isValid(fieldValue)
-        ) {
+        const ref = getRefModelName(schemaPath);
+        if (!ref) continue;
+
+        const resolveRefValue = async (value) => {
+          if (
+            typeof value !== "string" ||
+            mongoose.Types.ObjectId.isValid(value)
+          ) {
+            return value;
+          }
           try {
             const RefModel = await getModel(connection.environment, ref);
             const refDoc = await RefModel.findOne({
-              $or: [{ sID: fieldValue }, { username: fieldValue }],
+              $or: [{ sID: value }, { username: value }],
             }).select("_id");
 
             if (refDoc) {
-              info[fieldName] = refDoc._id;
-              console.log(
-                `🔄 [CreateEntity] Convertido ${fieldName}: ${fieldValue} -> ${refDoc._id}`,
-              );
+              return refDoc._id;
             }
           } catch (err) {
             console.warn(
@@ -1281,6 +1276,13 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
               err.message,
             );
           }
+          return value;
+        };
+
+        if (Array.isArray(fieldValue)) {
+          info[fieldName] = await Promise.all(fieldValue.map(resolveRefValue));
+        } else {
+          info[fieldName] = await resolveRefValue(fieldValue);
         }
       }
 
@@ -1406,31 +1408,34 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
       throw new Error("Must search an id, username or name");
     }
 
-    // Convertir shortIDs a ObjectIds para campos con ref (mismo criterio que createEntity)
+    // Convertir shortIDs a ObjectIds para campos con ref
     for (const [fieldName, fieldValue] of Object.entries(newInfo)) {
       if (!fieldValue) continue;
 
       const schemaPath = model.schema.paths[fieldName];
       if (!schemaPath) continue;
 
-      // Si el campo tiene ref y el valor no es un ObjectId válido, intentar convertirlo
-      const ref = schemaPath.options?.ref;
-      if (
-        ref &&
-        typeof fieldValue === "string" &&
-        !mongoose.Types.ObjectId.isValid(fieldValue)
-      ) {
+      const ref = getRefModelName(schemaPath);
+      if (!ref) continue;
+
+      const resolveRefValue = async (value) => {
+        if (
+          typeof value !== "string" ||
+          mongoose.Types.ObjectId.isValid(value)
+        ) {
+          return value;
+        }
         try {
           const RefModel = await getModel(connection.environment, ref);
           const refDoc = await RefModel.findOne({
-            $or: [{ sID: fieldValue }, { username: fieldValue }],
+            $or: [{ sID: value }, { username: value }],
           }).select("_id");
 
           if (refDoc) {
-            newInfo[fieldName] = refDoc._id;
             console.log(
-              `🔄 [UpdateEntity] Convertido ${fieldName}: ${fieldValue} -> ${refDoc._id}`,
+              `🔄 [UpdateEntity] Convertido ${fieldName}: ${value} -> ${refDoc._id}`,
             );
+            return refDoc._id;
           }
         } catch (err) {
           console.warn(
@@ -1438,6 +1443,13 @@ async function createCRUDActions({ modelName, schema, options = {}, req }) {
             err.message,
           );
         }
+        return value;
+      };
+
+      if (Array.isArray(fieldValue)) {
+        newInfo[fieldName] = await Promise.all(fieldValue.map(resolveRefValue));
+      } else {
+        newInfo[fieldName] = await resolveRefValue(fieldValue);
       }
     }
 

@@ -7,20 +7,21 @@ const {
 
 function getModelSchema(modelName) {
   const modelSchemas = {
-    EntityDirectory: require("../models/appbase/EntityDirectory").schema,
-    User: require("../models/appbase/User").schema,
     AnalyticsEvent: require("../models/appbase/AnalyticsEvent").schema,
     Artist: require("../models/domain/Artist.schema").schema,
     Album: require("../models/domain/ArtistAlbum.schema").schema,
+    Country: require("../models/parametrics/geo/Country.schema").schema,
+    EntityDirectory: require("../models/appbase/EntityDirectory").schema,
+    EventTicketType: require("../models/domain/EventTicketType.schema").schema,
+    EventGuest: require("../models/domain/EventGuest.schema").schema,
+    Follower: require("../models/domain/Follower.schema").schema,
     Place: require("../models/domain/Place.schema").schema,
     ProfileClaim: require("../models/domain/ProfileClaim.schema").schema,
     ReportClaim: require("../models/domain/ReportClaim.schema").schema,
-    Follower: require("../models/domain/Follower.schema").schema,
     OpenCall: require("../models/domain/OpenCall.schema").schema,
     OpenCallApplication: require("../models/domain/OpenCallApplication.schema")
       .schema,
-    EventTicketType: require("../models/domain/EventTicketType.schema").schema,
-    EventGuest: require("../models/domain/EventGuest.schema").schema,
+    User: require("../models/appbase/User").schema,
   };
 
   return modelSchemas[modelName] || null;
@@ -52,7 +53,7 @@ async function getModel(connOrEnv, modelName) {
 
   // Determinar si el primer parámetro es una conexión o un string de ambiente
   let env, conn;
-  if (typeof connOrEnv === 'string') {
+  if (typeof connOrEnv === "string") {
     // Si es un string, es el ambiente
     env = connOrEnv;
     conn = connections[env];

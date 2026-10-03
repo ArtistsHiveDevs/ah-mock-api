@@ -10,7 +10,10 @@ const createCRUDActions = require("../../../helpers/crud-actions");
 const apiHelperFunctions = require("../../../helpers/apiHelperFunctions");
 const helperFunctions = require("../../../helpers/helperFunctions");
 
-const { connections } = require("../../../db/db_g");
+const {
+  connections,
+  modelsWithCustomConnections,
+} = require("../../../db/db_g");
 const { getModel } = require("../../../helpers/getModel");
 const { decompressJSON } = require("../../../helpers/compression");
 const { resolveId } = require("../../../helpers/resolveEntityId");
@@ -39,6 +42,33 @@ async function resolveReferenceFields(info, connection) {
     } else {
       info[field] = await resolveId(info[field], modelName, connection);
     }
+  }
+}
+
+async function populateFromGeneralDB(info, fields, lang) {
+  for (const { path, model: ReferencedModel, select } of fields) {
+    const value = info[path];
+    if (value === undefined || value === null) {
+      continue;
+    }
+
+    const isArray = Array.isArray(value);
+    const ids = (isArray ? value : [value]).filter(Boolean);
+    if (!ids.length) {
+      continue;
+    }
+
+    const found = await ReferencedModel.find({ _id: { $in: ids } }).select(
+      select,
+    );
+    const translated = apiHelperFunctions.translateDBResults({
+      results: found,
+      lang,
+    });
+    const byId = new Map(translated.map((doc) => [String(doc._id), doc]));
+    const resolved = ids.map((id) => byId.get(String(id))).filter(Boolean);
+
+    info[path] = isArray ? resolved : (resolved[0] ?? value);
   }
 }
 
@@ -337,18 +367,27 @@ module.exports = [
         // console.log(projectionFields);
         // console.log(modelFields);
 
+        const [CountryModel, EventModel, PlaceModel] = await Promise.all([
+          getModel(req.serverEnvironment, "Country"),
+          getModel(req.serverEnvironment, "Event"),
+          getModel(req.serverEnvironment, "Place"),
+        ]);
+
         // Identificar campos que necesitan populate
         const customPopulateFields = [
           {
             path: "arts.music.related_artists",
+            model: Artist,
             select: routesConstants.public_fields.join(" "),
             populate: {
               path: "country",
+              model: CountryModel,
               select: routesConstants.parametric_public_fields.Country.summary,
             },
           },
           {
             path: "events",
+            model: EventModel,
             select: [
               ...routesConstants.public_fields,
               "timetable__initial_date",
@@ -363,9 +402,11 @@ module.exports = [
             populate: [
               {
                 path: "artists",
+                model: Artist,
                 select: routesConstants.public_fields,
                 populate: {
                   path: "country",
+                  model: CountryModel,
                   select:
                     routesConstants.parametric_public_fields.Country.summary.join(
                       " ",
@@ -374,9 +415,11 @@ module.exports = [
               },
               {
                 path: "place",
+                model: PlaceModel,
                 select: routesConstants.public_fields,
                 populate: {
                   path: "country",
+                  model: CountryModel,
                   select:
                     routesConstants.parametric_public_fields.Country.summary.join(
                       " ",
@@ -387,8 +430,8 @@ module.exports = [
           },
         ];
 
-        const populateFields = [
-          ...modelFields
+        const schemaPopulateFields = await Promise.all(
+          modelFields
             .filter((field) => {
               const fieldType = model.schema.paths[field];
               // Mongoose 9
@@ -402,7 +445,7 @@ module.exports = [
                     arrayItemType.instance?.toLowerCase() === "objectid"))
               );
             })
-            .map((field) => {
+            .map(async (field) => {
               const arrayItemType =
                 model.schema.paths[field].caster ||
                 model.schema.paths[field].embeddedSchemaType;
@@ -429,11 +472,23 @@ module.exports = [
 
               return {
                 path: field,
+                model: await getModel(req.serverEnvironment, refModelName),
                 select: refModelFields.join(" "),
+                isGeneralDB:
+                  !modelsWithCustomConnections.includes(refModelName),
               };
             }),
+        );
 
-          "events",
+        const generalDBFields = schemaPopulateFields.filter(
+          (field) => field.isGeneralDB,
+        );
+
+        // "events" ya viaja en customPopulateFields (con model y select), no se repite como string.
+        const populateFields = [
+          ...schemaPopulateFields
+            .filter((field) => !field.isGeneralDB)
+            .map(({ isGeneralDB, ...populateOption }) => populateOption),
           ...customPopulateFields,
         ];
 
@@ -461,6 +516,8 @@ module.exports = [
           results: [artistInfo],
           lang,
         })[0]; // Convertir el array de resultados en un solo objeto
+
+        await populateFromGeneralDB(artistInfo, generalDBFields, lang);
 
         artistInfo.events.forEach((event) => {
           if (!event.name) {
