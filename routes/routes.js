@@ -26,6 +26,8 @@ const Prebooking = require("../models/domain/Prebooking.schema");
 const ProfileClaim = require("../models/domain/ProfileClaim.schema");
 const OpenCall = require("../models/domain/OpenCall.schema");
 const OpenCallApplication = require("../models/domain/OpenCallApplication.schema");
+const EventTicketType = require("../models/domain/EventTicketType.schema");
+const EventGuest = require("../models/domain/EventGuest.schema");
 const Currency = require("../models/parametrics/geo/Currency.schema");
 const Continent = require("../models/parametrics/geo/Continent.schema");
 const Country = require("../models/parametrics/geo/Country.schema");
@@ -200,6 +202,162 @@ async function buildOpenCallApplicationsVisibilityFilter({ userId, req }) {
   }
 
   return visibilityFilter;
+}
+
+async function resolveQueryParamEntityId(req, paramName, modelName) {
+  const paramValue = req?.query?.[paramName];
+
+  if (!paramValue) {
+    return undefined;
+  }
+
+  if (mongoose.Types.ObjectId.isValid(paramValue)) {
+    return paramValue;
+  }
+
+  const Model = await getModel(req.serverEnvironment, modelName);
+  const found = await Model.findOne({ sID: paramValue }).select("_id");
+
+  return found?._id || null;
+}
+
+async function buildEventTicketTypesQueryFilter({ req }) {
+  const resolvedEventId = await resolveQueryParamEntityId(
+    req,
+    "event_id",
+    "Event",
+  );
+
+  if (resolvedEventId === undefined) {
+    return {};
+  }
+
+  return { event_id: resolvedEventId || { $in: [] } };
+}
+
+const MEMBERSHIP_ROLES = ["OWNER", "ADMIN"];
+
+function collectUserRoleEntityIdentifiers(user, entityName) {
+  return (user?.roles || [])
+    .filter((role) => role?.entityName === entityName)
+    .flatMap((role) => role?.entityRoleMap || [])
+    .filter((entityRole) =>
+      (entityRole?.roles || []).some((role) =>
+        MEMBERSHIP_ROLES.includes(role),
+      ),
+    )
+    .map((entityRole) =>
+      entityRole?.id === undefined || entityRole?.id === null
+        ? ""
+        : String(entityRole.id).trim(),
+    )
+    .filter((identifier) => identifier.length > 0);
+}
+
+async function findEntityIdsByIdentifiers(Model, identifiers) {
+  if (!identifiers.length) {
+    return [];
+  }
+
+  const objectIdCandidates = identifiers.filter((identifier) =>
+    mongoose.Types.ObjectId.isValid(identifier),
+  );
+
+  const orConditions = [{ sID: { $in: identifiers } }];
+  if (objectIdCandidates.length) {
+    orConditions.push({ _id: { $in: objectIdCandidates } });
+  }
+  if (Model.schema.path("username")) {
+    orConditions.push({ username: { $in: identifiers } });
+  }
+
+  const found = await Model.find({ $or: orConditions }).select("_id");
+
+  return found.map((entity) => entity._id);
+}
+
+function mergeUniqueIds(...idGroups) {
+  const uniqueById = new Map();
+
+  idGroups.flat().forEach((id) => uniqueById.set(String(id), id));
+
+  return [...uniqueById.values()];
+}
+
+async function buildEventGuestsVisibilityFilter({ userId, req }) {
+  const noResultsFilter = { _id: { $in: [] } };
+
+  if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
+    return noResultsFilter;
+  }
+
+  const [ArtistModel, EventModel, UserModel] = await Promise.all([
+    getModel(req.serverEnvironment, "Artist"),
+    getModel(req.serverEnvironment, "Event"),
+    getModel(req.serverEnvironment, "User"),
+  ]);
+
+  const currentUser = await UserModel.findById(userId).select("roles").lean();
+
+  const ownerAdminMatch = {
+    entityRoleMap: {
+      $elemMatch: { role: { $in: MEMBERSHIP_ROLES }, ids: userId },
+    },
+  };
+
+  const [
+    artistsFromEntityRoleMap,
+    eventsFromEntityRoleMap,
+    artistIdsFromUserRoles,
+    eventIdsFromUserRoles,
+  ] = await Promise.all([
+    ArtistModel.find(ownerAdminMatch).select("_id"),
+    EventModel.find(ownerAdminMatch).select("_id"),
+    findEntityIdsByIdentifiers(
+      ArtistModel,
+      collectUserRoleEntityIdentifiers(currentUser, "Artist"),
+    ),
+    findEntityIdsByIdentifiers(
+      EventModel,
+      collectUserRoleEntityIdentifiers(currentUser, "Event"),
+    ),
+  ]);
+
+  const memberArtistIds = mergeUniqueIds(
+    artistsFromEntityRoleMap.map((artist) => artist._id),
+    artistIdsFromUserRoles,
+  );
+  const memberEventIds = mergeUniqueIds(
+    eventsFromEntityRoleMap.map((event) => event._id),
+    eventIdsFromUserRoles,
+  );
+
+  const orConditions = [];
+  if (memberArtistIds.length) {
+    orConditions.push({ artist_id: { $in: memberArtistIds } });
+  }
+  if (memberEventIds.length) {
+    orConditions.push({ event_id: { $in: memberEventIds } });
+  }
+
+  const visibilityFilter = orConditions.length
+    ? { $or: orConditions }
+    : noResultsFilter;
+
+  const [resolvedEventId, resolvedArtistId] = await Promise.all([
+    resolveQueryParamEntityId(req, "event_id", "Event"),
+    resolveQueryParamEntityId(req, "artist_id", "Artist"),
+  ]);
+
+  const requestedFilters = {};
+  if (resolvedEventId !== undefined) {
+    requestedFilters.event_id = resolvedEventId || { $in: [] };
+  }
+  if (resolvedArtistId !== undefined) {
+    requestedFilters.artist_id = resolvedArtistId || { $in: [] };
+  }
+
+  return { ...visibilityFilter, ...requestedFilters };
 }
 
 /**
@@ -456,6 +614,176 @@ function loadRoutes() {
               result.promoter = "Sed ut perspiciatis unde omnis";
             });
           },
+        },
+      }),
+    },
+    {
+      path: "/event-ticket-types",
+      route: createCRUDRoutes({
+        modelName: "EventTicketType",
+        schema: EventTicketType.schema,
+        options: {
+          public_fields: [
+            ...routesConstants.public_fields,
+            "event_id",
+            "name",
+            "price",
+            "currency",
+            "order",
+            "active",
+            "createdAt",
+          ],
+          authenticated_fields: [
+            ...routesConstants.public_fields,
+            "event_id",
+            "name",
+            "price",
+            "currency",
+            "order",
+            "active",
+            "createdAt",
+          ],
+          listQueryFilter: buildEventTicketTypesQueryFilter,
+        },
+      }),
+    },
+    {
+      path: "/event-guests",
+      route: createCRUDRoutes({
+        modelName: "EventGuest",
+        schema: EventGuest.schema,
+        options: {
+          public_fields: [
+            ...routesConstants.public_fields,
+            "event_id",
+            "artist_id",
+            "first_name",
+            "last_name",
+            "cc",
+            "email",
+            "ticket_type_id",
+            "ticket_type_name",
+            "ticket_price",
+            "checked_in",
+            "createdAt",
+          ],
+          authenticated_fields: [
+            ...routesConstants.public_fields,
+            "event_id",
+            "artist_id",
+            "first_name",
+            "last_name",
+            "cc",
+            "email",
+            "ticket_type_id",
+            "ticket_type_name",
+            "ticket_price",
+            "checked_in",
+            "createdAt",
+          ],
+          customPopulateFields: [
+            {
+              path: "event_id",
+              select: "name description place sID",
+            },
+            {
+              path: "artist_id",
+              select: routesConstants.public_fields.join(" "),
+            },
+          ],
+          buildCreatePayload: async ({ body, req }) => {
+            const connection = { environment: req.serverEnvironment };
+            const resolvedEventId = await resolveId(
+              body.event_id,
+              "Event",
+              connection,
+            );
+            const resolvedTicketTypeId = await resolveId(
+              body.ticket_type_id,
+              "EventTicketType",
+              connection,
+            );
+
+            const EventTicketTypeModel = await getModel(
+              req.serverEnvironment,
+              "EventTicketType",
+            );
+            const ticketType =
+              await EventTicketTypeModel.findById(resolvedTicketTypeId);
+
+            const payload = {
+              ...body,
+              event_id: resolvedEventId,
+              ticket_type_id: resolvedTicketTypeId,
+              ticket_type_name: ticketType?.name,
+              ticket_price: ticketType?.price,
+              checked_in: false,
+            };
+
+            if (body.artist_id) {
+              payload.artist_id = await resolveId(
+                body.artist_id,
+                "Artist",
+                connection,
+              );
+            } else {
+              delete payload.artist_id;
+            }
+
+            return payload;
+          },
+          validateCreate: async ({ body, req }) => {
+            const connection = { environment: req.serverEnvironment };
+            const resolvedEventId = await resolveId(
+              body.event_id,
+              "Event",
+              connection,
+            );
+            const resolvedTicketTypeId = await resolveId(
+              body.ticket_type_id,
+              "EventTicketType",
+              connection,
+            );
+
+            const EventTicketTypeModel = await getModel(
+              req.serverEnvironment,
+              "EventTicketType",
+            );
+            const ticketType =
+              await EventTicketTypeModel.findById(resolvedTicketTypeId);
+
+            if (!ticketType) {
+              throw new Error(
+                `Ticket type '${body.ticket_type_id}' not found.`,
+              );
+            }
+
+            if (String(ticketType.event_id) !== String(resolvedEventId)) {
+              throw new Error(
+                "The selected ticket type does not belong to this event.",
+              );
+            }
+
+            const EventGuestModel = await getModel(
+              req.serverEnvironment,
+              "EventGuest",
+            );
+            const existingGuest = await EventGuestModel.findOne({
+              event_id: resolvedEventId,
+              cc: body.cc,
+            });
+
+            if (existingGuest) {
+              throw new Error(
+                "A guest with this document number is already registered for this event.",
+              );
+            }
+
+            if (body.artist_id) {
+              await resolveId(body.artist_id, "Artist", connection);
+            }
+          },
+          listQueryFilter: buildEventGuestsVisibilityFilter,
         },
       }),
     },
