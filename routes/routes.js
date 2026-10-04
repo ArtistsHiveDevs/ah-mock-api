@@ -291,9 +291,10 @@ async function buildEventGuestsVisibilityFilter({ userId, req }) {
     return noResultsFilter;
   }
 
-  const [ArtistModel, EventModel, UserModel] = await Promise.all([
+  const [ArtistModel, EventModel, PlaceModel, UserModel] = await Promise.all([
     getModel(req.serverEnvironment, "Artist"),
     getModel(req.serverEnvironment, "Event"),
+    getModel(req.serverEnvironment, "Place"),
     getModel(req.serverEnvironment, "User"),
   ]);
 
@@ -308,11 +309,14 @@ async function buildEventGuestsVisibilityFilter({ userId, req }) {
   const [
     artistsFromEntityRoleMap,
     eventsFromEntityRoleMap,
+    placesFromEntityRoleMap,
     artistIdsFromUserRoles,
     eventIdsFromUserRoles,
+    placeIdsFromUserRoles,
   ] = await Promise.all([
     ArtistModel.find(ownerAdminMatch).select("_id"),
     EventModel.find(ownerAdminMatch).select("_id"),
+    PlaceModel.find(ownerAdminMatch).select("_id"),
     findEntityIdsByIdentifiers(
       ArtistModel,
       collectUserRoleEntityIdentifiers(currentUser, "Artist"),
@@ -321,15 +325,29 @@ async function buildEventGuestsVisibilityFilter({ userId, req }) {
       EventModel,
       collectUserRoleEntityIdentifiers(currentUser, "Event"),
     ),
+    findEntityIdsByIdentifiers(
+      PlaceModel,
+      collectUserRoleEntityIdentifiers(currentUser, "Place"),
+    ),
   ]);
 
   const memberArtistIds = mergeUniqueIds(
     artistsFromEntityRoleMap.map((artist) => artist._id),
     artistIdsFromUserRoles,
   );
+  const memberPlaceIds = mergeUniqueIds(
+    placesFromEntityRoleMap.map((place) => place._id),
+    placeIdsFromUserRoles,
+  );
+
+  const eventsFromMemberPlaces = memberPlaceIds.length
+    ? await EventModel.find({ place: { $in: memberPlaceIds } }).select("_id")
+    : [];
+
   const memberEventIds = mergeUniqueIds(
     eventsFromEntityRoleMap.map((event) => event._id),
     eventIdsFromUserRoles,
+    eventsFromMemberPlaces.map((event) => event._id),
   );
 
   const orConditions = [];
@@ -358,6 +376,39 @@ async function buildEventGuestsVisibilityFilter({ userId, req }) {
   }
 
   return { ...visibilityFilter, ...requestedFilters };
+}
+
+async function assertCanManageEventGuestCheckIn({ userId, guest, req }) {
+  if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
+    throw new Error(
+      "Unauthorized operation. To execute this operation you require a valid session",
+    );
+  }
+
+  const ownsGuestRecord = (guest?.entityRoleMap || []).some(
+    (entityRole) =>
+      MEMBERSHIP_ROLES.includes(entityRole?.role) &&
+      (entityRole?.ids || []).some(
+        (roleUserId) => String(roleUserId) === String(userId),
+      ),
+  );
+
+  if (ownsGuestRecord) {
+    return;
+  }
+
+  const visibilityFilter = await buildEventGuestsVisibilityFilter({
+    userId,
+    req,
+  });
+  const EventGuestModel = await getModel(req.serverEnvironment, "EventGuest");
+  const visibleGuest = await EventGuestModel.findOne({
+    $and: [{ _id: guest._id }, visibilityFilter],
+  }).select("_id");
+
+  if (!visibleGuest) {
+    throw new Error("Permission denied");
+  }
 }
 
 /**
@@ -661,10 +712,12 @@ function loadRoutes() {
             "last_name",
             "cc",
             "email",
+            "gender",
             "ticket_type_id",
             "ticket_type_name",
             "ticket_price",
             "checked_in",
+            "checked_in_at",
             "createdAt",
           ],
           authenticated_fields: [
@@ -675,10 +728,12 @@ function loadRoutes() {
             "last_name",
             "cc",
             "email",
+            "gender",
             "ticket_type_id",
             "ticket_type_name",
             "ticket_price",
             "checked_in",
+            "checked_in_at",
             "createdAt",
           ],
           customPopulateFields: [
@@ -719,6 +774,9 @@ function loadRoutes() {
               ticket_price: ticketType?.price,
               checked_in: false,
             };
+
+            delete payload.checked_in_at;
+            delete payload.checked_in_by;
 
             if (body.artist_id) {
               payload.artist_id = await resolveId(
@@ -782,6 +840,43 @@ function loadRoutes() {
             if (body.artist_id) {
               await resolveId(body.artist_id, "Artist", connection);
             }
+          },
+          validateUpdate: async ({ body, existingEntity }) => {
+            if (existingEntity?.checked_in) {
+              throw new Error(
+                "This guest has already entered the event and can no longer be modified.",
+              );
+            }
+
+            if (
+              body &&
+              Object.prototype.hasOwnProperty.call(body, "checked_in")
+            ) {
+              throw new Error(
+                "The guest entry can only be registered through the checkIn action.",
+              );
+            }
+          },
+          actions: {
+            checkIn: async (req, res, entity) => {
+              await assertCanManageEventGuestCheckIn({
+                userId: req.userId,
+                guest: entity,
+                req,
+              });
+
+              if (entity.checked_in) {
+                throw new Error(
+                  "This guest has already entered the event and can no longer be modified.",
+                );
+              }
+
+              entity.checked_in = true;
+              entity.checked_in_at = new Date();
+              entity.checked_in_by = new mongoose.Types.ObjectId(req.userId);
+
+              return entity;
+            },
           },
           listQueryFilter: buildEventGuestsVisibilityFilter,
         },

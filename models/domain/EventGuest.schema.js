@@ -14,6 +14,7 @@ const schema = new Schema(
     last_name: { type: String, required: true },
     cc: { type: String, required: true },
     email: { type: String },
+    gender: { type: String },
     ticket_type_id: {
       type: Schema.Types.ObjectId,
       ref: "EventTicketType",
@@ -22,6 +23,8 @@ const schema = new Schema(
     ticket_type_name: { type: String },
     ticket_price: { type: Number },
     checked_in: { type: Boolean, default: false },
+    checked_in_at: { type: Date },
+    checked_in_by: { type: Schema.Types.ObjectId, ref: "User" },
     entityRoleMap: [
       {
         ids: [mongoose.Types.ObjectId],
