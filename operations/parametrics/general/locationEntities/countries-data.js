@@ -12035,6 +12035,710 @@ const countries = [
     ],
     sID: "y3x0sr6Eyt",
   },
+  {
+    label: "Uruguay",
+    value: "UY",
+    id: "66d6198da546e02c6ce65ba9",
+    // INE (Instituto Nacional de Estadística)
+    // Sistema: Códigos INE
+    // Niveles: Departamentos → Localidades
+    // Código: 2 dígitos para departamentos
+    // ISO 3166-2: UY-XX
+    statisticalInstitute: "INE",
+    codingSystem: "Códigos INE",
+    adminLevels: ["Departamento", "Localidad"],
+    states: [
+      {
+        label: "Artigas",
+        value: "UY-AR",
+        departamento: {
+          nombre: "Artigas",
+          codigo: "02",
+          sID: "9wHm5dYrzR",
+        },
+        cities: [
+          {
+            label: "Artigas",
+            value: "AR001",
+            sID: "u5iTI5rrPi",
+          },
+          {
+            label: "Bella Unión",
+            value: "AR002",
+            sID: "8nfMJ7U5Fc",
+          },
+          {
+            label: "Tomás Gomensoro",
+            value: "AR003",
+            sID: "6qUikWjJKr",
+          },
+          {
+            label: "Baltasar Brum",
+            value: "AR004",
+            sID: "oTMDBm2JvL",
+          },
+        ],
+        sID: "WeI6qx1gPK",
+      },
+      {
+        label: "Canelones",
+        value: "UY-CA",
+        departamento: {
+          nombre: "Canelones",
+          codigo: "03",
+          sID: "3yemeTQfLN",
+        },
+        cities: [
+          {
+            label: "Canelones",
+            value: "CA001",
+            sID: "FjA49ecpU2",
+          },
+          {
+            label: "Las Piedras",
+            value: "CA002",
+            sID: "A7YGT6envG",
+          },
+          {
+            label: "Ciudad de la Costa",
+            value: "CA003",
+            sID: "4OITZ2huB6",
+          },
+          {
+            label: "Pando",
+            value: "CA004",
+            sID: "67TKSTn55H",
+          },
+          {
+            label: "La Paz",
+            value: "CA005",
+            sID: "j9gDEUSdwd",
+          },
+          {
+            label: "Barros Blancos",
+            value: "CA006",
+            sID: "yM5nH994uw",
+          },
+          {
+            label: "Progreso",
+            value: "CA007",
+            sID: "vUPMGdEFZo",
+          },
+          {
+            label: "Santa Lucía",
+            value: "CA008",
+            sID: "uTXlnOUhRq",
+          },
+          {
+            label: "Atlántida",
+            value: "CA009",
+            sID: "J3BBdB24Zr",
+          },
+          {
+            label: "Salinas",
+            value: "CA010",
+            sID: "U4VEbI6DCl",
+          },
+          {
+            label: "Parque del Plata",
+            value: "CA011",
+            sID: "vEG0Xxfcrx",
+          },
+          {
+            label: "San Ramón",
+            value: "CA012",
+            sID: "DEpLaOgQ9U",
+          },
+          {
+            label: "Sauce",
+            value: "CA013",
+            sID: "Zx1hhKKdpA",
+          },
+          {
+            label: "Tala",
+            value: "CA014",
+            sID: "4jTOdYzVsP",
+          },
+          {
+            label: "Santa Rosa",
+            value: "CA015",
+            sID: "VQ9lIqwU4O",
+          },
+        ],
+        sID: "DmOso3o0l8",
+      },
+      {
+        label: "Cerro Largo",
+        value: "UY-CL",
+        departamento: {
+          nombre: "Cerro Largo",
+          codigo: "04",
+          sID: "0zrAQmOw6u",
+        },
+        cities: [
+          {
+            label: "Melo",
+            value: "CL001",
+            sID: "NqqrXsBMtA",
+          },
+          {
+            label: "Río Branco",
+            value: "CL002",
+            sID: "S3gzCp8lph",
+          },
+          {
+            label: "Fraile Muerto",
+            value: "CL003",
+            sID: "hWqOPL1tDY",
+          },
+          {
+            label: "Isidoro Noblía",
+            value: "CL004",
+            sID: "GYrwxbWAvA",
+          },
+          {
+            label: "Aceguá",
+            value: "CL005",
+            sID: "5N720ZSteQ",
+          },
+        ],
+        sID: "0ozxPrq8BN",
+      },
+      {
+        label: "Colonia",
+        value: "UY-CO",
+        departamento: {
+          nombre: "Colonia",
+          codigo: "05",
+          sID: "O5VLcVneKa",
+        },
+        cities: [
+          {
+            label: "Colonia del Sacramento",
+            value: "CO001",
+            sID: "koeORU68bQ",
+          },
+          {
+            label: "Carmelo",
+            value: "CO002",
+            sID: "F4Q4V1hXPX",
+          },
+          {
+            label: "Juan Lacaze",
+            value: "CO003",
+            sID: "AUFnkmz0FM",
+          },
+          {
+            label: "Nueva Helvecia",
+            value: "CO004",
+            sID: "7Z49VehHT0",
+          },
+          {
+            label: "Rosario",
+            value: "CO005",
+            sID: "T8ujPWDzbM",
+          },
+          {
+            label: "Nueva Palmira",
+            value: "CO006",
+            sID: "eStGVDCEw4",
+          },
+          {
+            label: "Tarariras",
+            value: "CO007",
+            sID: "x8pSt25md7",
+          },
+          {
+            label: "Ombúes de Lavalle",
+            value: "CO008",
+            sID: "kK6UtpghvN",
+          },
+          {
+            label: "Florencio Sánchez",
+            value: "CO009",
+            sID: "z7hsEpUyub",
+          },
+        ],
+        sID: "xkUZcme92w",
+      },
+      {
+        label: "Durazno",
+        value: "UY-DU",
+        departamento: {
+          nombre: "Durazno",
+          codigo: "06",
+          sID: "1M3eBMKQpG",
+        },
+        cities: [
+          {
+            label: "Durazno",
+            value: "DU001",
+            sID: "owz4ps5eop",
+          },
+          {
+            label: "Sarandí del Yí",
+            value: "DU002",
+            sID: "beGpXqpZe3",
+          },
+          {
+            label: "Villa del Carmen",
+            value: "DU003",
+            sID: "ZdWNMjUhhA",
+          },
+        ],
+        sID: "oO2eTJvsi9",
+      },
+      {
+        label: "Flores",
+        value: "UY-FS",
+        departamento: {
+          nombre: "Flores",
+          codigo: "07",
+          sID: "xZewwOZlrB",
+        },
+        cities: [
+          {
+            label: "Trinidad",
+            value: "FS001",
+            sID: "u8HsQahmdu",
+          },
+          {
+            label: "Ismael Cortinas",
+            value: "FS002",
+            sID: "G7htuDnhNK",
+          },
+        ],
+        sID: "OhSwRbBMCY",
+      },
+      {
+        label: "Florida",
+        value: "UY-FD",
+        departamento: {
+          nombre: "Florida",
+          codigo: "08",
+          sID: "M1RlzaeBXP",
+        },
+        cities: [
+          {
+            label: "Florida",
+            value: "FD001",
+            sID: "SpwiZBPvOb",
+          },
+          {
+            label: "Sarandí Grande",
+            value: "FD002",
+            sID: "DKKZE1XqsP",
+          },
+          {
+            label: "Casupá",
+            value: "FD003",
+            sID: "TkvK6JKXxI",
+          },
+          {
+            label: "Fray Marcos",
+            value: "FD004",
+            sID: "KFFRKKEEjW",
+          },
+          {
+            label: "25 de Mayo",
+            value: "FD005",
+            sID: "cs9Cbhpq1a",
+          },
+        ],
+        sID: "xU8ui3pz4J",
+      },
+      {
+        label: "Lavalleja",
+        value: "UY-LA",
+        departamento: {
+          nombre: "Lavalleja",
+          codigo: "09",
+          sID: "bf9aFmeNb4",
+        },
+        cities: [
+          {
+            label: "Minas",
+            value: "LA001",
+            sID: "Vg5F0tlaA1",
+          },
+          {
+            label: "José Pedro Varela",
+            value: "LA002",
+            sID: "lWUioSfEpf",
+          },
+          {
+            label: "Solís de Mataojo",
+            value: "LA003",
+            sID: "pZUwsUQKB3",
+          },
+          {
+            label: "José Batlle y Ordóñez",
+            value: "LA004",
+            sID: "tHaCIQwXDT",
+          },
+          {
+            label: "Mariscala",
+            value: "LA005",
+            sID: "KGe4MOJ1Du",
+          },
+        ],
+        sID: "b3PbOkOcRL",
+      },
+      {
+        label: "Maldonado",
+        value: "UY-MA",
+        departamento: {
+          nombre: "Maldonado",
+          codigo: "10",
+          sID: "Oi8a39eDJH",
+        },
+        cities: [
+          {
+            label: "Maldonado",
+            value: "MA001",
+            sID: "zN0rEnH4wH",
+          },
+          {
+            label: "Punta del Este",
+            value: "MA002",
+            sID: "5HBpM1eXA3",
+          },
+          {
+            label: "San Carlos",
+            value: "MA003",
+            sID: "wZLjsTqgpA",
+          },
+          {
+            label: "Piriápolis",
+            value: "MA004",
+            sID: "Y7tAYLthVN",
+          },
+          {
+            label: "Pan de Azúcar",
+            value: "MA005",
+            sID: "VA4x5fvzQs",
+          },
+          {
+            label: "Aiguá",
+            value: "MA006",
+            sID: "BBV79UKHtb",
+          },
+        ],
+        sID: "8leTCgRFjV",
+      },
+      {
+        label: "Montevideo",
+        value: "UY-MO",
+        departamento: {
+          nombre: "Montevideo",
+          codigo: "01",
+          sID: "H6hkMDEfEp",
+        },
+        cities: [
+          {
+            label: "Montevideo",
+            value: "MO001",
+            sID: "PjeAYm527M",
+          },
+        ],
+        sID: "pQTfypT4el",
+      },
+      {
+        label: "Paysandú",
+        value: "UY-PA",
+        departamento: {
+          nombre: "Paysandú",
+          codigo: "11",
+          sID: "9bOSnIpEsV",
+        },
+        cities: [
+          {
+            label: "Paysandú",
+            value: "PA001",
+            sID: "r8HiF6MSFG",
+          },
+          {
+            label: "Guichón",
+            value: "PA002",
+            sID: "Bhnkm3EFZE",
+          },
+          {
+            label: "Quebracho",
+            value: "PA003",
+            sID: "LPvMoNYYET",
+          },
+        ],
+        sID: "RAvTquNTQo",
+      },
+      {
+        label: "Río Negro",
+        value: "UY-RN",
+        departamento: {
+          nombre: "Río Negro",
+          codigo: "12",
+          sID: "28tvBDM7L6",
+        },
+        cities: [
+          {
+            label: "Fray Bentos",
+            value: "RN001",
+            sID: "HMN8ki8wJd",
+          },
+          {
+            label: "Young",
+            value: "RN002",
+            sID: "EqncyS3ycD",
+          },
+          {
+            label: "Nuevo Berlín",
+            value: "RN003",
+            sID: "xmF5jzdEwD",
+          },
+          {
+            label: "San Javier",
+            value: "RN004",
+            sID: "dtHaMlJhOW",
+          },
+        ],
+        sID: "skQ0Oh1Zq7",
+      },
+      {
+        label: "Rivera",
+        value: "UY-RV",
+        departamento: {
+          nombre: "Rivera",
+          codigo: "13",
+          sID: "K7Yp8z1SUe",
+        },
+        cities: [
+          {
+            label: "Rivera",
+            value: "RV001",
+            sID: "VkAbQt15Jk",
+          },
+          {
+            label: "Tranqueras",
+            value: "RV002",
+            sID: "SXcErh0aH0",
+          },
+          {
+            label: "Vichadero",
+            value: "RV003",
+            sID: "oqzhxruChK",
+          },
+          {
+            label: "Minas de Corrales",
+            value: "RV004",
+            sID: "rjqpYMQxQa",
+          },
+        ],
+        sID: "icsDVyPQaK",
+      },
+      {
+        label: "Rocha",
+        value: "UY-RO",
+        departamento: {
+          nombre: "Rocha",
+          codigo: "14",
+          sID: "gLHyBvv0Dq",
+        },
+        cities: [
+          {
+            label: "Rocha",
+            value: "RO001",
+            sID: "5coOSL2mj8",
+          },
+          {
+            label: "Chuy",
+            value: "RO002",
+            sID: "XsZD3kjbVr",
+          },
+          {
+            label: "Castillos",
+            value: "RO003",
+            sID: "cRuFGidHwK",
+          },
+          {
+            label: "Lascano",
+            value: "RO004",
+            sID: "1zbmGqIDz0",
+          },
+          {
+            label: "La Paloma",
+            value: "RO005",
+            sID: "nr7qt8bk3u",
+          },
+          {
+            label: "Punta del Diablo",
+            value: "RO006",
+            sID: "VAbtguBpC6",
+          },
+        ],
+        sID: "5hza0wPY70",
+      },
+      {
+        label: "Salto",
+        value: "UY-SA",
+        departamento: {
+          nombre: "Salto",
+          codigo: "15",
+          sID: "DXYhceTb1c",
+        },
+        cities: [
+          {
+            label: "Salto",
+            value: "SA001",
+            sID: "Ua5Dkhaxf9",
+          },
+          {
+            label: "Constitución",
+            value: "SA002",
+            sID: "8Ra3lOxQUC",
+          },
+          {
+            label: "Belén",
+            value: "SA003",
+            sID: "UQPOx6lP5G",
+          },
+        ],
+        sID: "f2o5H9sHCH",
+      },
+      {
+        label: "San José",
+        value: "UY-SJ",
+        departamento: {
+          nombre: "San José",
+          codigo: "16",
+          sID: "MPEtqOpoMX",
+        },
+        cities: [
+          {
+            label: "San José de Mayo",
+            value: "SJ001",
+            sID: "a65SsY9tj6",
+          },
+          {
+            label: "Ciudad del Plata",
+            value: "SJ002",
+            sID: "O6auW7WRcn",
+          },
+          {
+            label: "Libertad",
+            value: "SJ003",
+            sID: "nSjvKjlajQ",
+          },
+          {
+            label: "Rodríguez",
+            value: "SJ004",
+            sID: "8VnoWmFwO9",
+          },
+          {
+            label: "Ecilda Paullier",
+            value: "SJ005",
+            sID: "F2LGfQNtKB",
+          },
+        ],
+        sID: "QDgL8zX24p",
+      },
+      {
+        label: "Soriano",
+        value: "UY-SO",
+        departamento: {
+          nombre: "Soriano",
+          codigo: "17",
+          sID: "N9N3nKVhyZ",
+        },
+        cities: [
+          {
+            label: "Mercedes",
+            value: "SO001",
+            sID: "USPQ0iuTRg",
+          },
+          {
+            label: "Dolores",
+            value: "SO002",
+            sID: "SMIIh5FSDB",
+          },
+          {
+            label: "Cardona",
+            value: "SO003",
+            sID: "C3wXAsmJuz",
+          },
+          {
+            label: "Palmitas",
+            value: "SO004",
+            sID: "2ad96GWMfj",
+          },
+          {
+            label: "José Enrique Rodó",
+            value: "SO005",
+            sID: "zF41HNI0Or",
+          },
+        ],
+        sID: "3lbBjsOM6I",
+      },
+      {
+        label: "Tacuarembó",
+        value: "UY-TA",
+        departamento: {
+          nombre: "Tacuarembó",
+          codigo: "18",
+          sID: "yENTmgcxVK",
+        },
+        cities: [
+          {
+            label: "Tacuarembó",
+            value: "TA001",
+            sID: "2LQDtr17rR",
+          },
+          {
+            label: "Paso de los Toros",
+            value: "TA002",
+            sID: "eAIiVar4eO",
+          },
+          {
+            label: "San Gregorio de Polanco",
+            value: "TA003",
+            sID: "q8Kd9VKAdg",
+          },
+          {
+            label: "Ansina",
+            value: "TA004",
+            sID: "qjcdVH1Nr7",
+          },
+        ],
+        sID: "fRbCS0S2Ft",
+      },
+      {
+        label: "Treinta y Tres",
+        value: "UY-TT",
+        departamento: {
+          nombre: "Treinta y Tres",
+          codigo: "19",
+          sID: "7jJ7KhavhY",
+        },
+        cities: [
+          {
+            label: "Treinta y Tres",
+            value: "TT001",
+            sID: "TggTxGpp96",
+          },
+          {
+            label: "Vergara",
+            value: "TT002",
+            sID: "YbQ1JtJjzy",
+          },
+          {
+            label: "Santa Clara de Olimar",
+            value: "TT003",
+            sID: "h3VV7i60dA",
+          },
+        ],
+        sID: "lO0DWSjpY3",
+      },
+    ],
+    sID: "13xhIKSff0",
+  },
 ];
 
 /**
